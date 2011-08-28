@@ -214,7 +214,13 @@ class ArrayCollection implements Collection
      */
     public function contains($element)
     {
-        return in_array($element, $this->_elements, true);
+        foreach ($this->_elements as $collectionElement) {
+            if ($element === $collectionElement) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     /**
