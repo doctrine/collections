@@ -89,7 +89,7 @@ class ArrayCollection implements Collection
     {
         return key($this->_elements);
     }
-    
+
     /**
      * Moves the internal iterator position to the next element.
      *
@@ -99,7 +99,7 @@ class ArrayCollection implements Collection
     {
         return next($this->_elements);
     }
-    
+
     /**
      * Gets the element of the collection at the current internal iterator position.
      *
@@ -121,7 +121,7 @@ class ArrayCollection implements Collection
         if (isset($this->_elements[$key])) {
             $removed = $this->_elements[$key];
             unset($this->_elements[$key]);
-            
+
             return $removed;
         }
 
@@ -137,13 +137,13 @@ class ArrayCollection implements Collection
     public function removeElement($element)
     {
         $key = array_search($element, $this->_elements, true);
-        
+
         if ($key !== false) {
             unset($this->_elements[$key]);
-            
+
             return true;
         }
-        
+
         return false;
     }
 
@@ -219,7 +219,7 @@ class ArrayCollection implements Collection
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -327,7 +327,7 @@ class ArrayCollection implements Collection
 
     /**
      * Checks whether the collection is empty.
-     * 
+     *
      * Note: This is preferrable over count() == 0.
      *
      * @return boolean TRUE if the collection is empty, FALSE otherwise.
@@ -385,7 +385,7 @@ class ArrayCollection implements Collection
                 return false;
             }
         }
-        
+
         return true;
     }
 

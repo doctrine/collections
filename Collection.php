@@ -23,11 +23,11 @@ use Closure, Countable, IteratorAggregate, ArrayAccess;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
- * 
+ *
  * A Collection resembles the nature of a regular PHP array. That is,
  * it is essentially an <b>ordered map</b> that can also be used
  * like a list.
- * 
+ *
  * A Collection has an internal iterator just like a PHP array. In addition,
  * a Collection can be iterated with external iterators, which is preferrable.
  * To use an external iterator simply use the foreach language construct to
@@ -37,7 +37,7 @@ use Closure, Countable, IteratorAggregate, ArrayAccess;
  * You can not rely on the internal iterator of the collection being at a certain
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
- * 
+ *
  * @since   2.0
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
@@ -52,7 +52,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return boolean Always TRUE.
      */
     function add($element);
-    
+
     /**
      * Clears the collection, removing all elements.
      */
@@ -76,7 +76,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Removes the element at the specified index from the collection.
-     * 
+     *
      * @param string|integer $key The kex/index of the element to remove.
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      */
@@ -92,7 +92,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Checks whether the collection contains an element with the specified key/index.
-     * 
+     *
      * @param string|integer $key The key/index to check for.
      * @return boolean TRUE if the collection contains an element with the specified key/index,
      *          FALSE otherwise.
@@ -101,7 +101,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Gets the element at the specified key/index.
-     * 
+     *
      * @param string|integer $key The key/index of the element to retrieve.
      * @return mixed
      */
@@ -116,8 +116,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     function getKeys();
 
     /**
-     * Gets all values of the collection. 
-     * 
+     * Gets all values of the collection.
+     *
      * @return array The values of all elements in the collection, in the order they
      *          appear in the collection.
      */
@@ -125,7 +125,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Sets an element in the collection at the specified key/index.
-     * 
+     *
      * @param string|integer $key The key/index of the element to set.
      * @param mixed $value The element to set.
      */
@@ -133,7 +133,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Gets a native PHP array representation of the collection.
-     * 
+     *
      * @return array
      */
     function toArray();
