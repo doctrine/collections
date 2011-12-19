@@ -170,7 +170,7 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
     {
         $this->_coll[] = 'one';
         $this->_coll[] = 'two';
-        
+
         $this->assertTrue($this->_coll->removeElement('two'));
         $this->assertFalse($this->_coll->contains('two'));
         $this->assertFalse($this->_coll->removeElement('two'));
