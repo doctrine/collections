@@ -33,14 +33,23 @@ abstract class ExpressionVisitor
 
     abstract public function walkCompositeExpression(CompositeExpression $expr);
 
+    /**
+     * Dispatch walking an expression to the appropriate handler.
+     *
+     * @var Expression
+     * @return mixed
+     */
     public function dispatch(Expression $expr)
     {
-        if ($expr instanceof Comparison) {
-            return $this->walkComparison($expr);
-        } else if ($expr instanceof Value) {
-            return $this->walkValue($expr);
-        } else if ($expr instanceof CompositeExpression) {
-            return $this->walkCompositeExpression($expr);
+        switch (true) {
+            case ($expr instanceof Comparison):
+                return $this->walkComparison($expr);
+            case ($expr instanceof Value):
+                return $this->walkValue($expr);
+            case ($expr instanceof CompositeExpression):
+                return $this->walkCompositeExpression($expr);
+            default:
+                throw new \RuntimeException("Unknown Expression " . get_class($expr));
         }
     }
 }
