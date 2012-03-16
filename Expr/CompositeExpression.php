@@ -56,7 +56,7 @@ class CompositeExpression implements Expression
      */
     public function getExpressionList()
     {
-        return $this->expresssions;
+        return $this->expressions;
     }
 
     public function getType()

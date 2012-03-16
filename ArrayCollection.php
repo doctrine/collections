@@ -20,6 +20,8 @@
 namespace Doctrine\Common\Collections;
 
 use Closure, ArrayIterator;
+use Doctrine\Common\Collections\Expr\Expression;
+use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
@@ -29,7 +31,7 @@ use Closure, ArrayIterator;
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
  */
-class ArrayCollection implements Collection
+class ArrayCollection implements Collection, Selectable
 {
     /**
      * An array containing the entries of this collection.
@@ -457,4 +459,29 @@ class ArrayCollection implements Collection
     {
         return array_slice($this->_elements, $offset, $length, true);
     }
+
+    /**
+     * Select all elements from a selectable that match the expression and
+     * return a new collection containing these elements.
+     *
+     * @param Expression $expr
+     * @return Collection
+     */
+    public function select(Expression $expr)
+    {
+        $visitor = new ClosureExpressionVisitor();
+
+        return $this->filter($visitor->dispatch($expr));
+    }
+
+    /**
+     * Return the expression builder.
+     *
+     * @return ExpressionBuilder
+     */
+    public function expr()
+    {
+        return new ExpressionBuilder();
+    }
 }
+
