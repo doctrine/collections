@@ -192,4 +192,23 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $slice = $this->_coll->slice(1, 1);
         $this->assertEquals(array(1 => 'two'), $slice);
     }
+
+    /**
+     * @group DDC-1637
+     */
+    public function testSelect()
+    {
+        $std1 = new \stdClass();
+        $std1->foo = "bar";
+        $this->_coll[] = $std1;
+
+        $std2 = new \stdClass();
+        $std2->foo = "baz";
+        $this->_coll[] = $std2;
+
+        $col = $this->_coll->select($this->_coll->expr()->eq("foo", "bar"));
+        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
+        $this->assertNotSame($col, $this->_coll);
+        $this->assertEquals(1, count($col));
+    }
 }
