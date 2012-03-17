@@ -112,10 +112,10 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
         switch($expr->getType()) {
             case CompositeExpression::TYPE_AND:
-                return $this->andexpressionList($expressionList);
+                return $this->andExpressions($expressionList);
 
             case CompositeExpression::TYPE_OR:
-                return $this->orexpressionList($expressionList);
+                return $this->orExpressions($expressionList);
 
             default:
                 throw new \RuntimeException("Unknown composite " . $expr->getType());
