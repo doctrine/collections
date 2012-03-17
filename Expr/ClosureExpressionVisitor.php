@@ -33,11 +33,15 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     static public function getObjectFieldValue($object, $field)
     {
         $accessor = "get" . $field;
+
         if (method_exists($object, $accessor)) {
             return $object->$accessor();
-        } else if ($object instanceof \ArrayAccess) {
+        }
+
+        if ($object instanceof \ArrayAccess) {
             return $object[$field];
         }
+
         return $object->$field;
     }
 
@@ -52,34 +56,42 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 return function ($object) use($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
                 };
+
             case Comparison::NEQ:
                 return function ($object) use($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };
+
             case Comparison::LT:
                 return function ($object) use($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
                 };
+
             case Comparison::LTE:
                 return function ($object) use($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
                 };
+
             case Comparison::GT:
                 return function ($object) use($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
                 };
+
             case Comparison::GTE:
                 return function ($object) use($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
                 };
+
             case Comparison::IN:
                 return function ($object) use($field, $value) {
                     return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
+
             case Comparison::NIN:
                 return function ($object) use($field, $value) {
                     return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
+
             default:
                 throw new \RuntimeException("Unknown comparison operator: " . $comparison->getOperator());
         }
@@ -92,16 +104,19 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
     public function walkCompositeExpression(CompositeExpression $expr)
     {
-        $expressions = array();
+        $expressionList = array();
+
         foreach ($expr->getExpressionList() as $child) {
-            $expressions[] = $this->dispatch($child);
+            $expressionList[] = $this->dispatch($child);
         }
 
         switch($expr->getType()) {
             case CompositeExpression::TYPE_AND:
-                return $this->andExpressions($expressions);
+                return $this->andexpressionList($expressionList);
+
             case CompositeExpression::TYPE_OR:
-                return $this->orExpressions($expressions);
+                return $this->orexpressionList($expressionList);
+
             default:
                 throw new \RuntimeException("Unknown composite " . $expr->getType());
         }

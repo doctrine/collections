@@ -50,6 +50,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function eq($field, $value)
@@ -60,6 +61,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function gt($field, $value)
@@ -70,6 +72,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function lt($field, $value)
@@ -80,6 +83,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function gte($field, $value)
@@ -90,6 +94,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function lte($field, $value)
@@ -100,6 +105,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function neq($field, $value)
@@ -110,6 +116,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function isNull($field)
@@ -120,6 +127,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function in($field, array $values)
@@ -130,6 +138,7 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed $value
+     *
      * @return Comparison
      */
     public function notIn($field, array $values)

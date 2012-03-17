@@ -27,16 +27,38 @@ namespace Doctrine\Common\Collections\Expr;
  */
 abstract class ExpressionVisitor
 {
+    /**
+     * Convert a comparison expression into the target query language output
+     *
+     * @param Comparison $comparison
+     *
+     * @return mixed
+     */
     abstract public function walkComparison(Comparison $comparison);
 
+    /**
+     * Convert a value expression into the target query language part.
+     *
+     * @param Value $value
+     *
+     * @return mixed
+     */
     abstract public function walkValue(Value $value);
 
+    /**
+     * Convert a composite expression into the target query language output
+     *
+     * @param CompositeExpression $expr
+     *
+     * @return mixed
+     */
     abstract public function walkCompositeExpression(CompositeExpression $expr);
 
     /**
      * Dispatch walking an expression to the appropriate handler.
      *
-     * @var Expression
+     * @param Expression
+     *
      * @return mixed
      */
     public function dispatch(Expression $expr)
@@ -44,10 +66,13 @@ abstract class ExpressionVisitor
         switch (true) {
             case ($expr instanceof Comparison):
                 return $this->walkComparison($expr);
+
             case ($expr instanceof Value):
                 return $this->walkValue($expr);
+
             case ($expr instanceof CompositeExpression):
                 return $this->walkCompositeExpression($expr);
+
             default:
                 throw new \RuntimeException("Unknown Expression " . get_class($expr));
         }
