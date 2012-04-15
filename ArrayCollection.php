@@ -151,6 +151,9 @@ class ArrayCollection implements Collection
      * ArrayAccess implementation of offsetExists()
      *
      * @see containsKey()
+     *
+     * @param mixed$offset
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -161,6 +164,9 @@ class ArrayCollection implements Collection
      * ArrayAccess implementation of offsetGet()
      *
      * @see get()
+     *
+     * @param mixed $offset
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -168,10 +174,14 @@ class ArrayCollection implements Collection
     }
 
     /**
-     * ArrayAccess implementation of offsetGet()
+     * ArrayAccess implementation of offsetSet()
      *
      * @see add()
      * @see set()
+     *
+     * @param mixed $offset
+     * @param mixed $value
+     * @return bool|void
      */
     public function offsetSet($offset, $value)
     {
@@ -185,6 +195,9 @@ class ArrayCollection implements Collection
      * ArrayAccess implementation of offsetUnset()
      *
      * @see remove()
+     *
+     * @param mixed $offset
+     * @return mixed
      */
     public function offsetUnset($offset)
     {
@@ -224,7 +237,7 @@ class ArrayCollection implements Collection
     }
 
     /**
-     * Tests for the existance of an element that satisfies the given predicate.
+     * Tests for the existence of an element that satisfies the given predicate.
      *
      * @param Closure $p The predicate.
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
@@ -328,7 +341,7 @@ class ArrayCollection implements Collection
     /**
      * Checks whether the collection is empty.
      *
-     * Note: This is preferrable over count() == 0.
+     * Note: This is preferable over count() == 0.
      *
      * @return boolean TRUE if the collection is empty, FALSE otherwise.
      */
