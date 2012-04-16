@@ -152,7 +152,7 @@ class ArrayCollection implements Collection
      *
      * @see containsKey()
      *
-     * @param mixed$offset
+     * @param mixed $offset
      * @return bool
      */
     public function offsetExists($offset)
@@ -181,7 +181,7 @@ class ArrayCollection implements Collection
      *
      * @param mixed $offset
      * @param mixed $value
-     * @return bool|void
+     * @return bool
      */
     public function offsetSet($offset, $value)
     {
