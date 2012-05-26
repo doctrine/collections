@@ -30,11 +30,19 @@ namespace Doctrine\Common\Collections\Expr;
  */
 class ClosureExpressionVisitor extends ExpressionVisitor
 {
+    /**
+     * Access the field of a given object. This field has to be public directly
+     * or indirectly (through an accessor get* or a magic method, __get, __call).
+     *
+     * is*() is not supported.
+     *
+     * @return mixed
+     */
     static public function getObjectFieldValue($object, $field)
     {
         $accessor = "get" . $field;
 
-        if (method_exists($object, $accessor)) {
+        if (method_exists($object, $accessor) || method_exists($object, '__call')) {
             return $object->$accessor();
         }
 
@@ -45,6 +53,9 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         return $object->$field;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function walkComparison(Comparison $comparison)
     {
         $field = $comparison->getField();
@@ -97,11 +108,17 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function walkValue(Value $value)
     {
         return $value->getValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function walkCompositeExpression(CompositeExpression $expr)
     {
         $expressionList = array();
