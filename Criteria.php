@@ -40,7 +40,7 @@ class Criteria
     const DESC = 'DESC';
 
     /**
-     * @var Doctrine\Common\Collections\Expr\Expression
+     * @var \Doctrine\Common\Collections\Expr\Expression
      */
     private $expression;
 

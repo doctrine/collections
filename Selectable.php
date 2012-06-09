@@ -48,7 +48,7 @@ interface Selectable
     /**
      * Return the expression builder.
      *
-     * @return Doctrine\Common\Collections\ExpressionBuilder
+     * @return \Doctrine\Common\Collections\ExpressionBuilder
      */
     function expr();
 }
