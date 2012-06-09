@@ -461,17 +461,40 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Select all elements from a selectable that match the expression and
+     * Select all elements from a selectable that match the criteria and
      * return a new collection containing these elements.
      *
-     * @param Expression $expr
+     * @param  Criteria $criteria
      * @return Collection
      */
-    public function select(Expression $expr)
+    public function matching(Criteria $criteria)
     {
-        $visitor = new ClosureExpressionVisitor();
+        $expr     = $criteria->getWhereExpression();
+        $filtered = $this->_elements;
 
-        return $this->filter($visitor->dispatch($expr));
+        if ($expr) {
+            $visitor  = new ClosureExpressionVisitor();
+            $filter   = $visitor->dispatch($expr);
+            $filtered = array_filter($filtered, $filter);
+        }
+
+        if ($orderings = $criteria->getOrderings()) {
+            $next = null;
+            foreach (array_reverse($orderings) as $field => $ordering) {
+                $next = ClosureExpressionVisitor::sortByField($field, $ordering == 'DESC' ? -1 : 1, $next);
+            }
+
+            usort($filtered, $next);
+        }
+
+        $offset = $criteria->getFirstResult();
+        $length = $criteria->getMaxResults();
+
+        if ($offset || $length) {
+            $filtered = array_slice($filtered, (int)$offset, $length);
+        }
+
+        return new static($filtered);
     }
 
     /**

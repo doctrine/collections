@@ -41,8 +41,12 @@ class Comparison implements Expression
     private $op;
     private $value;
 
-    public function __construct($field, $operator, Value $value)
+    public function __construct($field, $operator, $value)
     {
+        if ( ! ($value instanceof Value)) {
+            $value = new Value($value);
+        }
+
         $this->field = $field;
         $this->op = $operator;
         $this->value = $value;

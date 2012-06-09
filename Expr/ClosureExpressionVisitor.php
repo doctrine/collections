@@ -54,6 +54,35 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
+     * Helper for sorting arrays of objects based on multiple fields +
+     * orientations.
+     *
+     * @param string $name
+     * @param int $orientation
+     * @param Closure $next
+     * @return Closure
+     */
+    static public function sortByField($name, $orientation = 1, \Closure $next = null)
+    {
+        if (!$next) {
+            $next = function() {
+                return 0;
+            };
+        }
+
+        return function ($a, $b) use ($name, $next, $orientation) {
+            $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
+            $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
+
+            if ($aValue === $bValue) {
+                return $next($a, $b);
+            }
+
+            return (($aValue > $bValue) ? 1 : -1) * $orientation;
+        };
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function walkComparison(Comparison $comparison)

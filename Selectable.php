@@ -19,8 +19,6 @@
 
 namespace Doctrine\Common\Collections;
 
-use Doctrine\Common\Collections\Expr\Expression;
-
 /**
  * Interface for collections that allow efficient filtering with an expression API.
  *
@@ -42,16 +40,16 @@ interface Selectable
      * Select all elements from a selectable that match the expression and
      * return a new collection containing these elements.
      *
-     * @param Expression $expr
+     * @param Criteria $criteria
      * @return Collection
      */
-    public function select(Expression $expr);
+    function matching(Criteria $criteria);
 
     /**
      * Return the expression builder.
      *
-     * @return ExpressionBuilder
+     * @return Doctrine\Common\Collections\ExpressionBuilder
      */
-    public function expr();
+    function expr();
 }
 
