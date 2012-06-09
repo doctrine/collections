@@ -135,6 +135,43 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($closure(new TestObject(0, 1)));
         $this->assertFalse($closure(new TestObject(0, 0)));
     }
+
+    public function testSortByFieldAscending()
+    {
+        $objects = array(new TestObject("b"), new TestObject("a"), new TestObject("c"));
+        $sort = ClosureExpressionVisitor::sortByField("foo");
+
+        usort($objects, $sort);
+
+        $this->assertEquals("a", $objects[0]->getFoo());
+        $this->assertEquals("b", $objects[1]->getFoo());
+        $this->assertEquals("c", $objects[2]->getFoo());
+    }
+
+    public function testSortByFieldDescending()
+    {
+        $objects = array(new TestObject("b"), new TestObject("a"), new TestObject("c"));
+        $sort = ClosureExpressionVisitor::sortByField("foo", -1);
+
+        usort($objects, $sort);
+
+        $this->assertEquals("c", $objects[0]->getFoo());
+        $this->assertEquals("b", $objects[1]->getFoo());
+        $this->assertEquals("a", $objects[2]->getFoo());
+    }
+
+    public function testSortDelegate()
+    {
+        $objects = array(new TestObject("a", "c"), new TestObject("a", "b"), new TestObject("a", "a"));
+        $sort = ClosureExpressionVisitor::sortByField("bar", 1);
+        $sort = ClosureExpressionVisitor::sortByField("foo", 1, $sort);
+
+        usort($objects, $sort);
+
+        $this->assertEquals("a", $objects[0]->getBar());
+        $this->assertEquals("b", $objects[1]->getBar());
+        $this->assertEquals("c", $objects[2]->getBar());
+    }
 }
 
 class TestObject
