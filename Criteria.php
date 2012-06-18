@@ -97,6 +97,11 @@ class Criteria
         return $this->expression;
     }
 
+    /**
+     * Get current orderings of this Criteria
+     *
+     * @return array
+     */
     public function getOrderings()
     {
         return $this->orderings;
@@ -133,10 +138,12 @@ class Criteria
      * Set number of first result that this criteria should return.
      *
      * @param firstResult the value to set.
+     * @return Criteria
      */
     public function setFirstResult($firstResult)
     {
         $this->firstResult = $firstResult;
+        return $this;
     }
 
     /**
@@ -153,10 +160,12 @@ class Criteria
      * Set maxResults.
      *
      * @param maxResults the value to set.
+     * @return Criteria
      */
     public function setMaxResults($maxResults)
     {
         $this->maxResults = $maxResults;
+        return $this;
     }
 }
 
