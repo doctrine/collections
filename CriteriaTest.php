@@ -6,6 +6,13 @@ use Doctrine\Common\Collections\Expr\Comparison;
 
 class CriteriaTest extends \PHPUnit_Framework_TestCase
 {
+    public function testCreate()
+    {
+        $criteria = Criteria::create();
+
+        $this->assertInstanceOf("Doctrine\Common\Collections\Criteria", $criteria);
+    }
+
     public function testConstructor()
     {
         $expr     = new Comparison("field", "=", "value");
@@ -29,9 +36,8 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
 
     public function testOrderings()
     {
-        $criteria = new Criteria();
-
-        $criteria->orderBy(array("foo" => "ASC"));
+        $criteria = Criteria::create()
+            ->orderBy(array("foo" => "ASC"));
 
         $this->assertEquals(array("foo" => "ASC"), $criteria->getOrderings());
     }
