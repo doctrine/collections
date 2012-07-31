@@ -20,6 +20,7 @@
 namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\Expression;
+use Doctrine\Common\Collections\Expr\CompositeExpression;
 
 /**
  * Criteria for filtering Selectable collections.
@@ -94,6 +95,46 @@ class Criteria
     public function where(Expression $expression)
     {
         $this->expression = $expression;
+        return $this;
+    }
+
+    /**
+     * Append the where expression to evaluate when this criteria is searched for
+     * using an AND with previous expression.
+     *
+     * @param Expression
+     * @return Criteria
+     */
+    public function andWhere(Expression $expression)
+    {
+        if ($this->expression === null) {
+            return $this->where($expression);
+        }
+
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_AND, array(
+            $this->expression, $expression
+        ));
+
+        return $this;
+    }
+
+    /**
+     * Append the where expression to evaluate when this criteria is searched for
+     * using an OR with previous expression.
+     *
+     * @param Expression
+     * @return Criteria
+     */
+    public function orWhere(Expression $expression)
+    {
+        if ($this->expression === null) {
+            return $this->where($expression);
+        }
+
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_OR, array(
+            $this->expression, $expression
+        ));
+
         return $this;
     }
 
