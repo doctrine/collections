@@ -60,6 +60,16 @@ class Criteria
     private $maxResults;
 
     /**
+     * Creates an instance of the class.
+     *
+     * @return Criteria
+     */
+    public static function create()
+    {
+        return new static();
+    }
+
+    /**
      * Construct new criteria
      *
      * @param Expression $expression
