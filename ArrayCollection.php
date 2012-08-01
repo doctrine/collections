@@ -496,15 +496,5 @@ class ArrayCollection implements Collection, Selectable
 
         return new static($filtered);
     }
-
-    /**
-     * Return the expression builder.
-     *
-     * @return ExpressionBuilder
-     */
-    public function expr()
-    {
-        return new ExpressionBuilder();
-    }
 }
 

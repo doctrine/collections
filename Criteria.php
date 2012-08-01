@@ -41,6 +41,11 @@ class Criteria
     const DESC = 'DESC';
 
     /**
+     * @var \Doctrine\Common\Collections\ExpressionBuilder
+     */
+    private static $expressionBuilder;
+
+    /**
      * @var \Doctrine\Common\Collections\Expr\Expression
      */
     private $expression;
@@ -68,6 +73,19 @@ class Criteria
     public static function create()
     {
         return new static();
+    }
+
+    /**
+     * Return the expression builder.
+     *
+     * @return \Doctrine\Common\Collections\ExpressionBuilder
+     */
+    public static function expr()
+    {
+        if (self::$expressionBuilder === null) {
+            self::$expressionBuilder = new ExpressionBuilder();
+        }
+        return self::$expressionBuilder;
     }
 
     /**
