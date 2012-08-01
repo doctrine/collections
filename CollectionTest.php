@@ -212,7 +212,7 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
     {
         $this->fillMatchingFixture();
 
-        $col = $this->_coll->matching(new Criteria($this->_coll->expr()->eq("foo", "bar")));
+        $col = $this->_coll->matching(new Criteria(Criteria::expr()->eq("foo", "bar")));
         $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
         $this->assertNotSame($col, $this->_coll);
         $this->assertEquals(1, count($col));

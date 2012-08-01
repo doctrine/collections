@@ -74,4 +74,9 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array("foo" => "ASC"), $criteria->getOrderings());
     }
+
+    public function testExpr()
+    {
+        $this->assertInstanceOf('Doctrine\Common\Collections\ExpressionBuilder', Criteria::expr());
+    }
 }
