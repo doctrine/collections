@@ -248,4 +248,17 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->assertEquals(1, count($col));
         $this->assertEquals('baz', $col[0]->foo);
     }
+
+    public function testCanRemoveNullValuesByKey()
+    {
+        $this->_coll->add(null);
+        $this->_coll->remove(0);
+        $this->assertTrue($this->_coll->isEmpty());
+    }
+
+    public function testCanVerifyExistingKeysWithNullValues()
+    {
+        $this->_coll->set('key', null);
+        $this->assertTrue($this->_coll->containsKey('key'));
+    }
 }
