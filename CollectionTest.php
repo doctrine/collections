@@ -218,4 +218,10 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->_coll->remove(0);
         $this->assertTrue($this->_coll->isEmpty());
     }
+
+    public function testCanVerifyExistingKeysWithNullValues()
+    {
+        $this->_coll->set('key', null);
+        $this->assertTrue($this->_coll->containsKey('key'));
+    }
 }
