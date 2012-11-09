@@ -211,4 +211,11 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->assertNotSame($col, $this->_coll);
         $this->assertEquals(1, count($col));
     }
+
+    public function testCanRemoveNullValuesByKey()
+    {
+        $this->_coll->add(null);
+        $this->_coll->remove(0);
+        $this->assertTrue($this->_coll->isEmpty());
+    }
 }
