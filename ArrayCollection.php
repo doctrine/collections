@@ -229,13 +229,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function contains($element)
     {
-        foreach ($this->_elements as $collectionElement) {
-            if ($element === $collectionElement) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($element, $this->_elements, true);
     }
 
     /**
