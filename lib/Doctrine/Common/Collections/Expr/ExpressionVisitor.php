@@ -57,7 +57,7 @@ abstract class ExpressionVisitor
     /**
      * Dispatch walking an expression to the appropriate handler.
      *
-     * @param Expression
+     * @param Expression $expr
      *
      * @return mixed
      */
@@ -78,4 +78,3 @@ abstract class ExpressionVisitor
         }
     }
 }
-

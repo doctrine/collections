@@ -69,4 +69,3 @@ class CompositeExpression implements Expression
         return $visitor->walkCompositeExpression($this);
     }
 }
-

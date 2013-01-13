@@ -107,7 +107,7 @@ class Criteria
     /**
      * Set the where expression to evaluate when this criteria is searched for.
      *
-     * @param Expression
+     * @param Expression $expression
      * @return Criteria
      */
     public function where(Expression $expression)
@@ -140,7 +140,7 @@ class Criteria
      * Append the where expression to evaluate when this criteria is searched for
      * using an OR with previous expression.
      *
-     * @param Expression
+     * @param Expression $expression
      * @return Criteria
      */
     public function orWhere(Expression $expression)
@@ -194,7 +194,7 @@ class Criteria
     }
 
     /**
-     * Get current first result option of the critera.
+     * Get current first result option of the criteria.
      *
      * @return firstResult.
      */
@@ -206,7 +206,7 @@ class Criteria
     /**
      * Set number of first result that this criteria should return.
      *
-     * @param firstResult the value to set.
+     * @param firstResult $firstResult the value to set.
      * @return Criteria
      */
     public function setFirstResult($firstResult)
@@ -228,7 +228,7 @@ class Criteria
     /**
      * Set maxResults.
      *
-     * @param maxResults the value to set.
+     * @param maxResults $maxResults the value to set.
      * @return Criteria
      */
     public function setMaxResults($maxResults)
@@ -237,4 +237,3 @@ class Criteria
         return $this;
     }
 }
-
