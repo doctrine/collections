@@ -38,7 +38,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      *
      * @return mixed
      */
-    static public function getObjectFieldValue($object, $field)
+    public static function getObjectFieldValue($object, $field)
     {
         $accessor = "get" . $field;
 
@@ -62,7 +62,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * @param Closure $next
      * @return Closure
      */
-    static public function sortByField($name, $orientation = 1, \Closure $next = null)
+    public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
         if (!$next) {
             $next = function() {
@@ -192,4 +192,3 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 }
-
