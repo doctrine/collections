@@ -20,16 +20,15 @@
 namespace Doctrine\Common\Collections;
 
 use Closure, ArrayIterator;
-use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
  *
- * @since   2.0
- * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author  Jonathan Wage <jonwage@gmail.com>
- * @author  Roman Borschel <roman@code-factory.org>
+ * @since  2.0
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
  */
 class ArrayCollection implements Collection, Selectable
 {
@@ -51,9 +50,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets the PHP array representation of this collection.
-     *
-     * @return array The PHP array representation of this collection.
+     * {@inheritDoc}
      */
     public function toArray()
     {
@@ -61,10 +58,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Sets the internal iterator to the first element in the collection and
-     * returns this element.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function first()
     {
@@ -72,10 +66,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Sets the internal iterator to the last element in the collection and
-     * returns this element.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function last()
     {
@@ -83,9 +74,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets the current key/index at the current internal iterator position.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -93,9 +82,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Moves the internal iterator position to the next element.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function next()
     {
@@ -103,9 +90,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets the element of the collection at the current internal iterator position.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -113,10 +98,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Removes an element with a specific key/index from the collection.
-     *
-     * @param mixed $key
-     * @return mixed The removed element or NULL, if no element exists for the given key.
+     * {@inheritDoc}
      */
     public function remove($key)
     {
@@ -131,10 +113,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Removes the specified element from the collection, if it is found.
-     *
-     * @param mixed $element The element to remove.
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * {@inheritDoc}
      */
     public function removeElement($element)
     {
@@ -150,12 +129,9 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * ArrayAccess implementation of offsetExists()
+     * Required by interface ArrayAccess.
      *
-     * @see containsKey()
-     *
-     * @param mixed $offset
-     * @return bool
+     * {@inheritDoc}
      */
     public function offsetExists($offset)
     {
@@ -163,12 +139,9 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * ArrayAccess implementation of offsetGet()
+     * Required by interface ArrayAccess.
      *
-     * @see get()
-     *
-     * @param mixed $offset
-     * @return mixed
+     * {@inheritDoc}
      */
     public function offsetGet($offset)
     {
@@ -176,14 +149,9 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * ArrayAccess implementation of offsetSet()
+     * Required by interface ArrayAccess.
      *
-     * @see add()
-     * @see set()
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     * @return bool
+     * {@inheritDoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -194,12 +162,9 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * ArrayAccess implementation of offsetUnset()
+     * Required by interface ArrayAccess.
      *
-     * @see remove()
-     *
-     * @param mixed $offset
-     * @return mixed
+     * {@inheritDoc}
      */
     public function offsetUnset($offset)
     {
@@ -207,10 +172,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Checks whether the collection contains a specific key/index.
-     *
-     * @param mixed $key The key to check for.
-     * @return boolean TRUE if the given key/index exists, FALSE otherwise.
+     * {@inheritDoc}
      */
     public function containsKey($key)
     {
@@ -218,14 +180,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Checks whether the given element is contained in the collection.
-     * Only element values are compared, not keys. The comparison of two elements
-     * is strict, that means not only the value but also the type must match.
-     * For objects this means reference equality.
-     *
-     * @param mixed $element
-     * @return boolean TRUE if the given element is contained in the collection,
-     *          FALSE otherwise.
+     * {@inheritDoc}
      */
     public function contains($element)
     {
@@ -233,10 +188,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Tests for the existence of an element that satisfies the given predicate.
-     *
-     * @param Closure $p The predicate.
-     * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
+     * {@inheritDoc}
      */
     public function exists(Closure $p)
     {
@@ -249,13 +201,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Searches for a given element and, if found, returns the corresponding key/index
-     * of that element. The comparison of two elements is strict, that means not
-     * only the value but also the type must match.
-     * For objects this means reference equality.
-     *
-     * @param mixed $element The element to search for.
-     * @return mixed The key/index of the element or FALSE if the element was not found.
+     * {@inheritDoc}
      */
     public function indexOf($element)
     {
@@ -263,10 +209,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets the element with the given key/index.
-     *
-     * @param mixed $key The key.
-     * @return mixed The element or NULL, if no element exists for the given key.
+     * {@inheritDoc}
      */
     public function get($key)
     {
@@ -277,9 +220,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets all keys/indexes of the collection elements.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function getKeys()
     {
@@ -287,9 +228,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets all elements.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function getValues()
     {
@@ -297,11 +236,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Returns the number of elements in the collection.
-     *
-     * Implementation of the Countable interface.
-     *
-     * @return integer The number of elements in the collection.
+     * {@inheritDoc}
      */
     public function count()
     {
@@ -309,13 +244,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Adds/sets an element in the collection at the index / with the specified key.
-     *
-     * When the collection is a Map this is like put(key,value)/add(key,value).
-     * When the collection is a List this is like add(position,value).
-     *
-     * @param mixed $key
-     * @param mixed $value
+     * {@inheritDoc}
      */
     public function set($key, $value)
     {
@@ -323,10 +252,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Adds an element to the collection.
-     *
-     * @param mixed $value
-     * @return boolean Always TRUE.
+     * {@inheritDoc}
      */
     public function add($value)
     {
@@ -335,11 +261,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Checks whether the collection is empty.
-     *
-     * Note: This is preferable over count() == 0.
-     *
-     * @return boolean TRUE if the collection is empty, FALSE otherwise.
+     * {@inheritDoc}
      */
     public function isEmpty()
     {
@@ -347,9 +269,9 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Gets an iterator for iterating over the elements in the collection.
+     * Required by interface IteratorAggregate.
      *
-     * @return ArrayIterator
+     * {@inheritDoc}
      */
     public function getIterator()
     {
@@ -357,11 +279,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Applies the given function to each element in the collection and returns
-     * a new collection with the elements returned by the function.
-     *
-     * @param Closure $func
-     * @return Collection
+     * {@inheritDoc}
      */
     public function map(Closure $func)
     {
@@ -369,11 +287,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Returns all the elements of this collection that satisfy the predicate p.
-     * The order of the elements is preserved.
-     *
-     * @param Closure $p The predicate used for filtering.
-     * @return Collection A collection with the results of the filter operation.
+     * {@inheritDoc}
      */
     public function filter(Closure $p)
     {
@@ -381,11 +295,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Applies the given predicate p to all elements of this collection,
-     * returning true, if the predicate yields true for all elements.
-     *
-     * @param Closure $p The predicate.
-     * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
+     * {@inheritDoc}
      */
     public function forAll(Closure $p)
     {
@@ -399,13 +309,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Partitions this collection in two collections according to a predicate.
-     * Keys are preserved in the resulting collections.
-     *
-     * @param Closure $p The predicate on which to partition.
-     * @return array An array with two elements. The first element contains the collection
-     *               of elements where the predicate returned TRUE, the second element
-     *               contains the collection of elements where the predicate returned FALSE.
+     * {@inheritDoc}
      */
     public function partition(Closure $p)
     {
@@ -431,7 +335,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Clears the collection.
+     * {@inheritDoc}
      */
     public function clear()
     {
@@ -439,15 +343,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Extract a slice of $length elements starting at position $offset from the Collection.
-     *
-     * If $length is null it returns all elements from $offset to the end of the Collection.
-     * Keys have to be preserved by this method. Calling this method will only return the
-     * selected slice and NOT change the elements contained in the collection slice is called on.
-     *
-     * @param int $offset
-     * @param int $length
-     * @return array
+     * {@inheritDoc}
      */
     public function slice($offset, $length = null)
     {
@@ -455,11 +351,7 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Select all elements from a selectable that match the criteria and
-     * return a new collection containing these elements.
-     *
-     * @param  Criteria $criteria
-     * @return Collection
+     * {@inheritDoc}
      */
     public function matching(Criteria $criteria)
     {
@@ -491,4 +383,3 @@ class ArrayCollection implements Collection, Selectable
         return new static($filtered);
     }
 }
-
