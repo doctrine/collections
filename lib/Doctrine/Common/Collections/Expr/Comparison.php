@@ -23,7 +23,7 @@ namespace Doctrine\Common\Collections\Expr;
  * Comparison of a field with a value by the given operator.
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since 2.3
+ * @since  2.3
  */
 class Comparison implements Expression
 {
@@ -37,10 +37,26 @@ class Comparison implements Expression
     const IN   = 'IN';
     const NIN  = 'NIN';
 
+    /**
+     * @var string
+     */
     private $field;
+
+    /**
+     * @var string
+     */
     private $op;
+
+    /**
+     * @var Value
+     */
     private $value;
 
+    /**
+     * @param string $field
+     * @param string $operator
+     * @param mixed  $value
+     */
     public function __construct($field, $operator, $value)
     {
         if ( ! ($value instanceof Value)) {
@@ -52,21 +68,33 @@ class Comparison implements Expression
         $this->value = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getField()
     {
         return $this->field;
     }
 
+    /**
+     * @return Value
+     */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * @return string
+     */
     public function getOperator()
     {
         return $this->op;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkComparison($this);

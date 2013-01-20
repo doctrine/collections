@@ -27,11 +27,13 @@ use Doctrine\Common\Collections\Expr\Value;
  * Builder for Expressions in the {@link Selectable} interface.
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since 2.3
+ * @since  2.3
  */
 class ExpressionBuilder
 {
     /**
+     * @param mixed $x
+     *
      * @return CompositeExpression
      */
     public function andX($x = null)
@@ -40,6 +42,8 @@ class ExpressionBuilder
     }
 
     /**
+     * @param mixed $x
+     *
      * @return CompositeExpression
      */
     public function orX($x = null)
@@ -49,7 +53,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Comparison
      */
@@ -60,7 +64,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Comparison
      */
@@ -71,7 +75,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Comparison
      */
@@ -82,7 +86,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Comparison
      */
@@ -93,7 +97,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Comparison
      */
@@ -104,7 +108,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Comparison
      */
@@ -125,7 +129,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $values
+     * @param mixed  $values
      *
      * @return Comparison
      */
@@ -136,7 +140,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed $values
+     * @param mixed  $values
      *
      * @return Comparison
      */

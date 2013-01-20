@@ -26,15 +26,18 @@ namespace Doctrine\Common\Collections\Expr;
  * by {@ArrayCollection#select()}.
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since 2.3
+ * @since  2.3
  */
 class ClosureExpressionVisitor extends ExpressionVisitor
 {
     /**
-     * Access the field of a given object. This field has to be public directly
+     * Accesses the field of a given object. This field has to be public directly
      * or indirectly (through an accessor get* or a magic method, __get, __call).
      *
      * is*() is not supported.
+     *
+     * @param object $object
+     * @param string $field
      *
      * @return mixed
      */
@@ -54,13 +57,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
-     * Helper for sorting arrays of objects based on multiple fields +
-     * orientations.
+     * Helper for sorting arrays of objects based on multiple fields + orientations.
      *
-     * @param string $name
-     * @param int $orientation
-     * @param Closure $next
-     * @return Closure
+     * @param string   $name
+     * @param int      $orientation
+     * @param \Closure $next
+     *
+     * @return \Closure
      */
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
@@ -168,6 +171,11 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
     }
 
+    /**
+     * @param array $expressions
+     *
+     * @return callable
+     */
     private function andExpressions($expressions)
     {
         return function ($object) use ($expressions) {
@@ -180,6 +188,11 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
+    /**
+     * @param array $expressions
+     *
+     * @return callable
+     */
     private function orExpressions($expressions)
     {
         return function ($object) use ($expressions) {
