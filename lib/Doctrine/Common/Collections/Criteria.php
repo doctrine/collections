@@ -41,12 +41,12 @@ class Criteria
     const DESC = 'DESC';
 
     /**
-     * @var \Doctrine\Common\Collections\ExpressionBuilder
+     * @var \Doctrine\Common\Collections\ExpressionBuilder|null
      */
     private static $expressionBuilder;
 
     /**
-     * @var \Doctrine\Common\Collections\Expr\Expression
+     * @var \Doctrine\Common\Collections\Expr\Expression|null
      */
     private $expression;
 
@@ -56,12 +56,12 @@ class Criteria
     private $orderings;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $firstResult;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $maxResults;
 
@@ -76,7 +76,7 @@ class Criteria
     }
 
     /**
-     * Return the expression builder.
+     * Returns the expression builder.
      *
      * @return \Doctrine\Common\Collections\ExpressionBuilder
      */
@@ -89,12 +89,12 @@ class Criteria
     }
 
     /**
-     * Construct new criteria
+     * Construct a new Criteria.
      *
      * @param Expression $expression
-     * @param array $orderings
-     * @param int $firstResult
-     * @param int $maxResults
+     * @param array|null $orderings
+     * @param int|null   $firstResult
+     * @param int|null   $maxResults
      */
     public function __construct(Expression $expression = null, array $orderings = null, $firstResult = null, $maxResults = null)
     {
@@ -105,9 +105,10 @@ class Criteria
     }
 
     /**
-     * Set the where expression to evaluate when this criteria is searched for.
+     * Sets the where expression to evaluate when this Criteria is searched for.
      *
      * @param Expression $expression
+     *
      * @return Criteria
      */
     public function where(Expression $expression)
@@ -117,10 +118,11 @@ class Criteria
     }
 
     /**
-     * Append the where expression to evaluate when this criteria is searched for
+     * Appends the where expression to evaluate when this Criteria is searched for
      * using an AND with previous expression.
      *
-     * @param Expression
+     * @param Expression $expression
+     *
      * @return Criteria
      */
     public function andWhere(Expression $expression)
@@ -137,10 +139,11 @@ class Criteria
     }
 
     /**
-     * Append the where expression to evaluate when this criteria is searched for
+     * Appends the where expression to evaluate when this Criteria is searched for
      * using an OR with previous expression.
      *
      * @param Expression $expression
+     *
      * @return Criteria
      */
     public function orWhere(Expression $expression)
@@ -157,7 +160,7 @@ class Criteria
     }
 
     /**
-     * Get the expression attached to this criteria.
+     * Gets the expression attached to this Criteria.
      *
      * @return Expression|null
      */
@@ -167,7 +170,7 @@ class Criteria
     }
 
     /**
-     * Get current orderings of this Criteria
+     * Gets the current orderings of this Criteria.
      *
      * @return array
      */
@@ -177,14 +180,15 @@ class Criteria
     }
 
     /**
-     * Set the ordering of the result of this criteria.
+     * Sets the ordering of the result of this Criteria.
      *
      * Keys are field and values are the order, being either ASC or DESC.
      *
      * @see Criteria::ASC
      * @see Criteria::DESC
      *
-     * @param array
+     * @param array $orderings
+     *
      * @return Criteria
      */
     public function orderBy(array $orderings)
@@ -194,9 +198,9 @@ class Criteria
     }
 
     /**
-     * Get current first result option of the criteria.
+     * Gets the current first result option of this Criteria.
      *
-     * @return firstResult.
+     * @return int|null
      */
     public function getFirstResult()
     {
@@ -204,9 +208,10 @@ class Criteria
     }
 
     /**
-     * Set number of first result that this criteria should return.
+     * Set the number of first result that this Criteria should return.
      *
-     * @param firstResult $firstResult the value to set.
+     * @param int|null $firstResult The value to set.
+     *
      * @return Criteria
      */
     public function setFirstResult($firstResult)
@@ -216,9 +221,9 @@ class Criteria
     }
 
     /**
-     * Get maxResults.
+     * Gets maxResults.
      *
-     * @return maxResults.
+     * @return int|null
      */
     public function getMaxResults()
     {
@@ -226,9 +231,10 @@ class Criteria
     }
 
     /**
-     * Set maxResults.
+     * Sets maxResults.
      *
-     * @param maxResults $maxResults the value to set.
+     * @param int|null $maxResults The value to set.
+     *
      * @return Criteria
      */
     public function setMaxResults($maxResults)

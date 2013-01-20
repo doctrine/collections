@@ -32,15 +32,16 @@ namespace Doctrine\Common\Collections;
  * EntityManager or Repositories.
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since 2.3
+ * @since  2.3
  */
 interface Selectable
 {
     /**
-     * Select all elements from a selectable that match the expression and
-     * return a new collection containing these elements.
+     * Selects all elements from a selectable that match the expression and
+     * returns a new collection containing these elements.
      *
      * @param Criteria $criteria
+     *
      * @return Collection
      */
     function matching(Criteria $criteria);
