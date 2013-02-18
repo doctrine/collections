@@ -31,10 +31,9 @@ namespace Doctrine\Common\Collections\Expr;
 class ClosureExpressionVisitor extends ExpressionVisitor
 {
     /**
-     * Accesses the field of a given object. This field has to be public directly
-     * or indirectly (through an accessor get* or a magic method, __get, __call).
-     *
-     * is*() is not supported.
+     * Accesses the field of a given object. This field has to be public
+     * directly or indirectly (through an accessor get*, is*, or a magic
+     * method, __get, __call).
      *
      * @param object $object
      * @param string $field
@@ -43,9 +42,22 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function getObjectFieldValue($object, $field)
     {
-        $accessor = "get" . $field;
+        $accessors = array('get', 'is');
 
-        if (method_exists($object, $accessor) || method_exists($object, '__call')) {
+        foreach ($accessors as $accessor) {
+            $accessor .= $field;
+
+            if ( ! method_exists($object, $accessor)) {
+                continue;
+            }
+
+            return $object->$accessor();
+        }
+
+        // __call should be triggered for get.
+        $accessor = $accessors[0] . $field;
+
+        if (method_exists($object, '__call')) {
             return $object->$accessor();
         }
 
