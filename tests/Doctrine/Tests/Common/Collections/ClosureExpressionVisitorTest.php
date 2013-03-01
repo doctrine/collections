@@ -186,6 +186,13 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("b", $objects[1]->getBar());
         $this->assertEquals("c", $objects[2]->getBar());
     }
+
+    public function testArrayComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->eq("foo", 42));
+
+        $this->assertTrue($closure(array('foo' => 42)));
+    }
 }
 
 class TestObject
