@@ -120,6 +120,14 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($closure(new TestObject(4)));
     }
 
+    public function testWalkContainsComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->contains('foo', 'hello'));
+
+        $this->assertTrue($closure(new TestObject('hello world')));
+        $this->assertFalse($closure(new TestObject('world')));
+    }
+
     public function testWalkAndCompositeExpression()
     {
         $closure = $this->visitor->walkCompositeExpression(
