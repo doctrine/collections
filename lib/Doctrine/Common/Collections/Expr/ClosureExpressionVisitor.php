@@ -61,7 +61,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object->$accessor();
         }
 
-        if ($object instanceof \ArrayAccess) {
+        if ($object instanceof \ArrayAccess || is_array($object)) {
             return $object[$field];
         }
 
