@@ -19,8 +19,10 @@
 
 namespace Doctrine\Common\Collections;
 
-use Closure, ArrayIterator;
+use ArrayIterator;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
@@ -38,6 +40,11 @@ class ArrayCollection implements Collection, Selectable
      * @var array
      */
     private $_elements;
+
+    /**
+     * @var Symfony\Component\PropertyAccess\PropertyAccess
+     */
+    private $_property_accessor;
 
     /**
      * Initializes a new ArrayCollection.
@@ -190,8 +197,10 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function exists(Closure $p)
+    public function exists($p)
     {
+        $p = $this->createClosure($p);
+
         foreach ($this->_elements as $key => $element) {
             if ($p($key, $element)) {
                 return true;
@@ -281,24 +290,30 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function map(Closure $func)
+    public function map($p)
     {
-        return new static(array_map($func, $this->_elements));
+        $p = $this->createClosure($p);
+
+        return new static(array_map($p, $this->_elements));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $p)
+    public function filter($p)
     {
+        $p = $this->createClosure($p);
+
         return new static(array_filter($this->_elements, $p));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function forAll(Closure $p)
+    public function forAll($p)
     {
+        $p = $this->createClosure($p);
+
         foreach ($this->_elements as $key => $element) {
             if ( ! $p($key, $element)) {
                 return false;
@@ -311,9 +326,11 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p)
+    public function partition($p)
     {
+        $p = $this->createClosure($p);
         $coll1 = $coll2 = array();
+
         foreach ($this->_elements as $key => $element) {
             if ($p($key, $element)) {
                 $coll1[$key] = $element;
@@ -381,5 +398,65 @@ class ArrayCollection implements Collection, Selectable
         }
 
         return new static($filtered);
+    }
+
+    /**
+     * Converts a predicate to closure, if the predicate is a string.
+     *
+     * @see \Symfony\Component\PropertyAccess\PropertyAccessorInterface::getValue()
+     *
+     * @param       string|callable     $p      The predicate. Can be callable, method name or PropertyPath string.
+     *
+     * @return      \Closure
+     *
+     * @throws      \Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException      Type of the predicate is unexpected
+     */
+    protected function createClosure($p)
+    {
+        if (is_callable($p)) {
+            return $p;
+        }
+
+        if (!is_string($p)) {
+            throw new UnexpectedTypeException($p, 'string');
+        }
+
+        $property_accessor = $this->getPropertyAccessor();
+
+        return function() use ($p, $property_accessor) {
+            // only item received
+            if (func_num_args() == 1) {
+                $key  = null;
+                $item = func_get_arg(0);
+            }
+            // key and item received
+            else {
+                list($key, $item) = func_get_args();
+            }
+
+            // explicit method call
+            if (is_callable(array($item, $p))) {
+                return $item->$p($key);
+            }
+            // property getter, isser or hasser call
+            else {
+                return $property_accessor->getValue($item, $p);
+            }
+        };
+    }
+
+    /**
+     * Returns an instance of PropertyAccessor.
+     *
+     * @return Symfony\Component\PropertyAccess\PropertyAccess
+     */
+    private function getPropertyAccessor()
+    {
+        if (!is_object($this->_property_accessor))
+        {
+            $this->_property_accessor = PropertyAccess::getPropertyAccessor();
+        }
+
+        return $this->_property_accessor;
     }
 }
