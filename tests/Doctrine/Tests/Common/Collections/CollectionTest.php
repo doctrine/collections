@@ -2,8 +2,9 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Tests;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Tests\Entity\Person;
+use Doctrine\Tests\Entity\Address;
 
 class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
 {
@@ -29,22 +30,41 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
     public function testToString()
     {
         $this->_coll->add('testing');
-        $this->assertTrue(is_string((string) $this->_coll));
+        $this->assertInternalType('string', (string) $this->_coll);
     }
 
     public function testRemovingNonExistentEntryReturnsNull()
     {
-        $this->assertEquals(null, $this->_coll->remove('testing_does_not_exist'));
+        $this->assertNull($this->_coll->remove('testing_does_not_exist'));
     }
 
     public function testExists()
     {
         $this->_coll->add("one");
         $this->_coll->add("two");
+
         $exists = $this->_coll->exists(function($k, $e) { return $e == "one"; });
         $this->assertTrue($exists);
+
         $exists = $this->_coll->exists(function($k, $e) { return $e == "other"; });
         $this->assertFalse($exists);
+
+        $this->_coll->clear();
+
+        $this->_coll[] = new Person('name1');
+        $this->_coll[] = new Person(null, null, new Address('street2'));
+
+        $this->assertTrue($this->_coll->exists('hasName'));
+        $this->assertFalse($this->_coll->exists('hasSurname'));
+
+        $this->_coll->clear();
+
+        $this->_coll[] = array('name' => 'name1');
+        $this->_coll[] = array('address' => array('street' => 'street2'));
+
+        $this->assertTrue($this->_coll->exists('[name]'));
+        $this->assertTrue($this->_coll->exists('[address][street]'));
+        $this->assertFalse($this->_coll->exists('[surname]'));
     }
 
     public function testMap()
@@ -53,6 +73,31 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->_coll->add(2);
         $res = $this->_coll->map(function($e) { return $e * 2; });
         $this->assertEquals(array(2, 4), $res->toArray());
+
+        $this->_coll->clear();
+
+        $this->_coll[] = new Person('name1', 'surname1', new Address('street1'));
+        $this->_coll[] = new Person('name2', 'surname2', new Address('street2'));
+
+        $res = $this->_coll->map('name');
+        $this->assertEquals(array('name1', 'name2'), $res->toArray());
+
+        $res = $this->_coll->map('address.street');
+        $this->assertEquals(array('street1', 'street2'), $res->toArray());
+
+        $res = $this->_coll->map('composeFullName');
+        $this->assertEquals(array('name1 surname1', 'name2 surname2'), $res->toArray());
+
+        $this->_coll->clear();
+
+        $this->_coll[] = array('name' => 'name1', 'address' => array('street' => 'street1'));
+        $this->_coll[] = array('name' => 'name2', 'address' => array('street' => 'street2'));
+
+        $res = $this->_coll->map('[name]');
+        $this->assertEquals(array('name1', 'name2'), $res->toArray());
+
+        $res = $this->_coll->map('[address][street]');
+        $this->assertEquals(array('street1', 'street2'), $res->toArray());
     }
 
     public function testFilter()
@@ -62,6 +107,41 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->_coll->add(3);
         $res = $this->_coll->filter(function($e) { return is_numeric($e); });
         $this->assertEquals(array(0 => 1, 2 => 3), $res->toArray());
+
+        $this->_coll->clear();
+
+        $person1 = new Person('name1',  null, new Address);
+        $person2 = new Person(null,     null, new Address('street2'));
+        $person3 = new Person('name3',  null, new Address);
+
+        $this->_coll[] = $person1;
+        $this->_coll[] = $person2;
+        $this->_coll[] = $person3;
+
+        $res = $this->_coll->filter('hasName');
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $res->toArray());
+
+        $res = $this->_coll->filter('name');
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $res->toArray());
+
+        $res = $this->_coll->filter('address.street');
+        $this->assertEquals(array(1 => $person2), $res->toArray());
+
+        $this->_coll->clear();
+
+        $person1 = array('name' => 'name1');
+        $person2 = array('address' => array('street' => 'street2'));
+        $person3 = array('name' => 'name3');
+
+        $this->_coll[] = $person1;
+        $this->_coll[] = $person2;
+        $this->_coll[] = $person3;
+
+        $res = $this->_coll->filter('[name]');
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $res->toArray());
+
+        $res = $this->_coll->filter('[address][street]');
+        $this->assertEquals(array(1 => $person2), $res->toArray());
     }
 
     public function testFirstAndLast()
@@ -135,8 +215,36 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
     {
         $this->_coll[] = 'one';
         $this->_coll[] = 'two';
-        $this->assertEquals($this->_coll->forAll(function($k, $e) { return is_string($e); }), true);
-        $this->assertEquals($this->_coll->forAll(function($k, $e) { return is_array($e); }), false);
+
+        $res = $this->_coll->forAll(function($k, $e) { return is_string($e); });
+        $this->assertTrue($res);
+
+        $res = $this->_coll->forAll(function($k, $e) { return is_array($e); });
+        $this->assertFalse($res);
+
+        $this->_coll->clear();
+
+        $this->_coll[] = new Person('name1', null,       new Address('street1', 'city1'));
+        $this->_coll[] = new Person('name2', 'surname2', new Address('street2'));
+
+        $this->assertTrue($this->_coll->forAll('hasName'));
+        $this->assertTrue($this->_coll->forAll('address.street'));
+
+        $this->assertFalse($this->_coll->forAll('hasSurname'));
+        $this->assertFalse($this->_coll->forAll('address.city'));
+
+        $this->_coll->clear();
+
+        $this->_coll[] = array('name' => 'name1', null,
+                               'address' => array('street' => 'street1', 'city' => 'city1'));
+        $this->_coll[] = array('name' => 'name2', 'surname1',
+                               'address' => array('street' => 'street2'));
+
+        $this->assertTrue($this->_coll->forAll('[name]'));
+        $this->assertTrue($this->_coll->forAll('[address][street]'));
+
+        $this->assertFalse($this->_coll->forAll('[surname]'));
+        $this->assertFalse($this->_coll->forAll('[address][city]'));
     }
 
     public function testPartition()
@@ -146,6 +254,46 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $partition = $this->_coll->partition(function($k, $e) { return $e == true; });
         $this->assertEquals($partition[0][0], true);
         $this->assertEquals($partition[1][0], false);
+
+        $this->_coll->clear();
+
+        $person1 = new Person('name1',  null, new Address);
+        $person2 = new Person(null,     null, new Address('street2'));
+        $person3 = new Person('name3',  null, new Address);
+
+        $this->_coll[] = $person1;
+        $this->_coll[] = $person2;
+        $this->_coll[] = $person3;
+
+        $partition = $this->_coll->partition('hasName');
+
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $partition[0]->toArray());
+        $this->assertEquals(array(1 => $person2),                $partition[1]->toArray());
+
+        $partition = $this->_coll->partition('address.street');
+
+        $this->assertEquals(array(1 => $person2),                $partition[0]->toArray());
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $partition[1]->toArray());
+
+        $this->_coll->clear();
+
+        $person1 = array('name' => 'name1');
+        $person2 = array('address' => array('street' => 'street2'));
+        $person3 = array('name' => 'name3');
+
+        $this->_coll[] = $person1;
+        $this->_coll[] = $person2;
+        $this->_coll[] = $person3;
+
+        $partition = $this->_coll->partition('[name]');
+
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $partition[0]->toArray());
+        $this->assertEquals(array(1 => $person2),                $partition[1]->toArray());
+
+        $partition = $this->_coll->partition('[address][street]');
+
+        $this->assertEquals(array(1 => $person2),                $partition[0]->toArray());
+        $this->assertEquals(array(0 => $person1, 2 => $person3), $partition[1]->toArray());
     }
 
     public function testClear()
@@ -153,7 +301,7 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->_coll[] = 'one';
         $this->_coll[] = 'two';
         $this->_coll->clear();
-        $this->assertEquals($this->_coll->isEmpty(), true);
+        $this->assertTrue($this->_coll->isEmpty());
     }
 
     public function testRemove()
@@ -163,7 +311,7 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $el = $this->_coll->remove(0);
 
         $this->assertEquals('one', $el);
-        $this->assertEquals($this->_coll->contains('one'), false);
+        $this->assertFalse($this->_coll->contains('one'));
         $this->assertNull($this->_coll->remove(0));
     }
 

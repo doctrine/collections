@@ -19,7 +19,7 @@
 
 namespace Doctrine\Common\Collections;
 
-use Closure, Countable, IteratorAggregate, ArrayAccess;
+use Countable, IteratorAggregate, ArrayAccess;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
@@ -186,53 +186,78 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Tests for the existence of an element that satisfies the given predicate.
      *
-     * @param Closure $p The predicate.
+     * @see \Doctrine\Tests\Common\Collections\CollectionTest::testExists()
+     * @see \Doctrine\Common\Collections\ArrayCollection::createClosure()
+     * @see \Symfony\Component\PropertyAccess\PropertyAccessorInterface::getValue()
+     *
+     * @param string|callable       $p      The predicate. Can be callable,
+     *                                      element method name or element PropertyPath string.
      *
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    function exists(Closure $p);
+    function exists($p);
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
      *
-     * @param Closure $p The predicate used for filtering.
+     * @see \Doctrine\Tests\Common\Collections\CollectionTest::testFilter()
+     * @see \Doctrine\Common\Collections\ArrayCollection::createClosure()
+     * @see \Symfony\Component\PropertyAccess\PropertyAccessorInterface::getValue()
+     *
+     * @param string|callable       $p      The predicate used for filtering. Can be callable,
+     *                                      element method name or element PropertyPath string.
      *
      * @return Collection A collection with the results of the filter operation.
      */
-    function filter(Closure $p);
+    function filter($p);
 
     /**
      * Applies the given predicate p to all elements of this collection,
      * returning true, if the predicate yields true for all elements.
      *
-     * @param Closure $p The predicate.
+     * @see \Doctrine\Tests\Common\Collections\CollectionTest::testForAll()
+     * @see \Doctrine\Common\Collections\ArrayCollection::createClosure()
+     * @see \Symfony\Component\PropertyAccess\PropertyAccessorInterface::getValue()
+     *
+     * @param string|callable       $p      The predicate. Can be callable,
+     *                                      element method name or element PropertyPath string.
      *
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    function forAll(Closure $p);
+    function forAll($p);
 
     /**
-     * Applies the given function to each element in the collection and returns
-     * a new collection with the elements returned by the function.
+     * Applies the given predicate p to each element in the collection and returns
+     * a new collection with the elements returned by the predicate.
      *
-     * @param Closure $func
+     * @see \Doctrine\Tests\Common\Collections\CollectionTest::testMap()
+     * @see \Doctrine\Common\Collections\ArrayCollection::createClosure()
+     * @see \Symfony\Component\PropertyAccess\PropertyAccessorInterface::getValue()
+     *
+     * @param string|callable       $p      The predicate. Can be callable,
+     *                                      element method name or element PropertyPath string.
      *
      * @return Collection
      */
-    function map(Closure $func);
+    function map($p);
 
     /**
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
      *
-     * @param Closure $p The predicate on which to partition.
+     * @see \Doctrine\Tests\Common\Collections\CollectionTest::testPartition()
+     * @see \Doctrine\Common\Collections\ArrayCollection::createClosure()
+     * @see \Symfony\Component\PropertyAccess\PropertyAccessorInterface::getValue()
+     *
+     * @param string|callable       $p      The predicate on which to partition. Can be callable,
+     *                                      element method name or element PropertyPath string.
      *
      * @return array An array with two elements. The first element contains the collection
      *               of elements where the predicate returned TRUE, the second element
      *               contains the collection of elements where the predicate returned FALSE.
      */
-    function partition(Closure $p);
+    function partition($p);
 
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
