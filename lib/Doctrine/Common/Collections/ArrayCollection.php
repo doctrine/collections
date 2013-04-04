@@ -421,9 +421,9 @@ class ArrayCollection implements Collection, Selectable
             throw new UnexpectedTypeException($p, 'string');
         }
 
-        $that = $this;
+        $property_accessor = $this->getPropertyAccessor();
 
-        return function() use ($p, $that) {
+        return function() use ($p, $property_accessor) {
             // only item received
             if (func_num_args() == 1) {
                 $key  = null;
@@ -440,8 +440,7 @@ class ArrayCollection implements Collection, Selectable
             }
             // property getter, isser or hasser call
             else {
-                return $that->getPropertyAccessor()
-                            ->getValue($item, $p);
+                return $property_accessor->getValue($item, $p);
             }
         };
     }
