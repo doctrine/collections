@@ -435,8 +435,8 @@ class ArrayCollection implements Collection, Selectable
             }
 
             // explicit method call
-            if (is_callable($closure = array($item, $p))) {
-                return $closure($key);
+            if (is_callable(array($item, $p))) {
+                return $item->$p($key);
             }
             // property getter, isser or hasser call
             else {
