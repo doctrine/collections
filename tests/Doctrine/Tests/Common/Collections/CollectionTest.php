@@ -273,6 +273,17 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         }
      }
 
+     public function testClassRestrictedConstructor() {
+        try {
+            $data = array($this->_coll, 5);
+            $coll = new \Doctrine\Common\Collections\ArrayCollection($data, 'Doctrine\Common\Collections\Collection');
+
+        } catch(\Exception $e) {
+            return;
+        }
+        $this->fail('Expected an exception to be thrown');
+     }
+
     private function failCaseOfClassRestricted($collection, $value) {
         try {
             $collection->add($value);

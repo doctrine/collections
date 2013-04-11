@@ -54,8 +54,15 @@ class ArrayCollection implements Collection, Selectable
      */
     public function __construct(array $elements = array(), $class = null)
     {
-        $this->_elements = $elements;
         $this->_class = $class;
+        if($class) {
+            $this->_elements = array();
+            foreach($elements as $key => $value) {
+                $this->set($key, $value);
+            }
+        } else {
+            $this->_elements = $elements;
+        }
     }
 
     /**
