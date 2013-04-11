@@ -262,7 +262,8 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->assertTrue($this->_coll->containsKey('key'));
     }
 
-    public function testClassRestricted() {
+    public function testClassRestricted() 
+    {
         $coll = new \Doctrine\Common\Collections\ArrayCollection(array(), 'Doctrine\Common\Collections\Collection');
         $coll->add($this->_coll);
         $coll['key'] = $this->_coll;
@@ -273,7 +274,8 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         }
      }
 
-     public function testClassRestrictedConstructor() {
+    public function testClassRestrictedConstructor() 
+    {
         try {
             $data = array($this->_coll, 5);
             $coll = new \Doctrine\Common\Collections\ArrayCollection($data, 'Doctrine\Common\Collections\Collection');
@@ -282,9 +284,10 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
             return;
         }
         $this->fail('Expected an exception to be thrown');
-     }
+    }
 
-    private function failCaseOfClassRestricted($collection, $value) {
+    private function failCaseOfClassRestricted($collection, $value) 
+    {
         try {
             $collection->add($value);
         } catch (\Exception $e) {

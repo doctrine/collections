@@ -55,7 +55,7 @@ class ArrayCollection implements Collection, Selectable
     public function __construct(array $elements = array(), $class = null)
     {
         $this->_class = $class;
-        if($class) {
+        if ($class) {
             $this->_elements = array();
             foreach($elements as $key => $value) {
                 $this->set($key, $value);
@@ -264,7 +264,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function set($key, $value)
     {
-        $this->checkClass($value);
+        if ($this->_class) {
+            $this->checkClass($value);
+        }
         $this->_elements[$key] = $value;
     }
 
@@ -273,7 +275,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function add($value)
     {
-        $this->checkClass($value);
+        if ($this->_class) {
+            $this->checkClass($value);    
+        }
         $this->_elements[] = $value;
         return true;
     }
@@ -401,8 +405,9 @@ class ArrayCollection implements Collection, Selectable
         return new static($filtered);
     }
 
-    private function checkClass($value) {
-        if($this->_class !== null && !$value instanceof $this->_class) {
+    private function checkClass($value) 
+    {
+        if ($this->_class && !$value instanceof $this->_class) {
             throw new \Exception("The collection can only accept instances of {$this->_class}. " . 
                                     "Given:" . get_class($value));
         }
