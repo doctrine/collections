@@ -40,13 +40,29 @@ class ArrayCollection implements Collection, Selectable
     private $_elements;
 
     /**
+     * 
+     * Class name. All added values must be of this instance, if class name is setup
+     * @var string
+     */
+    private $_class;
+
+    /**
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
+     * @param string class
      */
-    public function __construct(array $elements = array())
+    public function __construct(array $elements = array(), $class = null)
     {
-        $this->_elements = $elements;
+        $this->_class = $class;
+        if ($class) {
+            $this->_elements = array();
+            foreach($elements as $key => $value) {
+                $this->set($key, $value);
+            }
+        } else {
+            $this->_elements = $elements;
+        }
     }
 
     /**
@@ -248,6 +264,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function set($key, $value)
     {
+        if ($this->_class) {
+            $this->checkClass($value);
+        }
         $this->_elements[$key] = $value;
     }
 
@@ -256,6 +275,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function add($value)
     {
+        if ($this->_class) {
+            $this->checkClass($value);    
+        }
         $this->_elements[] = $value;
         return true;
     }
@@ -381,5 +403,13 @@ class ArrayCollection implements Collection, Selectable
         }
 
         return new static($filtered);
+    }
+
+    private function checkClass($value) 
+    {
+        if ($this->_class && !$value instanceof $this->_class) {
+            throw new \Exception("The collection can only accept instances of {$this->_class}. " . 
+                                    "Given:" . get_class($value));
+        }
     }
 }
