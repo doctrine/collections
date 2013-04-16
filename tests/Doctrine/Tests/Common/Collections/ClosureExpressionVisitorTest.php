@@ -50,6 +50,13 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
     }
 
+    public function testGetObjectFieldValueWithReflection()
+    {
+        $object = new TestObject(1, 2, true, 3, false);
+
+        $this->assertFalse($this->visitor->getObjectFieldValue($object, 'isDeleted'));
+    }
+
     public function testWalkEqualsComparison()
     {
         $closure = $this->visitor->walkComparison($this->builder->eq("foo", 1));
@@ -209,13 +216,15 @@ class TestObject
     private $bar;
     private $baz;
     private $qux;
+    private $isDeleted;
 
-    public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
+    public function __construct($foo = null, $bar = null, $baz = null, $qux = null, $isDeleted = null)
     {
         $this->foo = $foo;
         $this->bar = $bar;
         $this->baz = $baz;
         $this->qux = $qux;
+        $this->isDeleted = $isDeleted;
     }
 
     public function __call($name, $arguments)
