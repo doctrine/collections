@@ -54,7 +54,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $object = new TestObject(1, 2, true, 3, false);
 
-        $this->assertEquals(false, $this->visitor->getObjectFieldValue($object, 'isDeleted'));
+        $this->assertFalse($this->visitor->getObjectFieldValue($object, 'isDeleted'));
     }
 
     public function testWalkEqualsComparison()
