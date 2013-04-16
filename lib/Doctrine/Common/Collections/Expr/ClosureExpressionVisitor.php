@@ -19,6 +19,9 @@
 
 namespace Doctrine\Common\Collections\Expr;
 
+use ArrayAccess;
+use ReflectionProperty;
+
 /**
  * Walks an expression graph and turns it into a PHP closure.
  *
@@ -61,11 +64,18 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object->$accessor();
         }
 
-        if ($object instanceof \ArrayAccess || is_array($object)) {
+        if ($object instanceof ArrayAccess || is_array($object)) {
             return $object[$field];
         }
 
-        return $object->$field;
+        if (property_exists($object, $field)) {
+            return $object->$field;
+        }
+
+        $reflProperty = new ReflectionProperty(get_class($object), $field);
+        $reflProperty->setAccessible(true);
+
+        return $reflProperty->getValue($object);
     }
 
     /**
