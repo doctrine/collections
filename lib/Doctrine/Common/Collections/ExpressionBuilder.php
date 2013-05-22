@@ -126,6 +126,16 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::IS, new Value(null));
     }
+    
+    /**
+     * @param string $field
+     *
+     * @return Comparison
+     */
+    public function isNotNull($field)
+    {
+        return new Comparison($field, Comparison::IS_NOT, new Value(null));
+    }
 
     /**
      * @param string $field
