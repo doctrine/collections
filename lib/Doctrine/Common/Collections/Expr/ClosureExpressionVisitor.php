@@ -113,7 +113,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 };
 
             case Comparison::NEQ:
-            case Comparison::ISNOT:
+            case Comparison::IS_NOT:
                 return function ($object) use ($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };

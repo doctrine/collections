@@ -115,7 +115,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
     	$expr = $this->builder->isNotNull("a");
     	
     	$this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
-    	$this->assertEquals(Comparison::ISNOT, $expr->getOperator());
+    	$this->assertEquals(Comparison::IS_NOT, $expr->getOperator());
     }
 
     public function testContains()
