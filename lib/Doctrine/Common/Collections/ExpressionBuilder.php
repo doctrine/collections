@@ -124,7 +124,7 @@ class ExpressionBuilder
      */
     public function isNull($field)
     {
-        return new Comparison($field, Comparison::IS, new Value(null));
+        return new Comparison($field, Comparison::EQ, new Value(null));
     }
 
     /**
