@@ -8,9 +8,6 @@ Collections Abstraction library
 
 * Deprecated ``Comparison::IS``, because it's only there for SQL semantics.
   These are fixed in the ORM instead.
-
-### v1.1
-
 * Add ``Comparison::CONTAINS`` to perform partial string matches:
 
         $criteria->andWhere($criteria->expr()->contains('property', 'Foo'));
