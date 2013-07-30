@@ -37,7 +37,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @var array
      */
-    private $_elements;
+    protected $_elements;
 
     /**
      * Initializes a new ArrayCollection.
