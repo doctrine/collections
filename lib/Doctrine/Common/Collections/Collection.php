@@ -234,6 +234,14 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     function partition(Closure $p);
 
     /**
+     *  Sorts the collection according to the order induced by the specified comparator.
+     *
+     * @param Closure $comparator The comparator on which to compare elements.
+     * @return void
+     */
+    function sort(Closure $comparator);
+
+    /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
      * that means not only the value but also the type must match.
      * For objects this means reference equality.

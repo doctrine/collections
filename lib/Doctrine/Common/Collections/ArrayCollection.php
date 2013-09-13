@@ -324,6 +324,14 @@ class ArrayCollection implements Collection, Selectable
         return array(new static($coll1), new static($coll2));
     }
 
+   /**
+     * {@inheritDoc}
+     */
+    public function sort(Closure $comparator)
+    {
+        usort($this->_elements, $comparator);
+    }
+
     /**
      * Returns a string representation of this object.
      *

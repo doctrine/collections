@@ -148,6 +148,15 @@ class CollectionTest extends \Doctrine\Tests\DoctrineTestCase
         $this->assertEquals($partition[1][0], false);
     }
 
+    public function testSort()
+    {
+        $this->_coll->add('foo');
+        $this->_coll->add('bar');
+        $this->_coll->sort(function($a, $b){ if ($a == $b) return 0; if ($a > $b) return 1; return -1; });
+        $this->assertEquals('bar', $this->_coll[0]);
+        $this->assertEquals('foo', $this->_coll[1]);
+    }
+
     public function testClear()
     {
         $this->_coll[] = 'one';
