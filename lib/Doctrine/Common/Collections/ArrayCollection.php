@@ -176,7 +176,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function containsKey($key)
     {
-        return isset($this->_elements[$key]) || array_key_exists($key, $this->_elements);
+        return array_key_exists($key, $this->_elements);
     }
 
     /**
