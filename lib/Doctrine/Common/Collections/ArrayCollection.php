@@ -102,7 +102,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function remove($key)
     {
-        if (isset($this->_elements[$key]) || array_key_exists($key, $this->_elements)) {
+        if (array_key_exists($key, $this->_elements)) {
             $removed = $this->_elements[$key];
             unset($this->_elements[$key]);
 
