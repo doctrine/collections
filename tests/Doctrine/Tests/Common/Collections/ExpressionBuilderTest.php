@@ -118,5 +118,13 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
         $this->assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
+
+    public function testIsInstanceOf()
+    {
+        $expr = $this->builder->isInstanceOf("a");
+
+        $this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
+        $this->assertEquals(Comparison::ISINSTANCEOF, $expr->getOperator());
+    }
 }
 

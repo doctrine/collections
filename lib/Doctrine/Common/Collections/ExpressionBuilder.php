@@ -159,4 +159,14 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
+
+    /**
+     * @param mixed $value
+     *
+     * @return Comparison
+     */
+    public function isInstanceOf($value)
+    {
+        return new Comparison(null, Comparison::ISINSTANCEOF, new Value($value));
+    }
 }
