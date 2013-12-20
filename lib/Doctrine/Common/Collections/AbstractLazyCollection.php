@@ -53,7 +53,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function add($element)
+    public function add($element)
     {
         $this->initialize();
         return $this->collection->add($element);
@@ -62,7 +62,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function clear()
+    public function clear()
     {
         $this->initialize();
         $this->collection->clear();
@@ -71,7 +71,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function contains($element)
+    public function contains($element)
     {
         $this->initialize();
         return $this->collection->contains($element);
@@ -80,7 +80,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function isEmpty()
+    public function isEmpty()
     {
         $this->initialize();
         return $this->collection->isEmpty();
@@ -89,7 +89,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function remove($key)
+    public function remove($key)
     {
         $this->initialize();
         return $this->collection->remove($key);
@@ -98,7 +98,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function removeElement($element)
+    public function removeElement($element)
     {
         $this->initialize();
         return $this->collection->removeElement($element);
@@ -107,7 +107,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function containsKey($key)
+    public function containsKey($key)
     {
         $this->initialize();
         return $this->collection->containsKey($key);
@@ -116,7 +116,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function get($key)
+    public function get($key)
     {
         $this->initialize();
         return $this->collection->get($key);
@@ -125,7 +125,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function getKeys()
+    public function getKeys()
     {
         $this->initialize();
         return $this->collection->getKeys();
@@ -134,7 +134,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function getValues()
+    public function getValues()
     {
         $this->initialize();
         return $this->collection->getValues();
@@ -143,7 +143,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function set($key, $value)
+    public function set($key, $value)
     {
         $this->initialize();
         $this->collection->set($key, $value);
@@ -152,7 +152,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function toArray()
+    public function toArray()
     {
         $this->initialize();
         return $this->collection->toArray();
@@ -161,7 +161,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function first()
+    public function first()
     {
         $this->initialize();
         return $this->collection->first();
@@ -179,7 +179,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function key()
+    public function key()
     {
         $this->initialize();
         return $this->collection->key();
@@ -188,7 +188,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function current()
+    public function current()
     {
         $this->initialize();
         return $this->collection->current();
@@ -197,7 +197,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function next()
+    public function next()
     {
         $this->initialize();
         return $this->collection->next();
@@ -206,7 +206,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function exists(Closure $p)
+    public function exists(Closure $p)
     {
         $this->initialize();
         return $this->collection->exists($p);
@@ -215,7 +215,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function filter(Closure $p)
+    public function filter(Closure $p)
     {
         $this->initialize();
         return $this->collection->filter($p);
@@ -224,7 +224,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function forAll(Closure $p)
+    public function forAll(Closure $p)
     {
         $this->initialize();
         return $this->collection->forAll($p);
@@ -233,7 +233,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function map(Closure $func)
+    public function map(Closure $func)
     {
         $this->initialize();
         return $this->collection->map($func);
@@ -242,7 +242,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function partition(Closure $p)
+    public function partition(Closure $p)
     {
         $this->initialize();
         return $this->collection->partition($p);
@@ -251,7 +251,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function indexOf($element)
+    public function indexOf($element)
     {
         $this->initialize();
         return $this->collection->indexOf($element);
@@ -260,7 +260,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function slice($offset, $length = null)
+    public function slice($offset, $length = null)
     {
         $this->initialize();
         return $this->collection->slice($offset, $length);
@@ -329,5 +329,5 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @return void
      */
-    abstract public function doInitialize();
+    abstract protected function doInitialize();
 }

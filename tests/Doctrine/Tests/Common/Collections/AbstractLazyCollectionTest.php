@@ -2,13 +2,13 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Tests\LazyCollection;
+use Doctrine\Tests\LazyArrayCollection;
 
 class AbstractLazyCollectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testLazyCollection()
     {
-        $collection = new LazyCollection();
+        $collection = new LazyArrayCollection();
 
         $this->assertCount(3, $collection);
 
