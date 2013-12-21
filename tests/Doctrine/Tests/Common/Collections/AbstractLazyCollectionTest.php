@@ -10,9 +10,11 @@ class AbstractLazyCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new LazyArrayCollection();
 
+        $this->assertFalse($collection->isInitialized());
         $this->assertCount(3, $collection);
 
         $collection->add('bar');
+        $this->assertTrue($collection->isInitialized());
         $this->assertCount(4, $collection);
     }
 }

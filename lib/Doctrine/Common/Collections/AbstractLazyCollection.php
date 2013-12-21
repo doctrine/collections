@@ -39,7 +39,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * @var bool
      */
-    protected $initialized = false;
+    private $initialized = false;
 
     /**
      * {@inheritDoc}
@@ -309,6 +309,16 @@ abstract class AbstractLazyCollection implements Collection
     {
         $this->initialize();
         $this->collection->offsetUnset($offset);
+    }
+
+    /**
+     * Is the lazy collection already initialized?
+     *
+     * @return bool
+     */
+    public function isInitialized()
+    {
+        return $this->initialized;
     }
 
     /**
