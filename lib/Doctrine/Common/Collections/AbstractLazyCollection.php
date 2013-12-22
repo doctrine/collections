@@ -25,7 +25,7 @@ use Closure;
  * Lazy collection that is backed by a concrete collection
  *
  * @author Michaël Gallego <mic.gallego@gmail.com>
- * @since  2.5
+ * @since  1.2
  */
 abstract class AbstractLazyCollection implements Collection
 {
@@ -170,7 +170,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    function last()
+    public function last()
     {
         $this->initialize();
         return $this->collection->last();

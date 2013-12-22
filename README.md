@@ -4,6 +4,10 @@ Collections Abstraction library
 
 ## Changelog
 
+### v1.2
+
+* Add a new ``AbstractLazyCollection``
+
 ### v1.1
 
 * Deprecated ``Comparison::IS``, because it's only there for SQL semantics.
