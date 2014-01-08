@@ -159,4 +159,26 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function startsWidth($field, $value)
+    {
+        return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
+    }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function endsWidth($field, $value)
+    {
+        return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
+    }
 }
