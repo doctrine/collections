@@ -166,7 +166,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function startsWidth($field, $value)
+    public function startsWith($field, $value)
     {
         return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
     }
@@ -177,7 +177,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function endsWidth($field, $value)
+    public function endsWith($field, $value)
     {
         return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
     }
