@@ -162,8 +162,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::ENDS_WITH:
                 return function ($object) use ($field, $value) {
-                    $haystack = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    return $value === substr($haystack, -strlen($value));
+                    return $value === substr($ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
 
             default:
