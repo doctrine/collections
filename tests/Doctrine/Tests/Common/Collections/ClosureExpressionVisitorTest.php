@@ -128,6 +128,27 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($closure(new TestObject('world')));
     }
 
+    public function testWalkIsInstanceOfComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->isInstanceOf(
+            new TestObject()
+        ));
+
+        $this->assertTrue($closure(new TestObject()));
+
+        $closure = $this->visitor->walkComparison($this->builder->isInstanceOf(
+            'Doctrine\Tests\Common\Collections\TestObject'
+        ));
+
+        $this->assertTrue($closure(new TestObject()));
+
+        $closure = $this->visitor->walkComparison($this->builder->isInstanceOf(
+            'Doctrine\Tests\Common\Collections\OtherTestObject'
+        ));
+
+        $this->assertFalse($closure(new TestObject()));
+    }
+
     public function testWalkAndCompositeExpression()
     {
         $closure = $this->visitor->walkCompositeExpression(
