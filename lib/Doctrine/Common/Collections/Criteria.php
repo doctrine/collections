@@ -51,9 +51,9 @@ class Criteria
     private $expression;
 
     /**
-     * @var array|null
+     * @var string[]
      */
-    private $orderings;
+    private $orderings = array();
 
     /**
      * @var int|null
@@ -92,18 +92,21 @@ class Criteria
     /**
      * Construct a new Criteria.
      *
-     * @param Expression $expression
-     * @param array|null $orderings
-     * @param int|null   $firstResult
-     * @param int|null   $maxResults
+     * @param Expression    $expression
+     * @param string[]|null $orderings
+     * @param int|null      $firstResult
+     * @param int|null      $maxResults
      */
     public function __construct(Expression $expression = null, array $orderings = null, $firstResult = null, $maxResults = null)
     {
-        $this->expression  = $expression;
-        $this->orderings   = $orderings;
+        $this->expression = $expression;
 
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
+
+        if (null !== $orderings) {
+            $this->orderBy($orderings);
+        }
     }
 
     /**
@@ -175,7 +178,7 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
-     * @return array
+     * @return string[]
      */
     public function getOrderings()
     {
@@ -190,13 +193,18 @@ class Criteria
      * @see Criteria::ASC
      * @see Criteria::DESC
      *
-     * @param array $orderings
+     * @param string[] $orderings
      *
      * @return Criteria
      */
     public function orderBy(array $orderings)
     {
-        $this->orderings = $orderings;
+        $this->orderings = array_map(
+            function ($ordering) {
+                return $ordering === static::ASC ? static::ASC : static::DESC;
+            },
+            $orderings
+        );
 
         return $this;
     }
