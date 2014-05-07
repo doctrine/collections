@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common;
+namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
