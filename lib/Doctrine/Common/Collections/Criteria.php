@@ -201,7 +201,7 @@ class Criteria
     {
         $this->orderings = array_map(
             function ($ordering) {
-                return strtoupper($ordering) === static::ASC ? static::ASC : static::DESC;
+                return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
             },
             $orderings
         );
