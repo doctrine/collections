@@ -85,6 +85,7 @@ class Criteria
         if (self::$expressionBuilder === null) {
             self::$expressionBuilder = new ExpressionBuilder();
         }
+
         return self::$expressionBuilder;
     }
 
@@ -100,8 +101,9 @@ class Criteria
     {
         $this->expression  = $expression;
         $this->orderings   = $orderings;
-        $this->firstResult = $firstResult;
-        $this->maxResults  = $maxResults;
+
+        $this->setFirstResult($firstResult);
+        $this->setMaxResults($maxResults);
     }
 
     /**
@@ -114,6 +116,7 @@ class Criteria
     public function where(Expression $expression)
     {
         $this->expression = $expression;
+
         return $this;
     }
 
@@ -194,6 +197,7 @@ class Criteria
     public function orderBy(array $orderings)
     {
         $this->orderings = $orderings;
+
         return $this;
     }
 
