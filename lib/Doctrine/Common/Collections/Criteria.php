@@ -216,7 +216,8 @@ class Criteria
      */
     public function setFirstResult($firstResult)
     {
-        $this->firstResult = $firstResult;
+        $this->firstResult = null === $firstResult ? null : (int) $firstResult;
+
         return $this;
     }
 
@@ -239,7 +240,8 @@ class Criteria
      */
     public function setMaxResults($maxResults)
     {
-        $this->maxResults = $maxResults;
+        $this->maxResults = null === $maxResults ? null : (int) $maxResults;
+
         return $this;
     }
 }
