@@ -27,7 +27,13 @@ use Doctrine\Common\Collections\ExpressionBuilder;
  */
 class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ClosureExpressionVisitor
+     */
     private $visitor;
+    /**
+     * @var ExpressionBuilder
+     */
     private $builder;
 
     public function setUp()
@@ -200,6 +206,14 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $closure = $this->visitor->walkComparison($this->builder->eq("foo", 42));
 
         $this->assertTrue($closure(array('foo' => 42)));
+    }
+
+    public function testEmbeddedObjectComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->eq("foo.foo", 1));
+
+        $this->assertTrue($closure(new TestObject(new TestObject(1))));
+        $this->assertFalse($closure(new TestObject(new TestObject(2))));
     }
 }
 
