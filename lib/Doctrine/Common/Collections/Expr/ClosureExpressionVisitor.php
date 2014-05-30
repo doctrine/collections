@@ -120,6 +120,16 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };
 
+            case Comparison::SIM:
+                return function ($object) use ($field, $value) {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) == $value;
+                };
+
+            case Comparison::NSIM:
+                return function ($object) use ($field, $value) {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) != $value;
+                };
+
             case Comparison::LT:
                 return function ($object) use ($field, $value) {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;

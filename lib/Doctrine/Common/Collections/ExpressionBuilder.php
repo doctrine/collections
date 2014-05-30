@@ -132,6 +132,30 @@ class ExpressionBuilder
     }
 
     /**
+     * Defines similarity between objects
+     * @param string $field
+     * @param mixed $value
+     *
+     * @return Comparison
+     */
+    public function sim($field, $value)
+    {
+        return new Comparison($field, Comparison::SIM, new Value($value));
+    }
+
+    /**
+     * Defines dissimilarity between objects
+     * @param string $field
+     * @param mixed $value
+     *
+     * @return Comparison
+     */
+    public function nsim($field, $value)
+    {
+        return new Comparison($field, Comparison::NSIM, new Value($value));
+    }
+
+    /**
      * @param string $field
      * @param mixed  $values
      *

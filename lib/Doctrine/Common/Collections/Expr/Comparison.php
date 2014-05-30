@@ -34,6 +34,8 @@ class Comparison implements Expression
     const GT        = '>';
     const GTE       = '>=';
     const IS        = '='; // no difference with EQ
+    const SIM       = '~'; // similarity: loose comparison;
+    const NSIM      = '!~';
     const IN        = 'IN';
     const NIN       = 'NIN';
     const CONTAINS  = 'CONTAINS';
