@@ -54,9 +54,9 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $object = new TestObject(1, 2);
 
-        $this->assertEquals([1, 2], $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        $this->assertEquals([1, 2], $this->visitor->getObjectFieldValue($object, 'foobar'));
-        $this->assertEquals([1, 2], $this->visitor->getObjectFieldValue($object, 'fooBar'));
+        $this->assertEquals(array(1, 2), $this->visitor->getObjectFieldValue($object, 'foo_bar'));
+        $this->assertEquals(array(1, 2), $this->visitor->getObjectFieldValue($object, 'foobar'));
+        $this->assertEquals(array(1, 2), $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueMagicCallMethod()
