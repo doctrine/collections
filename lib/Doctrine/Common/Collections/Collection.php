@@ -29,7 +29,7 @@ use Closure, Countable, IteratorAggregate, ArrayAccess;
  * like a list.
  *
  * A Collection has an internal iterator just like a PHP array. In addition,
- * a Collection can be iterated with external iterators, which is preferrable.
+ * a Collection can be iterated with external iterators, which is preferable.
  * To use an external iterator simply use the foreach language construct to
  * iterate over the collection (which calls {@link getIterator()} internally) or
  * explicitly retrieve an iterator though {@link getIterator()} which can then be
