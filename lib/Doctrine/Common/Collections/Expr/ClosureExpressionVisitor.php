@@ -58,7 +58,6 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object->$accessor();
         }
 
-
         // __call should be triggered for get.
         $accessor = $accessors[0] . $field;
 
