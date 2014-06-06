@@ -255,11 +255,6 @@ class TestObject
     {
         return $this->baz;
     }
-
-    public function getFooBar()
-    {
-        return array($this->foo, $this->bar);
-    }
 }
 
 class TestObjectNotCamelCase
