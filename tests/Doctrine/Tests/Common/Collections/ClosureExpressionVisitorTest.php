@@ -45,11 +45,11 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetObjectFieldValueIsAccessorCamelCase()
     {
-        $object = new TestObject(1, 2);
+        $object = new TestObjectNotCamelCase(1);
 
-        $this->assertEquals(array(1, 2), $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        $this->assertEquals(array(1, 2), $this->visitor->getObjectFieldValue($object, 'foobar'));
-        $this->assertEquals(array(1, 2), $this->visitor->getObjectFieldValue($object, 'fooBar'));
+        $this->assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
+        $this->assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        $this->assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueMagicCallMethod()
@@ -248,10 +248,25 @@ class TestObject
     {
         return $this->baz;
     }
-    
+
     public function getFooBar()
     {
         return array($this->foo, $this->bar);
+    }
+}
+
+class TestObjectNotCamelCase
+{
+    private $foo_bar;
+
+    public function __construct($foo_bar = null)
+    {
+        $this->foo_bar = $foo_bar;
+    }
+
+    public function getFooBar()
+    {
+        return $this->foo_bar;
     }
 }
 
