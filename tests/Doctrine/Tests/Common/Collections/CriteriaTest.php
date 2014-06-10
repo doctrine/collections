@@ -1,17 +1,19 @@
 <?php
+
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Tests\DoctrineTestCase;
 
-class CriteriaTest extends \PHPUnit_Framework_TestCase
+class CriteriaTest extends DoctrineTestCase
 {
     public function testCreate()
     {
         $criteria = Criteria::create();
 
-        $this->assertInstanceOf("Doctrine\Common\Collections\Criteria", $criteria);
+        $this->assertInstanceOf("Doctrine\\Common\\Collections\\Criteria", $criteria);
     }
 
     public function testConstructor()
@@ -45,7 +47,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $criteria->andWhere($expr);
 
         $where = $criteria->getWhereExpression();
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\CompositeExpression', $where);
+        $this->assertInstanceOf('Doctrine\\Common\\Collections\\Expr\\CompositeExpression', $where);
 
         $this->assertEquals(CompositeExpression::TYPE_AND, $where->getType());
         $this->assertSame(array($expr, $expr), $where->getExpressionList());
@@ -61,7 +63,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $criteria->orWhere($expr);
 
         $where = $criteria->getWhereExpression();
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\CompositeExpression', $where);
+        $this->assertInstanceOf('Doctrine\\Common\\Collections\\Expr\\CompositeExpression', $where);
 
         $this->assertEquals(CompositeExpression::TYPE_OR, $where->getType());
         $this->assertSame(array($expr, $expr), $where->getExpressionList());
@@ -77,6 +79,6 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
 
     public function testExpr()
     {
-        $this->assertInstanceOf('Doctrine\Common\Collections\ExpressionBuilder', Criteria::expr());
+        $this->assertInstanceOf('Doctrine\\Common\\Collections\\ExpressionBuilder', Criteria::expr());
     }
 }

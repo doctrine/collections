@@ -21,16 +21,24 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\ExpressionBuilder;
+use Doctrine\Tests\DoctrineTestCase;
 
 /**
  * @group DDC-1637
  */
-class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
+class ClosureExpressionVisitorTest extends DoctrineTestCase
 {
+    /**
+     * @var ClosureExpressionVisitor
+     */
     private $visitor;
+
+    /**
+     * @var ExpressionBuilder
+     */
     private $builder;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->visitor = new ClosureExpressionVisitor();
         $this->builder = new ExpressionBuilder();
