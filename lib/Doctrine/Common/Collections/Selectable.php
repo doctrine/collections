@@ -44,5 +44,5 @@ interface Selectable
      *
      * @return Collection
      */
-    function matching(Criteria $criteria);
+    public function matching(Criteria $criteria);
 }
