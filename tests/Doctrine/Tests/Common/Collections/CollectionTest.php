@@ -228,7 +228,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
         $col = $this->collection->matching(new Criteria(null, array('foo' => 'DESC')));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
+        $this->assertInstanceOf('Doctrine\\Common\\Collections\\Collection', $col);
         $this->assertNotSame($col, $this->collection);
         $this->assertEquals(2, count($col));
         $this->assertEquals('baz', $col[0]->foo);
@@ -244,7 +244,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
         $col = $this->collection->matching(new Criteria(null, null, 1, 1));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
+        $this->assertInstanceOf('Doctrine\\Common\\Collections\\Collection', $col);
         $this->assertNotSame($col, $this->collection);
         $this->assertEquals(1, count($col));
         $this->assertEquals('baz', $col[0]->foo);
