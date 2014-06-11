@@ -21,12 +21,11 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\ExpressionBuilder;
-use Doctrine\Tests\DoctrineTestCase;
 
 /**
  * @group DDC-1637
  */
-class ClosureExpressionVisitorTest extends DoctrineTestCase
+class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ClosureExpressionVisitor

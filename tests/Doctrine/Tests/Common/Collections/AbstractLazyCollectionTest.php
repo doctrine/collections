@@ -2,10 +2,9 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\LazyArrayCollection;
 
-class AbstractLazyCollectionTest extends DoctrineTestCase
+class AbstractLazyCollectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testLazyCollection()
     {

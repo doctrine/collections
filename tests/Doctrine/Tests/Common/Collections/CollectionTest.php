@@ -5,9 +5,8 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Tests\DoctrineTestCase;
 
-class CollectionTest extends DoctrineTestCase
+class CollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Collection

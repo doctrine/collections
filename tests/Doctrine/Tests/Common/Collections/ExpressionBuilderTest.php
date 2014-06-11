@@ -5,12 +5,11 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
-use Doctrine\Tests\DoctrineTestCase;
 
 /**
  * @group DDC-1637
  */
-class ExpressionBuilderTest extends DoctrineTestCase
+class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ExpressionBuilder

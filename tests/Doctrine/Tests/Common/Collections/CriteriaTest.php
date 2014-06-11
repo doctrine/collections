@@ -5,9 +5,8 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
-use Doctrine\Tests\DoctrineTestCase;
 
-class CriteriaTest extends DoctrineTestCase
+class CriteriaTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {

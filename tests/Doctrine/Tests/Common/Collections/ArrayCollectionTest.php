@@ -20,14 +20,13 @@
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Tests\DoctrineTestCase;
 
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}
  *
  * @covers ArrayCollection
  */
-class ArrayCollectionTest extends DoctrineTestCase
+class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideDifferentElements
