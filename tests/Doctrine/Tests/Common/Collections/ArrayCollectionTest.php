@@ -24,7 +24,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}
  *
- * @covers ArrayCollection
+ * @covers \Doctrine\Common\Collections\ArrayCollection
  */
 class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
 {
