@@ -10,3 +10,6 @@ php:
 
 before_script:
     - composer --prefer-source --dev install
+
+script:
+    - ./vendor/bin/phpunit
