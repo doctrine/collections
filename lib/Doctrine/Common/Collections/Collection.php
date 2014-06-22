@@ -19,13 +19,13 @@
 
 namespace Doctrine\Common\Collections;
 
+use JsonSerializable;
 use Closure;
 use Countable;
 use IteratorAggregate;
 use ArrayAccess;
-use JsonSerializable;
 
-    /**
+/**
  * The missing (SPL) Collection/Array/OrderedMap interface.
  *
  * A Collection resembles the nature of a regular PHP array. That is,
