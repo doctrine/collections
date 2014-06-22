@@ -60,6 +60,14 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
+    public function jsonSerialize()
+    {
+        return $this->_elements;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function first()
     {
         return reset($this->_elements);
