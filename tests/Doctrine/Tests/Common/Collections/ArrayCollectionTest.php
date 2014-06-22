@@ -41,6 +41,16 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
+    public function testJsonSerialize($elements)
+    {
+        $collection = new ArrayCollection($elements);
+
+        $this->assertSame($elements, $collection->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideDifferentElements
+     */
     public function testFirst($elements)
     {
         $collection = new ArrayCollection($elements);

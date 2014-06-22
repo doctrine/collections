@@ -19,9 +19,13 @@
 
 namespace Doctrine\Common\Collections;
 
-use Closure, Countable, IteratorAggregate, ArrayAccess;
+use Closure;
+use Countable;
+use IteratorAggregate;
+use ArrayAccess;
+use JsonSerializable;
 
-/**
+    /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
  *
  * A Collection resembles the nature of a regular PHP array. That is,
@@ -43,7 +47,7 @@ use Closure, Countable, IteratorAggregate, ArrayAccess;
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-interface Collection extends Countable, IteratorAggregate, ArrayAccess
+interface Collection extends Countable, IteratorAggregate, ArrayAccess, JsonSerializable
 {
     /**
      * Adds an element at the end of the collection.
@@ -147,6 +151,13 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array
      */
     public function toArray();
+
+    /**
+     * Gets a native PHP array representation of the collection for Json Serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize();
 
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.
