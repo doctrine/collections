@@ -269,6 +269,15 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function merge(Collection $collection)
+    {
+        $this->initialize();
+        return $this->collection->merge($collection);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getIterator()
     {
         $this->initialize();
