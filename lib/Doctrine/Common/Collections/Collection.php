@@ -55,6 +55,15 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function add($element);
 
     /**
+     * Adds an element at the end of the collection if is not contained yet.
+     *
+     * @param mixed $element The element to add.
+     *
+     * @return boolean TRUE if has been added. Otherwise, FALSE
+     */
+    public function addUnique($element);
+
+    /**
      * Clears the collection, removing all elements.
      *
      * @return void
