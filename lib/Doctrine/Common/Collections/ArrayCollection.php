@@ -314,6 +314,7 @@ class ArrayCollection implements Collection, Selectable
     public function partition(Closure $p)
     {
         $matches = $noMatches = array();
+
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
                 $matches[$key] = $element;
