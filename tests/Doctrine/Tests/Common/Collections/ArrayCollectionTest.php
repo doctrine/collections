@@ -268,4 +268,16 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('a',  $collection->get('A'),            'Get element by name');
         $this->assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
+
+    public function testMerge()
+    {
+        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $collection = new ArrayCollection($elements);
+
+        $this->assertEquals($collection, $collection->merge(new ArrayCollection(array())));
+        $this->assertEquals(
+            array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0, 1, 2, 3),
+            $collection->merge($collection)->toArray()
+        );
+    }
 }

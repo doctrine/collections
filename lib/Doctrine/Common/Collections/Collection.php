@@ -257,4 +257,14 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array
      */
     public function slice($offset, $length = null);
+
+    /**
+     * Merge current collection with a new Collection, returning result as a new
+     * Collection
+     *
+     * @param Collection $collection Collection to merge with
+     *
+     * @return Collection new Collection with $collection and $this merged
+     */
+    public function merge(Collection $collection);
 }

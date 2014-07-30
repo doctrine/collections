@@ -383,4 +383,17 @@ class ArrayCollection implements Collection, Selectable
 
         return new static($filtered);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function merge(Collection $collection)
+    {
+        return new self(
+            array_merge(
+                $this->toArray(),
+                $collection->toArray()
+            )
+        );
+    }
 }

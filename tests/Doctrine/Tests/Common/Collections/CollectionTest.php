@@ -262,4 +262,16 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->collection->set('key', null);
         $this->assertTrue($this->collection->containsKey('key'));
     }
+
+    public function testMerge()
+    {
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $this->collection->add(3);
+
+        $this->assertEquals(
+            $this->collection->merge(new ArrayCollection(array(1,2)))->toArray(),
+            array(1,2,3,1,2)
+        );
+    }
 }
