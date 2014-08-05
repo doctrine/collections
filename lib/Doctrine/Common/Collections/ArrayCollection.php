@@ -37,7 +37,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @var array
      */
-    private $elements;
+    private $elements = [];
 
     /**
      * Initializes a new ArrayCollection.
@@ -46,7 +46,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function __construct(array $elements = array())
     {
-        $this->elements = $elements;
+        foreach ($elements as $key => $element) {
+            $this->offsetSet($key, $element);
+        }
     }
 
     /**
@@ -155,11 +157,12 @@ class ArrayCollection implements Collection, Selectable
      */
     public function offsetSet($offset, $value)
     {
-        if ( ! isset($offset)) {
-            return $this->add($value);
+        if (null === $offset) {
+            $this->elements[] = $value;
         }
-
-        $this->set($offset, $value);
+        else {
+            $this->elements[$offset] = $value;
+        }
     }
 
     /**
@@ -247,7 +250,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function set($key, $value)
     {
-        $this->elements[$key] = $value;
+        $this->offsetSet($key, $value);
     }
 
     /**
@@ -255,8 +258,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function add($value)
     {
-        $this->elements[] = $value;
-
+        $this->offsetSet(null, $value);
         return true;
     }
 

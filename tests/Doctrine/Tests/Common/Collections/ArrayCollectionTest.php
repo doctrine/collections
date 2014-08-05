@@ -268,4 +268,26 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('a',  $collection->get('A'),            'Get element by name');
         $this->assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
+
+    public function testSet()
+    {
+        $collection = new ArrayCollection();
+        $this->assertNull($collection->set('key', 'val'));
+        $this->assertSame(['key' => 'val'], $collection->toArray());
+    }
+
+    public function testAdd()
+    {
+        $collection = new ArrayCollection();
+        $this->assertTrue($collection->add('element1'));
+        $this->assertSame(['element1'], $collection->toArray());
+    }
+
+    public function testOffsetSet()
+    {
+        $collection = new ArrayCollection();
+        $this->assertNull($collection->offsetSet(null, 'element'));
+        $this->assertNull($collection->offsetSet('2', 'element'));
+        $this->assertSame(['element', '2' => 'element'], $collection->toArray());
+    }
 }
