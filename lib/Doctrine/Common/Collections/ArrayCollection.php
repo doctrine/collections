@@ -159,8 +159,7 @@ class ArrayCollection implements Collection, Selectable
     {
         if (null === $offset) {
             $this->elements[] = $value;
-        }
-        else {
+        } else {
             $this->elements[$offset] = $value;
         }
     }
@@ -259,6 +258,7 @@ class ArrayCollection implements Collection, Selectable
     public function add($value)
     {
         $this->offsetSet(null, $value);
+
         return true;
     }
 
