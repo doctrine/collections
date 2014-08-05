@@ -37,7 +37,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @var array
      */
-    private $elements = [];
+    private $elements = array();
 
     /**
      * Initializes a new ArrayCollection.

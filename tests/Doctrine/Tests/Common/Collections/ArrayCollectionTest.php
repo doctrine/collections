@@ -274,14 +274,14 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $collection = new ArrayCollection();
         $collection->set('key', 'val');
         $collection->set(null, 'val');
-        $this->assertSame(['key' => 'val', '' => 'val'], $collection->toArray(), 'null index is casted to empty string');
+        $this->assertSame(array('key' => 'val', '' => 'val'), $collection->toArray(), 'null index is casted to empty string');
     }
 
     public function testAdd()
     {
         $collection = new ArrayCollection();
         $this->assertTrue($collection->add('element1'));
-        $this->assertSame(['element1'], $collection->toArray());
+        $this->assertSame(array('element1'), $collection->toArray());
     }
 
     public function testOffsetSet()
@@ -290,6 +290,6 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->offsetSet(null, 'element');
         $collection->offsetSet(null, 'element');
         $collection->offsetSet('key', 'element');
-        $this->assertSame(['element', 'element', 'key' => 'element'], $collection->toArray(), 'null indexes are incremented');
+        $this->assertSame(array('element', 'element', 'key' => 'element'), $collection->toArray(), 'null indexes are incremented');
     }
 }
