@@ -250,7 +250,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function set($key, $value)
     {
-        $this->offsetSet($key, $value);
+        $this->offsetSet(null === $key ? '' : $key, $value);
     }
 
     /**
