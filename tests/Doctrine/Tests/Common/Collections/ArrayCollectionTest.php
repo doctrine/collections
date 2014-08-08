@@ -74,6 +74,30 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
+    public function testPrevious($elements)
+    {
+        $collection = new ArrayCollection($elements);
+
+        $collection->last();
+        end($elements);
+
+        while (true) {
+            $collectionPrevious = $collection->previous();
+            $arrayPrevious = prev($elements);
+
+            if (!$collectionPrevious || !$arrayPrevious) {
+                break;
+            }
+
+            $this->assertSame($arrayPrevious,     $collectionPrevious,    "Returned value of ArrayCollection::previous() and prev() not match");
+            $this->assertSame(key($elements),     $collection->key(),     "Keys not match");
+            $this->assertSame(current($elements), $collection->current(), "Current values not match");
+        }
+    }
+
+    /**
+     * @dataProvider provideDifferentElements
+     */
     public function testNext($elements)
     {
         $collection = new ArrayCollection($elements);
@@ -82,11 +106,11 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
             $collectionNext = $collection->next();
             $arrayNext = next($elements);
 
-            if(!$collectionNext || !$arrayNext) {
+            if (!$collectionNext || !$arrayNext) {
                 break;
             }
 
-            $this->assertSame($arrayNext,      $collectionNext,        "Returned value of ArrayCollection::next() and next() not match");
+            $this->assertSame($arrayNext,         $collectionNext,        "Returned value of ArrayCollection::next() and next() not match");
             $this->assertSame(key($elements),     $collection->key(),     "Keys not match");
             $this->assertSame(current($elements), $collection->current(), "Current values not match");
         }

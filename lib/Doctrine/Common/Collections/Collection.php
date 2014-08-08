@@ -177,6 +177,13 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function current();
 
     /**
+     * Moves the internal iterator position to the previous element and returns this element.
+     *
+     * @return mixed
+     */
+    function previous();
+
+    /**
      * Moves the internal iterator position to the next element and returns this element.
      *
      * @return mixed
