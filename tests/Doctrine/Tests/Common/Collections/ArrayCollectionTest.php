@@ -20,22 +20,19 @@
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}
  *
  * @covers \Doctrine\Common\Collections\ArrayCollection
  */
-class ArrayCollectionTest extends PHPUnit_Framework_TestCase
+class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider provideDifferentElements
      */
     public function testToArray($elements)
     {
-
         $collection = new ArrayCollection($elements);
 
         $this->assertSame($elements, $collection->toArray());
@@ -173,16 +170,16 @@ class ArrayCollectionTest extends PHPUnit_Framework_TestCase
         $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3);
         $collection = new ArrayCollection($elements);
 
-        $this->assertEquals(1,    $collection->remove(0));
+        $this->assertEquals(1, $collection->remove(0));
         unset($elements[0]);
 
         $this->assertEquals(null, $collection->remove('non-existent'));
         unset($elements['non-existent']);
 
-        $this->assertEquals(2,    $collection->remove(1));
+        $this->assertEquals(2, $collection->remove(1));
         unset($elements[1]);
 
-        $this->assertEquals('a',  $collection->remove('A'));
+        $this->assertEquals('a', $collection->remove('A'));
         unset($elements['A']);
 
         $this->assertEquals($elements, $collection->toArray());
