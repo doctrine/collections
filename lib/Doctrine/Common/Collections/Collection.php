@@ -43,7 +43,7 @@ use Closure, Countable, IteratorAggregate, ArrayAccess;
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-interface Collection extends Countable, IteratorAggregate, ArrayAccess
+interface Collection extends Countable, IteratorAggregate, ArrayAccess, Selectable
 {
     /**
      * Adds an element at the end of the collection.

@@ -312,6 +312,15 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function matching(Criteria $criteria)
+    {
+        $this->initialize();
+        $this->collection->matching($criteria);
+    }
+
+    /**
      * Is the lazy collection already initialized?
      *
      * @return bool
