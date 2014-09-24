@@ -83,7 +83,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
-        if (!$next) {
+        if ( ! $next) {
             $next = function() {
                 return 0;
             };

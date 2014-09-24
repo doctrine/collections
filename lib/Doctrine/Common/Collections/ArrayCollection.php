@@ -19,7 +19,8 @@
 
 namespace Doctrine\Common\Collections;
 
-use Closure, ArrayIterator;
+use ArrayIterator;
+use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 
 /**

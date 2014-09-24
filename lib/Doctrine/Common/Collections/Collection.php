@@ -19,7 +19,10 @@
 
 namespace Doctrine\Common\Collections;
 
-use Closure, Countable, IteratorAggregate, ArrayAccess;
+use ArrayAccess;
+use Closure;
+use Countable;
+use IteratorAggregate;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
@@ -204,7 +207,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
-     * 
+     *
      * @param Closure $p The predicate.
      *
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
