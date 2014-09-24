@@ -30,7 +30,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-class ArrayCollection extends ImmutableArrayCollection implements Collection
+class ArrayCollection extends ReadableArrayCollection implements Collection
 {
     /**
      * {@inheritDoc}

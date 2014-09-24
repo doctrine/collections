@@ -19,21 +19,21 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Common\Collections\ImmutableArrayCollection;
+use Doctrine\Common\Collections\ReadableArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\ImmutableArrayCollection}
+ * Tests for {@see \Doctrine\Common\Collections\ReadableArrayCollection}
  *
- * @covers \Doctrine\Common\Collections\ImmutableArrayCollection
+ * @covers \Doctrine\Common\Collections\ReadableArrayCollection
  */
-class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
+class ReadableArrayCollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideDifferentElements
      */
     public function testToArray($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame($elements, $collection->toArray());
     }
@@ -43,7 +43,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFirst($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
         $this->assertSame(reset($elements), $collection->first());
     }
 
@@ -52,7 +52,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testLast($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
         $this->assertSame(end($elements), $collection->last());
     }
 
@@ -61,7 +61,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testKey($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(key($elements), $collection->key());
 
@@ -76,7 +76,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testNext($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         while (true) {
             $collectionNext = $collection->next();
@@ -97,7 +97,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCurrent($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(current($elements), $collection->current());
 
@@ -112,7 +112,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetKeys($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(array_keys($elements), $collection->getKeys());
     }
@@ -122,7 +122,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetValues($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(array_values($elements), $collection->getValues());
     }
@@ -132,7 +132,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCount($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(count($elements), $collection->count());
     }
@@ -142,7 +142,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIterator($elements)
     {
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $iterations = 0;
         foreach($collection->getIterator() as $key => $item) {
@@ -168,7 +168,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testContainsKey()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b');
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertTrue($collection->containsKey(0),               "Contains index 0");
         $this->assertTrue($collection->containsKey('A'),             "Contains key \"A\"");
@@ -178,17 +178,17 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testEmpty()
     {
-        $collection = new ImmutableArrayCollection();
+        $collection = new ReadableArrayCollection();
         $this->assertTrue($collection->isEmpty(), "Empty collection");
 
-        $collection = new ImmutableArrayCollection(array('value'));
+        $collection = new ReadableArrayCollection(array('value'));
         $this->assertFalse($collection->isEmpty(), "Not empty collection");
     }
 
     public function testContains()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertTrue($collection->contains(0),               "Contains Zero");
         $this->assertTrue($collection->contains('a'),             "Contains \"a\"");
@@ -199,7 +199,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testExists()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertTrue($collection->exists(function($key, $element) {
             return $key == 'A' && $element == 'a';
@@ -213,7 +213,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testIndexOf()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(array_search(2,              $elements, true), $collection->indexOf(2),              'Index of 2');
         $this->assertSame(array_search(null,           $elements, true), $collection->indexOf(null),           'Index of null');
@@ -223,7 +223,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testGet()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
 
         $this->assertSame(2,    $collection->get(1),              'Get element by index');
         $this->assertSame('a',  $collection->get('A'),            'Get element by name');
@@ -233,7 +233,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testOffsetExists()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
         $this->assertTrue(isset($collection[0]));
         $this->assertTrue(isset($collection['A']));
         $this->assertTrue(isset($collection['null']));
@@ -244,7 +244,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testOffsetGet()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
         $this->assertSame('a', $collection['A']);
         $this->assertSame(null, $collection['null']);
         $this->assertSame('a', $collection['A2']);
@@ -254,7 +254,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $exception = false;
         $elements = array(1);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
         try {
             $collection[0] = 2;
         } catch (\BadMethodCallException $e) {
@@ -268,7 +268,7 @@ class ImmutableArrayCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $exception = false;
         $elements = array(1);
-        $collection = new ImmutableArrayCollection($elements);
+        $collection = new ReadableArrayCollection($elements);
         try {
             unset($collection[0]);
         } catch (\BadMethodCallException $e) {

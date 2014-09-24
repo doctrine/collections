@@ -34,7 +34,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Hidde Boomsma <hboomsma@hostnet.nl>
  */
-class ImmutableArrayCollection implements ConstantCollection, Selectable, ArrayAccess
+class ReadableArrayCollection implements ConstantCollection, Selectable, ArrayAccess
 {
     /**
      * An array containing the entries of this collection.
