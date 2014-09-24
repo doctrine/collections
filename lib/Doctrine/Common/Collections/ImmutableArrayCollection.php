@@ -19,6 +19,7 @@
 
 namespace Doctrine\Common\Collections;
 
+use ArrayAccess;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
@@ -33,7 +34,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Hidde Boomsma <hboomsma@hostnet.nl>
  */
-class ImmutableArrayCollection implements ConstantCollection, Selectable
+class ImmutableArrayCollection implements ConstantCollection, Selectable, ArrayAccess
 {
     /**
      * An array containing the entries of this collection.

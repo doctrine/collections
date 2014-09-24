@@ -21,7 +21,6 @@ namespace Doctrine\Common\Collections;
 
 use Closure;
 use Countable;
-use ArrayAccess;
 use IteratorAggregate;
 
 /**
@@ -46,7 +45,7 @@ use IteratorAggregate;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Hidde Boomsma <hboomsma@hostnet.nl>
  */
-interface ConstantCollection extends Countable, IteratorAggregate, ArrayAccess
+interface ConstantCollection extends Countable, IteratorAggregate
 {
     /**
      * Checks whether an element is contained in the collection.
