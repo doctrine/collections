@@ -58,12 +58,13 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed  $value
+     * @param boolean $ic ignoreCase
      *
      * @return Comparison
      */
-    public function eq($field, $value)
+    public function eq($field, $value, $ic = false)
     {
-        return new Comparison($field, Comparison::EQ, new Value($value));
+        return new Comparison($field, Comparison::EQ, new Value($value), $ic);
     }
 
     /**
@@ -113,12 +114,13 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed  $value
+     * @param boolean $ic ignoreCase
      *
      * @return Comparison
      */
-    public function neq($field, $value)
+    public function neq($field, $value, $ic = false)
     {
-        return new Comparison($field, Comparison::NEQ, new Value($value));
+        return new Comparison($field, Comparison::NEQ, new Value($value), $ic);
     }
 
     /**
@@ -134,33 +136,36 @@ class ExpressionBuilder
     /**
      * @param string $field
      * @param mixed  $values
+     * @param boolean $ic ignoreCase
      *
      * @return Comparison
      */
-    public function in($field, array $values)
+    public function in($field, array $values, $ic = false)
     {
-        return new Comparison($field, Comparison::IN, new Value($values));
+        return new Comparison($field, Comparison::IN, new Value($values), $ic);
     }
 
     /**
      * @param string $field
      * @param mixed  $values
+     * @param boolean $ic ignoreCase
      *
      * @return Comparison
      */
-    public function notIn($field, array $values)
+    public function notIn($field, array $values, $ic = false)
     {
-        return new Comparison($field, Comparison::NIN, new Value($values));
+        return new Comparison($field, Comparison::NIN, new Value($values), $ic);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
+     * @param boolean $ic ignoreCase
      *
      * @return Comparison
      */
-    public function contains($field, $value)
+    public function contains($field, $value, $ic = false)
     {
-        return new Comparison($field, Comparison::CONTAINS, new Value($value));
+        return new Comparison($field, Comparison::CONTAINS, new Value($value), $ic);
     }
 }

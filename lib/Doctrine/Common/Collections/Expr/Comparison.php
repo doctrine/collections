@@ -39,6 +39,11 @@ class Comparison implements Expression
     const CONTAINS  = 'CONTAINS';
 
     /**
+     * @var boolean
+     */
+    private $ic;
+
+    /**
      * @var string
      */
     private $field;
@@ -58,17 +63,26 @@ class Comparison implements Expression
      * @param string $operator
      * @param mixed  $value
      */
-    public function __construct($field, $operator, $value)
+    public function __construct($field, $operator, $value, $ignoreCase = false)
     {
         if ( ! ($value instanceof Value)) {
             $value = new Value($value);
         }
 
+        $this->ic = $ignoreCase;
         $this->field = $field;
         $this->op = $operator;
         $this->value = $value;
     }
 
+    /**
+     * @return boolean
+     */
+    public function getIgnoreCase()
+    {
+        return $this->ic;
+    }
+    
     /**
      * @return string
      */
