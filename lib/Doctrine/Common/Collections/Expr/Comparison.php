@@ -60,7 +60,7 @@ class Comparison implements Expression
      */
     public function __construct($field, $operator, $value)
     {
-        if ( ! ($value instanceof Value)) {
+        if (! ($value instanceof Value)) {
             $value = new Value($value);
         }
 
