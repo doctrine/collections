@@ -4,8 +4,3 @@
 # standalone application
 /vendor/
 /composer.lock
-
-# ignore eclipse project
-/.project
-/.buildpath
-/.settings
