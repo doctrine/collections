@@ -23,27 +23,16 @@ use Closure;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
+ * Adds modification functionallity to ConstantCollection.
  *
- * A Collection resembles the nature of a regular PHP array. That is,
- * it is essentially an <b>ordered map</b> that can also be used
- * like a list.
- *
- * A Collection has an internal iterator just like a PHP array. In addition,
- * a Collection can be iterated with external iterators, which is preferable.
- * To use an external iterator simply use the foreach language construct to
- * iterate over the collection (which calls {@link getIterator()} internally) or
- * explicitly retrieve an iterator though {@link getIterator()} which can then be
- * used to iterate over the collection.
- * You can not rely on the internal iterator of the collection being at a certain
- * position unless you explicitly positioned it before. Prefer iteration with
- * external iterators.
+ * {@inheritDoc}
  *
  * @since  2.0
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-interface Collection extends ImmutableCollection
+interface Collection extends ConstantCollection
 {
     /**
      * Adds an element at the end of the collection.

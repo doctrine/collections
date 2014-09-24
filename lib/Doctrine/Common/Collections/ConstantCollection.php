@@ -25,11 +25,11 @@ use ArrayAccess;
 use IteratorAggregate;
 
 /**
- * The missing (SPL) Collection/Array/OrderedMap interface.
+ * The missing (SPL) ConstantCollection/ConstantOrderedMap interface.
  *
- * A Collection resembles the nature of a regular PHP array. That is,
+ * A constant collection resembles the nature of a regular PHP array. That is,
  * it is essentially an <b>ordered map</b> that can also be used
- * like a list.
+ * like a list but its contents can not be changed.
  *
  * A Collection has an internal iterator just like a PHP array. In addition,
  * a Collection can be iterated with external iterators, which is preferable.
@@ -41,12 +41,12 @@ use IteratorAggregate;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  *
- * @since  2.0
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
+ * @author Hidde Boomsma <hboomsma@hostnet.nl>
  */
-interface ImmutableCollection extends Countable, IteratorAggregate, ArrayAccess
+interface ConstantCollection extends Countable, IteratorAggregate, ArrayAccess
 {
     /**
      * Checks whether an element is contained in the collection.
