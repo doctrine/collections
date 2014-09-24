@@ -103,7 +103,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function remove($key)
     {
-        if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
+        if ( ! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
             return null;
         }
 
@@ -156,7 +156,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function offsetSet($offset, $value)
     {
-        if (! isset($offset)) {
+        if ( ! isset($offset)) {
             return $this->add($value);
         }
 
@@ -301,7 +301,7 @@ class ArrayCollection implements Collection, Selectable
     public function forAll(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
-            if (! $p($key, $element)) {
+            if ( ! $p($key, $element)) {
                 return false;
             }
         }

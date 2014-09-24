@@ -328,7 +328,7 @@ abstract class AbstractLazyCollection implements Collection
      */
     protected function initialize()
     {
-        if (!$this->initialized) {
+        if ( ! $this->initialized) {
             $this->doInitialize();
             $this->initialized = true;
         }

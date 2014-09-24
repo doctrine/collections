@@ -96,12 +96,8 @@ class Criteria
      * @param int|null   $firstResult
      * @param int|null   $maxResults
      */
-    public function __construct(
-        Expression $expression = null,
-        array $orderings = null,
-        $firstResult = null,
-        $maxResults = null
-    ) {
+    public function __construct(Expression $expression = null, array $orderings = null, $firstResult = null, $maxResults = null)
+    {
         $this->expression  = $expression;
         $this->orderings   = $orderings;
         $this->firstResult = $firstResult;

@@ -51,7 +51,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         foreach ($accessors as $accessor) {
             $accessor .= $field;
 
-            if (! method_exists($object, $accessor)) {
+            if ( ! method_exists($object, $accessor)) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
-        if (!$next) {
+        if ( ! $next) {
             $next = function() {
                 return 0;
             };
@@ -200,7 +200,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     {
         return function ($object) use ($expressions) {
             foreach ($expressions as $expression) {
-                if (! $expression($object)) {
+                if ( ! $expression($object)) {
                     return false;
                 }
             }
