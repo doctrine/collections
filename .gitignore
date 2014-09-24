@@ -1,1 +1,11 @@
-vendor/
+# ignore composer files
+# lock is ignored because this is a library
+# and having a lock only makes sense for an
+# standalone application
+/vendor/
+/composer.lock
+
+# ignore eclipse project
+/.project
+/.buildpath
+/.settings
