@@ -34,7 +34,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Hidde Boomsma <hboomsma@hostnet.nl>
  */
-class ReadableArrayCollection implements ConstantCollection, Selectable, ArrayAccess
+class ReadableArrayCollection implements ReadableCollection, Selectable, ArrayAccess
 {
     /**
      * An array containing the entries of this collection.
@@ -284,7 +284,7 @@ class ReadableArrayCollection implements ConstantCollection, Selectable, ArrayAc
      */
     public function __toString()
     {
-        return __CLASS__ . '@' . spl_object_hash($this);
+        return get_called_class() . '@' . spl_object_hash($this);
     }
 
     /**

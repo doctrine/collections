@@ -45,7 +45,7 @@ use IteratorAggregate;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Hidde Boomsma <hboomsma@hostnet.nl>
  */
-interface ConstantCollection extends Countable, IteratorAggregate
+interface ReadableCollection extends Countable, IteratorAggregate
 {
     /**
      * Checks whether an element is contained in the collection.

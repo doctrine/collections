@@ -33,7 +33,7 @@ use Closure;
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-interface Collection extends ConstantCollection, ArrayAccess
+interface Collection extends ReadableCollection, ArrayAccess
 {
     /**
      * Adds an element at the end of the collection.
