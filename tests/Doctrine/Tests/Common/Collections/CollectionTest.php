@@ -56,6 +56,33 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(2, 4), $res->toArray());
     }
 
+    public function testReduce()
+    {
+        $sum = function ($carry, $item) {
+            return $carry + $item;
+        };
+
+        $product = function ($carry, $item) {
+            return $carry * $item;
+        };
+
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $this->collection->add(3);
+        $this->collection->add(4);
+        $this->collection->add(5);
+
+        $res = $this->collection->reduce($sum);
+        $this->assertEquals(15, $res);
+
+        $res = $this->collection->reduce($product, 10);
+        $this->assertEquals(1200, $res);
+
+        $this->collection->clear();
+        $res = $this->collection->reduce($sum, "No data to reduce");
+        $this->assertEquals("No data to reduce", $res);
+    }
+
     public function testFilter()
     {
         $this->collection->add(1);
