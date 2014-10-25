@@ -152,7 +152,28 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::CONTAINS:
                 return function ($object) use ($field, $value) {
-                    return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                    $field_value = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                    // Check whether we have a wildcard characters, and build the regular expression
+                    $pattern = str_replace('\%', 'SQLWILDCARDESCAPEDMANY', $value);
+                    $pattern = str_replace('\_', 'SQLWILDCARDESCAPEDONE', $pattern);
+                    if(strpos($pattern, '%') !== false || strpos($pattern, '_') !== false) {
+                        // Build regexp
+                        $pattern = preg_quote($pattern);
+                        $pattern = str_replace('%', '.*', $pattern);
+                        $pattern = str_replace('_', '.{1}', $pattern);
+                        $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '\\%', $pattern);
+                        $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
+                        $pattern = '/^' . $pattern . '$/i';
+
+                        return preg_match_all($pattern, $field_value);
+                    }
+
+                    // Replace the escaped characters to normal one
+                    $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '%', $pattern);
+                    $pattern = str_replace('SQLWILDCARDESCAPEDONE', '_', $pattern);
+
+                    return false !== strpos($field_value, $pattern);
                 };
 
             default:
