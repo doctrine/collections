@@ -95,6 +95,27 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
+    public function testPrev($elements)
+    {
+        $collection = new ArrayCollection($elements);
+
+        while (true) {
+            $collectionNext = $collection->prev();
+            $arrayNext = prev($elements);
+
+            if(!$collectionNext || !$arrayNext) {
+                break;
+            }
+
+            $this->assertSame($arrayNext,      $collectionNext,        "Returned value of ArrayCollection::next() and next() not match");
+            $this->assertSame(key($elements),     $collection->key(),     "Keys not match");
+            $this->assertSame(current($elements), $collection->current(), "Current values not match");
+        }
+    }
+
+    /**
+     * @dataProvider provideDifferentElements
+     */
     public function testCurrent($elements)
     {
         $collection = new ArrayCollection($elements);
