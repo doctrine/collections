@@ -187,6 +187,13 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function next();
 
     /**
+     * Moves the internal iterator position to the prev element and returns this element.
+     *
+     * @return mixed
+     */
+    public function prev();
+
+    /**
      * Tests for the existence of an element that satisfies the given predicate.
      *
      * @param Closure $p The predicate.
