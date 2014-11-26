@@ -93,6 +93,14 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
+    public function prev()
+    {
+        return prev($this->elements);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function current()
     {
         return current($this->elements);

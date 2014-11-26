@@ -206,6 +206,15 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function prev()
+    {
+        $this->initialize();
+        return $this->collection->prev();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function exists(Closure $p)
     {
         $this->initialize();
