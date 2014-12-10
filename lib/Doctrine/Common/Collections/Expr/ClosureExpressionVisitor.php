@@ -175,7 +175,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                         $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
                         $pattern = '/^' . $pattern . '$/i';
 
-                        return $like ? preg_match_all($pattern, $field_value) : !preg_match_all($pattern, $field_value);
+                        return (bool) ($like ? preg_match_all($pattern, $field_value) : !preg_match_all($pattern, $field_value));
                     }
 
                     // Replace the escaped characters to normal one
@@ -183,7 +183,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     $pattern = str_replace('SQLWILDCARDESCAPEDONE', '_', $pattern);
 
                     // The wildcard characters not exist, use regular comparison
-                    return $like ? $field_value === $pattern : $field_value !== $pattern;
+                    return ($like ? $field_value === $pattern : $field_value !== $pattern);
                 };
 
             default:
