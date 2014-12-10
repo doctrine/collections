@@ -155,6 +155,37 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
+            case Comparison::LIKE:
+            case Comparison::NOTLIKE:
+                $like = $comparison->getOperator() === Comparison::LIKE ? true : false;
+                return function ($object) use ($field, $value, $like) {
+                    $field_value = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                    // Replace the escaped characters to placeholder
+                    $pattern = str_replace('\%', 'SQLWILDCARDESCAPEDMANY', $value);
+                    $pattern = str_replace('\_', 'SQLWILDCARDESCAPEDONE', $pattern);
+
+                    // Check whether we have a wildcard characters, and build the regular expression
+                    if(strpos($pattern, '%') !== false || strpos($pattern, '_') !== false) {
+                        // Build regexp
+                        $pattern = preg_quote($pattern);
+                        $pattern = str_replace('%', '.*', $pattern);
+                        $pattern = str_replace('_', '.{1}', $pattern);
+                        $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '\\%', $pattern);
+                        $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
+                        $pattern = '/^' . $pattern . '$/i';
+
+                        return $like ? preg_match_all($pattern, $field_value) : !preg_match_all($pattern, $field_value);
+                    }
+
+                    // Replace the escaped characters to normal one
+                    $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '%', $pattern);
+                    $pattern = str_replace('SQLWILDCARDESCAPEDONE', '_', $pattern);
+
+                    // The wildcard characters not exist, use regular comparison
+                    return $like ? $field_value === $pattern : $field_value !== $pattern;
+                };
+
             default:
                 throw new \RuntimeException("Unknown comparison operator: " . $comparison->getOperator());
         }
