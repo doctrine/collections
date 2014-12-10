@@ -137,7 +137,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testWalkLikeComparison()
     {
-        $closure = $this->visitor->walkComparison($this->builder->like('foo', 'h_llo! I%robot!'));
+        $closure = $this->visitor->walkComparison($this->builder->like('foo', 'H_llo! I%Robot!'));
 
         $this->assertTrue($closure(new TestObject('Hello! I am Robot!')));
         $this->assertFalse($closure(new TestObject('Hello! I am Robot?')));
@@ -145,7 +145,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testWalkNotLikeComparison()
     {
-        $closure = $this->visitor->walkComparison($this->builder->notLike('foo', '%I a_ robot?'));
+        $closure = $this->visitor->walkComparison($this->builder->notLike('foo', '%I a_ Robot?'));
 
         $this->assertTrue($closure(new TestObject('Hello! I am Robot!')));
         $this->assertFalse($closure(new TestObject('Hello! I am Robot?')));

@@ -157,9 +157,9 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::LIKE:
             case Comparison::NOTLIKE:
-                $like = $comparison->getOperator() === Comparison::LIKE ? true : false;
+                $like = $comparison->getOperator() === Comparison::LIKE;
                 return function ($object) use ($field, $value, $like) {
-                    $field_value = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
                     // Replace the escaped characters to placeholder
                     $pattern = str_replace('\%', 'SQLWILDCARDESCAPEDMANY', $value);
@@ -168,14 +168,14 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     // Check whether we have a wildcard characters, and build the regular expression
                     if(strpos($pattern, '%') !== false || strpos($pattern, '_') !== false) {
                         // Build regexp
-                        $pattern = preg_quote($pattern);
+                        $pattern = preg_quote($pattern, '/');
                         $pattern = str_replace('%', '.*', $pattern);
                         $pattern = str_replace('_', '.{1}', $pattern);
                         $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '\\%', $pattern);
                         $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
-                        $pattern = '/^' . $pattern . '$/i';
+                        $pattern = '/^' . $pattern . '$/';
 
-                        return (bool) ($like ? preg_match_all($pattern, $field_value) : !preg_match_all($pattern, $field_value));
+                        return (bool) ($like ? preg_match_all($pattern, $fieldValue) : !preg_match_all($pattern, $fieldValue));
                     }
 
                     // Replace the escaped characters to normal one
@@ -183,7 +183,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     $pattern = str_replace('SQLWILDCARDESCAPEDONE', '_', $pattern);
 
                     // The wildcard characters not exist, use regular comparison
-                    return ($like ? $field_value === $pattern : $field_value !== $pattern);
+                    return ($like ? $fieldValue === $pattern : $fieldValue !== $pattern);
                 };
 
             default:
