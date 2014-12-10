@@ -157,33 +157,38 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::LIKE:
             case Comparison::NOTLIKE:
-                $like = $comparison->getOperator() === Comparison::LIKE;
-                return function ($object) use ($field, $value, $like) {
+                $like    = $comparison->getOperator() === Comparison::LIKE;
+                $pattern = null;
+
+                // Replace the escaped characters to placeholder
+                $tmpValue = str_replace('\%', 'SQLWILDCARDESCAPEDMANY', $value);
+                $tmpValue = str_replace('\_', 'SQLWILDCARDESCAPEDONE', $tmpValue);
+
+                // Check whether we have a wildcard characters, and build the regular expression
+                if(strpos($tmpValue, '%') !== false || strpos($tmpValue, '_') !== false) {
+                    // Build regexp
+                    $pattern = preg_quote($tmpValue, '/');
+                    $pattern = str_replace('%', '.*', $pattern);
+                    $pattern = str_replace('_', '.{1}', $pattern);
+                    $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '\\%', $pattern);
+                    $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
+                    $pattern = '/^' . $pattern . '$/m';
+                }
+                else {
+                    // Replace the escaped characters to normal one
+                    $value = str_replace('\%', '%', $value);
+                    $value = str_replace('\_', '_', $value);
+                }
+
+                return function ($object) use ($field, $value, $like, $pattern) {
                     $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
-                    // Replace the escaped characters to placeholder
-                    $pattern = str_replace('\%', 'SQLWILDCARDESCAPEDMANY', $value);
-                    $pattern = str_replace('\_', 'SQLWILDCARDESCAPEDONE', $pattern);
-
-                    // Check whether we have a wildcard characters, and build the regular expression
-                    if(strpos($pattern, '%') !== false || strpos($pattern, '_') !== false) {
-                        // Build regexp
-                        $pattern = preg_quote($pattern, '/');
-                        $pattern = str_replace('%', '.*', $pattern);
-                        $pattern = str_replace('_', '.{1}', $pattern);
-                        $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '\\%', $pattern);
-                        $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
-                        $pattern = '/^' . $pattern . '$/';
-
-                        return (bool) ($like ? preg_match_all($pattern, $fieldValue) : !preg_match_all($pattern, $fieldValue));
+                    if($pattern) {
+                        return (bool) ($like ? preg_match($pattern, $fieldValue) : !preg_match($pattern, $fieldValue));
                     }
 
-                    // Replace the escaped characters to normal one
-                    $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '%', $pattern);
-                    $pattern = str_replace('SQLWILDCARDESCAPEDONE', '_', $pattern);
-
                     // The wildcard characters not exist, use regular comparison
-                    return ($like ? $fieldValue === $pattern : $fieldValue !== $pattern);
+                    return ($like ? $fieldValue === $value : $fieldValue !== $value);
                 };
 
             default:
