@@ -161,8 +161,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 $pattern = null;
 
                 // Replace the escaped characters to placeholder
-                $tmpValue = str_replace('\%', 'SQLWILDCARDESCAPEDMANY', $value);
-                $tmpValue = str_replace('\_', 'SQLWILDCARDESCAPEDONE', $tmpValue);
+                $tmpValue = str_replace('\%', 'DOCTRINESQLWILDCARDESCAPEDMANY', $value);
+                $tmpValue = str_replace('\_', 'DOCTRINESQLWILDCARDESCAPEDONE', $tmpValue);
 
                 // Check whether we have a wildcard characters, and build the regular expression
                 if(strpos($tmpValue, '%') !== false || strpos($tmpValue, '_') !== false) {
@@ -170,26 +170,26 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     $pattern = preg_quote($tmpValue, '/');
                     $pattern = str_replace('%', '.*', $pattern);
                     $pattern = str_replace('_', '.{1}', $pattern);
-                    $pattern = str_replace('SQLWILDCARDESCAPEDMANY', '\\%', $pattern);
-                    $pattern = str_replace('SQLWILDCARDESCAPEDONE', '\\_', $pattern);
+                    $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDMANY', '\\%', $pattern);
+                    $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDONE', '\\_', $pattern);
                     $pattern = '/^' . $pattern . '$/m';
+
+                    return function ($object) use ($field, $value, $like, $pattern) {
+                        $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                        return (bool) ($like ? preg_match($pattern, $fieldValue) : !preg_match($pattern, $fieldValue));
+                    };
                 }
                 else {
                     // Replace the escaped characters to normal one
                     $value = str_replace('\%', '%', $value);
                     $value = str_replace('\_', '_', $value);
-                }
-
-                return function ($object) use ($field, $value, $like, $pattern) {
-                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-
-                    if($pattern) {
-                        return (bool) ($like ? preg_match($pattern, $fieldValue) : !preg_match($pattern, $fieldValue));
-                    }
 
                     // The wildcard characters not exist, use regular comparison
-                    return ($like ? $fieldValue === $value : $fieldValue !== $value);
-                };
+                    return function ($object) use ($field, $value, $like) {
+                        $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                        return ($like ? $fieldValue === $value : $fieldValue !== $value);
+                    };
+                }
 
             default:
                 throw new \RuntimeException("Unknown comparison operator: " . $comparison->getOperator());
