@@ -271,6 +271,15 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('a',  $collection->get('A'),            'Get element by name');
         $this->assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
+
+    public function testUnwrap()
+    {
+        $elements = array(1);
+        $arrayCollection = new ArrayCollection($elements);
+        $collection = new SampleWrappedCollection($arrayCollection);
+
+        $this->assertSame($arrayCollection, $collection->unwrap());
+    }
 }
 
 class SampleWrappedCollection extends AbstractWrappedCollection

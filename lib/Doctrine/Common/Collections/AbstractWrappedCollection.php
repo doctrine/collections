@@ -263,4 +263,14 @@ abstract class AbstractWrappedCollection extends ArrayCollection
     {
         return $this->collection->matching($criteria);
     }
+
+    /**
+     * Retrieves the wrapped Collection instance.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function unwrap()
+    {
+        return $this->collection;
+    }
 }
