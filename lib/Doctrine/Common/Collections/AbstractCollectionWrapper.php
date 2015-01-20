@@ -22,12 +22,12 @@ namespace Doctrine\Common\Collections;
 use Closure;
 
 /**
- * An AbstractWrappedCollection is a Collection implementation that wraps another Collection.
+ * An AbstractCollectionWrapper is a Collection implementation that wraps another Collection.
  *
  * @since  1.3
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-abstract class AbstractWrappedCollection extends ArrayCollection
+abstract class AbstractCollectionWrapper implements Collection
 {
     /**
      * @var Collection
@@ -106,6 +106,50 @@ abstract class AbstractWrappedCollection extends ArrayCollection
     public function removeElement($element)
     {
         return $this->collection->removeElement($element);
+    }
+
+    /**
+     * Required by interface ArrayAccess.
+     *
+     * {@inheritDoc}
+     */
+    public function offsetExists($offset)
+    {
+        return $this->containsKey($offset);
+    }
+
+    /**
+     * Required by interface ArrayAccess.
+     *
+     * {@inheritDoc}
+     */
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * Required by interface ArrayAccess.
+     *
+     * {@inheritDoc}
+     */
+    public function offsetSet($offset, $value)
+    {
+        if ( ! isset($offset)) {
+            return $this->add($value);
+        }
+
+        $this->set($offset, $value);
+    }
+
+    /**
+     * Required by interface ArrayAccess.
+     *
+     * {@inheritDoc}
+     */
+    public function offsetUnset($offset)
+    {
+        return $this->remove($offset);
     }
 
     /**

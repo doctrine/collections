@@ -19,22 +19,22 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Common\Collections\AbstractWrappedCollection;
+use Doctrine\Common\Collections\AbstractCollectionWrapper;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\AbstractWrappedCollection}
+ * Tests for {@see \Doctrine\Common\Collections\AbstractCollectionWrapper}
  *
- * @covers \Doctrine\Common\Collections\AbstractWrappedCollection
+ * @covers \Doctrine\Common\Collections\AbstractCollectionWrapper
  */
-class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
+class AbstractCollectionWrapperTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideDifferentElements
      */
     public function testToArray($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame($elements, $collection->toArray());
     }
@@ -44,7 +44,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFirst($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(reset($elements), $collection->first());
     }
@@ -54,7 +54,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testLast($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(end($elements), $collection->last());
     }
@@ -64,7 +64,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testKey($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(key($elements), $collection->key());
 
@@ -79,7 +79,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testNext($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         while (true) {
             $collectionNext = $collection->next();
@@ -100,7 +100,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCurrent($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(current($elements), $collection->current());
 
@@ -115,7 +115,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetKeys($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(array_keys($elements), $collection->getKeys());
     }
@@ -125,7 +125,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetValues($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(array_values($elements), $collection->getValues());
     }
@@ -135,7 +135,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCount($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(count($elements), $collection->count());
     }
@@ -145,7 +145,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIterator($elements)
     {
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $iterations = 0;
         foreach($collection->getIterator() as $key => $item) {
@@ -171,7 +171,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testRemove()
     {
         $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3);
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertEquals(1, $collection->remove(0));
         unset($elements[0]);
@@ -191,7 +191,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testRemoveElement()
     {
         $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b');
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertTrue($collection->removeElement(1));
         unset($elements[0]);
@@ -210,7 +210,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testContainsKey()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b');
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertTrue($collection->containsKey(0),               "Contains index 0");
         $this->assertTrue($collection->containsKey('A'),             "Contains key \"A\"");
@@ -220,7 +220,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testEmpty()
     {
-        $collection = new SampleWrappedCollection();
+        $collection = new SampleCollectionWrapper();
         $this->assertTrue($collection->isEmpty(), "Empty collection");
 
         $collection->add(1);
@@ -230,7 +230,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testContains()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertTrue($collection->contains(0),               "Contains Zero");
         $this->assertTrue($collection->contains('a'),             "Contains \"a\"");
@@ -241,7 +241,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testExists()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertTrue($collection->exists(function($key, $element) {
             return $key == 'A' && $element == 'a';
@@ -255,7 +255,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testIndexOf()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(array_search(2,              $elements, true), $collection->indexOf(2),              'Index of 2');
         $this->assertSame(array_search(null,           $elements, true), $collection->indexOf(null),           'Index of null');
@@ -265,7 +265,7 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     public function testGet()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
-        $collection = new SampleWrappedCollection(new ArrayCollection($elements));
+        $collection = new SampleCollectionWrapper(new ArrayCollection($elements));
 
         $this->assertSame(2,    $collection->get(1),              'Get element by index');
         $this->assertSame('a',  $collection->get('A'),            'Get element by name');
@@ -276,12 +276,12 @@ class AbstractWrappedCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $elements = array(1);
         $arrayCollection = new ArrayCollection($elements);
-        $collection = new SampleWrappedCollection($arrayCollection);
+        $collection = new SampleCollectionWrapper($arrayCollection);
 
         $this->assertSame($arrayCollection, $collection->unwrap());
     }
 }
 
-class SampleWrappedCollection extends AbstractWrappedCollection
+class SampleCollectionWrapper extends AbstractCollectionWrapper
 {
 }
