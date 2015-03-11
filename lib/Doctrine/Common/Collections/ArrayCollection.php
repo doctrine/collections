@@ -298,6 +298,14 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
+    public function reduce(Closure $func, $initial = null)
+    {
+        return array_reduce($this->elements, $func, $initial);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function forAll(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
