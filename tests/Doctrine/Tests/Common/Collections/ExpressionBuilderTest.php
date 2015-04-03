@@ -130,4 +130,20 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
         $this->assertEquals(Comparison::MEMBER_OF, $expr->getOperator());
     }
+
+    public function testStartsWith()
+    {
+        $expr = $this->builder->startsWith("a", "b");
+
+        $this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
+        $this->assertEquals(Comparison::STARTS_WITH, $expr->getOperator());
+    }
+
+    public function testEndsWith()
+    {
+        $expr = $this->builder->endsWith("a", "b");
+
+        $this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
+        $this->assertEquals(Comparison::ENDS_WITH, $expr->getOperator());
+    }    
 }
