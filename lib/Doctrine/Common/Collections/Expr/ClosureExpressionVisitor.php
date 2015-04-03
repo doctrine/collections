@@ -155,6 +155,16 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
+            case Comparison::STARTS_WITH:
+                return function ($object) use ($field, $value) {
+                    return 0 === strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                };
+
+            case Comparison::ENDS_WITH:
+                return function ($object) use ($field, $value) {
+                    return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
+                };
+
             default:
                 throw new \RuntimeException("Unknown comparison operator: " . $comparison->getOperator());
         }
