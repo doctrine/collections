@@ -163,4 +163,26 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function startsWith($field, $value)
+    {
+        return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
+    }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function endsWith($field, $value)
+    {
+        return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
+    }    
 }
