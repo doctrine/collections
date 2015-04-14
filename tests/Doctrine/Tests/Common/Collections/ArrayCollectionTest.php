@@ -20,6 +20,7 @@
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}
@@ -267,5 +268,29 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2,    $collection->get(1),              'Get element by index');
         $this->assertSame('a',  $collection->get('A'),            'Get element by name');
         $this->assertSame(null, $collection->get('non-existent'), 'Get non existent element');
+    }
+
+    public function testMatchingWithSortingPreservesyKeys()
+    {
+        $object1 = new \stdClass();
+        $object2 = new \stdClass();
+
+        $object1->sortField = 2;
+        $object2->sortField = 1;
+
+        $collection = new ArrayCollection(array(
+            'object1' => $object1,
+            'object2' => $object2,
+        ));
+
+        $this->assertSame(
+            array(
+                'object2' => $object2,
+                'object1' => $object1,
+            ),
+            $collection
+                ->matching(new Criteria(null, array('sortField' => Criteria::ASC)))
+                ->toArray()
+        );
     }
 }

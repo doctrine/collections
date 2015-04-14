@@ -231,8 +231,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
         $this->assertNotSame($col, $this->collection);
         $this->assertEquals(2, count($col));
-        $this->assertEquals('baz', $col[0]->foo);
-        $this->assertEquals('bar', $col[1]->foo);
+        $this->assertEquals('baz', $col->first()->foo);
+        $this->assertEquals('bar', $col->last()->foo);
     }
 
     /**

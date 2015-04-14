@@ -372,7 +372,7 @@ class ArrayCollection implements Collection, Selectable
                 $next = ClosureExpressionVisitor::sortByField($field, $ordering == Criteria::DESC ? -1 : 1);
             }
 
-            usort($filtered, $next);
+            uasort($filtered, $next);
         }
 
         $offset = $criteria->getFirstResult();
