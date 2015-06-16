@@ -39,7 +39,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * @var bool
      */
-    private $initialized = false;
+    protected $initialized = false;
 
     /**
      * {@inheritDoc}
