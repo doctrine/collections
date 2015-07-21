@@ -208,6 +208,13 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($closure(array('foo' => 42)));
     }
+
+    public function testObjectMethodUseNonStandardName()
+    {
+        $object = new TestObject();
+
+        $this->assertSame('result', $this->visitor->getObjectFieldValue($object, 'useNonStandardName'));
+    }
 }
 
 class TestObject
@@ -245,6 +252,11 @@ class TestObject
     public function isBaz()
     {
         return $this->baz;
+    }
+
+    public function useNonStandardName()
+    {
+        return 'result';
     }
 }
 
