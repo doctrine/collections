@@ -293,4 +293,26 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
                 ->toArray()
         );
     }
+
+    public function testMultiColumnSortAppliesAllSorts()
+    {
+        $collection = new ArrayCollection(array(
+            array('foo' => 1, 'bar' => 2),
+            array('foo' => 2, 'bar' => 4),
+            array('foo' => 2, 'bar' => 3)
+        ));
+
+        $expected = array(
+            1 => array('foo' => 2, 'bar' => 4),
+            2 => array('foo' => 2, 'bar' => 3),
+            0 => array('foo' => 1, 'bar' => 2)
+        );
+
+        $this->assertSame(
+            $expected,
+            $collection
+                ->matching(new Criteria(null, array('foo' => Criteria::DESC, 'bar' => Criteria::DESC)))
+                ->toArray()
+        );
+    }
 }
