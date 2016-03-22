@@ -109,6 +109,12 @@ class Criteria
         }
     }
 
+    public static function fromArray(array $criteria) {
+        $factory = new CriteriaFactory();
+
+        return $factory->create($criteria);
+	}
+
     /**
      * Sets the where expression to evaluate when this Criteria is searched for.
      *
