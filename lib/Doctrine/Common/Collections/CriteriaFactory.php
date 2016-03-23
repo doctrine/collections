@@ -29,6 +29,8 @@ use Doctrine\Common\Collections\Exception;
  */
 class CriteriaFactory
 {
+    private static $validComparisonFields = array('fld', 'op', 'val');
+
     public function create(array $criteria)
     {
         $expression = $orderings = $firstResult = $maxResults = $page = null;
@@ -62,37 +64,37 @@ class CriteriaFactory
             throw Exception\InvalidCriteriaArrayException::fromInvalidExpression($expression);
         }
 
-        if (
-            isset($expression['fld'])
-            && isset($expression['op'])
-            && isset($expression['val'])
-        ) {
-            return new Comparison($expression['fld'], $expression['op'], $expression['val']);
-        }
+        $keys = array_keys($expression);
 
-        $expressionsArray = $expression;
-        $compositeExpressionType = CompositeExpression::TYPE_AND;
-
-        if (isset($expression['$or'])) {
-            if (! is_array($expression['$or'])) {
-                throw Exception\InvalidCriteriaArrayException::fromInvalidCompositeExpression($expression['$or']);
-            }
-
-            $expressionsArray = $expression['$or'];
-            $compositeExpressionType = CompositeExpression::TYPE_OR;
+        if (array_keys($keys) === $keys) { //sequential array; implicit AND
+            return new CompositeExpression(
+                CompositeExpression::TYPE_AND,
+                array_map(array($this, __FUNCTION__), $expression)
+            );
         } elseif (isset($expression['$and'])) {
             if (! is_array($expression['$and'])) {
                 throw Exception\InvalidCriteriaArrayException::fromInvalidCompositeExpression($expression['$and']);
             }
 
-            $expressionsArray = $expression['$and'];
+            return new CompositeExpression(
+                CompositeExpression::TYPE_AND,
+                array_map(array($this, __FUNCTION__), $expression['$and'])
+            );
+        } elseif (isset($expression['$or'])) {
+            if (! is_array($expression['$or'])) {
+                throw Exception\InvalidCriteriaArrayException::fromInvalidCompositeExpression($expression['$or']);
+            }
+
+            return new CompositeExpression(
+                CompositeExpression::TYPE_OR,
+                array_map(array($this, __FUNCTION__), $expression['$or'])
+            );
         }
 
-        $expressions = array();
-        foreach ($expressionsArray as $expr) {
-            $expressions[] = $this->buildExpression($expr);
+        if (count(array_intersect_key(array_flip(self::$validComparisonFields), $expression)) === count(self::$validComparisonFields)) {
+            return new Comparison($expression['fld'], $expression['op'], $expression['val']);
         }
 
-        return new CompositeExpression($compositeExpressionType, $expressions);
+        throw Exception\InvalidCriteriaArrayException::fromInvalidExpressionSyntax($expression);
     }
 }

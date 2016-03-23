@@ -103,6 +103,20 @@ class CriteriaFactoryTest extends \PHPUnit_Framework_TestCase
         $this->criteriaFactory->create($criteriaArray);
     }
 
+    public function testExceptionIsRaisedInCaseOfInvalidExpressionArraySyntax()
+    {
+        $criteriaArray = array(
+            'expression' => array('fld' => 'name', 'foo' => 'bar'),
+        );
+
+        $this->setExpectedException(
+            'Doctrine\Common\Collections\Exception\InvalidCriteriaArrayException',
+            'Criteria expression array contains invalid fields'
+        );
+
+        $this->criteriaFactory->create($criteriaArray);
+    }
+
     public function testExceptionIsRaisedInCaseOfInvalidOrderings()
     {
         $criteriaArray = array(

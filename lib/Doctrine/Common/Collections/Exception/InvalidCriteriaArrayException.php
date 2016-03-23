@@ -37,6 +37,11 @@ class InvalidCriteriaArrayException extends InvalidArgumentException implements 
         return new self(sprintf('Criteria composite expression must be an array; received "%s"', gettype($expression)));
     }
 
+    public static function fromInvalidExpressionSyntax($expression)
+    {
+        return new self('Criteria expression array contains invalid fields');
+    }
+
     public static function fromInvalidOrderings($orderings)
     {
         return new self(sprintf('Criteria orderings must be an array; received "%s"', gettype($orderings)));
