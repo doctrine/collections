@@ -52,6 +52,16 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array($expr, $expr), $where->getExpressionList());
     }
 
+    public function testAndWhereWithoutWhere()
+    {
+        $expr     = new Comparison("field", "=", "value");
+        $criteria = new Criteria();
+
+        $criteria->andWhere($expr);
+
+        $this->assertSame($expr, $criteria->getWhereExpression());
+    }
+
     public function testOrWhere()
     {
         $expr     = new Comparison("field", "=", "value");
@@ -66,6 +76,16 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(CompositeExpression::TYPE_OR, $where->getType());
         $this->assertSame(array($expr, $expr), $where->getExpressionList());
+    }
+
+    public function testOrWhereWithoutWhere()
+    {
+        $expr     = new Comparison("field", "=", "value");
+        $criteria = new Criteria();
+
+        $criteria->orWhere($expr);
+
+        $this->assertSame($expr, $criteria->getWhereExpression());
     }
 
     public function testOrderings()
