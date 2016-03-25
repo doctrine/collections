@@ -135,6 +135,38 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($closure(new TestObject('world')));
     }
 
+    public function testWalkLikeComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->like('foo', 'H_llo! I%Robot!'));
+
+        $this->assertTrue($closure(new TestObject('Hello! I am Robot!')));
+        $this->assertFalse($closure(new TestObject('Hello! I am Robot?')));
+    }
+
+    public function testWalkLikeEscapedWildcardComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->like('foo', 'Hello!\_I\_am\_Robot\_on\_100\%!'));
+
+        $this->assertTrue($closure(new TestObject('Hello!_I_am_Robot_on_100%!')));
+        $this->assertFalse($closure(new TestObject('Hello!_I_am_Robot on 100 and more %!')));
+    }
+
+    public function testWalkNotLikeComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->notLike('foo', '%I a_ Robot?'));
+
+        $this->assertTrue($closure(new TestObject('Hello! I am Robot!')));
+        $this->assertFalse($closure(new TestObject('Hello! I am Robot?')));
+    }
+
+    public function testWalkNotLikeEscapedWildcardComparison()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->notLike('foo', 'Here\_a\_100\%'));
+
+        $this->assertTrue($closure(new TestObject('Here a 100')));
+        $this->assertFalse($closure(new TestObject('Here_a_100%')));
+    }
+
     public function testWalkAndCompositeExpression()
     {
         $closure = $this->visitor->walkCompositeExpression(

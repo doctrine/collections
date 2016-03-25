@@ -155,6 +155,42 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
+            case Comparison::LIKE:
+            case Comparison::NOTLIKE:
+                $like    = $comparison->getOperator() === Comparison::LIKE;
+                $pattern = null;
+
+                // Replace the escaped characters to placeholder
+                $tmpValue = str_replace('\%', 'DOCTRINESQLWILDCARDESCAPEDMANY', $value);
+                $tmpValue = str_replace('\_', 'DOCTRINESQLWILDCARDESCAPEDONE', $tmpValue);
+
+                // Check whether we have a wildcard characters, and build the regular expression
+                if(strpos($tmpValue, '%') !== false || strpos($tmpValue, '_') !== false) {
+                    // Build regexp
+                    $pattern = preg_quote($tmpValue, '/');
+                    $pattern = str_replace('%', '.*', $pattern);
+                    $pattern = str_replace('_', '.{1}', $pattern);
+                    $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDMANY', '\\%', $pattern);
+                    $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDONE', '\\_', $pattern);
+                    $pattern = '/^' . $pattern . '$/m';
+
+                    return function ($object) use ($field, $value, $like, $pattern) {
+                        $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                        return (bool) ($like ? preg_match($pattern, $fieldValue) : !preg_match($pattern, $fieldValue));
+                    };
+                }
+                else {
+                    // Replace the escaped characters to normal one
+                    $value = str_replace('\%', '%', $value);
+                    $value = str_replace('\_', '_', $value);
+
+                    // The wildcard characters not exist, use regular comparison
+                    return function ($object) use ($field, $value, $like) {
+                        $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                        return ($like ? $fieldValue === $value : $fieldValue !== $value);
+                    };
+                }
+
             default:
                 throw new \RuntimeException("Unknown comparison operator: " . $comparison->getOperator());
         }

@@ -163,4 +163,26 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function like($field, $value)
+    {
+        return new Comparison($field, Comparison::LIKE, new Value($value));
+    }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function notLike($field, $value)
+    {
+        return new Comparison($field, Comparison::NOTLIKE, new Value($value));
+    }
 }

@@ -122,4 +122,21 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
         $this->assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
+
+    public function testLike()
+    {
+        $expr = $this->builder->like("a", "b");
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
+        $this->assertEquals(Comparison::LIKE, $expr->getOperator());
+    }
+
+    public function testNotLike()
+    {
+        $expr = $this->builder->notLike("a", "b");
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
+        $this->assertEquals(Comparison::NOTLIKE, $expr->getOperator());
+    }
+
 }
