@@ -73,6 +73,54 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($closure(new TestObject(2)));
     }
 
+    /**
+     * eq() performs a strict comparison, hence objects are equal iff their references are equal.
+     * It follows that eq() cannot be used for Value Objects.
+     */
+    public function testWalkEqualsComparisonForObjects()
+    {
+        $valueObject = new TestValueObject("foo");
+        $closure = $this->visitor->walkComparison($this->builder->eq("valueObject", $valueObject));
+
+        $this->assertTrue($closure(new TestEntity($valueObject)));
+        $this->assertFalse($closure(new TestEntity(new TestValueObject("foo"))));
+    }
+
+    /**
+     * neq() performs a strict comparison, hence objects are not equal iff their references are not equal.
+     * It follows that neq() cannot be used for Value Objects.
+     */
+    public function testWalkNotEqualsComparisonForObjects()
+    {
+        $valueObject = new TestValueObject("foo");
+        $closure = $this->visitor->walkComparison($this->builder->neq("valueObject", $valueObject));
+
+        $this->assertFalse($closure(new TestEntity($valueObject)));
+        $this->assertTrue($closure(new TestEntity(new TestValueObject("foo"))));
+    }
+
+    /**
+     * sim() performs a loose comparison and can be used for Value Objects.
+     */
+    public function testWalkSimilarToComparisonForValueObjects()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->sim("valueObject", new TestValueObject("foo")));
+
+        $this->assertTrue($closure(new TestEntity(new TestValueObject("foo"))));
+        $this->assertFalse($closure(new TestEntity(new TestValueObject("bar"))));
+    }
+
+    /**
+     * nsim() performs a loose comparison and can be used for Value Objects.
+     */
+    public function testWalkNotSimilarToComparisonForValueObjects()
+    {
+        $closure = $this->visitor->walkComparison($this->builder->nsim("valueObject", new TestValueObject("foo")));
+
+        $this->assertFalse($closure(new TestEntity(new TestValueObject("foo"))));
+        $this->assertTrue($closure(new TestEntity(new TestValueObject("bar"))));
+    }
+
     public function testWalkLessThanComparison()
     {
         $closure = $this->visitor->walkComparison($this->builder->lt("foo", 1));
@@ -248,3 +296,27 @@ class TestObject
     }
 }
 
+class TestEntity
+{
+    private $valueObject;
+
+    function __construct(TestValueObject $valueObject)
+    {
+        $this->valueObject = $valueObject;
+    }
+
+    public function getValueObject()
+    {
+        return $this->valueObject;
+    }
+}
+
+class TestValueObject
+{
+    private $value;
+
+    function __construct($value)
+    {
+        $this->value = $value;
+    }
+}
