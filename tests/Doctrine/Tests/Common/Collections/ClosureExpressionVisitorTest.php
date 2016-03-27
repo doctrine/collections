@@ -137,7 +137,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testWalkMemberOfComparisonWithObject()
     {
-        $closure = $this->visitor->walkComparison($this->builder->memberof(2, "foo"));
+        $closure = $this->visitor->walkComparison($this->builder->memberof("foo", 2));
 
         $this->assertTrue($closure(new TestObject(array(1,2,3))));
         $this->assertTrue($closure(new TestObject(array(2))));
