@@ -163,4 +163,15 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
+    public function memberOf ($field, $value)
+    {
+        return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
+    }
 }

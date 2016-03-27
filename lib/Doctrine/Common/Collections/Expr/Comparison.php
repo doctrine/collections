@@ -27,16 +27,17 @@ namespace Doctrine\Common\Collections\Expr;
  */
 class Comparison implements Expression
 {
-    const EQ        = '=';
-    const NEQ       = '<>';
-    const LT        = '<';
-    const LTE       = '<=';
-    const GT        = '>';
-    const GTE       = '>=';
-    const IS        = '='; // no difference with EQ
-    const IN        = 'IN';
-    const NIN       = 'NIN';
-    const CONTAINS  = 'CONTAINS';
+    const EQ         = '=';
+    const NEQ        = '<>';
+    const LT         = '<';
+    const LTE        = '<=';
+    const GT         = '>';
+    const GTE        = '>=';
+    const IS         = '='; // no difference with EQ
+    const IN         = 'IN';
+    const NIN        = 'NIN';
+    const CONTAINS   = 'CONTAINS';
+    const MEMBER_OF  = 'MEMBER_OF';
 
     /**
      * @var string
