@@ -16,3 +16,6 @@ before_script:
 
 script:
     - phpunit
+
+after_script:
+  - if [[ $TRAVIS_PHP_VERSION != '7.0' ]] && [[ $TRAVIS_PHP_VERSION != 'hhvm' ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi
