@@ -69,6 +69,24 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object[$field];
         }
 
+        if (isset($object->$field)) {
+            return $object->$field;
+        }
+
+        // camelcase field name to support different variable naming conventions
+        $ccField   = preg_replace_callback('/_(.?)/', function($matches) { return strtoupper($matches[1]); }, $field);
+
+        foreach ($accessors as $accessor) {
+            $accessor .= $ccField;
+
+
+            if ( ! method_exists($object, $accessor)) {
+                continue;
+            }
+
+            return $object->$accessor();
+        }
+
         return $object->$field;
     }
 
