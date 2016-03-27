@@ -158,7 +158,10 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             case Comparison::MEMBER_OF:
                 return function ($object) use ($field, $value) {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    return in_array($value, is_array($fieldValues) ? $fieldValues : iterator_to_array($fieldValues));
+                    if (!is_array($fieldValues)) {
+                        $fieldValues = iterator_to_array($fieldValues);
+                    }
+                    return in_array($value, $fieldValues);
                 };
 
             default:
