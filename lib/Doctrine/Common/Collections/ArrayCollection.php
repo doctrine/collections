@@ -295,7 +295,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $p)
+    public function filter(Closure $p = null)
     {
         return new static(array_filter($this->elements, $p));
     }
