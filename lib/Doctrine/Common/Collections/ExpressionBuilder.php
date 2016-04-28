@@ -27,7 +27,7 @@ use Doctrine\Common\Collections\Expr\Value;
  * Builder for Expressions in the {@link Selectable} interface.
  *
  * Important Notice for interoperable code: You have to use scalar
- * values only for comparisons, otherwise the behavior of the comparision
+ * values only for comparisons, otherwise the behavior of the comparison
  * may be different between implementations (Array vs ORM vs ODM).
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
