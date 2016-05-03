@@ -63,6 +63,12 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(end($elements), $collection->last());
     }
 
+    public function testLastWithEmptyElements()
+    {
+        $collection = new ArrayCollection([]);
+        $this->assertNull($collection->last());
+    }
+
     /**
      * @dataProvider provideDifferentElements
      */
