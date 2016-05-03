@@ -152,9 +152,9 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function toArray();
 
     /**
-     * Sets the internal iterator to the first element in the collection and returns this element.
+     * Sets the internal iterator to the first element in the collection and returns this element (or null if no element).
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function first();
 

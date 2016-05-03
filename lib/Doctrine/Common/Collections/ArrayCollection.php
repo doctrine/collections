@@ -68,6 +68,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function first()
     {
+        if (!$this->elements) {
+            return null;
+        }
         return reset($this->elements);
     }
 
