@@ -4,7 +4,6 @@ namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
-use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
@@ -17,38 +16,6 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 class CompositeExpressionTest extends TestCase
 {
-    /**
-     * @return array
-     */
-    public function invalidDataProvider()
-    {
-        return array(
-            array(
-                'expression' => new Value('value'),
-            ),
-            array(
-                'expression' => 'wrong-type',
-            ),
-        );
-    }
-
-    /**
-     * @dataProvider invalidDataProvider
-     *
-     * @param $expression
-     * @return void
-     */
-    public function testExceptions($expression)
-    {
-        $type = CompositeExpression::TYPE_AND;
-        $expressions = array(
-            $expression,
-        );
-
-        $this->setExpectedException('\RuntimeException');
-        $compositeExpression = new CompositeExpression($type, $expressions);
-    }
-
     /**
      * @return CompositeExpression
      */
