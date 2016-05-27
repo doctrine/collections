@@ -36,13 +36,12 @@ class CompositeExpressionTest extends TestCase
      */
     public function testExceptions($expression)
     {
-        $this->setExpectedException('\RuntimeException');
-
         $type = CompositeExpression::TYPE_AND;
         $expressions = array(
             $expression,
         );
 
+        $this->setExpectedException('\RuntimeException');
         new CompositeExpression($type, $expressions);
     }
 
