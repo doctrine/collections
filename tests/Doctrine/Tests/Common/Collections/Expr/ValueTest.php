@@ -11,11 +11,8 @@ use PHPUnit_Framework_TestCase as TestCase;
  *
  * PHP Version 5
  *
- * @category  PHP
- * @package   Doctrine\Tests\Common\Collections\Expr
- * @author    Tobias Oberrauch <hello@tobiasoberrauch.com>
- *
- * @covers \Doctrine\Common\Collections\Expr\Value
+ * @author  Tobias Oberrauch <hello@tobiasoberrauch.com>
+ * @covers  \Doctrine\Common\Collections\Expr\Value
  */
 class ValueTest extends TestCase
 {
