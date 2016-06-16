@@ -16,6 +16,21 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Criteria::class, $criteria);
     }
 
+    public function testFromFindCriteria() : void
+    {
+        $criteria = Criteria::fromFindCriteria(['name' => 'test', 'foo' => [42, 1337]]);
+
+        /** @var CompositeExpression $where */
+        $where = $criteria->getWhereExpression();
+        $this->assertInstanceOf(CompositeExpression::class, $where);
+
+        $this->assertSame(CompositeExpression::TYPE_AND, $where->getType());
+        $this->assertCount(2, $where->getExpressionList());
+        $this->assertInstanceOf(Comparison::class, $where->getExpressionList()[0]);
+        $this->assertInstanceOf(CompositeExpression::class, $where->getExpressionList()[1]);
+        $this->assertSame(CompositeExpression::TYPE_OR, $where->getExpressionList()[1]->getType());
+    }
+
     public function testConstructor() : void
     {
         $expr     = new Comparison("field", "=", "value");
