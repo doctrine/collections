@@ -21,6 +21,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Tests\DerivedArrayCollection;
 
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}
@@ -314,5 +315,22 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
                 ->matching(new Criteria(null, array('foo' => Criteria::DESC, 'bar' => Criteria::DESC)))
                 ->toArray()
         );
+    }
+
+    /**
+     * Tests that methods that create a new instance can be called in a derived
+     * class that implements different constructor semantics.
+     */
+    public function testDerivedClassCreation()
+    {
+        $collection = new DerivedArrayCollection(new \stdClass);
+        $closure = function () {
+            // Intentionally empty.
+        };
+
+        self::assertInstanceOf('Doctrine\Tests\DerivedArrayCollection', $collection->map($closure));
+        self::assertInstanceOf('Doctrine\Tests\DerivedArrayCollection', $collection->filter($closure));
+        self::assertContainsOnlyInstancesOf('Doctrine\Tests\DerivedArrayCollection', $collection->partition($closure));
+        self::assertInstanceOf('Doctrine\Tests\DerivedArrayCollection', $collection->matching(new Criteria));
     }
 }

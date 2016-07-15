@@ -56,6 +56,21 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
+     * Creates a new instance from the specified elements.
+     *
+     * This method is provided for derived classes to specify how a new
+     * instance should be created when constructor semantics have changed.
+     *
+     * @param array $elements Elements.
+     *
+     * @return static
+     */
+    protected function createFrom(array $elements)
+    {
+        return new static($elements);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function toArray()
@@ -289,7 +304,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function map(Closure $func)
     {
-        return new static(array_map($func, $this->elements));
+        return $this->createFrom(array_map($func, $this->elements));
     }
 
     /**
@@ -297,7 +312,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function filter(Closure $p)
     {
-        return new static(array_filter($this->elements, $p));
+        return $this->createFrom(array_filter($this->elements, $p));
     }
 
     /**
@@ -329,7 +344,7 @@ class ArrayCollection implements Collection, Selectable
             }
         }
 
-        return array(new static($matches), new static($noMatches));
+        return array($this->createFrom($matches), $this->createFrom($noMatches));
     }
 
     /**
@@ -388,6 +403,6 @@ class ArrayCollection implements Collection, Selectable
             $filtered = array_slice($filtered, (int)$offset, $length);
         }
 
-        return new static($filtered);
+        return $this->createFrom($filtered);
     }
 }
