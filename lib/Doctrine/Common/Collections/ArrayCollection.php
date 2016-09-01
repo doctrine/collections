@@ -274,9 +274,9 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function add($value)
+    public function add($element)
     {
-        $this->elements[] = $value;
+        $this->elements[] = $element;
 
         return true;
     }
