@@ -93,6 +93,13 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
     }
 
+    public function testGetObjectFieldValueSameNameMethod()
+    {
+        $object = new TestObject(1, 2, true, 3, 4);
+
+        $this->assertEquals(4, $this->visitor->getObjectFieldValue($object, 'quux'));
+    }
+
     public function testWalkEqualsComparison()
     {
         $closure = $this->visitor->walkComparison($this->builder->eq("foo", 1));
@@ -277,13 +284,15 @@ class TestObject
     private $bar;
     private $baz;
     private $qux;
+    private $quux;
 
-    public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
+    public function __construct($foo = null, $bar = null, $baz = null, $qux = null, $quux = null)
     {
-        $this->foo = $foo;
-        $this->bar = $bar;
-        $this->baz = $baz;
-        $this->qux = $qux;
+        $this->foo  = $foo;
+        $this->bar  = $bar;
+        $this->baz  = $baz;
+        $this->qux  = $qux;
+        $this->quux = $quux;
     }
 
     public function __call($name, $arguments)
@@ -306,6 +315,11 @@ class TestObject
     public function isBaz()
     {
         return $this->baz;
+    }
+
+    public function quux()
+    {
+        return $this->quux;
     }
 }
 
