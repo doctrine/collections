@@ -124,78 +124,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public function walkComparison(Comparison $comparison)
     {
-        $field = $comparison->getField();
-        $value = $comparison->getValue()->getValue(); // shortcut for walkValue()
-
-        switch ($comparison->getOperator()) {
-            case Comparison::EQ:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
-                };
-
-            case Comparison::NEQ:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
-                };
-
-            case Comparison::LT:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
-                };
-
-            case Comparison::LTE:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
-                };
-
-            case Comparison::GT:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
-                };
-
-            case Comparison::GTE:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
-                };
-
-            case Comparison::IN:
-                return function ($object) use ($field, $value) {
-                    return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
-                };
-
-            case Comparison::NIN:
-                return function ($object) use ($field, $value) {
-                    return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
-                };
-
-            case Comparison::CONTAINS:
-                return function ($object) use ($field, $value) {
-                    return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
-                };
-
-            case Comparison::MEMBER_OF:
-                return function ($object) use ($field, $value) {
-                    $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    if (!is_array($fieldValues)) {
-                        $fieldValues = iterator_to_array($fieldValues);
-                    }
-                    return in_array($value, $fieldValues);
-                };
-
-            case Comparison::STARTS_WITH:
-                return function ($object) use ($field, $value) {
-                    return 0 === strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
-                };
-
-            case Comparison::ENDS_WITH:
-                return function ($object) use ($field, $value) {
-                    return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
-                };
-
-
-            default:
-                throw new \RuntimeException("Unknown comparison operator: " . $comparison->getOperator());
-        }
+        return $comparison->getFilterCallback();
     }
 
     /**

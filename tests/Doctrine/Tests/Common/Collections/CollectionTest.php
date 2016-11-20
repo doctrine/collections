@@ -62,4 +62,21 @@ class CollectionTest extends BaseCollectionTest
         $this->assertEquals(1, count($col));
         $this->assertEquals('baz', $col[0]->foo);
     }
+
+    public function testMatchWithClosureCriteria()
+    {
+        $dateTime = new \DateTime();
+        $this->collection->add(new \DateTime('2000-01-01'));
+        $this->collection->add(new \DateTime());
+        $this->collection->add(new \DateTime());
+
+        $criteria = Criteria::create()
+            ->andWhere(
+                Criteria::expr()->matchingClosure(function(\DateTimeInterface $date) use ($dateTime) {
+                        return $date->format('Y-m-d') === $dateTime->format('Y-m-d');
+                    })
+            )
+        ;
+        $this->assertCount(2, $this->collection->matching($criteria));
+    }
 }

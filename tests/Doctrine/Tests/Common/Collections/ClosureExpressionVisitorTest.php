@@ -269,6 +269,33 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($closure(array('foo' => 42)));
     }
+
+    public function testClosureComparison() {
+        $closure = $this->visitor->walkComparison(
+            $this->builder->matchingClosure(
+                function (TestObject $context) {
+                    return $context->getFoo() == 43;
+                }
+            )
+        );
+        $this->assertTrue($closure(new TestObject(43)));
+    }
+
+    public function testClosureComparisonWithArgumentInContextObject() {
+        $compareTo = new TestObject('foo', 'bar');
+        $context = new TestObject('foo', 'bar', 'baz');
+        $this->assertNotEquals($context, $compareTo, 'The data in object should not be the same');
+
+        $closure = $this->visitor->walkComparison(
+            $this->builder->matchingClosure(
+                function (TestObject $context) use ($compareTo) {
+                    return $context->matchValueObject($compareTo);
+                }
+            )
+        );
+
+        $this->assertTrue($closure($context));
+    }
 }
 
 class TestObject
@@ -306,6 +333,15 @@ class TestObject
     public function isBaz()
     {
         return $this->baz;
+    }
+
+    /**
+     * @param TestObject $object
+     *
+     * @return bool
+     */
+    public function matchValueObject(TestObject $object) {
+        return $this->foo === $object->foo && $this->bar === $object->bar;
     }
 }
 

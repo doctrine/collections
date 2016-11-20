@@ -39,7 +39,7 @@ class Comparison implements Expression
     const CONTAINS   = 'CONTAINS';
     const MEMBER_OF  = 'MEMBER_OF';
     const STARTS_WITH  = 'STARTS_WITH';
-    const ENDS_WITH    = 'ENDS_WITH';    
+    const ENDS_WITH    = 'ENDS_WITH';
     /**
      * @var string
      */
@@ -101,5 +101,14 @@ class Comparison implements Expression
     public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkComparison($this);
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getFilterCallback()
+    {
+        // todo should be abstract, defined for BC
+        throw new \RuntimeException(__METHOD__ . ' is not defined yet, you can override it.');
     }
 }
