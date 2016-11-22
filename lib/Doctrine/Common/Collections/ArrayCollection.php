@@ -83,6 +83,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function first()
     {
+        if (!$this->elements) {
+            return null;
+        }
         return reset($this->elements);
     }
 
@@ -91,6 +94,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function last()
     {
+        if (!$this->elements) {
+            return null;
+        }
         return end($this->elements);
     }
 

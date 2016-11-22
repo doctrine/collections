@@ -49,6 +49,12 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(reset($elements), $collection->first());
     }
 
+    public function testFirstWithEmptyElements()
+    {
+        $collection = new ArrayCollection([]);
+        $this->assertNull($collection->first());
+    }
+
     /**
      * @dataProvider provideDifferentElements
      */
@@ -56,6 +62,12 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new ArrayCollection($elements);
         $this->assertSame(end($elements), $collection->last());
+    }
+
+    public function testLastWithEmptyElements()
+    {
+        $collection = new ArrayCollection([]);
+        $this->assertNull($collection->last());
     }
 
     /**
@@ -164,6 +176,7 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
             'indexed'     => array(array(1, 2, 3, 4, 5)),
             'associative' => array(array('A' => 'a', 'B' => 'b', 'C' => 'c')),
             'mixed'       => array(array('A' => 'a', 1, 'B' => 'b', 2, 3)),
+            'falsy'       => array(array(false)),
         );
     }
 
