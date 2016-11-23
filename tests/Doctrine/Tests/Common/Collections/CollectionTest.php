@@ -56,6 +56,15 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(2, 4), $res->toArray());
     }
 
+    public function testReduce()
+    {
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $callback = function($curry, $e) { return $curry +  $e * 2; };
+        $this->assertEquals(6, $this->collection->reduce($callback));
+        $this->assertEquals(7, $this->collection->reduce($callback, 1));
+    }
+
     public function testFilter()
     {
         $this->collection->add(1);
