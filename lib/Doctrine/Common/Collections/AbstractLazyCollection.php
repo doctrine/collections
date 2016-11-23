@@ -62,6 +62,15 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function addUnique($element)
+    {
+        $this->initialize();
+        return $this->collection->addUnique($element);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function clear()
     {
         $this->initialize();

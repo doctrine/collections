@@ -284,6 +284,16 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
+    public function addUnique($element)
+    {
+        return $this->contains($element)
+            ? false
+            : $this->add($element);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function isEmpty()
     {
         return empty($this->elements);

@@ -262,4 +262,14 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->collection->set('key', null);
         $this->assertTrue($this->collection->containsKey('key'));
     }
+
+    public function testAddUnique()
+    {
+        $this->collection->add(1);
+
+        $this->assertFalse($this->collection->addUnique(1));
+        $this->assertEquals(array(1), $this->collection->toArray());
+        $this->assertTrue($this->collection->addUnique(2));
+        $this->assertEquals(array(1, 2), $this->collection->toArray());
+    }
 }
