@@ -225,6 +225,16 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function map(Closure $func);
 
     /**
+     * Iteratively reduce the array to a single value using a callback function.
+     *
+     * @param Closure $func
+     * @param mixed   $initial
+     *
+     * @return mixed
+     */
+    public function reduce(Closure $func, $initial = null);
+
+    /**
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
      *
