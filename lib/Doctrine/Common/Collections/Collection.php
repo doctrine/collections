@@ -206,6 +206,17 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function filter(Closure $p);
 
     /**
+     * Reduces all the elements of this collection into a single value.
+     *
+     * @param Closure    $p       The predicate used for reducing.
+     * @param mixed|null $initial An optional initial value to begin the operation with
+     *                            or to return in case the collection is empty.
+     *
+     * @return mixed The result of the reduce operation.
+     */
+    function reduce(Closure $p, $initial = null);
+
+    /**
      * Tests whether the given predicate p holds for all elements of this collection.
      *
      * @param Closure $p The predicate.

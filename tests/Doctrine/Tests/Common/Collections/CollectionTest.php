@@ -65,6 +65,28 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(0 => 1, 2 => 3), $res->toArray());
     }
 
+    public function testReduce()
+    {
+        $this->_coll->add(1);
+        $this->_coll->add(2);
+        $res = $this->_coll->reduce(function($memo, $e) { return $memo + $e; });
+        $this->assertSame(3, $res);
+    }
+
+    public function testReduceWithInitialValue()
+    {
+        $this->_coll->add(1);
+        $this->_coll->add(2);
+        $res = $this->_coll->reduce(function($memo, $e) { return $memo + $e; }, 0);
+        $this->assertSame(3, $res);
+    }
+
+    public function testReduceWhenCollectionIsEmptyReturnsInitialValue()
+    {
+        $res = $this->_coll->reduce(function($e) { return $e; }, 10);
+        $this->assertSame(10, $res);
+    }
+
     public function testFirstAndLast()
     {
         $this->collection->add('one');
