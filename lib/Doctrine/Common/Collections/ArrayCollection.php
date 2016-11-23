@@ -347,6 +347,14 @@ class ArrayCollection implements Collection, Selectable
         return array($this->createFrom($matches), $this->createFrom($noMatches));
     }
 
+   /**
+     * {@inheritDoc}
+     */
+    public function sort(Closure $comparator)
+    {
+        usort($this->_elements, $comparator);
+    }
+
     /**
      * Returns a string representation of this object.
      *
