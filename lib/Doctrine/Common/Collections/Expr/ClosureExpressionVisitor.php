@@ -160,12 +160,12 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::IN:
                 return function ($object) use ($field, $value) {
-                    return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                    return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value, true);
                 };
 
             case Comparison::NIN:
                 return function ($object) use ($field, $value) {
-                    return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                    return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value, true);
                 };
 
             case Comparison::CONTAINS:
@@ -179,7 +179,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     if (!is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
                     }
-                    return in_array($value, $fieldValues);
+                    return in_array($value, $fieldValues, true);
                 };
 
             case Comparison::STARTS_WITH:
