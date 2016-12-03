@@ -3,6 +3,9 @@ namespace Doctrine\Tests;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Simple collection implements different constructor semantics
+ */
 final class DerivedArrayCollection extends ArrayCollection
 {
     private $foo;

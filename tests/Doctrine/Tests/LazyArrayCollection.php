@@ -2,6 +2,7 @@
 
 namespace Doctrine\Tests;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -10,6 +11,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class LazyArrayCollection extends AbstractLazyCollection
 {
+    private $_onInitialization;
+
+    public function __construct(Collection $collection)
+    {
+        $this->_onInitialization = $collection;
+    }
+
     /**
      * Do the initialization logic
      *
@@ -17,6 +25,6 @@ class LazyArrayCollection extends AbstractLazyCollection
      */
     protected function doInitialize()
     {
-        $this->collection = new ArrayCollection(array('a', 'b', 'c'));
+        $this->collection = $this->_onInitialization;
     }
 }
