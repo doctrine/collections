@@ -26,8 +26,8 @@ class CollectionTest extends BaseCollectionTest
     {
         $this->fillMatchingFixture();
 
-        $col = $this->collection->matching(new Criteria(Criteria::expr()->eq("foo", "bar")));
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
+        $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('foo', 'bar')));
+        $this->assertInstanceOf(Collection::class, $col);
         $this->assertNotSame($col, $this->collection);
         $this->assertEquals(1, count($col));
     }
@@ -39,9 +39,9 @@ class CollectionTest extends BaseCollectionTest
     {
         $this->fillMatchingFixture();
 
-        $col = $this->collection->matching(new Criteria(null, array('foo' => 'DESC')));
+        $col = $this->collection->matching(new Criteria(null, ['foo' => 'DESC']));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
+        $this->assertInstanceOf(Collection::class, $col);
         $this->assertNotSame($col, $this->collection);
         $this->assertEquals(2, count($col));
         $this->assertEquals('baz', $col->first()->foo);
@@ -57,7 +57,7 @@ class CollectionTest extends BaseCollectionTest
 
         $col = $this->collection->matching(new Criteria(null, null, 1, 1));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $col);
+        $this->assertInstanceOf(Collection::class, $col);
         $this->assertNotSame($col, $this->collection);
         $this->assertEquals(1, count($col));
         $this->assertEquals('baz', $col[0]->foo);

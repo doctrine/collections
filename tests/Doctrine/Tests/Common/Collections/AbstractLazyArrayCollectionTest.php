@@ -29,14 +29,14 @@ use Doctrine\Tests\LazyArrayCollection;
  */
 class AbstractLazyCollectionTest extends BaseArrayCollectionTest
 {
-    protected function buildCollection(array $elements = array())
+    protected function buildCollection(array $elements = [])
     {
         return new LazyArrayCollection(new ArrayCollection($elements));
     }
 
     public function testLazyCollection()
     {
-        $collection = $this->buildCollection(array('a', 'b', 'c'));
+        $collection = $this->buildCollection(['a', 'b', 'c']);
 
         $this->assertFalse($collection->isInitialized());
         $this->assertCount(3, $collection);

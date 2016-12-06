@@ -24,7 +24,7 @@ use Doctrine\Common\Collections\Selectable;
 
 abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 {
-    abstract protected function buildCollection(array $elements = array());
+    abstract protected function buildCollection(array $elements = []);
 
     protected function isSelectable($obj)
     {
@@ -161,16 +161,16 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDifferentElements()
     {
-        return array(
-            'indexed'     => array(array(1, 2, 3, 4, 5)),
-            'associative' => array(array('A' => 'a', 'B' => 'b', 'C' => 'c')),
-            'mixed'       => array(array('A' => 'a', 1, 'B' => 'b', 2, 3)),
-        );
+        return [
+            'indexed'     => [[1, 2, 3, 4, 5]],
+            'associative' => [['A' => 'a', 'B' => 'b', 'C' => 'c']],
+            'mixed'       => [['A' => 'a', 1, 'B' => 'b', 2, 3]],
+        ];
     }
 
     public function testRemove()
     {
-        $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3);
+        $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3];
         $collection = $this->buildCollection($elements);
 
         $this->assertEquals(1, $collection->remove(0));
@@ -190,7 +190,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testRemoveElement()
     {
-        $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b');
+        $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
 
         $this->assertTrue($collection->removeElement(1));
@@ -209,7 +209,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testContainsKey()
     {
-        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b');
+        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
 
         $this->assertTrue($collection->containsKey(0), 'Contains index 0');
@@ -229,7 +229,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testContains()
     {
-        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         $this->assertTrue($collection->contains(0), 'Contains Zero');
@@ -240,7 +240,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testExists()
     {
-        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         $this->assertTrue($collection->exists(function ($key, $element) {
@@ -254,7 +254,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testIndexOf()
     {
-        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         $this->assertSame(array_search(2, $elements, true), $collection->indexOf(2), 'Index of 2');
@@ -264,7 +264,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         $this->assertSame(2, $collection->get(1), 'Get element by index');
@@ -280,39 +280,39 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $object1->sortField = 2;
         $object2->sortField = 1;
 
-        $collection = $this->buildCollection(array(
+        $collection = $this->buildCollection([
             'object1' => $object1,
             'object2' => $object2,
-        ));
+        ]);
 
         if (!$this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 
         $this->assertSame(
-            array(
+            [
                 'object2' => $object2,
                 'object1' => $object1,
-            ),
+            ],
             $collection
-                ->matching(new Criteria(null, array('sortField' => Criteria::ASC)))
+                ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
                 ->toArray()
         );
     }
 
     public function testMultiColumnSortAppliesAllSorts()
     {
-        $collection = $this->buildCollection(array(
-            array('foo' => 1, 'bar' => 2),
-            array('foo' => 2, 'bar' => 4),
-            array('foo' => 2, 'bar' => 3)
-        ));
+        $collection = $this->buildCollection([
+            ['foo' => 1, 'bar' => 2],
+            ['foo' => 2, 'bar' => 4],
+            ['foo' => 2, 'bar' => 3]
+        ]);
 
-        $expected = array(
-            1 => array('foo' => 2, 'bar' => 4),
-            2 => array('foo' => 2, 'bar' => 3),
-            0 => array('foo' => 1, 'bar' => 2)
-        );
+        $expected = [
+            1 => ['foo' => 2, 'bar' => 4],
+            2 => ['foo' => 2, 'bar' => 3],
+            0 => ['foo' => 1, 'bar' => 2]
+        ];
 
         if (!$this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
@@ -321,7 +321,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, array('foo' => Criteria::DESC, 'bar' => Criteria::DESC)))
+                ->matching(new Criteria(null, ['foo' => Criteria::DESC, 'bar' => Criteria::DESC]))
                 ->toArray()
         );
     }

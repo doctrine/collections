@@ -46,7 +46,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $res = $this->collection->map(function ($e) {
             return $e * 2;
         });
-        $this->assertEquals(array(2, 4), $res->toArray());
+        $this->assertEquals([2, 4], $res->toArray());
     }
 
     public function testFilter()
@@ -57,7 +57,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $res = $this->collection->filter(function ($e) {
             return is_numeric($e);
         });
-        $this->assertEquals(array(0 => 1, 2 => 3), $res->toArray());
+        $this->assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
 
     public function testFirstAndLast()
@@ -109,14 +109,14 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
-        $this->assertEquals(array(0, 1), $this->collection->getKeys());
+        $this->assertEquals([0, 1], $this->collection->getKeys());
     }
 
     public function testGetValues()
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
-        $this->assertEquals(array('one', 'two'), $this->collection->getValues());
+        $this->assertEquals(['one', 'two'], $this->collection->getValues());
     }
 
     public function testCount()
@@ -187,13 +187,13 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
 
         $slice = $this->collection->slice(0, 1);
         $this->assertInternalType('array', $slice);
-        $this->assertEquals(array('one'), $slice);
+        $this->assertEquals(['one'], $slice);
 
         $slice = $this->collection->slice(1);
-        $this->assertEquals(array(1 => 'two', 2 => 'three'), $slice);
+        $this->assertEquals([1 => 'two', 2 => 'three'], $slice);
 
         $slice = $this->collection->slice(1, 1);
-        $this->assertEquals(array(1 => 'two'), $slice);
+        $this->assertEquals([1 => 'two'], $slice);
     }
 
     public function fillMatchingFixture()
