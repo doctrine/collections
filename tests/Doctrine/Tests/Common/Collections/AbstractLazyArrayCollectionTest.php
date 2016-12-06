@@ -23,21 +23,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Tests\LazyArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}
+ * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}.
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
 class AbstractLazyCollectionTest extends BaseArrayCollectionTest
 {
-
-    protected function _buildCollection(array $elements = array())
+    protected function buildCollection(array $elements = array())
     {
         return new LazyArrayCollection(new ArrayCollection($elements));
     }
 
     public function testLazyCollection()
     {
-        $collection = $this->_buildCollection(array('a', 'b', 'c'));
+        $collection = $this->buildCollection(array('a', 'b', 'c'));
 
         $this->assertFalse($collection->isInitialized());
         $this->assertCount(3, $collection);

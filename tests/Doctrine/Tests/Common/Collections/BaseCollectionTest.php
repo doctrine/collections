@@ -2,9 +2,7 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 
 abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,11 +27,15 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testExists()
     {
-        $this->collection->add("one");
-        $this->collection->add("two");
-        $exists = $this->collection->exists(function($k, $e) { return $e == "one"; });
+        $this->collection->add('one');
+        $this->collection->add('two');
+        $exists = $this->collection->exists(function ($k, $e) {
+            return $e == 'one';
+        });
         $this->assertTrue($exists);
-        $exists = $this->collection->exists(function($k, $e) { return $e == "other"; });
+        $exists = $this->collection->exists(function ($k, $e) {
+            return $e == 'other';
+        });
         $this->assertFalse($exists);
     }
 
@@ -41,16 +43,20 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->collection->add(1);
         $this->collection->add(2);
-        $res = $this->collection->map(function($e) { return $e * 2; });
+        $res = $this->collection->map(function ($e) {
+            return $e * 2;
+        });
         $this->assertEquals(array(2, 4), $res->toArray());
     }
 
     public function testFilter()
     {
         $this->collection->add(1);
-        $this->collection->add("foo");
+        $this->collection->add('foo');
         $this->collection->add(3);
-        $res = $this->collection->filter(function($e) { return is_numeric($e); });
+        $res = $this->collection->filter(function ($e) {
+            return is_numeric($e);
+        });
         $this->assertEquals(array(0 => 1, 2 => 3), $res->toArray());
     }
 
@@ -125,15 +131,21 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
-        $this->assertEquals($this->collection->forAll(function($k, $e) { return is_string($e); }), true);
-        $this->assertEquals($this->collection->forAll(function($k, $e) { return is_array($e); }), false);
+        $this->assertEquals($this->collection->forAll(function ($k, $e) {
+            return is_string($e);
+        }), true);
+        $this->assertEquals($this->collection->forAll(function ($k, $e) {
+            return is_array($e);
+        }), false);
     }
 
     public function testPartition()
     {
         $this->collection[] = true;
         $this->collection[] = false;
-        $partition = $this->collection->partition(function($k, $e) { return $e == true; });
+        $partition = $this->collection->partition(function ($k, $e) {
+            return $e == true;
+        });
         $this->assertEquals($partition[0][0], true);
         $this->assertEquals($partition[1][0], false);
     }
@@ -187,11 +199,11 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
     public function fillMatchingFixture()
     {
         $std1 = new \stdClass();
-        $std1->foo = "bar";
+        $std1->foo = 'bar';
         $this->collection[] = $std1;
 
         $std2 = new \stdClass();
-        $std2->foo = "baz";
+        $std2->foo = 'baz';
         $this->collection[] = $std2;
     }
 

@@ -22,14 +22,13 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}
+ * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}.
  *
  * @covers \Doctrine\Common\Collections\ArrayCollection
  */
 class ArrayCollectionTest extends BaseArrayCollectionTest
 {
-
-    protected function _buildCollection(array $elements = array())
+    protected function buildCollection(array $elements = array())
     {
         return new ArrayCollection($elements);
     }

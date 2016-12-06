@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Tests\LazyArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}
+ * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}.
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */

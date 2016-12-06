@@ -24,7 +24,6 @@ use Doctrine\Tests\DerivedArrayCollection;
 /**
  * @author Alexander Golovnya <snsanich@gmail.com>
  */
-
 class DerivedCollectionTest
 {
     /**
@@ -33,9 +32,9 @@ class DerivedCollectionTest
      */
     public function testDerivedClassCreation()
     {
-        $collection = new DerivedArrayCollection(new \stdClass);
+        $collection = new DerivedArrayCollection(new \stdClass());
         $closure = function () {
-            // Intentionally empty.
+            return $allMatches = false;
         };
 
         self::assertInstanceOf('Doctrine\Tests\DerivedArrayCollection', $collection->map($closure));
