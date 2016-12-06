@@ -20,16 +20,25 @@
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Tests\LazyArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}.
+ * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}.
  *
- * @covers \Doctrine\Common\Collections\ArrayCollection
+ * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
-class ArrayCollectionTest extends BaseArrayCollectionTest
+class AbstractLazyCollectionTest extends BaseArrayCollectionTest
 {
     protected function buildCollection(array $elements = [])
     {
-        return new ArrayCollection($elements);
+        return new LazyArrayCollection(new ArrayCollection($elements));
+    }
+
+    public function testLazyCollection()
+    {
+        $collection = $this->buildCollection(['a', 'b', 'c']);
+
+        $this->assertFalse($collection->isInitialized());
+        $this->assertCount(3, $collection);
     }
 }

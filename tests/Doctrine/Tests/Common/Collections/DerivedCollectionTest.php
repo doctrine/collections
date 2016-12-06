@@ -19,17 +19,27 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Tests\DerivedArrayCollection;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}.
- *
- * @covers \Doctrine\Common\Collections\ArrayCollection
+ * @author Alexander Golovnya <snsanich@gmail.com>
  */
-class ArrayCollectionTest extends BaseArrayCollectionTest
+class DerivedCollectionTest
 {
-    protected function buildCollection(array $elements = [])
+    /**
+     * Tests that methods that create a new instance can be called in a derived
+     * class that implements different constructor semantics.
+     */
+    public function testDerivedClassCreation()
     {
-        return new ArrayCollection($elements);
+        $collection = new DerivedArrayCollection(new \stdClass());
+        $closure = function () {
+            return $allMatches = false;
+        };
+
+        self::assertInstanceOf(DerivedArrayCollection::class, $collection->map($closure));
+        self::assertInstanceOf(DerivedArrayCollection::class, $collection->filter($closure));
+        self::assertContainsOnlyInstancesOf(DerivedArrayCollection::class, $collection->partition($closure));
+        self::assertInstanceOf(DerivedArrayCollection::class, $collection->matching(new Criteria()));
     }
 }

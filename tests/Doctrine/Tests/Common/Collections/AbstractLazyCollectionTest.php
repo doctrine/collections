@@ -2,19 +2,18 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Tests\LazyArrayCollection;
 
-class AbstractLazyCollectionTest extends \PHPUnit_Framework_TestCase
+/**
+ * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}.
+ *
+ * @covers \Doctrine\Common\Collections\AbstractLazyCollection
+ */
+class LazyCollectionTest extends BaseCollectionTest
 {
-    public function testLazyCollection()
+    protected function setUp()
     {
-        $collection = new LazyArrayCollection();
-
-        $this->assertFalse($collection->isInitialized());
-        $this->assertCount(3, $collection);
-
-        $collection->add('bar');
-        $this->assertTrue($collection->isInitialized());
-        $this->assertCount(4, $collection);
+        $this->collection = new LazyArrayCollection(new ArrayCollection());
     }
 }
