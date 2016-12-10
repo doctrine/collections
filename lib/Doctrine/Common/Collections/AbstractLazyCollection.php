@@ -340,4 +340,13 @@ abstract class AbstractLazyCollection implements Collection
      * @return void
      */
     abstract protected function doInitialize();
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prev()
+    {
+        $this->initialize();
+        return $this->collection->prev();
+    }
 }

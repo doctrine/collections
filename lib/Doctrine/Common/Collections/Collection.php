@@ -260,4 +260,11 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array
      */
     public function slice($offset, $length = null);
+
+    /**
+     * Moves the internal iterator position to the previous element and returns this element.
+     *
+     * @return mixed
+     */
+    public function prev();
 }
