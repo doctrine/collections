@@ -42,7 +42,7 @@ class ExpressionBuilder
      */
     public function andX($x = null)
     {
-        return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
+        return new CompositeExpression(CompositeExpression::TYPE_AND, is_array($x) ? $x : func_get_args());
     }
 
     /**
@@ -52,7 +52,7 @@ class ExpressionBuilder
      */
     public function orX($x = null)
     {
-        return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
+        return new CompositeExpression(CompositeExpression::TYPE_OR, is_array($x) ? $x : func_get_args());
     }
 
     /**
