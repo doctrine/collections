@@ -37,6 +37,44 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(CompositeExpression::TYPE_OR, $expr->getType());
     }
 
+    public function testAndXArguments()
+    {
+        $x = [
+            $this->builder->eq("a", "b"),
+            $this->builder->eq("c", "d"),
+        ];
+
+        $expr = $this->builder->andX(
+            $x[0],
+            $x[1]
+        );
+
+        $this->assertEquals($x, $expr->getExpressionList());
+
+        $expr = $this->builder->andX($x);
+
+        $this->assertEquals($x, $expr->getExpressionList());
+    }
+
+    public function testOrXArguments()
+    {
+        $x = [
+            $this->builder->eq("a", "b"),
+            $this->builder->eq("c", "d"),
+        ];
+
+        $expr = $this->builder->orX(
+            $x[0],
+            $x[1]
+        );
+
+        $this->assertEquals($x, $expr->getExpressionList());
+
+        $expr = $this->builder->orX($x);
+
+        $this->assertEquals($x, $expr->getExpressionList());
+    }
+
     public function testInvalidAndXArgument()
     {
         $this->setExpectedException("RuntimeException");
