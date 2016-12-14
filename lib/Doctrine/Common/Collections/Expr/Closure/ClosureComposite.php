@@ -25,7 +25,7 @@ use Doctrine\Common\Collections\Expr\FilterAware;
 /**
  * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class ClosureComposite implements FilterAware, Filterable
+abstract class ClosureComposite implements FilterAware, Filterable, MatchByClosure
 {
     /**
      * @var FilterAware[]
@@ -165,6 +165,14 @@ abstract class ClosureComposite implements FilterAware, Filterable
     public function memberOf($field, $value)
     {
         $this->expressions[] = new ClosureMemberOf($field, $value);
+    }
+
+    /**
+     * @param callable $closure
+     */
+    public function matchBy($closure)
+    {
+        $this->expressions[] = new ClosureMatchClosure($closure);
     }
 
     /**

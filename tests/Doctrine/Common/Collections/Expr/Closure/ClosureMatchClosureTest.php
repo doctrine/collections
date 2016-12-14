@@ -90,7 +90,7 @@ final class MatchClosure implements Expression
      */
     public function applyTo(Filterable $selection)
     {
-        if ($selection instanceof ClosureSelection) {
+        if ($selection instanceof MatchByClosure) {
             $selection->matchBy($this->closure);
         }
     }
