@@ -20,8 +20,7 @@
 namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\Comparison;
-use Doctrine\Common\Collections\Expr\CompositeExpression;
-use Doctrine\Common\Collections\Expr\Value;
+use Doctrine\Common\Collections\Expr\Composition;
 
 /**
  * Builder for Expressions in the {@link Selectable} interface.
@@ -38,163 +37,164 @@ class ExpressionBuilder
     /**
      * @param mixed $x
      *
-     * @return CompositeExpression
+     * @return Composition\AndComposition
+     * @throws \RuntimeException
      */
     public function andX($x = null)
     {
-        return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
+        return new Composition\AndComposition(func_get_args());
     }
 
     /**
      * @param mixed $x
      *
-     * @return CompositeExpression
+     * @return Composition\OrComposition
+     * @throws \RuntimeException
      */
     public function orX($x = null)
     {
-        return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
+        return new Composition\OrComposition(func_get_args());
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\Equal
      */
     public function eq($field, $value)
     {
-        return new Comparison($field, Comparison::EQ, new Value($value));
+        return new Comparison\Equal($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\GreaterThan
      */
     public function gt($field, $value)
     {
-        return new Comparison($field, Comparison::GT, new Value($value));
+        return new Comparison\GreaterThan($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\LessThan
      */
     public function lt($field, $value)
     {
-        return new Comparison($field, Comparison::LT, new Value($value));
+        return new Comparison\LessThan($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\GreaterThanEqual
      */
     public function gte($field, $value)
     {
-        return new Comparison($field, Comparison::GTE, new Value($value));
+        return new Comparison\GreaterThanEqual($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\LessThanEqual
      */
     public function lte($field, $value)
     {
-        return new Comparison($field, Comparison::LTE, new Value($value));
+        return new Comparison\LessThanEqual($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\NotEqual
      */
     public function neq($field, $value)
     {
-        return new Comparison($field, Comparison::NEQ, new Value($value));
+        return new Comparison\NotEqual($field, $value);
     }
 
     /**
      * @param string $field
      *
-     * @return Comparison
+     * @return Comparison\Equal
      */
     public function isNull($field)
     {
-        return new Comparison($field, Comparison::EQ, new Value(null));
+        return new Comparison\Equal($field, null);
     }
 
     /**
      * @param string $field
      * @param mixed  $values
      *
-     * @return Comparison
+     * @return Comparison\In
      */
     public function in($field, array $values)
     {
-        return new Comparison($field, Comparison::IN, new Value($values));
+        return new Comparison\In($field, $values);
     }
 
     /**
      * @param string $field
-     * @param mixed  $values
+     * @param array  $values
      *
-     * @return Comparison
+     * @return Comparison\NotIn
      */
     public function notIn($field, array $values)
     {
-        return new Comparison($field, Comparison::NIN, new Value($values));
+        return new Comparison\NotIn($field, $values);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\Contains
      */
     public function contains($field, $value)
     {
-        return new Comparison($field, Comparison::CONTAINS, new Value($value));
+        return new Comparison\Contains($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\MemberOf
      */
-    public function memberOf ($field, $value)
+    public function memberOf($field, $value)
     {
-        return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
+        return new Comparison\MemberOf($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\StartsWith
      */
     public function startsWith($field, $value)
     {
-        return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
+        return new Comparison\StartsWith($field, $value);
     }
 
     /**
      * @param string $field
      * @param mixed  $value
      *
-     * @return Comparison
+     * @return Comparison\EndsWith
      */
     public function endsWith($field, $value)
     {
-        return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
-    }    
-
+        return new Comparison\EndsWith($field, $value);
+    }
 }

@@ -23,7 +23,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests/Doctrine/Tests"
+            "Doctrine\\": "tests/Doctrine"
         }
     },
     "extra": {

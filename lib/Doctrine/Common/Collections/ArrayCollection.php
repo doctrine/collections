@@ -21,7 +21,8 @@ namespace Doctrine\Common\Collections;
 
 use ArrayIterator;
 use Closure;
-use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Doctrine\Common\Collections\Expr\Closure\ClosureSelection;
+use Doctrine\Common\Collections\Expr\ClosureExpressionHelper;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
@@ -382,15 +383,15 @@ class ArrayCollection implements Collection, Selectable
         $filtered = $this->elements;
 
         if ($expr) {
-            $visitor  = new ClosureExpressionVisitor();
-            $filter   = $visitor->dispatch($expr);
-            $filtered = array_filter($filtered, $filter);
+            $selection = new ClosureSelection();
+            $expr->applyTo($selection);
+            $filtered = array_filter($filtered, $selection->getFilter());
         }
 
         if ($orderings = $criteria->getOrderings()) {
             $next = null;
             foreach (array_reverse($orderings) as $field => $ordering) {
-                $next = ClosureExpressionVisitor::sortByField($field, $ordering == Criteria::DESC ? -1 : 1, $next);
+                $next = ClosureExpressionHelper::sortByField($field, $ordering == Criteria::DESC ? -1 : 1, $next);
             }
 
             uasort($filtered, $next);

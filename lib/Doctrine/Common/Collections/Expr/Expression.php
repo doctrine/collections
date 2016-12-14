@@ -27,9 +27,7 @@ namespace Doctrine\Common\Collections\Expr;
 interface Expression
 {
     /**
-     * @param ExpressionVisitor $visitor
-     *
-     * @return mixed
+     * @param Filterable $selection
      */
-    public function visit(ExpressionVisitor $visitor);
+    public function applyTo(Filterable $selection);
 }

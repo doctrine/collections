@@ -17,49 +17,23 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Composition;
+
+use Doctrine\Common\Collections\Expr\Composable;
+use Doctrine\Common\Collections\Expr\Composition;
+use Doctrine\Common\Collections\Expr\Filterable;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+final class AndComposition extends Composition
 {
     /**
-     * @var string
+     * @param Composable $selection
+     * @return Filterable
      */
-    private $field;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    protected function joinBy(Composable $selection)
     {
-        $this->field = $field;
-        $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    final protected function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
-    {
-        return $this->value;
+        return $selection->andX();
     }
 }

@@ -17,49 +17,30 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Comparison;
+
+use Doctrine\Common\Collections\Expr\Comparison;
+use Doctrine\Common\Collections\Expr\ComparisonTest;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+class ArrayEqualTest extends ComparisonTest
 {
     /**
-     * @var string
+     * @return Comparison
      */
-    private $field;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    protected function buildExpression()
     {
-        $this->field = $field;
-        $this->value = $value;
+        return $this->builder->eq('foo', 42);
     }
 
     /**
-     * @return string
+     * @param \Closure $closure
      */
-    final protected function getField()
+    protected function checkExpression(\Closure $closure)
     {
-        return $this->field;
-    }
-
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
-    {
-        return $this->value;
+        static::assertTrue($closure(array('foo' => 42)));
+        static::assertFalse($closure(array('foo' => 24)));
     }
 }

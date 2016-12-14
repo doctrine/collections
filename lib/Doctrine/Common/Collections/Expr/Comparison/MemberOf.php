@@ -17,49 +17,21 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Comparison;
+
+use Doctrine\Common\Collections\Expr\Comparison;
+use Doctrine\Common\Collections\Expr\Filterable;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+final class MemberOf extends Comparison
 {
     /**
-     * @var string
+     * @param Filterable $selection
      */
-    private $field;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    public function applyTo(Filterable $selection)
     {
-        $this->field = $field;
-        $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    final protected function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
-    {
-        return $this->value;
+        $selection->memberOf($this->getField(), $this->getValue());
     }
 }

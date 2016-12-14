@@ -19,8 +19,9 @@
 
 namespace Doctrine\Common\Collections;
 
+use Doctrine\Common\Collections\Expr\Composition\AndComposition;
+use Doctrine\Common\Collections\Expr\Composition\OrComposition;
 use Doctrine\Common\Collections\Expr\Expression;
-use Doctrine\Common\Collections\Expr\CompositeExpression;
 
 /**
  * Criteria for filtering Selectable collections.
@@ -136,10 +137,8 @@ class Criteria
         if ($this->expression === null) {
             return $this->where($expression);
         }
-
-        $this->expression = new CompositeExpression(CompositeExpression::TYPE_AND, array(
-            $this->expression, $expression
-        ));
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection - here expression hinted by constructor and current method */
+        $this->expression = new AndComposition([$this->expression, $expression]);
 
         return $this;
     }
@@ -157,10 +156,8 @@ class Criteria
         if ($this->expression === null) {
             return $this->where($expression);
         }
-
-        $this->expression = new CompositeExpression(CompositeExpression::TYPE_OR, array(
-            $this->expression, $expression
-        ));
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection - here expression hinted by constructor and current method */
+        $this->expression = new OrComposition([$this->expression, $expression]);
 
         return $this;
     }

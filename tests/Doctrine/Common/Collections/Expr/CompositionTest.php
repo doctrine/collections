@@ -19,47 +19,41 @@
 
 namespace Doctrine\Common\Collections\Expr;
 
+use Doctrine\Common\Collections\Expr\Closure\ClosureSelection;
+use Doctrine\Common\Collections\ExpressionBuilder;
+
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+abstract class CompositionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var string
+     * @var ExpressionBuilder
      */
-    private $field;
+    protected $builder;
 
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    public function setUp()
     {
-        $this->field = $field;
-        $this->value = $value;
+        $this->builder = new ExpressionBuilder();
+    }
+
+    public function testCompose()
+    {
+        $expression = $this->buildExpression();
+        $container = new ClosureSelection();
+        $expression->applyTo($container);
+        $closure = $container->getFilter();
+
+        $this->checkExpression($closure);
     }
 
     /**
-     * @return string
+     * @return Comparison
      */
-    final protected function getField()
-    {
-        return $this->field;
-    }
+    abstract protected function buildExpression();
 
     /**
-     * @return mixed
+     * @param \Closure $closure
      */
-    final protected function getValue()
-    {
-        return $this->value;
-    }
+    abstract protected function checkExpression(\Closure $closure);
 }

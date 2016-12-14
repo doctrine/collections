@@ -17,49 +17,29 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Closure;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @internal Should be used only at `ClosureSelection`
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+final class ClosureAnd extends ClosureComposite
 {
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
-    {
-        $this->field = $field;
-        $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    final protected function getField()
-    {
-        return $this->field;
-    }
-
     /**
      * @return mixed
      */
-    final protected function getValue()
+    public function getFilter()
     {
-        return $this->value;
+        $expressions = $this->getExpressions();
+        return function ($object) use ($expressions) {
+            foreach ($expressions as $expression) {
+                /** @var \Closure $filter */
+                $filter = $expression->getFilter();
+                if ( ! $filter($object)) {
+                    return false;
+                }
+            }
+            return true;
+        };
     }
 }

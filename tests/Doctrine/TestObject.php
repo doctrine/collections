@@ -17,49 +17,46 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+
+class TestObject
 {
-    /**
-     * @var string
-     */
-    private $field;
+    private $foo;
+    private $bar;
+    private $baz;
+    private $qux;
 
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
     {
-        $this->field = $field;
-        $this->value = $value;
+        $this->foo = $foo;
+        $this->bar = $bar;
+        $this->baz = $baz;
+        $this->qux = $qux;
     }
 
-    /**
-     * @return string
-     */
-    final protected function getField()
+    public function __call($name, $arguments)
     {
-        return $this->field;
+        if ('getqux' === $name) {
+            return $this->qux;
+        }
     }
 
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
+    public function getFoo()
     {
-        return $this->value;
+        return $this->foo;
+    }
+
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
+    public function isBaz()
+    {
+        return $this->baz;
     }
 }

@@ -4,7 +4,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Expr\Comparison;
-use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Composition;
 
 /**
  * @group DDC-1637
@@ -23,127 +23,114 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testAndX()
     {
-        $expr = $this->builder->andX($this->builder->eq("a", "b"));
+        $expr = $this->builder->andX($this->builder->eq('a', 'b'));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\CompositeExpression', $expr);
-        $this->assertEquals(CompositeExpression::TYPE_AND, $expr->getType());
+        static::assertInstanceOf(Composition\AndComposition::class, $expr);
     }
 
     public function testOrX()
     {
-        $expr = $this->builder->orX($this->builder->eq("a", "b"));
+        $expr = $this->builder->orX($this->builder->eq('a', 'b'));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\CompositeExpression', $expr);
-        $this->assertEquals(CompositeExpression::TYPE_OR, $expr->getType());
+        static::assertInstanceOf(Composition\OrComposition::class, $expr);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testInvalidAndXArgument()
     {
-        $this->setExpectedException("RuntimeException");
-        $this->builder->andX("foo");
+        $this->builder->andX('foo');
     }
 
     public function testEq()
     {
-        $expr = $this->builder->eq("a", "b");
+        $expr = $this->builder->eq('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::EQ, $expr->getOperator());
+        static::assertInstanceOf(Comparison\Equal::class, $expr);
     }
 
     public function testNeq()
     {
-        $expr = $this->builder->neq("a", "b");
+        $expr = $this->builder->neq('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::NEQ, $expr->getOperator());
+        static::assertInstanceOf(Comparison\NotEqual::class, $expr);
     }
 
     public function testLt()
     {
-        $expr = $this->builder->lt("a", "b");
+        $expr = $this->builder->lt('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::LT, $expr->getOperator());
+        static::assertInstanceOf(Comparison\LessThan::class, $expr);
     }
 
     public function testGt()
     {
-        $expr = $this->builder->gt("a", "b");
+        $expr = $this->builder->gt('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::GT, $expr->getOperator());
+        static::assertInstanceOf(Comparison\GreaterThan::class, $expr);
     }
 
     public function testGte()
     {
-        $expr = $this->builder->gte("a", "b");
+        $expr = $this->builder->gte('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::GTE, $expr->getOperator());
+        static::assertInstanceOf(Comparison\GreaterThanEqual::class, $expr);
     }
 
     public function testLte()
     {
-        $expr = $this->builder->lte("a", "b");
+        $expr = $this->builder->lte('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::LTE, $expr->getOperator());
+        static::assertInstanceOf(Comparison\LessThanEqual::class, $expr);
     }
 
     public function testIn()
     {
-        $expr = $this->builder->in("a", array("b"));
+        $expr = $this->builder->in('a', array('b'));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::IN, $expr->getOperator());
+        static::assertInstanceOf(Comparison\In::class, $expr);
     }
 
     public function testNotIn()
     {
-        $expr = $this->builder->notIn("a", array("b"));
+        $expr = $this->builder->notIn('a', array('b'));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::NIN, $expr->getOperator());
+        static::assertInstanceOf(Comparison\NotIn::class, $expr);
     }
 
     public function testIsNull()
     {
-        $expr = $this->builder->isNull("a");
+        $expr = $this->builder->isNull('a');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::EQ, $expr->getOperator());
+        static::assertInstanceOf(Comparison\Equal::class, $expr);
     }
 
     public function testContains()
     {
-        $expr = $this->builder->contains("a", "b");
+        $expr = $this->builder->contains('a', 'b');
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::CONTAINS, $expr->getOperator());
+        static::assertInstanceOf(Comparison\Contains::class, $expr);
     }
 
     public function testMemberOf()
     {
-        $expr = $this->builder->memberOf("b", array("a"));
+        $expr = $this->builder->memberOf('b', array('a'));
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
-        $this->assertEquals(Comparison::MEMBER_OF, $expr->getOperator());
+        static::assertInstanceOf(Comparison\MemberOf::class, $expr);
     }
 
     public function testStartsWith()
     {
-        $expr = $this->builder->startsWith("a", "b");
+        $expr = $this->builder->startsWith('a', 'b');
 
-        $this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
-        $this->assertEquals(Comparison::STARTS_WITH, $expr->getOperator());
+        static::assertInstanceOf(Comparison\StartsWith::class, $expr);
     }
 
     public function testEndsWith()
     {
-        $expr = $this->builder->endsWith("a", "b");
+        $expr = $this->builder->endsWith('a', 'b');
 
-        $this->assertInstanceOf("Doctrine\Common\Collections\Expr\Comparison", $expr);
-        $this->assertEquals(Comparison::ENDS_WITH, $expr->getOperator());
+        static::assertInstanceOf(Comparison\EndsWith::class, $expr);
     }    
 }

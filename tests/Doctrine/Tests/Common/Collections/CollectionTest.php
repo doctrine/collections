@@ -16,7 +16,7 @@ class CollectionTest extends BaseCollectionTest
     public function testToString()
     {
         $this->collection->add('testing');
-        $this->assertTrue(is_string((string) $this->collection));
+        static::assertTrue(is_string((string) $this->collection));
     }
 
     /**
@@ -27,9 +27,9 @@ class CollectionTest extends BaseCollectionTest
         $this->fillMatchingFixture();
 
         $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('foo', 'bar')));
-        $this->assertInstanceOf(Collection::class, $col);
-        $this->assertNotSame($col, $this->collection);
-        $this->assertEquals(1, count($col));
+        static::assertInstanceOf(Collection::class, $col);
+        static::assertNotSame($col, $this->collection);
+        static::assertEquals(1, count($col));
     }
 
     /**
@@ -41,11 +41,12 @@ class CollectionTest extends BaseCollectionTest
 
         $col = $this->collection->matching(new Criteria(null, ['foo' => 'DESC']));
 
-        $this->assertInstanceOf(Collection::class, $col);
-        $this->assertNotSame($col, $this->collection);
-        $this->assertEquals(2, count($col));
-        $this->assertEquals('baz', $col->first()->foo);
-        $this->assertEquals('bar', $col->last()->foo);
+        static::assertInstanceOf(Collection::class, $col);
+        /** @var Collection $col */
+        static::assertNotSame($col, $this->collection);
+        static::assertEquals(2, count($col));
+        static::assertEquals('baz', $col->first()->foo);
+        static::assertEquals('bar', $col->last()->foo);
     }
 
     /**
@@ -57,9 +58,9 @@ class CollectionTest extends BaseCollectionTest
 
         $col = $this->collection->matching(new Criteria(null, null, 1, 1));
 
-        $this->assertInstanceOf(Collection::class, $col);
-        $this->assertNotSame($col, $this->collection);
-        $this->assertEquals(1, count($col));
-        $this->assertEquals('baz', $col[0]->foo);
+        static::assertInstanceOf(Collection::class, $col);
+        static::assertNotSame($col, $this->collection);
+        static::assertEquals(1, count($col));
+        static::assertEquals('baz', $col[0]->foo);
     }
 }

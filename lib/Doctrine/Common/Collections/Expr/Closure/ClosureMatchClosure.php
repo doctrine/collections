@@ -17,49 +17,34 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Closure;
+
+use Doctrine\Common\Collections\Expr\FilterAware;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @internal Should be used only at `ClosureSelection`
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+final class ClosureMatchClosure implements FilterAware
 {
     /**
-     * @var string
+     * @var callable
      */
-    private $field;
+    private $closure;
 
     /**
-     * @var mixed
+     * @param callable $closure
      */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    public function __construct($closure)
     {
-        $this->field = $field;
-        $this->value = $value;
+        $this->closure = $closure;
     }
 
     /**
-     * @return string
+     * @return callable
      */
-    final protected function getField()
+    public function getFilter()
     {
-        return $this->field;
-    }
-
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
-    {
-        return $this->value;
+        return $this->closure;
     }
 }

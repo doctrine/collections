@@ -17,15 +17,16 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Closure;
+
+use Doctrine\Common\Collections\Expr\ClosureExpressionHelper;
+use Doctrine\Common\Collections\Expr\FilterAware;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @internal Should be used only at `ClosureSelection`
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+final class ClosureEndsWith implements FilterAware
 {
     /**
      * @var string
@@ -48,18 +49,17 @@ abstract class Comparison implements Expression
     }
 
     /**
-     * @return string
+     * @return \Closure
      */
-    final protected function getField()
+    public function getFilter()
     {
-        return $this->field;
-    }
-
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
-    {
-        return $this->value;
+        $field = $this->field;
+        $value = $this->value;
+        return function ($object) use ($field, $value) {
+            return $value === substr(
+                ClosureExpressionHelper::getObjectFieldValue($object, $field),
+                -strlen($value)
+            );
+        };
     }
 }

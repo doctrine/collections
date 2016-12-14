@@ -17,36 +17,49 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Closure;
 
-class Value implements Expression
+use Doctrine\Common\Collections\Expr\ClosureExpressionHelper;
+use Doctrine\Common\Collections\Expr\FilterAware;
+
+/**
+ * @internal Should be used only at `ClosureSelection`
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
+ */
+final class ClosureContains implements FilterAware
 {
+    /**
+     * @var string
+     */
+    private $field;
+
     /**
      * @var mixed
      */
     private $value;
 
     /**
-     * @param mixed $value
+     * @param string $field
+     * @param mixed  $value
      */
-    public function __construct($value)
+    public function __construct($field, $value)
     {
+        $this->field = $field;
         $this->value = $value;
     }
 
     /**
-     * @return mixed
+     * @return \Closure
      */
-    public function getValue()
+    public function getFilter()
     {
-        return $this->value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function visit(ExpressionVisitor $visitor)
-    {
-        return $visitor->walkValue($this);
+        $field = $this->field;
+        $value = $this->value;
+        return function ($object) use ($value, $field) {
+            return false !== strpos(
+                ClosureExpressionHelper::getObjectFieldValue($object, $field),
+                $value
+            );
+        };
     }
 }

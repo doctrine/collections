@@ -17,49 +17,36 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Common\Collections\Expr\Composition;
+
+use Doctrine\Common\Collections\Expr\Composition;
+use Doctrine\Common\Collections\Expr\CompositionTest;
+use Doctrine\TestObject;
 
 /**
- * Comparison of a field with a value by the given operator.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-abstract class Comparison implements Expression
+class AndCompositionTest extends CompositionTest
 {
     /**
-     * @var string
+     * @return Composition
      */
-    private $field;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param mixed  $value
-     */
-    public function __construct($field, $value)
+    protected function buildExpression()
     {
-        $this->field = $field;
-        $this->value = $value;
+        return $this->builder->andX(
+            $this->builder->eq('foo', 1),
+            $this->builder->eq('bar', 1)
+        );
     }
 
     /**
-     * @return string
+     * @param \Closure $closure
      */
-    final protected function getField()
+    protected function checkExpression(\Closure $closure)
     {
-        return $this->field;
-    }
-
-    /**
-     * @return mixed
-     */
-    final protected function getValue()
-    {
-        return $this->value;
+        static::assertTrue($closure(new TestObject(1, 1)));
+        static::assertFalse($closure(new TestObject(1, 0)));
+        static::assertFalse($closure(new TestObject(0, 1)));
+        static::assertFalse($closure(new TestObject(0, 0)));
     }
 }
