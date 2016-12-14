@@ -50,9 +50,6 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals($x, $expr->getExpressionList());
 
-        $expr = $this->builder->andX($x);
-        $this->assertEquals($x, $expr->getExpressionList());
-
         $expr = $this->builder->andX(...$x);
         $this->assertEquals($x, $expr->getExpressionList());
     }
@@ -68,9 +65,6 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
             $x[0],
             $x[1]
         );
-        $this->assertEquals($x, $expr->getExpressionList());
-
-        $expr = $this->builder->orX($x);
         $this->assertEquals($x, $expr->getExpressionList());
 
         $expr = $this->builder->orX(...$x);
