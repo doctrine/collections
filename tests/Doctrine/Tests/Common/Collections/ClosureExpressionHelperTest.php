@@ -83,6 +83,16 @@ class ClosureExpressionHelperTest extends \PHPUnit_Framework_TestCase
         static::assertEquals('bar', ClosureExpressionHelper::getObjectFieldValue($object, 'foo'));
     }
 
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage No way found to access value of field 'anyField' on stdClass
+     */
+    public function testNoFieldValueFound()
+    {
+        $object = new \stdClass();
+        static::assertNull(ClosureExpressionHelper::getObjectFieldValue($object, 'anyField'));
+    }
+
     public function testSortByFieldAscending()
     {
         /** @var TestObject[] $objects */

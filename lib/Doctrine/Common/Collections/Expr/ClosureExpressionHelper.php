@@ -86,7 +86,7 @@ final class ClosureExpressionHelper
             }
         }
 
-        return $object->$field;
+        throw new LogicException('No way found to access value of field \''.$field.'\' on '.get_class($object));
     }
 
     /**
