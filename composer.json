@@ -13,7 +13,8 @@
         {"name": "Johannes Schmitt", "email": "schmittjoh@gmail.com"}
     ],
     "require": {
-        "php": "^5.5 || ^7.0"
+        "php": "^5.5 || ^7.0",
+        "doctrine/coding-standard": "~0.1@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
