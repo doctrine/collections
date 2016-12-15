@@ -19,6 +19,8 @@
 
 namespace Doctrine\Common\Collections\Expr;
 
+use LogicException;
+
 /**
  * Walks an expression graph and turns it into a PHP closure.
  *
@@ -28,7 +30,7 @@ namespace Doctrine\Common\Collections\Expr;
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  * @since  2.3
  */
-class ClosureExpressionHelper
+final class ClosureExpressionHelper
 {
     /**
      * Accesses the field of a given object. This field has to be public
@@ -37,6 +39,7 @@ class ClosureExpressionHelper
      *
      * @param object|array $object
      * @param string       $field
+     * @throws LogicException
      *
      * @return mixed
      */
@@ -46,22 +49,19 @@ class ClosureExpressionHelper
             return $object[$field];
         }
 
-        $accessors = array('get', 'is');
+        $accessors = ['get', 'is'];
 
         foreach ($accessors as $accessor) {
             $accessor .= $field;
-
-            if ( ! method_exists($object, $accessor)) {
-                continue;
+            if (method_exists($object, $accessor)) {
+                return $object->$accessor();
             }
-
-            return $object->$accessor();
         }
 
-        // __call should be triggered for get.
-        $accessor = $accessors[0] . $field;
-
         if (method_exists($object, '__call')) {
+            // __call should be triggered for get.
+            $accessor = $accessors[0] . $field;
+
             return $object->$accessor();
         }
 
@@ -74,17 +74,16 @@ class ClosureExpressionHelper
         }
 
         // camelcase field name to support different variable naming conventions
-        $ccField   = preg_replace_callback('/_(.?)/', function($matches) { return strtoupper($matches[1]); }, $field);
+        $upperCaseFirstLetter = function ($matches) {
+            return strtoupper($matches[1]);
+        };
+        $ccField   = preg_replace_callback('/_(.?)/', $upperCaseFirstLetter, $field);
 
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
-
-
-            if ( ! method_exists($object, $accessor)) {
-                continue;
+            if (method_exists($object, $accessor)) {
+                return $object->$accessor();
             }
-
-            return $object->$accessor();
         }
 
         return $object->$field;
@@ -101,21 +100,21 @@ class ClosureExpressionHelper
      */
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
-        if ( ! $next) {
-            $next = function() {
+        if (!$next) {
+            $next = function () {
                 return 0;
             };
         }
 
-        return function ($a, $b) use ($name, $next, $orientation) {
-            $aValue = ClosureExpressionHelper::getObjectFieldValue($a, $name);
-            $bValue = ClosureExpressionHelper::getObjectFieldValue($b, $name);
+        return function ($first, $second) use ($name, $next, $orientation) {
+            $firstValue = ClosureExpressionHelper::getObjectFieldValue($first, $name);
+            $secondValue = ClosureExpressionHelper::getObjectFieldValue($second, $name);
 
-            if ($aValue === $bValue) {
-                return $next($a, $b);
+            if ($firstValue === $secondValue) {
+                return $next($first, $second);
             }
 
-            return (($aValue > $bValue) ? 1 : -1) * $orientation;
+            return (($firstValue > $secondValue) ? 1 : -1) * $orientation;
         };
     }
 }

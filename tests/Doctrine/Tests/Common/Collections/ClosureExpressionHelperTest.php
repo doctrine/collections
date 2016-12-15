@@ -77,6 +77,12 @@ class ClosureExpressionHelperTest extends \PHPUnit_Framework_TestCase
         static::assertEquals(3, ClosureExpressionHelper::getObjectFieldValue($object, 'qux'));
     }
 
+    public function testGetObjectFieldValueArrayAccess()
+    {
+        $object = new \ArrayObject(['foo' => 'bar']);
+        static::assertEquals('bar', ClosureExpressionHelper::getObjectFieldValue($object, 'foo'));
+    }
+
     public function testSortByFieldAscending()
     {
         /** @var TestObject[] $objects */
@@ -101,6 +107,19 @@ class ClosureExpressionHelperTest extends \PHPUnit_Framework_TestCase
         static::assertEquals('c', $objects[0]->getFoo());
         static::assertEquals('b', $objects[1]->getFoo());
         static::assertEquals('a', $objects[2]->getFoo());
+    }
+
+    public function testSortByFieldTwoEqual()
+    {
+        /** @var TestObject[] $objects */
+        $objects = [new TestObject('a'), new TestObject('a'), new TestObject('c')];
+        $sort = ClosureExpressionHelper::sortByField('foo');
+
+        usort($objects, $sort);
+
+        static::assertEquals('a', $objects[0]->getFoo());
+        static::assertEquals('a', $objects[1]->getFoo());
+        static::assertEquals('c', $objects[2]->getFoo());
     }
 
     public function testSortDelegate()

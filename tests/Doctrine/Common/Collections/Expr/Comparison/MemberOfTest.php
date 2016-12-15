@@ -19,6 +19,7 @@
 
 namespace Doctrine\Common\Collections\Expr\Comparison;
 
+use Doctrine\Common\Collections\Expr\Closure\ClosureSelection;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\ComparisonTest;
 use Doctrine\TestObject;
@@ -28,6 +29,18 @@ use Doctrine\TestObject;
  */
 class MemberOfTest extends ComparisonTest
 {
+    public function testTraversableValue()
+    {
+        $expression = $this->buildExpression();
+        $container = new ClosureSelection();
+        $expression->applyTo($container);
+        $closure = $container->getFilter();
+
+        static::assertTrue($closure(new TestObject(new \ArrayIterator(array(1,2,3)))));
+        static::assertTrue($closure(new TestObject(new \ArrayIterator(array(2)))));
+        static::assertFalse($closure(new TestObject(new \ArrayIterator(array(1,3,5)))));
+    }
+
     /**
      * @return Comparison
      */
