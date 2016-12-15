@@ -43,6 +43,7 @@ abstract class ClosureComposite implements FilterAware, Filterable, MatchByClosu
     final public function andX()
     {
         $container = new ClosureAnd();
+
         $this->expressions[] = $container;
 
         return $container;
@@ -54,6 +55,7 @@ abstract class ClosureComposite implements FilterAware, Filterable, MatchByClosu
     public function orX()
     {
         $container = new ClosureOr();
+
         $this->expressions[] = $container;
 
         return $container;

@@ -25,7 +25,7 @@ use Doctrine\Common\Collections\Expr\Selection;
 /**
  * @author Oleksandr Sova <sovaalexandr@gmail.com>
  */
-final class ClosureSelection extends Selection implements  MatchByClosure
+final class ClosureSelection extends Selection implements MatchByClosure
 {
     /**
      * @return Filterable

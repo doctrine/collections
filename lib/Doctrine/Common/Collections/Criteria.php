@@ -34,7 +34,7 @@ class Criteria
     /**
      * @var string
      */
-    const ASC  = 'ASC';
+    const ASC = 'ASC';
 
     /**
      * @var string
@@ -98,8 +98,12 @@ class Criteria
      * @param int|null      $firstResult
      * @param int|null      $maxResults
      */
-    public function __construct(Expression $expression = null, array $orderings = null, $firstResult = null, $maxResults = null)
-    {
+    public function __construct(
+        Expression $expression = null,
+        array $orderings = null,
+        $firstResult = null,
+        $maxResults = null
+    ) {
         $this->expression = $expression;
 
         $this->setFirstResult($firstResult);
@@ -137,7 +141,7 @@ class Criteria
         if ($this->expression === null) {
             return $this->where($expression);
         }
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection - here expression hinted by constructor and current method */
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection - Expression hinted by constructor and method */
         $this->expression = new AndComposition([$this->expression, $expression]);
 
         return $this;
@@ -156,7 +160,7 @@ class Criteria
         if ($this->expression === null) {
             return $this->where($expression);
         }
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection - here expression hinted by constructor and current method */
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection - Expression hinted by constructor and method */
         $this->expression = new OrComposition([$this->expression, $expression]);
 
         return $this;

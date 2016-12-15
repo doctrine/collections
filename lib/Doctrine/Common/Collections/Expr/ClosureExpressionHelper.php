@@ -77,7 +77,7 @@ final class ClosureExpressionHelper
         $upperCaseFirstLetter = function ($matches) {
             return strtoupper($matches[1]);
         };
-        $ccField   = preg_replace_callback('/_(.?)/', $upperCaseFirstLetter, $field);
+        $ccField = preg_replace_callback('/_(.?)/', $upperCaseFirstLetter, $field);
 
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
@@ -86,7 +86,7 @@ final class ClosureExpressionHelper
             }
         }
 
-        throw new LogicException('No way found to access value of field \''.$field.'\' on '.get_class($object));
+        throw new LogicException('No way found to access value of field \'' . $field . '\' on ' . get_class($object));
     }
 
     /**
@@ -95,19 +95,19 @@ final class ClosureExpressionHelper
      * @param string   $name
      * @param int      $orientation
      * @param \Closure $next
-     *
+     * @throws \LogicException
      * @return \Closure
      */
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
-        if (!$next) {
+        if ( ! $next) {
             $next = function () {
                 return 0;
             };
         }
 
         return function ($first, $second) use ($name, $next, $orientation) {
-            $firstValue = ClosureExpressionHelper::getObjectFieldValue($first, $name);
+            $firstValue  = ClosureExpressionHelper::getObjectFieldValue($first, $name);
             $secondValue = ClosureExpressionHelper::getObjectFieldValue($second, $name);
 
             if ($firstValue === $secondValue) {

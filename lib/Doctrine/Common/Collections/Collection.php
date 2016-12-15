@@ -189,30 +189,30 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Tests for the existence of an element that satisfies the given predicate.
      *
-     * @param Closure $p The predicate.
+     * @param Closure $predicate The predicate to check if element is at collection.
      *
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    public function exists(Closure $p);
+    public function exists(Closure $predicate);
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
      *
-     * @param Closure $p The predicate used for filtering.
+     * @param Closure $predicate The predicate used for filtering.
      *
      * @return Collection A collection with the results of the filter operation.
      */
-    public function filter(Closure $p);
+    public function filter(Closure $predicate);
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
      *
-     * @param Closure $p The predicate.
+     * @param Closure $predicate The predicate.
      *
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    public function forAll(Closure $p);
+    public function forAll(Closure $predicate);
 
     /**
      * Applies the given function to each element in the collection and returns
@@ -228,13 +228,13 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
      *
-     * @param Closure $p The predicate on which to partition.
+     * @param Closure $predicate The predicate on which to partition.
      *
      * @return array An array with two elements. The first element contains the collection
      *               of elements where the predicate returned TRUE, the second element
      *               contains the collection of elements where the predicate returned FALSE.
      */
-    public function partition(Closure $p);
+    public function partition(Closure $predicate);
 
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,

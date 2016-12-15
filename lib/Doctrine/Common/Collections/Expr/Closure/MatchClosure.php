@@ -48,7 +48,7 @@ final class MatchClosure implements Expression
     public function applyTo(Filterable $selection)
     {
         if (!($selection instanceof MatchByClosure)) {
-            $message = 'Expression is not applicable to selection of type '.get_class($selection);
+            $message = 'Expression is not applicable to selection of type ' . get_class($selection);
             throw new LogicException($message);
         }
         $selection->matchBy($this->closure);

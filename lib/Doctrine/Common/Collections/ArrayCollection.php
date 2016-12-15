@@ -178,7 +178,8 @@ class ArrayCollection implements Collection, Selectable
     public function offsetSet($offset, $value)
     {
         if ( ! isset($offset)) {
-            return $this->add($value);
+            $this->add($value);
+            return;
         }
 
         $this->set($offset, $value);
@@ -213,10 +214,10 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function exists(Closure $p)
+    public function exists(Closure $predicate)
     {
         foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
+            if ($predicate($key, $element)) {
                 return true;
             }
         }
@@ -287,6 +288,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function isEmpty()
     {
+        /** @noinspection IsEmptyFunctionUsageInspection - for performance reasons. */
         return empty($this->elements);
     }
 
@@ -311,18 +313,18 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $p)
+    public function filter(Closure $predicate)
     {
-        return $this->createFrom(array_filter($this->elements, $p));
+        return $this->createFrom(array_filter($this->elements, $predicate));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function forAll(Closure $p)
+    public function forAll(Closure $predicate)
     {
         foreach ($this->elements as $key => $element) {
-            if ( ! $p($key, $element)) {
+            if ( ! $predicate($key, $element)) {
                 return false;
             }
         }
@@ -333,12 +335,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p)
+    public function partition(Closure $predicate)
     {
         $matches = $noMatches = array();
 
         foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
+            if ($predicate($key, $element)) {
                 $matches[$key] = $element;
             } else {
                 $noMatches[$key] = $element;

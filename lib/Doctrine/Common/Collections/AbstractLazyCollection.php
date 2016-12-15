@@ -206,28 +206,28 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function exists(Closure $p)
+    public function exists(Closure $predicate)
     {
         $this->initialize();
-        return $this->collection->exists($p);
+        return $this->collection->exists($predicate);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $p)
+    public function filter(Closure $predicate)
     {
         $this->initialize();
-        return $this->collection->filter($p);
+        return $this->collection->filter($predicate);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function forAll(Closure $p)
+    public function forAll(Closure $predicate)
     {
         $this->initialize();
-        return $this->collection->forAll($p);
+        return $this->collection->forAll($predicate);
     }
 
     /**
@@ -242,10 +242,10 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p)
+    public function partition(Closure $predicate)
     {
         $this->initialize();
-        return $this->collection->partition($p);
+        return $this->collection->partition($predicate);
     }
 
     /**
