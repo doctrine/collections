@@ -20,7 +20,6 @@
 namespace Doctrine\Common\Collections\Expr\Closure;
 
 use Doctrine\Common\Collections\Expr\Comparison;
-use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\Filterable;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\TestObject;
@@ -51,6 +50,18 @@ class ClosureMatchClosureTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \LogicException
+     */
+    public function testWrongSelection()
+    {
+        /** @var Filterable|\PHPUnit_Framework_MockObject_MockObject $selection */
+        $selection = $this->getMockBuilder(Filterable::class)
+            ->getMockForAbstractClass();
+        $expression = $this->buildExpression();
+        $expression->applyTo($selection);
+    }
+
+    /**
      * @return Comparison
      */
     protected function buildExpression()
@@ -67,31 +78,5 @@ class ClosureMatchClosureTest extends \PHPUnit_Framework_TestCase
     {
         static::assertTrue($closure(new TestObject(1)));
         static::assertFalse($closure(new \stdClass()));
-    }
-}
-
-final class MatchClosure implements Expression
-{
-    /**
-     * @var \Closure
-     */
-    private $closure;
-
-    /**
-     * @param \Closure $closure
-     */
-    public function __construct(\Closure $closure)
-    {
-        $this->closure = $closure;
-    }
-
-    /**
-     * @param Filterable $selection
-     */
-    public function applyTo(Filterable $selection)
-    {
-        if ($selection instanceof MatchByClosure) {
-            $selection->matchBy($this->closure);
-        }
     }
 }
