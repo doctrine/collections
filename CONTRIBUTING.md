@@ -55,8 +55,8 @@ curl -sS https://getcomposer.org/installer | php --
 
 ## Travis
 
-We automatically run your pull request through [Travis CI](http://www.travis-ci.org)
-against PHP 5.5, PHP 5.6, PHP 7 and HHVM. If you break the tests, we cannot merge your code,
+We automatically run your pull request through [Travis CI](https://www.travis-ci.org)
+against supported PHP versions. If you break the tests, we cannot merge your code,
 so please make sure that your code is working before opening up a Pull-Request.
 
 ## Getting merged
