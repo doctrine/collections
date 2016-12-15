@@ -30,6 +30,8 @@ with some exceptions/differences:
 * Add spaces between assignment, control and return statements
 * Prefer early exit over nesting conditions
 * Add spaces around a negation if condition ``if ( ! $cond)``
+* Add legal information at the beginning of each source file
+* Add ``@author`` [phpDoc](https://www.phpdoc.org/docs/latest/references/phpdoc/tags/author.html) comment at DockBlock of class/interface/trait that you create.
 
 ## Unit-Tests
 
