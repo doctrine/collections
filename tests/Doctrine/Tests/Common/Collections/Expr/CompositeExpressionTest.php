@@ -5,7 +5,7 @@ namespace Doctrine\Tests\Common\Collections\Expr;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase as TestCase;
 
 /**
  * @author  Tobias Oberrauch <hello@tobiasoberrauch.com>
@@ -65,7 +65,7 @@ class CompositeExpressionTest extends TestCase
     {
         $type = CompositeExpression::TYPE_AND;
         $expressions = array(
-            $this->getMock('Doctrine\Common\Collections\Expr\Expression'),
+            $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
         );
 
         $compositeExpression = new CompositeExpression($type, $expressions);
@@ -81,7 +81,7 @@ class CompositeExpressionTest extends TestCase
         $compositeExpression = $this->createCompositeExpression();
 
         $expectedExpressionList = array(
-            $this->getMock('Doctrine\Common\Collections\Expr\Expression'),
+            $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
         );
         $actualExpressionList = $compositeExpression->getExpressionList();
 
