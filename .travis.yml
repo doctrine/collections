@@ -12,6 +12,7 @@ matrix:
       - nightly
 
 before_script:
+  - if [ $TRAVIS_PHP_VERSION = 'hhvm' ]; then ./update-hhvm-to-php7-compat.sh; fi
   - composer -n --prefer-source install
 
 script:
