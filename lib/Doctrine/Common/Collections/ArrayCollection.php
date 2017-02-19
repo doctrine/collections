@@ -301,6 +301,8 @@ class ArrayCollection implements Collection, Selectable
 
     /**
      * {@inheritDoc}
+     *
+     * @return static
      */
     public function map(Closure $func)
     {
@@ -309,6 +311,8 @@ class ArrayCollection implements Collection, Selectable
 
     /**
      * {@inheritDoc}
+     *
+     * @return static
      */
     public function filter(Closure $p)
     {
