@@ -22,6 +22,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use JsonSerializable;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
@@ -36,7 +37,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-class ArrayCollection implements Collection, Selectable
+class ArrayCollection implements Collection, Selectable, JsonSerializable
 {
     /**
      * An array containing the entries of this collection.
@@ -76,6 +77,16 @@ class ArrayCollection implements Collection, Selectable
     public function toArray()
     {
         return $this->elements;
+    }
+
+    /**
+     * Returns an array representation of this object.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     /**
