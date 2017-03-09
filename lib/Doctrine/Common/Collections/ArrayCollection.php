@@ -36,7 +36,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * @author Jonathan Wage <jonwage@gmail.com>
  * @author Roman Borschel <roman@code-factory.org>
  */
-class ArrayCollection implements Collection, Selectable
+class ArrayCollection implements Collection
 {
     /**
      * An array containing the entries of this collection.
