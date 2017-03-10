@@ -223,6 +223,16 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return Collection
      */
     public function map(Closure $func);
+    
+    /**
+     * Applies the given function to each element in the collection and returns
+     * a single value.
+     *
+     * @param Closure $func
+     *
+     * @return Collection
+     */
+    public function reduce(Closure $func);
 
     /**
      * Partitions this collection in two collections according to a predicate.
