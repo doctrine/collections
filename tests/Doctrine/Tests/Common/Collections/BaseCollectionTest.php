@@ -49,6 +49,16 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([2, 4], $res->toArray());
     }
 
+    public function testReduce()
+    {
+        $this->collection->add(3);
+        $this->collection->add(4);
+        $res = $this->collection->reduce(function ($carry, $e) {
+            return $carry + $e;
+        });
+        $this->assertEquals(7, $res);
+    }
+
     public function testFilter()
     {
         $this->collection->add(1);
