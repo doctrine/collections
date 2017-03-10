@@ -242,6 +242,15 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function reduce(Closure $func)
+    {
+        $this->initialize();
+        return $this->collection->reduce($func);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function partition(Closure $p)
     {
         $this->initialize();
