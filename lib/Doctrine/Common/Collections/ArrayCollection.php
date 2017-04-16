@@ -109,6 +109,17 @@ class ArrayCollection implements Collection, Selectable
     {
         return next($this->elements);
     }
+    
+    /**
+     * Moves the internal iterator position to the previous element and returns this element.
+     *
+     * @return mixed
+     * @todo add to Collection interface
+     */
+    public function prev()
+    {
+        return prev($this->elements);
+    }
 
     /**
      * {@inheritDoc}
