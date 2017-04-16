@@ -30,6 +30,29 @@ namespace Doctrine\Common\Collections\Expr;
  */
 class ClosureExpressionVisitor extends ExpressionVisitor
 {
+
+    /**
+     * Accesses the field of a given object. This field has to be public
+     * directly or indirectly (through an accessor get*, is*, or a magic
+     * method, __get, __call).
+     * This is a wrapper for self::determineObjectFieldValue() to modify 
+     * the field value before returning it.
+     * 
+     * 
+     * @param object $object
+     * @param string $field
+     * @param boolean $lc convert to lower case
+     * @return mixed
+     */
+    public static function getObjectFieldValue($object, $field, $lc = false)
+    {
+        $value = self::determineObjectFieldValue($object, $field);
+        if ( $lc ) {
+            $value = self::toLower($value);
+        }
+        return $value;
+    }
+
     /**
      * Accesses the field of a given object. This field has to be public
      * directly or indirectly (through an accessor get*, is*, or a magic
@@ -40,7 +63,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      *
      * @return mixed
      */
-    public static function getObjectFieldValue($object, $field)
+    private static function determineObjectFieldValue($object, $field)
     {
         if (is_array($object)) {
             return $object[$field];
@@ -120,57 +143,82 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
+     * Converts all strings in a variable to lower case.
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public static function toLower($value)
+    {
+        if (is_string($value))
+            return strtolower($value);
+
+        if (is_array($value) || is_object($value)) {
+            foreach ($value as &$item) {
+                $item = self::toLower($item);
+            }
+            unset($item);
+            return $value;
+        }
+        return $value;
+
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function walkComparison(Comparison $comparison)
     {
         $field = $comparison->getField();
         $value = $comparison->getValue()->getValue(); // shortcut for walkValue()
+        $ic = $comparison->getIgnoreCase();
+        if ($ic) $value = self::toLower($value);
 
         switch ($comparison->getOperator()) {
             case Comparison::EQ:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
+                return function ($object) use ($field, $value, $ic) {
+                    return self::getObjectFieldValue($object, $field, $ic) === $value;
                 };
 
             case Comparison::NEQ:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
+                return function ($object) use ($field, $value, $ic) {
+                    return self::getObjectFieldValue($object, $field, $ic) !== $value;
                 };
 
             case Comparison::LT:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
+                return function ($object) use ($field, $value, $ic) {
+                    return self::getObjectFieldValue($object, $field, $ic) < $value;
                 };
 
             case Comparison::LTE:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
+                return function ($object) use ($field, $value, $ic) {
+                    return self::getObjectFieldValue($object, $field, $ic) <= $value;
                 };
 
             case Comparison::GT:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
+                return function ($object) use ($field, $value, $ic) {
+                    return self::getObjectFieldValue($object, $field, $ic) > $value;
                 };
 
             case Comparison::GTE:
-                return function ($object) use ($field, $value) {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
+                return function ($object) use ($field, $value, $ic) {
+                    return self::getObjectFieldValue($object, $field, $ic) >= $value;
                 };
 
             case Comparison::IN:
-                return function ($object) use ($field, $value) {
-                    return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                return function ($object) use ($field, $value, $ic) {
+                    return in_array(self::getObjectFieldValue($object, $field, $ic), $value);
                 };
 
             case Comparison::NIN:
-                return function ($object) use ($field, $value) {
-                    return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                return function ($object) use ($field, $value, $ic) {
+                    return ! in_array(self::getObjectFieldValue($object, $field, $ic), $value);
                 };
 
             case Comparison::CONTAINS:
-                return function ($object) use ($field, $value) {
-                    return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                return function ($object) use ($field, $value, $ic) {
+                    return false !== strpos(self::getObjectFieldValue($object, $field, $ic), $value);
                 };
 
             case Comparison::MEMBER_OF:

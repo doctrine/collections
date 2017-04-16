@@ -99,6 +99,12 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($closure(new TestObject(1)));
         $this->assertFalse($closure(new TestObject(2)));
+
+        $closure = $this->visitor->walkComparison($this->builder->eq("foo", "ignorecase", true));
+        $this->assertTrue($closure(new TestObject("ignoreCase")));
+
+        $closure = $this->visitor->walkComparison($this->builder->eq("foo", "ignorecase", false));
+        $this->assertFalse($closure(new TestObject("ignoreCase")));
     }
 
     public function testWalkNotEqualsComparison()
@@ -107,6 +113,12 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($closure(new TestObject(1)));
         $this->assertTrue($closure(new TestObject(2)));
+
+        $closure = $this->visitor->walkComparison($this->builder->neq("foo", "ignorecase", true));
+        $this->assertFalse($closure(new TestObject("ignoreCase")));
+
+        $closure = $this->visitor->walkComparison($this->builder->neq("foo", "ignorecase", false));
+        $this->assertTrue($closure(new TestObject("ignoreCase")));
     }
 
     public function testWalkLessThanComparison()
@@ -115,6 +127,10 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($closure(new TestObject(1)));
         $this->assertTrue($closure(new TestObject(0)));
+
+        $closure = $this->visitor->walkComparison($this->builder->lt("foo", 1));
+
+        $this->assertFalse($closure(new TestObject(1)));
     }
 
     public function testWalkLessThanEqualsComparison()
@@ -151,6 +167,13 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($closure(new TestObject(2)));
         $this->assertTrue($closure(new TestObject(1)));
         $this->assertFalse($closure(new TestObject(0)));
+
+        $closure = $this->visitor->walkComparison($this->builder->in("foo", array(1, 'ignorecase', 3), true));
+        $this->assertTrue($closure(new TestObject('ignoreCase')));
+
+        $closure = $this->visitor->walkComparison($this->builder->in("foo", array(1, 'ignorecase', 3)), false);
+        $this->assertFalse($closure(new TestObject('ignoreCase')));
+
     }
 
     public function testWalkNotInComparison()
@@ -161,6 +184,12 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($closure(new TestObject(2)));
         $this->assertTrue($closure(new TestObject(0)));
         $this->assertTrue($closure(new TestObject(4)));
+
+        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", array(1, 'ignorecase', 3), true));
+        $this->assertFalse($closure(new TestObject('ignoreCase')));
+
+        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", array(1, 'ignorecase', 3)), false);
+        $this->assertTrue($closure(new TestObject('ignoreCase')));
     }
 
     public function testWalkContainsComparison()
@@ -169,6 +198,13 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($closure(new TestObject('hello world')));
         $this->assertFalse($closure(new TestObject('world')));
+
+        $closure = $this->visitor->walkComparison($this->builder->contains('foo', 'ignorecase', true));
+        $this->assertTrue($closure(new TestObject('ignoreCase')));
+
+        $closure = $this->visitor->walkComparison($this->builder->contains('foo', 'ignorecase', false));
+        $this->assertFalse($closure(new TestObject('ignoreCase')));
+
     }
 
     public function testWalkMemberOfComparisonWithObject()
@@ -269,6 +305,21 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($closure(array('foo' => 42)));
     }
+
+    public function testToLower() {
+        $this->assertEquals('hello', $this->visitor->toLower('Hello'));
+
+        $input = array(1, 'Hello', array('Hello'));
+        $output = array(1, 'hello', array('hello'));
+        $this->assertEquals($output, $this->visitor->toLower($input));
+
+        $input = new \stdClass();
+        $input->foo = "Foo";
+        $output = new \stdClass();
+        $output->foo = "foo";
+        $this->assertEquals($output, $this->visitor->toLower($input));
+    }
+
 }
 
 class TestObject
