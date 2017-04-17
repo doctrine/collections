@@ -46,7 +46,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object[$field];
         }
 
-        $accessors = array('get', 'is');
+        $accessors = array('get', 'is', 'get_');
 
         foreach ($accessors as $accessor) {
             $accessor .= $field;
