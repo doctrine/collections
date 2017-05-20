@@ -46,7 +46,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object[$field];
         }
 
-        $accessors = array('get', 'is');
+        $accessors = ['get', 'is'];
 
         foreach ($accessors as $accessor) {
             $accessor .= $field;
@@ -211,7 +211,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public function walkCompositeExpression(CompositeExpression $expr)
     {
-        $expressionList = array();
+        $expressionList = [];
 
         foreach ($expr->getExpressionList() as $child) {
             $expressionList[] = $this->dispatch($child);

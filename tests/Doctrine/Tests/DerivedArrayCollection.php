@@ -11,7 +11,7 @@ final class DerivedArrayCollection extends ArrayCollection
 {
     private $foo;
 
-    public function __construct(\stdClass $foo, array $elements = array())
+    public function __construct(\stdClass $foo, array $elements = [])
     {
         $this->foo = $foo;
 

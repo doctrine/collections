@@ -18,14 +18,14 @@ class CompositeExpressionTest extends TestCase
      */
     public function invalidDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'expression' => new Value('value'),
-            ),
-            array(
+            ],
+            [
                 'expression' => 'wrong-type',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -37,9 +37,9 @@ class CompositeExpressionTest extends TestCase
     public function testExceptions($expression)
     {
         $type = CompositeExpression::TYPE_AND;
-        $expressions = array(
+        $expressions = [
             $expression,
-        );
+        ];
 
         $this->setExpectedException('\RuntimeException');
         new CompositeExpression($type, $expressions);
@@ -64,9 +64,9 @@ class CompositeExpressionTest extends TestCase
     protected function createCompositeExpression()
     {
         $type = CompositeExpression::TYPE_AND;
-        $expressions = array(
+        $expressions = [
             $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
-        );
+        ];
 
         $compositeExpression = new CompositeExpression($type, $expressions);
 
@@ -80,9 +80,9 @@ class CompositeExpressionTest extends TestCase
     {
         $compositeExpression = $this->createCompositeExpression();
 
-        $expectedExpressionList = array(
+        $expectedExpressionList = [
             $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
-        );
+        ];
         $actualExpressionList = $compositeExpression->getExpressionList();
 
         $this->assertEquals($expectedExpressionList, $actualExpressionList);

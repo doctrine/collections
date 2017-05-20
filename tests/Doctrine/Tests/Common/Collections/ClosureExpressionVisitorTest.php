@@ -146,7 +146,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testWalkInComparison()
     {
-        $closure = $this->visitor->walkComparison($this->builder->in("foo", array(1, 2, 3)));
+        $closure = $this->visitor->walkComparison($this->builder->in("foo", [1, 2, 3]));
 
         $this->assertTrue($closure(new TestObject(2)));
         $this->assertTrue($closure(new TestObject(1)));
@@ -155,7 +155,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testWalkNotInComparison()
     {
-        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", array(1, 2, 3)));
+        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", [1, 2, 3]));
 
         $this->assertFalse($closure(new TestObject(1)));
         $this->assertFalse($closure(new TestObject(2)));
@@ -175,9 +175,9 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $closure = $this->visitor->walkComparison($this->builder->memberof("foo", 2));
 
-        $this->assertTrue($closure(new TestObject(array(1,2,3))));
-        $this->assertTrue($closure(new TestObject(array(2))));
-        $this->assertFalse($closure(new TestObject(array(1,3,5))));
+        $this->assertTrue($closure(new TestObject([1,2,3])));
+        $this->assertTrue($closure(new TestObject([2])));
+        $this->assertFalse($closure(new TestObject([1,3,5])));
     }
 
     public function testWalkStartsWithComparison()
@@ -228,7 +228,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testSortByFieldAscending()
     {
-        $objects = array(new TestObject("b"), new TestObject("a"), new TestObject("c"));
+        $objects = [new TestObject("b"), new TestObject("a"), new TestObject("c")];
         $sort = ClosureExpressionVisitor::sortByField("foo");
 
         usort($objects, $sort);
@@ -240,7 +240,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testSortByFieldDescending()
     {
-        $objects = array(new TestObject("b"), new TestObject("a"), new TestObject("c"));
+        $objects = [new TestObject("b"), new TestObject("a"), new TestObject("c")];
         $sort = ClosureExpressionVisitor::sortByField("foo", -1);
 
         usort($objects, $sort);
@@ -252,7 +252,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testSortDelegate()
     {
-        $objects = array(new TestObject("a", "c"), new TestObject("a", "b"), new TestObject("a", "a"));
+        $objects = [new TestObject("a", "c"), new TestObject("a", "b"), new TestObject("a", "a")];
         $sort = ClosureExpressionVisitor::sortByField("bar", 1);
         $sort = ClosureExpressionVisitor::sortByField("foo", 1, $sort);
 
@@ -267,7 +267,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $closure = $this->visitor->walkComparison($this->builder->eq("foo", 42));
 
-        $this->assertTrue($closure(array('foo' => 42)));
+        $this->assertTrue($closure(['foo' => 42]));
     }
 }
 

@@ -50,7 +50,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @param array $elements
      */
-    public function __construct(array $elements = array())
+    public function __construct(array $elements = [])
     {
         $this->elements = $elements;
     }
@@ -338,7 +338,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function partition(Closure $p)
     {
-        $matches = $noMatches = array();
+        $matches = $noMatches = [];
 
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -348,7 +348,7 @@ class ArrayCollection implements Collection, Selectable
             }
         }
 
-        return array($this->createFrom($matches), $this->createFrom($noMatches));
+        return [$this->createFrom($matches), $this->createFrom($noMatches)];
     }
 
     /**
@@ -366,7 +366,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function clear()
     {
-        $this->elements = array();
+        $this->elements = [];
     }
 
     /**
