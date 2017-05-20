@@ -32,8 +32,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 {
     /**
      * Accesses the field of a given object. This field has to be public
-     * directly or indirectly (through an accessor get*, is*, or a magic
-     * method, __get, __call).
+     * directly or indirectly (through a method with the same name,
+     * an accessor get*, is*, or a magic method, __get, __call).
      *
      * @param object $object
      * @param string $field
@@ -44,6 +44,11 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     {
         if (is_array($object)) {
             return $object[$field];
+        }
+
+        if (method_exists($object, $field))
+        {
+            return $object->$field();
         }
 
         $accessors = array('get', 'is');
