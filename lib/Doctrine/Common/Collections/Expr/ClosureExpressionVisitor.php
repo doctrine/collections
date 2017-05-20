@@ -46,11 +46,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object[$field];
         }
 
-        $accessors = array('get', 'is');
+        $accessors = array(
+            'get' . $field,
+            'is' . $field,
+            $field, // non-standard method
+        );
 
         foreach ($accessors as $accessor) {
-            $accessor .= $field;
-
             if ( ! method_exists($object, $accessor)) {
                 continue;
             }
@@ -59,7 +61,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
 
         // __call should be triggered for get.
-        $accessor = $accessors[0] . $field;
+        $accessor = $accessors[0];
 
         if (method_exists($object, '__call')) {
             return $object->$accessor();
