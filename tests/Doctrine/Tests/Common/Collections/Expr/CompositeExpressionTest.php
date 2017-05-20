@@ -3,6 +3,7 @@
 namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase as TestCase;
@@ -41,7 +42,7 @@ class CompositeExpressionTest extends TestCase
             $expression,
         ];
 
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException(\RuntimeException::class);
         new CompositeExpression($type, $expressions);
     }
 
@@ -63,10 +64,8 @@ class CompositeExpressionTest extends TestCase
      */
     protected function createCompositeExpression()
     {
-        $type = CompositeExpression::TYPE_AND;
-        $expressions = [
-            $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
-        ];
+        $type        = CompositeExpression::TYPE_AND;
+        $expressions = [$this->createMock(Expression::class)];
 
         $compositeExpression = new CompositeExpression($type, $expressions);
 
@@ -78,12 +77,9 @@ class CompositeExpressionTest extends TestCase
      */
     public function testGetExpressionList()
     {
-        $compositeExpression = $this->createCompositeExpression();
-
-        $expectedExpressionList = [
-            $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
-        ];
-        $actualExpressionList = $compositeExpression->getExpressionList();
+        $compositeExpression    = $this->createCompositeExpression();
+        $expectedExpressionList = [$this->createMock(Expression::class)];
+        $actualExpressionList   = $compositeExpression->getExpressionList();
 
         $this->assertEquals($expectedExpressionList, $actualExpressionList);
     }
@@ -95,7 +91,7 @@ class CompositeExpressionTest extends TestCase
     {
         $compositeExpression = $this->createCompositeExpression();
 
-        $visitor = $this->getMockForAbstractClass('Doctrine\Common\Collections\Expr\ExpressionVisitor');
+        $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
         $visitor
             ->expects($this->once())
             ->method('walkCompositeExpression');

@@ -5,6 +5,7 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\ExpressionBuilder;
 
 class CriteriaTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +13,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
     {
         $criteria = Criteria::create();
 
-        $this->assertInstanceOf('Doctrine\Common\Collections\Criteria', $criteria);
+        $this->assertInstanceOf(Criteria::class, $criteria);
     }
 
     public function testConstructor()
@@ -46,7 +47,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $criteria->andWhere($expr);
 
         $where = $criteria->getWhereExpression();
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\CompositeExpression', $where);
+        $this->assertInstanceOf(CompositeExpression::class, $where);
 
         $this->assertEquals(CompositeExpression::TYPE_AND, $where->getType());
         $this->assertSame([$expr, $expr], $where->getExpressionList());
@@ -72,7 +73,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $criteria->orWhere($expr);
 
         $where = $criteria->getWhereExpression();
-        $this->assertInstanceOf('Doctrine\Common\Collections\Expr\CompositeExpression', $where);
+        $this->assertInstanceOf(CompositeExpression::class, $where);
 
         $this->assertEquals(CompositeExpression::TYPE_OR, $where->getType());
         $this->assertSame([$expr, $expr], $where->getExpressionList());
@@ -98,6 +99,6 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
 
     public function testExpr()
     {
-        $this->assertInstanceOf('Doctrine\Common\Collections\ExpressionBuilder', Criteria::expr());
+        $this->assertInstanceOf(ExpressionBuilder::class, Criteria::expr());
     }
 }

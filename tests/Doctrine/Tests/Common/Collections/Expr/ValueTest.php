@@ -30,7 +30,7 @@ class ValueTest extends TestCase
      */
     public function testVisitor()
     {
-        $visitor = $this->getMockForAbstractClass('Doctrine\Common\Collections\Expr\ExpressionVisitor');
+        $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
         $visitor
             ->expects($this->once())
             ->method('walkValue');
