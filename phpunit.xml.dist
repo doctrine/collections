@@ -23,12 +23,6 @@
         </whitelist>
     </filter>
 
-    <groups>
-        <exclude>
-            <group>performance</group>
-        </exclude>
-    </groups>
-
     <logging>
         <log type="coverage-html" target="build/coverage" title="Doctrine Collections"
              charset="UTF-8" yui="true" highlight="true" lowUpperBound="5"
