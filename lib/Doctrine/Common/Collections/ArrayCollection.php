@@ -308,6 +308,16 @@ class ArrayCollection implements Collection, Selectable
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * @return static
+     */
+    public function reduce(Closure $func)
+    {
+        return array_reduce($this->elements, $func);
+    }
 
     /**
      * {@inheritDoc}
