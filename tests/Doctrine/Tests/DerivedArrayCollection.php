@@ -18,7 +18,7 @@ final class DerivedArrayCollection extends ArrayCollection
         parent::__construct($elements);
     }
 
-    protected function createFrom(array $elements)
+    protected function createFrom(array $elements) : self
     {
         return new static($this->foo, $elements);
     }

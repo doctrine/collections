@@ -12,10 +12,7 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 class ValueTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testGetter()
+    public function testGetter() : void
     {
         $value = 'foo';
         $valueExpression = new Value($value);
@@ -25,10 +22,7 @@ class ValueTest extends TestCase
         $this->assertEquals($value, $actualValue);
     }
 
-    /**
-     * @return void
-     */
-    public function testVisitor()
+    public function testVisitor() : void
     {
         $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
         $visitor

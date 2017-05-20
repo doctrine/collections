@@ -11,7 +11,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
      */
     protected $collection;
 
-    public function testIssetAndUnset()
+    public function testIssetAndUnset() : void
     {
         $this->assertFalse(isset($this->collection[0]));
         $this->collection->add('testing');
@@ -20,12 +20,12 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->collection[0]));
     }
 
-    public function testRemovingNonExistentEntryReturnsNull()
+    public function testRemovingNonExistentEntryReturnsNull() : void
     {
         $this->assertEquals(null, $this->collection->remove('testing_does_not_exist'));
     }
 
-    public function testExists()
+    public function testExists() : void
     {
         $this->collection->add('one');
         $this->collection->add('two');
@@ -39,7 +39,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($exists);
     }
 
-    public function testMap()
+    public function testMap() : void
     {
         $this->collection->add(1);
         $this->collection->add(2);
@@ -49,7 +49,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([2, 4], $res->toArray());
     }
 
-    public function testFilter()
+    public function testFilter() : void
     {
         $this->collection->add(1);
         $this->collection->add('foo');
@@ -60,7 +60,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
 
-    public function testFirstAndLast()
+    public function testFirstAndLast() : void
     {
         $this->collection->add('one');
         $this->collection->add('two');
@@ -69,7 +69,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->collection->last(), 'two');
     }
 
-    public function testArrayAccess()
+    public function testArrayAccess() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -81,45 +81,45 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->collection->count(), 1);
     }
 
-    public function testContainsKey()
+    public function testContainsKey() : void
     {
         $this->collection[5] = 'five';
         $this->assertTrue($this->collection->containsKey(5));
     }
 
-    public function testContains()
+    public function testContains() : void
     {
         $this->collection[0] = 'test';
         $this->assertTrue($this->collection->contains('test'));
     }
 
-    public function testSearch()
+    public function testSearch() : void
     {
         $this->collection[0] = 'test';
         $this->assertEquals(0, $this->collection->indexOf('test'));
     }
 
-    public function testGet()
+    public function testGet() : void
     {
         $this->collection[0] = 'test';
         $this->assertEquals('test', $this->collection->get(0));
     }
 
-    public function testGetKeys()
+    public function testGetKeys() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
         $this->assertEquals([0, 1], $this->collection->getKeys());
     }
 
-    public function testGetValues()
+    public function testGetValues() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
         $this->assertEquals(['one', 'two'], $this->collection->getValues());
     }
 
-    public function testCount()
+    public function testCount() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -127,7 +127,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($this->collection), 2);
     }
 
-    public function testForAll()
+    public function testForAll() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -139,7 +139,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         }), false);
     }
 
-    public function testPartition()
+    public function testPartition() : void
     {
         $this->collection[] = true;
         $this->collection[] = false;
@@ -150,7 +150,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($partition[1][0], false);
     }
 
-    public function testClear()
+    public function testClear() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -158,7 +158,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->collection->isEmpty(), true);
     }
 
-    public function testRemove()
+    public function testRemove() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -169,7 +169,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->collection->remove(0));
     }
 
-    public function testRemoveElement()
+    public function testRemoveElement() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -179,7 +179,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->collection->removeElement('two'));
     }
 
-    public function testSlice()
+    public function testSlice() : void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -196,7 +196,7 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([1 => 'two'], $slice);
     }
 
-    public function fillMatchingFixture()
+    protected function fillMatchingFixture() : void
     {
         $std1 = new \stdClass();
         $std1->foo = 'bar';
@@ -207,14 +207,14 @@ abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->collection[] = $std2;
     }
 
-    public function testCanRemoveNullValuesByKey()
+    public function testCanRemoveNullValuesByKey() : void
     {
         $this->collection->add(null);
         $this->collection->remove(0);
         $this->assertTrue($this->collection->isEmpty());
     }
 
-    public function testCanVerifyExistingKeysWithNullValues()
+    public function testCanVerifyExistingKeysWithNullValues() : void
     {
         $this->collection->set('key', null);
         $this->assertTrue($this->collection->containsKey('key'));

@@ -9,14 +9,14 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 
 class CriteriaTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreate()
+    public function testCreate() : void
     {
         $criteria = Criteria::create();
 
         $this->assertInstanceOf(Criteria::class, $criteria);
     }
 
-    public function testConstructor()
+    public function testConstructor() : void
     {
         $expr     = new Comparison("field", "=", "value");
         $criteria = new Criteria($expr, ["foo" => "ASC"], 10, 20);
@@ -27,7 +27,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(20, $criteria->getMaxResults());
     }
 
-    public function testWhere()
+    public function testWhere() : void
     {
         $expr     = new Comparison("field", "=", "value");
         $criteria = new Criteria();
@@ -37,7 +37,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expr, $criteria->getWhereExpression());
     }
 
-    public function testAndWhere()
+    public function testAndWhere() : void
     {
         $expr     = new Comparison("field", "=", "value");
         $criteria = new Criteria();
@@ -53,7 +53,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([$expr, $expr], $where->getExpressionList());
     }
 
-    public function testAndWhereWithoutWhere()
+    public function testAndWhereWithoutWhere() : void
     {
         $expr     = new Comparison("field", "=", "value");
         $criteria = new Criteria();
@@ -63,7 +63,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expr, $criteria->getWhereExpression());
     }
 
-    public function testOrWhere()
+    public function testOrWhere() : void
     {
         $expr     = new Comparison("field", "=", "value");
         $criteria = new Criteria();
@@ -79,7 +79,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([$expr, $expr], $where->getExpressionList());
     }
 
-    public function testOrWhereWithoutWhere()
+    public function testOrWhereWithoutWhere() : void
     {
         $expr     = new Comparison("field", "=", "value");
         $criteria = new Criteria();
@@ -89,7 +89,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expr, $criteria->getWhereExpression());
     }
 
-    public function testOrderings()
+    public function testOrderings() : void
     {
         $criteria = Criteria::create()
             ->orderBy(["foo" => "ASC"]);
@@ -97,7 +97,7 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(["foo" => "ASC"], $criteria->getOrderings());
     }
 
-    public function testExpr()
+    public function testExpr() : void
     {
         $this->assertInstanceOf(ExpressionBuilder::class, Criteria::expr());
     }

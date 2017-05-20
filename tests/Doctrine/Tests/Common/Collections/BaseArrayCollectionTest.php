@@ -19,14 +19,15 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 
 abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
 {
-    abstract protected function buildCollection(array $elements = []);
+    abstract protected function buildCollection(array $elements = []) : Collection;
 
-    protected function isSelectable($obj)
+    protected function isSelectable($obj) : bool
     {
         return $obj instanceof Selectable;
     }
@@ -34,7 +35,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testToArray($elements)
+    public function testToArray($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -44,7 +45,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testFirst($elements)
+    public function testFirst($elements) : void
     {
         $collection = $this->buildCollection($elements);
         $this->assertSame(reset($elements), $collection->first());
@@ -53,7 +54,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testLast($elements)
+    public function testLast($elements) : void
     {
         $collection = $this->buildCollection($elements);
         $this->assertSame(end($elements), $collection->last());
@@ -62,7 +63,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testKey($elements)
+    public function testKey($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -77,7 +78,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testNext($elements)
+    public function testNext($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -98,7 +99,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testCurrent($elements)
+    public function testCurrent($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -113,7 +114,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testGetKeys($elements)
+    public function testGetKeys($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -123,7 +124,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testGetValues($elements)
+    public function testGetValues($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -133,7 +134,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testCount($elements)
+    public function testCount($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -143,7 +144,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDifferentElements
      */
-    public function testIterator($elements)
+    public function testIterator($elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -156,10 +157,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
-    /**
-     * @return array
-     */
-    public function provideDifferentElements()
+    public function provideDifferentElements() : array
     {
         return [
             'indexed'     => [[1, 2, 3, 4, 5]],
@@ -168,7 +166,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testRemove()
+    public function testRemove() : void
     {
         $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3];
         $collection = $this->buildCollection($elements);
@@ -188,7 +186,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($elements, $collection->toArray());
     }
 
-    public function testRemoveElement()
+    public function testRemoveElement() : void
     {
         $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
@@ -207,7 +205,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($elements, $collection->toArray());
     }
 
-    public function testContainsKey()
+    public function testContainsKey() : void
     {
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
@@ -218,7 +216,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($collection->containsKey('non-existent'), "Doesn't contain key");
     }
 
-    public function testEmpty()
+    public function testEmpty() : void
     {
         $collection = $this->buildCollection();
         $this->assertTrue($collection->isEmpty(), 'Empty collection');
@@ -227,7 +225,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($collection->isEmpty(), 'Not empty collection');
     }
 
-    public function testContains()
+    public function testContains() : void
     {
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -238,7 +236,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($collection->contains('non-existent'), "Doesn't contain an element");
     }
 
-    public function testExists()
+    public function testExists() : void
     {
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -252,7 +250,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         }), 'Element not exists');
     }
 
-    public function testIndexOf()
+    public function testIndexOf() : void
     {
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -262,7 +260,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array_search('non-existent', $elements, true), $collection->indexOf('non-existent'), 'Index of non existent');
     }
 
-    public function testGet()
+    public function testGet() : void
     {
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -272,7 +270,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
 
-    public function testMatchingWithSortingPreservesyKeys()
+    public function testMatchingWithSortingPreservesyKeys() : void
     {
         $object1 = new \stdClass();
         $object2 = new \stdClass();
@@ -300,7 +298,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testMultiColumnSortAppliesAllSorts()
+    public function testMultiColumnSortAppliesAllSorts() : void
     {
         $collection = $this->buildCollection([
             ['foo' => 1, 'bar' => 2],

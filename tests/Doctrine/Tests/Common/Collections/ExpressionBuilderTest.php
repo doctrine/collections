@@ -16,12 +16,12 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private $builder;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->builder = new ExpressionBuilder();
     }
 
-    public function testAndX()
+    public function testAndX() : void
     {
         $expr = $this->builder->andX($this->builder->eq("a", "b"));
 
@@ -29,7 +29,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(CompositeExpression::TYPE_AND, $expr->getType());
     }
 
-    public function testOrX()
+    public function testOrX() : void
     {
         $expr = $this->builder->orX($this->builder->eq("a", "b"));
 
@@ -37,13 +37,13 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(CompositeExpression::TYPE_OR, $expr->getType());
     }
 
-    public function testInvalidAndXArgument()
+    public function testInvalidAndXArgument() : void
     {
         $this->expectException(\RuntimeException::class);
         $this->builder->andX("foo");
     }
 
-    public function testEq()
+    public function testEq() : void
     {
         $expr = $this->builder->eq("a", "b");
 
@@ -51,7 +51,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::EQ, $expr->getOperator());
     }
 
-    public function testNeq()
+    public function testNeq() : void
     {
         $expr = $this->builder->neq("a", "b");
 
@@ -59,7 +59,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::NEQ, $expr->getOperator());
     }
 
-    public function testLt()
+    public function testLt() : void
     {
         $expr = $this->builder->lt("a", "b");
 
@@ -67,7 +67,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::LT, $expr->getOperator());
     }
 
-    public function testGt()
+    public function testGt() : void
     {
         $expr = $this->builder->gt("a", "b");
 
@@ -75,7 +75,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::GT, $expr->getOperator());
     }
 
-    public function testGte()
+    public function testGte() : void
     {
         $expr = $this->builder->gte("a", "b");
 
@@ -83,7 +83,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::GTE, $expr->getOperator());
     }
 
-    public function testLte()
+    public function testLte() : void
     {
         $expr = $this->builder->lte("a", "b");
 
@@ -91,7 +91,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::LTE, $expr->getOperator());
     }
 
-    public function testIn()
+    public function testIn() : void
     {
         $expr = $this->builder->in("a", ["b"]);
 
@@ -99,7 +99,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::IN, $expr->getOperator());
     }
 
-    public function testNotIn()
+    public function testNotIn() : void
     {
         $expr = $this->builder->notIn("a", ["b"]);
 
@@ -107,7 +107,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::NIN, $expr->getOperator());
     }
 
-    public function testIsNull()
+    public function testIsNull() : void
     {
         $expr = $this->builder->isNull("a");
 
@@ -115,7 +115,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::EQ, $expr->getOperator());
     }
 
-    public function testContains()
+    public function testContains() : void
     {
         $expr = $this->builder->contains("a", "b");
 
@@ -123,7 +123,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
 
-    public function testMemberOf()
+    public function testMemberOf() : void
     {
         $expr = $this->builder->memberOf("b", ["a"]);
 
@@ -131,7 +131,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::MEMBER_OF, $expr->getOperator());
     }
 
-    public function testStartsWith()
+    public function testStartsWith() : void
     {
         $expr = $this->builder->startsWith("a", "b");
 
@@ -139,7 +139,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::STARTS_WITH, $expr->getOperator());
     }
 
-    public function testEndsWith()
+    public function testEndsWith() : void
     {
         $expr = $this->builder->endsWith("a", "b");
 

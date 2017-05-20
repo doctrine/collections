@@ -14,28 +14,18 @@ use PHPUnit\Framework\TestCase as TestCase;
  */
 class CompositeExpressionTest extends TestCase
 {
-    /**
-     * @return array
-     */
-    public function invalidDataProvider()
+    public function invalidDataProvider() : array
     {
         return [
-            [
-                'expression' => new Value('value'),
-            ],
-            [
-                'expression' => 'wrong-type',
-            ],
+            ['expression' => new Value('value')],
+            ['expression' => 'wrong-type'],
         ];
     }
 
     /**
      * @dataProvider invalidDataProvider
-     *
-     * @param $expression
-     * @return void
      */
-    public function testExceptions($expression)
+    public function testExceptions($expression) : void
     {
         $type = CompositeExpression::TYPE_AND;
         $expressions = [
@@ -46,10 +36,7 @@ class CompositeExpressionTest extends TestCase
         new CompositeExpression($type, $expressions);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetType()
+    public function testGetType() : void
     {
         $compositeExpression = $this->createCompositeExpression();
 
@@ -59,23 +46,15 @@ class CompositeExpressionTest extends TestCase
         $this->assertSame($expectedType, $actualType);
     }
 
-    /**
-     * @return CompositeExpression
-     */
-    protected function createCompositeExpression()
+    protected function createCompositeExpression() : CompositeExpression
     {
         $type        = CompositeExpression::TYPE_AND;
         $expressions = [$this->createMock(Expression::class)];
 
-        $compositeExpression = new CompositeExpression($type, $expressions);
-
-        return $compositeExpression;
+        return new CompositeExpression($type, $expressions);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetExpressionList()
+    public function testGetExpressionList() : void
     {
         $compositeExpression    = $this->createCompositeExpression();
         $expectedExpressionList = [$this->createMock(Expression::class)];
@@ -84,10 +63,7 @@ class CompositeExpressionTest extends TestCase
         $this->assertEquals($expectedExpressionList, $actualExpressionList);
     }
 
-    /**
-     * @return void
-     */
-    public function testVisitor()
+    public function testVisitor() : void
     {
         $compositeExpression = $this->createCompositeExpression();
 

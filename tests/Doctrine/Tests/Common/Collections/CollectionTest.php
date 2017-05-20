@@ -8,12 +8,12 @@ use Doctrine\Common\Collections\Criteria;
 
 class CollectionTest extends BaseCollectionTest
 {
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->collection = new ArrayCollection();
     }
 
-    public function testToString()
+    public function testToString() : void
     {
         $this->collection->add('testing');
         $this->assertTrue(is_string((string) $this->collection));
@@ -22,7 +22,7 @@ class CollectionTest extends BaseCollectionTest
     /**
      * @group DDC-1637
      */
-    public function testMatching()
+    public function testMatching() : void
     {
         $this->fillMatchingFixture();
 
@@ -35,7 +35,7 @@ class CollectionTest extends BaseCollectionTest
     /**
      * @group DDC-1637
      */
-    public function testMatchingOrdering()
+    public function testMatchingOrdering() : void
     {
         $this->fillMatchingFixture();
 
@@ -51,7 +51,7 @@ class CollectionTest extends BaseCollectionTest
     /**
      * @group DDC-1637
      */
-    public function testMatchingSlice()
+    public function testMatchingSlice() : void
     {
         $this->fillMatchingFixture();
 
