@@ -1,3 +1,8 @@
+build:
+    environment:
+        php:
+            version: 7.1.0
+
 tools:
     external_code_coverage:
         timeout: 600    # Timeout in seconds.
