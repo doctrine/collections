@@ -35,7 +35,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * directly or indirectly (through an accessor get*, is*, or a magic
      * method, __get, __call).
      *
-     * @param object $object
+     * @param object|array $object
      * @param string $field
      *
      * @return mixed
