@@ -177,7 +177,8 @@ class ArrayCollection implements Collection, Selectable
     public function offsetSet($offset, $value)
     {
         if ( ! isset($offset)) {
-            return $this->add($value);
+            $this->add($value);
+            return;
         }
 
         $this->set($offset, $value);
@@ -190,7 +191,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function offsetUnset($offset)
     {
-        return $this->remove($offset);
+        $this->remove($offset);
     }
 
     /**
