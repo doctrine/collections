@@ -19,18 +19,19 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Tests\DerivedArrayCollection;
 
 /**
  * @author Alexander Golovnya <snsanich@gmail.com>
  */
-class DerivedCollectionTest
+class DerivedCollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests that methods that create a new instance can be called in a derived
      * class that implements different constructor semantics.
      */
-    public function testDerivedClassCreation()
+    public function testDerivedClassCreation() : void
     {
         $collection = new DerivedArrayCollection(new \stdClass());
         $closure = function () {

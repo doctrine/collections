@@ -2,14 +2,11 @@ language: php
 sudo: false
 
 php:
-  - 7.0
   - 7.1
   - nightly
 
 matrix:
   fast_finish: true
-  allow_failures:
-      - nightly
 
 before_install:
   - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then PHPUNIT_FLAGS="--coverage-clover clover.xml"; fi

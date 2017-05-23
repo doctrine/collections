@@ -2,16 +2,14 @@
 
 namespace Doctrine\Tests;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\AbstractLazyCollection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Simple lazy collection that used an ArrayCollection as backed collection.
  */
 class LazyArrayCollection extends AbstractLazyCollection
 {
-
     /**
      * Apply the collection only in method doInitialize
      * @var Collection
@@ -30,7 +28,7 @@ class LazyArrayCollection extends AbstractLazyCollection
     /**
      * Do the initialization logic.
      */
-    protected function doInitialize()
+    protected function doInitialize() : void
     {
         $this->collection = $this->collectionOnInitialization;
     }

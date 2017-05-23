@@ -53,7 +53,7 @@ class Criteria
     /**
      * @var string[]
      */
-    private $orderings = array();
+    private $orderings = [];
 
     /**
      * @var int|null
@@ -137,9 +137,10 @@ class Criteria
             return $this->where($expression);
         }
 
-        $this->expression = new CompositeExpression(CompositeExpression::TYPE_AND, array(
-            $this->expression, $expression
-        ));
+        $this->expression = new CompositeExpression(
+            CompositeExpression::TYPE_AND,
+            [$this->expression, $expression]
+        );
 
         return $this;
     }
@@ -158,9 +159,10 @@ class Criteria
             return $this->where($expression);
         }
 
-        $this->expression = new CompositeExpression(CompositeExpression::TYPE_OR, array(
-            $this->expression, $expression
-        ));
+        $this->expression = new CompositeExpression(
+            CompositeExpression::TYPE_OR,
+            [$this->expression, $expression]
+        );
 
         return $this;
     }
@@ -200,7 +202,7 @@ class Criteria
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
-            function ($ordering) {
+            function (string $ordering) : string {
                 return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
             },
             $orderings

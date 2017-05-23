@@ -3,6 +3,7 @@
 namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase as TestCase;
@@ -13,42 +14,29 @@ use PHPUnit\Framework\TestCase as TestCase;
  */
 class CompositeExpressionTest extends TestCase
 {
-    /**
-     * @return array
-     */
-    public function invalidDataProvider()
+    public function invalidDataProvider() : array
     {
-        return array(
-            array(
-                'expression' => new Value('value'),
-            ),
-            array(
-                'expression' => 'wrong-type',
-            ),
-        );
+        return [
+            ['expression' => new Value('value')],
+            ['expression' => 'wrong-type'],
+        ];
     }
 
     /**
      * @dataProvider invalidDataProvider
-     *
-     * @param $expression
-     * @return void
      */
-    public function testExceptions($expression)
+    public function testExceptions($expression) : void
     {
         $type = CompositeExpression::TYPE_AND;
-        $expressions = array(
+        $expressions = [
             $expression,
-        );
+        ];
 
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException(\RuntimeException::class);
         new CompositeExpression($type, $expressions);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetType()
+    public function testGetType() : void
     {
         $compositeExpression = $this->createCompositeExpression();
 
@@ -58,44 +46,28 @@ class CompositeExpressionTest extends TestCase
         $this->assertSame($expectedType, $actualType);
     }
 
-    /**
-     * @return CompositeExpression
-     */
-    protected function createCompositeExpression()
+    protected function createCompositeExpression() : CompositeExpression
     {
-        $type = CompositeExpression::TYPE_AND;
-        $expressions = array(
-            $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
-        );
+        $type        = CompositeExpression::TYPE_AND;
+        $expressions = [$this->createMock(Expression::class)];
 
-        $compositeExpression = new CompositeExpression($type, $expressions);
-
-        return $compositeExpression;
+        return new CompositeExpression($type, $expressions);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetExpressionList()
+    public function testGetExpressionList() : void
     {
-        $compositeExpression = $this->createCompositeExpression();
-
-        $expectedExpressionList = array(
-            $this->createMock('Doctrine\Common\Collections\Expr\Expression'),
-        );
-        $actualExpressionList = $compositeExpression->getExpressionList();
+        $compositeExpression    = $this->createCompositeExpression();
+        $expectedExpressionList = [$this->createMock(Expression::class)];
+        $actualExpressionList   = $compositeExpression->getExpressionList();
 
         $this->assertEquals($expectedExpressionList, $actualExpressionList);
     }
 
-    /**
-     * @return void
-     */
-    public function testVisitor()
+    public function testVisitor() : void
     {
         $compositeExpression = $this->createCompositeExpression();
 
-        $visitor = $this->getMockForAbstractClass('Doctrine\Common\Collections\Expr\ExpressionVisitor');
+        $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
         $visitor
             ->expects($this->once())
             ->method('walkCompositeExpression');
