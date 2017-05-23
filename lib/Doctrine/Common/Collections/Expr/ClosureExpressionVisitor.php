@@ -102,12 +102,12 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
         if ( ! $next) {
-            $next = function() {
+            $next = function() : int {
                 return 0;
             };
         }
 
-        return function ($a, $b) use ($name, $next, $orientation) {
+        return function ($a, $b) use ($name, $next, $orientation) : int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
 
@@ -129,42 +129,42 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
         switch ($comparison->getOperator()) {
             case Comparison::EQ:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
                 };
 
             case Comparison::NEQ:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };
 
             case Comparison::LT:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
                 };
 
             case Comparison::LTE:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
                 };
 
             case Comparison::GT:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
                 };
 
             case Comparison::GTE:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
                 };
 
             case Comparison::IN:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
             case Comparison::NIN:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
@@ -174,7 +174,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 };
 
             case Comparison::MEMBER_OF:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
                     if (!is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
@@ -183,12 +183,12 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 };
 
             case Comparison::STARTS_WITH:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return 0 === strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
             case Comparison::ENDS_WITH:
-                return function ($object) use ($field, $value) {
+                return function ($object) use ($field, $value) : bool {
                     return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
 
@@ -234,14 +234,15 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      *
      * @return callable
      */
-    private function andExpressions($expressions)
+    private function andExpressions(array $expressions) : callable
     {
-        return function ($object) use ($expressions) {
+        return function ($object) use ($expressions) : bool {
             foreach ($expressions as $expression) {
                 if ( ! $expression($object)) {
                     return false;
                 }
             }
+
             return true;
         };
     }
@@ -251,14 +252,15 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      *
      * @return callable
      */
-    private function orExpressions($expressions)
+    private function orExpressions(array $expressions) : callable
     {
-        return function ($object) use ($expressions) {
+        return function ($object) use ($expressions) : bool {
             foreach ($expressions as $expression) {
                 if ($expression($object)) {
                     return true;
                 }
             }
+
             return false;
         };
     }

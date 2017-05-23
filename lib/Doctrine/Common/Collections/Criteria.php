@@ -202,7 +202,7 @@ class Criteria
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
-            function ($ordering) {
+            function (string $ordering) : string {
                 return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
             },
             $orderings
