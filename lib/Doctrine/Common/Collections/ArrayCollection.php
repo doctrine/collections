@@ -315,7 +315,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      */
-    public function filter(Closure $p)
+    public function filter(Closure $p = null)
     {
         return $this->createFrom(array_filter($this->elements, $p));
     }
