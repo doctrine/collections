@@ -323,4 +323,25 @@ abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
                 ->toArray()
         );
     }
+
+    /**
+     * @dataProvider provideDifferentElements
+     */
+    public function testPrevious($elements)
+    {
+        $collection = $this->buildCollection($elements);
+
+        while (true) {
+            $collectionPrev = $collection->prev();
+            $arrayPrev = prev($elements);
+
+            if (!$collectionPrev || !$arrayPrev) {
+                break;
+            }
+
+            $this->assertSame($arrayPrev, $collectionPrev, 'Returned value of ArrayCollection::prev() and prev() not match');
+            $this->assertSame(key($elements), $collection->key(), 'Keys not match');
+            $this->assertSame(current($elements), $collection->current(), 'Current values not match');
+        }
+    }
 }

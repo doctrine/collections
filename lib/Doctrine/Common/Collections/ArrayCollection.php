@@ -410,4 +410,12 @@ class ArrayCollection implements Collection, Selectable
 
         return $this->createFrom($filtered);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prev()
+    {
+        return prev($this->elements);
+    }
 }
