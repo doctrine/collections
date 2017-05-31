@@ -201,7 +201,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate used for filtering.
      *
-     * @return Collection A collection with the results of the filter operation.
+     * @return static A collection with the results of the filter operation.
      */
     public function filter(Closure $p);
 
@@ -220,7 +220,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $func
      *
-     * @return Collection
+     * @return static
      */
     public function map(Closure $func);
 
