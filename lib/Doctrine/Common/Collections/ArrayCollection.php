@@ -313,6 +313,16 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      *
+     * @return mixed
+     */
+    public function reduce(Closure $func, $initial = null)
+    {
+        return array_reduce($this->toArray(), $func, $initial);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @return static
      */
     public function filter(Closure $p)
