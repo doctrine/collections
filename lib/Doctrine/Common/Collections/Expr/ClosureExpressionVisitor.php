@@ -36,7 +36,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * method, __get, __call).
      *
      * @param object|array $object
-     * @param string       $field
+     * @param string $field
      *
      * @return mixed
      */
@@ -51,7 +51,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         foreach ($accessors as $accessor) {
             $accessor .= $field;
 
-            if (!method_exists($object, $accessor)) {
+            if ( ! method_exists($object, $accessor)) {
                 continue;
             }
 
@@ -74,17 +74,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
 
         // camelcase field name to support different variable naming conventions
-        $ccField = preg_replace_callback(
-            '/_(.?)/', function ($matches) {
-            return strtoupper($matches[1]);
-        }, $field
-        );
+        $ccField   = preg_replace_callback('/_(.?)/', function($matches) { return strtoupper($matches[1]); }, $field);
 
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
 
 
-            if (!method_exists($object, $accessor)) {
+            if ( ! method_exists($object, $accessor)) {
                 continue;
             }
 
@@ -97,16 +93,16 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     /**
      * Helper for sorting arrays of objects based on multiple fields + orientations.
      *
-     * @param string $name
-     * @param int $orientation
+     * @param string   $name
+     * @param int      $orientation
      * @param \Closure $next
      *
      * @return \Closure
      */
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
-        if (!$next) {
-            $next = function () : int {
+        if ( ! $next) {
+            $next = function() : int {
                 return 0;
             };
         }
@@ -169,7 +165,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::NIN:
                 return function ($object) use ($field, $value) : bool {
-                    return !in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                    return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
             case Comparison::CONTAINS:
@@ -184,7 +180,6 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     if (!is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
                     }
-
                     return in_array($value, $fieldValues);
                 };
 
@@ -195,9 +190,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::ENDS_WITH:
                 return function ($object) use ($field, $value) : bool {
-                    return $value === substr(
-                            ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value)
-                        );
+                    return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
 
 
@@ -225,7 +218,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             $expressionList[] = $this->dispatch($child);
         }
 
-        switch ($expr->getType()) {
+        switch($expr->getType()) {
             case CompositeExpression::TYPE_AND:
                 return $this->andExpressions($expressionList);
 
@@ -246,7 +239,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     {
         return function ($object) use ($expressions) : bool {
             foreach ($expressions as $expression) {
-                if (!$expression($object)) {
+                if ( ! $expression($object)) {
                     return false;
                 }
             }
