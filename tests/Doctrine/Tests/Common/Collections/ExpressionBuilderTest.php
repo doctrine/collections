@@ -123,6 +123,14 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
 
+    public function testContainsCi() : void
+    {
+        $expr = $this->builder->containsCi("a", "b");
+
+        $this->assertInstanceOf(Comparison::class, $expr);
+        $this->assertEquals(Comparison::CONTAINS_CI, $expr->getOperator());
+    }
+
     public function testMemberOf() : void
     {
         $expr = $this->builder->memberOf("b", ["a"]);

@@ -170,6 +170,17 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
+    public function containsCi($field, $value)
+    {
+        return new Comparison($field, Comparison::CONTAINS_CI, new Value($value));
+    }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return Comparison
+     */
     public function memberOf ($field, $value)
     {
         return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
