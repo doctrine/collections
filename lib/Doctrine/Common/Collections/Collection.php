@@ -230,9 +230,9 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate on which to partition.
      *
-     * @return array An array with two elements. The first element contains the collection
-     *               of elements where the predicate returned TRUE, the second element
-     *               contains the collection of elements where the predicate returned FALSE.
+     * @return Collection[] An array with two elements. The first element contains the collection
+     *                      of elements where the predicate returned TRUE, the second element
+     *                      contains the collection of elements where the predicate returned FALSE.
      */
     public function partition(Closure $p);
 
