@@ -37,7 +37,7 @@ class Comparison implements Expression
     const IN           = 'IN';
     const NIN          = 'NIN';
     const CONTAINS     = 'CONTAINS';
-    const CONTAINS_CI  = 'CONTAINS_CI';
+    const ICONTAINS    = 'ICONTAINS';
     const MEMBER_OF    = 'MEMBER_OF';
     const STARTS_WITH  = 'STARTS_WITH';
     const ENDS_WITH    = 'ENDS_WITH';

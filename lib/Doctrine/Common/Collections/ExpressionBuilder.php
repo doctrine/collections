@@ -170,9 +170,9 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function containsCi($field, $value)
+    public function iContains($field, $value)
     {
-        return new Comparison($field, Comparison::CONTAINS_CI, new Value($value));
+        return new Comparison($field, Comparison::ICONTAINS, new Value($value));
     }
 
     /**

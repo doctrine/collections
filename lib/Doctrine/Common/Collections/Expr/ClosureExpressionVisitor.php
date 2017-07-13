@@ -169,9 +169,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 };
 
             case Comparison::CONTAINS:
-            case Comparison::CONTAINS_CI:
                 return function ($object) use ($field, $value) {
                     return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                };
+
+            case Comparison::ICONTAINS:
+                return function ($object) use ($field, $value) {
+                    return false !== strpos(mb_strtolower(ClosureExpressionVisitor::getObjectFieldValue($object, $field)), mb_strtolower($value));
                 };
 
             case Comparison::MEMBER_OF:
