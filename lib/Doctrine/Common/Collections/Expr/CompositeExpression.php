@@ -29,8 +29,8 @@ namespace Doctrine\Common\Collections\Expr;
  */
 class CompositeExpression implements Expression
 {
-    const TYPE_AND = 'AND';
-    const TYPE_OR = 'OR';
+    public const TYPE_AND = 'AND';
+    public const TYPE_OR = 'OR';
 
     /**
      * @var string

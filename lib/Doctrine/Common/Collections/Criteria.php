@@ -35,12 +35,12 @@ class Criteria
     /**
      * @var string
      */
-    const ASC  = 'ASC';
+    public const ASC  = 'ASC';
 
     /**
      * @var string
      */
-    const DESC = 'DESC';
+    public const DESC = 'DESC';
 
     /**
      * @var \Doctrine\Common\Collections\ExpressionBuilder|null
