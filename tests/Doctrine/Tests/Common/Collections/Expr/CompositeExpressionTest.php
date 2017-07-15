@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
