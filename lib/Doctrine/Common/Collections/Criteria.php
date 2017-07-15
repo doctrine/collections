@@ -14,8 +14,7 @@ use function strtoupper;
  */
 class Criteria
 {
-    public const ASC = 'ASC';
-
+    public const ASC  = 'ASC';
     public const DESC = 'DESC';
 
     /** @var ExpressionBuilder|null */
