@@ -64,7 +64,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->elements;
     }
@@ -145,7 +145,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function removeElement($element)
+    public function removeElement($element): bool
     {
         $key = array_search($element, $this->elements, true);
 
@@ -163,7 +163,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -183,7 +183,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (! isset($offset)) {
             $this->add($value);
@@ -199,7 +199,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->remove($offset);
     }
@@ -207,7 +207,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function containsKey($key)
+    public function containsKey($key): bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
@@ -215,7 +215,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function contains($element)
+    public function contains($element): bool
     {
         return in_array($element, $this->elements, true);
     }
@@ -223,7 +223,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function exists(Closure $p)
+    public function exists(Closure $p): bool
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -253,7 +253,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function getKeys()
+    public function getKeys(): array
     {
         return array_keys($this->elements);
     }
@@ -261,7 +261,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function getValues()
+    public function getValues(): array
     {
         return array_values($this->elements);
     }
@@ -269,7 +269,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->elements);
     }
@@ -277,7 +277,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->elements[$key] = $value;
     }
@@ -285,7 +285,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function add($element)
+    public function add($element): bool
     {
         $this->elements[] = $element;
 
@@ -295,7 +295,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->elements);
     }
@@ -305,7 +305,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->elements);
     }
@@ -315,7 +315,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      */
-    public function map(Closure $func)
+    public function map(Closure $func): Collection
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
@@ -327,7 +327,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-return ArrayCollection<TKey,T>
      */
-    public function filter(Closure $p)
+    public function filter(Closure $p): Collection
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
@@ -335,7 +335,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function forAll(Closure $p)
+    public function forAll(Closure $p): bool
     {
         foreach ($this->elements as $key => $element) {
             if (! $p($key, $element)) {
@@ -349,7 +349,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p)
+    public function partition(Closure $p): array
     {
         $matches = $noMatches = [];
 
@@ -369,7 +369,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::class . '@' . spl_object_hash($this);
     }
@@ -377,7 +377,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function clear()
+    public function clear(): void
     {
         $this->elements = [];
     }
@@ -385,7 +385,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function slice($offset, $length = null)
+    public function slice(int $offset, ?int $length = null): array
     {
         return array_slice($this->elements, $offset, $length, true);
     }
@@ -393,7 +393,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function matching(Criteria $criteria)
+    public function matching(Criteria $criteria): Collection
     {
         $expr     = $criteria->getWhereExpression();
         $filtered = $this->elements;

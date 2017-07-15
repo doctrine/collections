@@ -36,7 +36,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      *
      * @return mixed
      */
-    public static function getObjectFieldValue($object, $field)
+    public static function getObjectFieldValue($object, string $field)
     {
         if (is_array($object)) {
             return $object[$field];
@@ -95,7 +95,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      *
      * @return Closure
      */
-    public static function sortByField($name, $orientation = 1, ?Closure $next = null)
+    public static function sortByField(string $name, int $orientation = 1, ?\Closure $next = null): \Closure
     {
         if (! $next) {
             $next = static function () : int {

@@ -26,7 +26,7 @@ class CompositeExpression implements Expression
      *
      * @throws RuntimeException
      */
-    public function __construct($type, array $expressions)
+    public function __construct(string $type, array $expressions)
     {
         $this->type = $type;
 
@@ -47,7 +47,7 @@ class CompositeExpression implements Expression
      *
      * @return Expression[]
      */
-    public function getExpressionList()
+    public function getExpressionList(): array
     {
         return $this->expressions;
     }
@@ -55,7 +55,7 @@ class CompositeExpression implements Expression
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }

@@ -23,7 +23,7 @@ class ExpressionBuilder
      *
      * @return CompositeExpression
      */
-    public function andX($x = null)
+    public function andX($x = null): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
     }
@@ -33,7 +33,7 @@ class ExpressionBuilder
      *
      * @return CompositeExpression
      */
-    public function orX($x = null)
+    public function orX($x = null): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
     }
@@ -44,7 +44,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function eq($field, $value)
+    public function eq(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value($value));
     }
@@ -55,7 +55,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function gt($field, $value)
+    public function gt(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::GT, new Value($value));
     }
@@ -77,7 +77,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function gte($field, $value)
+    public function gte(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::GTE, new Value($value));
     }
@@ -88,7 +88,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function lte($field, $value)
+    public function lte(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::LTE, new Value($value));
     }
@@ -99,7 +99,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function neq($field, $value)
+    public function neq(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::NEQ, new Value($value));
     }
@@ -109,7 +109,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function isNull($field)
+    public function isNull(string $field): Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value(null));
     }
@@ -120,7 +120,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function in($field, array $values)
+    public function in(string $field, array $values): Comparison
     {
         return new Comparison($field, Comparison::IN, new Value($values));
     }
@@ -131,7 +131,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function notIn($field, array $values)
+    public function notIn(string $field, array $values): Comparison
     {
         return new Comparison($field, Comparison::NIN, new Value($values));
     }
@@ -142,7 +142,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function contains($field, $value)
+    public function contains(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
@@ -153,7 +153,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function memberOf($field, $value)
+    public function memberOf(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
     }
@@ -164,7 +164,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function startsWith($field, $value)
+    public function startsWith(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
     }
@@ -175,7 +175,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function endsWith($field, $value)
+    public function endsWith(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
     }
