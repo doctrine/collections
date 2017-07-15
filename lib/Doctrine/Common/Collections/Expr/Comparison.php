@@ -63,7 +63,7 @@ class Comparison implements Expression
      * @param string $operator
      * @param mixed  $value
      */
-    public function __construct($field, $operator, $value)
+    public function __construct(string $field, string $operator, $value)
     {
         if ( ! ($value instanceof Value)) {
             $value = new Value($value);
@@ -77,13 +77,13 @@ class Comparison implements Expression
     /**
      * @return string
      */
-    public function getField()
+    public function getField(): string
     {
         return $this->field;
     }
 
     /**
-     * @return Value
+     * @return mixed
      */
     public function getValue()
     {
@@ -93,7 +93,7 @@ class Comparison implements Expression
     /**
      * @return string
      */
-    public function getOperator()
+    public function getOperator(): string
     {
         return $this->op;
     }
