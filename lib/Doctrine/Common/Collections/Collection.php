@@ -41,14 +41,14 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return true Always TRUE.
      */
-    public function add($element);
+    public function add($element): bool;
 
     /**
      * Clears the collection, removing all elements.
      *
      * @return void
      */
-    public function clear();
+    public function clear(): void;
 
     /**
      * Checks whether an element is contained in the collection.
@@ -59,14 +59,14 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if the collection contains the element, FALSE otherwise.
      */
-    public function contains($element);
+    public function contains($element): bool;
 
     /**
      * Checks whether the collection is empty (contains no elements).
      *
      * @return bool TRUE if the collection is empty, FALSE otherwise.
      */
-    public function isEmpty();
+    public function isEmpty(): bool;
 
     /**
      * Removes the element at the specified index from the collection.
@@ -87,7 +87,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeElement($element);
+    public function removeElement($element): bool;
 
     /**
      * Checks whether the collection contains an element with the specified key/index.
@@ -98,7 +98,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return bool TRUE if the collection contains an element with the specified key/index,
      *              FALSE otherwise.
      */
-    public function containsKey($key);
+    public function containsKey($key): bool;
 
     /**
      * Gets the element at the specified key/index.
@@ -118,7 +118,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *               elements in the collection.
      * @psalm-return TKey[]
      */
-    public function getKeys();
+    public function getKeys(): array;
 
     /**
      * Gets all values of the collection.
@@ -127,7 +127,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *                 order they appear in the collection.
      * @psalm-return list<T>
      */
-    public function getValues();
+    public function getValues(): array;
 
     /**
      * Sets an element in the collection at the specified key/index.
@@ -139,7 +139,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return void
      */
-    public function set($key, $value);
+    public function set($key, $value): void;
 
     /**
      * Gets a native PHP array representation of the collection.
@@ -147,7 +147,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return mixed[]
      * @psalm-return array<TKey,T>
      */
-    public function toArray();
+    public function toArray(): array;
 
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.
@@ -197,7 +197,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    public function exists(Closure $p);
+    public function exists(Closure $p): bool;
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
@@ -209,7 +209,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return Collection<mixed> A collection with the results of the filter operation.
      * @psalm-return Collection<TKey, T>
      */
-    public function filter(Closure $p);
+    public function filter(Closure $p): self;
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
@@ -219,7 +219,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    public function forAll(Closure $p);
+    public function forAll(Closure $p): bool;
 
     /**
      * Applies the given function to each element in the collection and returns
@@ -232,7 +232,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @psalm-template U
      */
-    public function map(Closure $func);
+    public function map(Closure $func): self;
 
     /**
      * Partitions this collection in two collections according to a predicate.
@@ -246,7 +246,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *                      contains the collection of elements where the predicate returned FALSE.
      * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
-    public function partition(Closure $p);
+    public function partition(Closure $p): array;
 
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
@@ -274,5 +274,35 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return mixed[]
      * @psalm-return array<TKey,T>
      */
-    public function slice($offset, $length = null);
+    public function slice(int $offset, ?int $length = null): array;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count(): int;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator(): \Traversable;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset);
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($offset, $value): void;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($offset): void;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset): bool;
 }

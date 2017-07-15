@@ -41,7 +41,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public static function create()
+    public static function create(): self
     {
         return new static();
     }
@@ -51,7 +51,7 @@ class Criteria
      *
      * @return ExpressionBuilder
      */
-    public static function expr()
+    public static function expr(): ExpressionBuilder
     {
         if (self::$expressionBuilder === null) {
             self::$expressionBuilder = new ExpressionBuilder();
@@ -67,7 +67,7 @@ class Criteria
      * @param int|null      $firstResult
      * @param int|null      $maxResults
      */
-    public function __construct(?Expression $expression = null, ?array $orderings = null, $firstResult = null, $maxResults = null)
+    public function __construct(?Expression $expression = null, ?array $orderings = null, ?int $firstResult = null, ?int $maxResults = null)
     {
         $this->expression = $expression;
 
@@ -86,7 +86,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function where(Expression $expression)
+    public function where(Expression $expression): self
     {
         $this->expression = $expression;
 
@@ -99,7 +99,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function andWhere(Expression $expression)
+    public function andWhere(Expression $expression): self
     {
         if ($this->expression === null) {
             return $this->where($expression);
@@ -119,7 +119,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function orWhere(Expression $expression)
+    public function orWhere(Expression $expression): self
     {
         if ($this->expression === null) {
             return $this->where($expression);
@@ -138,7 +138,7 @@ class Criteria
      *
      * @return Expression|null
      */
-    public function getWhereExpression()
+    public function getWhereExpression(): ?Expression
     {
         return $this->expression;
     }
@@ -148,7 +148,7 @@ class Criteria
      *
      * @return string[]
      */
-    public function getOrderings()
+    public function getOrderings(): array
     {
         return $this->orderings;
     }
@@ -165,7 +165,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function orderBy(array $orderings)
+    public function orderBy(array $orderings): self
     {
         $this->orderings = array_map(
             static function (string $ordering): string {
@@ -182,7 +182,7 @@ class Criteria
      *
      * @return int|null
      */
-    public function getFirstResult()
+    public function getFirstResult(): ?int
     {
         return $this->firstResult;
     }
@@ -194,7 +194,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function setFirstResult($firstResult)
+    public function setFirstResult(?int $firstResult): self
     {
         $this->firstResult = $firstResult;
 
@@ -206,7 +206,7 @@ class Criteria
      *
      * @return int|null
      */
-    public function getMaxResults()
+    public function getMaxResults(): ?int
     {
         return $this->maxResults;
     }
@@ -218,7 +218,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function setMaxResults($maxResults)
+    public function setMaxResults(?int $maxResults): self
     {
         $this->maxResults = $maxResults;
 

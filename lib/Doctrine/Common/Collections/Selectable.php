@@ -28,5 +28,5 @@ interface Selectable
      * @return Collection<mixed>
      * @psalm-return Collection<TKey,T>
      */
-    public function matching(Criteria $criteria);
+    public function matching(Criteria $criteria): Collection;
 }
