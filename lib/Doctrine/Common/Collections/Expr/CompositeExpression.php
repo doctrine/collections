@@ -21,8 +21,7 @@ class CompositeExpression implements Expression
     private $expressions = [];
 
     /**
-     * @param string $type
-     * @param array  $expressions
+     * @param array $expressions
      *
      * @throws RuntimeException
      */
@@ -47,15 +46,12 @@ class CompositeExpression implements Expression
      *
      * @return Expression[]
      */
-    public function getExpressionList(): array
+    public function getExpressionList() : array
     {
         return $this->expressions;
     }
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }

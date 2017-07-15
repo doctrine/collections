@@ -33,9 +33,7 @@ class Comparison implements Expression
     private $value;
 
     /**
-     * @param string $field
-     * @param string $operator
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function __construct(string $field, string $operator, $value)
     {
@@ -48,10 +46,7 @@ class Comparison implements Expression
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getField(): string
+    public function getField() : string
     {
         return $this->field;
     }
@@ -64,10 +59,7 @@ class Comparison implements Expression
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
-    public function getOperator(): string
+    public function getOperator() : string
     {
         return $this->op;
     }

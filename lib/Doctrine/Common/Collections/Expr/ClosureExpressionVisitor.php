@@ -32,7 +32,6 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * method, __get, __call).
      *
      * @param object|array $object
-     * @param string       $field
      *
      * @return mixed
      */
@@ -89,13 +88,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
     /**
      * Helper for sorting arrays of objects based on multiple fields + orientations.
-     *
-     * @param string $name
-     * @param int    $orientation
-     *
-     * @return Closure
      */
-    public static function sortByField(string $name, int $orientation = 1, ?\Closure $next = null): \Closure
+    public static function sortByField(string $name, int $orientation = 1, ?Closure $next = null) : Closure
     {
         if (! $next) {
             $next = static function () : int {

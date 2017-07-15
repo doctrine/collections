@@ -20,42 +20,32 @@ class ExpressionBuilder
 {
     /**
      * @param mixed $x
-     *
-     * @return CompositeExpression
      */
-    public function andX($x = null): CompositeExpression
+    public function andX($x = null) : CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
     }
 
     /**
      * @param mixed $x
-     *
-     * @return CompositeExpression
      */
-    public function orX($x = null): CompositeExpression
+    public function orX($x = null) : CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function eq(string $field, $value): Comparison
+    public function eq(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value($value));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function gt(string $field, $value): Comparison
+    public function gt(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::GT, new Value($value));
     }
@@ -72,110 +62,78 @@ class ExpressionBuilder
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function gte(string $field, $value): Comparison
+    public function gte(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::GTE, new Value($value));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function lte(string $field, $value): Comparison
+    public function lte(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::LTE, new Value($value));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function neq(string $field, $value): Comparison
+    public function neq(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::NEQ, new Value($value));
     }
 
-    /**
-     * @param string $field
-     *
-     * @return Comparison
-     */
-    public function isNull(string $field): Comparison
+    public function isNull(string $field) : Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value(null));
     }
 
     /**
-     * @param string $field
-     * @param array  $values
-     *
-     * @return Comparison
+     * @param array $values
      */
-    public function in(string $field, array $values): Comparison
+    public function in(string $field, array $values) : Comparison
     {
         return new Comparison($field, Comparison::IN, new Value($values));
     }
 
     /**
-     * @param string $field
-     * @param array  $values
-     *
-     * @return Comparison
+     * @param array $values
      */
-    public function notIn(string $field, array $values): Comparison
+    public function notIn(string $field, array $values) : Comparison
     {
         return new Comparison($field, Comparison::NIN, new Value($values));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function contains(string $field, $value): Comparison
+    public function contains(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function memberOf(string $field, $value): Comparison
+    public function memberOf(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function startsWith(string $field, $value): Comparison
+    public function startsWith(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function endsWith(string $field, $value): Comparison
+    public function endsWith(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
     }
