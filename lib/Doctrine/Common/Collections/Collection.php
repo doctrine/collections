@@ -53,7 +53,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param mixed $element The element to add.
      *
-     * @return boolean Always TRUE.
+     * @return bool Always TRUE.
      */
     public function add($element);
 
@@ -70,21 +70,21 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param mixed $element The element to search for.
      *
-     * @return boolean TRUE if the collection contains the element, FALSE otherwise.
+     * @return bool TRUE if the collection contains the element, FALSE otherwise.
      */
     public function contains($element);
 
     /**
      * Checks whether the collection is empty (contains no elements).
      *
-     * @return boolean TRUE if the collection is empty, FALSE otherwise.
+     * @return bool TRUE if the collection is empty, FALSE otherwise.
      */
     public function isEmpty();
 
     /**
      * Removes the element at the specified index from the collection.
      *
-     * @param string|integer $key The kex/index of the element to remove.
+     * @param string|int $key The kex/index of the element to remove.
      *
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      */
@@ -95,24 +95,24 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param mixed $element The element to remove.
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
     public function removeElement($element);
 
     /**
      * Checks whether the collection contains an element with the specified key/index.
      *
-     * @param string|integer $key The key/index to check for.
+     * @param string|int $key The key/index to check for.
      *
-     * @return boolean TRUE if the collection contains an element with the specified key/index,
-     *                 FALSE otherwise.
+     * @return bool TRUE if the collection contains an element with the specified key/index,
+     *              FALSE otherwise.
      */
     public function containsKey($key);
 
     /**
      * Gets the element at the specified key/index.
      *
-     * @param string|integer $key The key/index of the element to retrieve.
+     * @param string|int $key The key/index of the element to retrieve.
      *
      * @return mixed
      */
@@ -137,8 +137,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Sets an element in the collection at the specified key/index.
      *
-     * @param string|integer $key   The key/index of the element to set.
-     * @param mixed          $value The element to set.
+     * @param string|int $key   The key/index of the element to set.
+     * @param mixed      $value The element to set.
      *
      * @return void
      */
@@ -191,7 +191,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate.
      *
-     * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
+     * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
     public function exists(Closure $p);
 
@@ -210,7 +210,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate.
      *
-     * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
+     * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
     public function forAll(Closure $p);
 
