@@ -37,7 +37,7 @@ abstract class AbstractLazyCollection implements Collection
     protected $collection;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $initialized = false;
 
