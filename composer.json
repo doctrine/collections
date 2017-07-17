@@ -31,5 +31,8 @@
         "branch-alias": {
             "dev-master": "1.3.x-dev"
         }
+    },
+    "suggest": {
+        "ext-mbstring": "Only required when ICONTAINS comparison is used"
     }
 }
