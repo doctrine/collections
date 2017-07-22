@@ -146,21 +146,24 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testWalkInComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->in("foo", [1, 2, 3]));
+        $closure = $this->visitor->walkComparison($this->builder->in("foo", [1, 2, 3, '04']));
 
         $this->assertTrue($closure(new TestObject(2)));
         $this->assertTrue($closure(new TestObject(1)));
         $this->assertFalse($closure(new TestObject(0)));
+        $this->assertFalse($closure(new TestObject(4)));
+        $this->assertTrue($closure(new TestObject('04')));
     }
 
     public function testWalkNotInComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", [1, 2, 3]));
+        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", [1, 2, 3, '04']));
 
         $this->assertFalse($closure(new TestObject(1)));
         $this->assertFalse($closure(new TestObject(2)));
         $this->assertTrue($closure(new TestObject(0)));
         $this->assertTrue($closure(new TestObject(4)));
+        $this->assertFalse($closure(new TestObject('04')));
     }
 
     public function testWalkContainsComparison() : void
@@ -178,6 +181,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($closure(new TestObject([1,2,3])));
         $this->assertTrue($closure(new TestObject([2])));
         $this->assertFalse($closure(new TestObject([1,3,5])));
+        $this->assertFalse($closure(new TestObject(array(1,'02'))));
     }
 
     public function testWalkStartsWithComparison() : void
