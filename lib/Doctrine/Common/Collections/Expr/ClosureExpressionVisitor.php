@@ -170,7 +170,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::CONTAINS:
                 return function ($object) use ($field, $value) {
-                    return false !== strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
+                    return false !== strpos(strtolower(ClosureExpressionVisitor::getObjectFieldValue($object, $field)), strtolower($value));
                 };
 
             case Comparison::MEMBER_OF:
