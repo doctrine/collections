@@ -170,7 +170,7 @@ class ExpressionBuilder
      *
      * @return Comparison
      */
-    public function memberOf ($field, $value)
+    public function memberOf($field, $value)
     {
         return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
     }
