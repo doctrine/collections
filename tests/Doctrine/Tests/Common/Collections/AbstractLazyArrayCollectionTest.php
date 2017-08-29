@@ -40,7 +40,7 @@ class AbstractLazyCollectionTest extends BaseArrayCollectionTest
         /** @var LazyArrayCollection $collection */
         $collection = $this->buildCollection(['a', 'b', 'c']);
 
-        $this->assertFalse($collection->isInitialized());
-        $this->assertCount(3, $collection);
+        self::assertFalse($collection->isInitialized());
+        self::assertCount(3, $collection);
     }
 }

@@ -43,7 +43,7 @@ class CompositeExpressionTest extends TestCase
         $expectedType = CompositeExpression::TYPE_AND;
         $actualType = $compositeExpression->getType();
 
-        $this->assertSame($expectedType, $actualType);
+        self::assertSame($expectedType, $actualType);
     }
 
     protected function createCompositeExpression() : CompositeExpression
@@ -60,7 +60,7 @@ class CompositeExpressionTest extends TestCase
         $expectedExpressionList = [$this->createMock(Expression::class)];
         $actualExpressionList   = $compositeExpression->getExpressionList();
 
-        $this->assertEquals($expectedExpressionList, $actualExpressionList);
+        self::assertEquals($expectedExpressionList, $actualExpressionList);
     }
 
     public function testVisitor() : void

@@ -19,7 +19,7 @@ class ValueTest extends TestCase
 
         $actualValue = $valueExpression->getValue();
 
-        $this->assertEquals($value, $actualValue);
+        self::assertEquals($value, $actualValue);
     }
 
     public function testVisitor() : void

@@ -39,7 +39,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame($elements, $collection->toArray());
+        self::assertSame($elements, $collection->toArray());
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     public function testFirst($elements) : void
     {
         $collection = $this->buildCollection($elements);
-        $this->assertSame(reset($elements), $collection->first());
+        self::assertSame(reset($elements), $collection->first());
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     public function testLast($elements) : void
     {
         $collection = $this->buildCollection($elements);
-        $this->assertSame(end($elements), $collection->last());
+        self::assertSame(end($elements), $collection->last());
     }
 
     /**
@@ -67,12 +67,12 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(key($elements), $collection->key());
+        self::assertSame(key($elements), $collection->key());
 
         next($elements);
         $collection->next();
 
-        $this->assertSame(key($elements), $collection->key());
+        self::assertSame(key($elements), $collection->key());
     }
 
     /**
@@ -90,9 +90,9 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
                 break;
             }
 
-            $this->assertSame($arrayNext, $collectionNext, 'Returned value of ArrayCollection::next() and next() not match');
-            $this->assertSame(key($elements), $collection->key(), 'Keys not match');
-            $this->assertSame(current($elements), $collection->current(), 'Current values not match');
+            self::assertSame($arrayNext, $collectionNext, 'Returned value of ArrayCollection::next() and next() not match');
+            self::assertSame(key($elements), $collection->key(), 'Keys not match');
+            self::assertSame(current($elements), $collection->current(), 'Current values not match');
         }
     }
 
@@ -103,12 +103,12 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(current($elements), $collection->current());
+        self::assertSame(current($elements), $collection->current());
 
         next($elements);
         $collection->next();
 
-        $this->assertSame(current($elements), $collection->current());
+        self::assertSame(current($elements), $collection->current());
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(array_keys($elements), $collection->getKeys());
+        self::assertSame(array_keys($elements), $collection->getKeys());
     }
 
     /**
@@ -128,7 +128,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(array_values($elements), $collection->getValues());
+        self::assertSame(array_values($elements), $collection->getValues());
     }
 
     /**
@@ -138,7 +138,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(count($elements), $collection->count());
+        self::assertSame(count($elements), $collection->count());
     }
 
     /**
@@ -150,11 +150,11 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
         $iterations = 0;
         foreach ($collection->getIterator() as $key => $item) {
-            $this->assertSame($elements[$key], $item, "Item {$key} not match");
+            self::assertSame($elements[$key], $item, "Item {$key} not match");
             ++$iterations;
         }
 
-        $this->assertEquals(count($elements), $iterations, 'Number of iterations not match');
+        self::assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
     public function provideDifferentElements() : array
@@ -171,19 +171,19 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3];
         $collection = $this->buildCollection($elements);
 
-        $this->assertEquals(1, $collection->remove(0));
+        self::assertEquals(1, $collection->remove(0));
         unset($elements[0]);
 
-        $this->assertEquals(null, $collection->remove('non-existent'));
+        self::assertEquals(null, $collection->remove('non-existent'));
         unset($elements['non-existent']);
 
-        $this->assertEquals(2, $collection->remove(1));
+        self::assertEquals(2, $collection->remove(1));
         unset($elements[1]);
 
-        $this->assertEquals('a', $collection->remove('A'));
+        self::assertEquals('a', $collection->remove('A'));
         unset($elements['A']);
 
-        $this->assertEquals($elements, $collection->toArray());
+        self::assertEquals($elements, $collection->toArray());
     }
 
     public function testRemoveElement() : void
@@ -191,18 +191,18 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
 
-        $this->assertTrue($collection->removeElement(1));
+        self::assertTrue($collection->removeElement(1));
         unset($elements[0]);
 
-        $this->assertFalse($collection->removeElement('non-existent'));
+        self::assertFalse($collection->removeElement('non-existent'));
 
-        $this->assertTrue($collection->removeElement('a'));
+        self::assertTrue($collection->removeElement('a'));
         unset($elements['A']);
 
-        $this->assertTrue($collection->removeElement('a'));
+        self::assertTrue($collection->removeElement('a'));
         unset($elements['A2']);
 
-        $this->assertEquals($elements, $collection->toArray());
+        self::assertEquals($elements, $collection->toArray());
     }
 
     public function testContainsKey() : void
@@ -210,19 +210,19 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
 
-        $this->assertTrue($collection->containsKey(0), 'Contains index 0');
-        $this->assertTrue($collection->containsKey('A'), 'Contains key "A"');
-        $this->assertTrue($collection->containsKey('null'), 'Contains key "null", with value null');
-        $this->assertFalse($collection->containsKey('non-existent'), "Doesn't contain key");
+        self::assertTrue($collection->containsKey(0), 'Contains index 0');
+        self::assertTrue($collection->containsKey('A'), 'Contains key "A"');
+        self::assertTrue($collection->containsKey('null'), 'Contains key "null", with value null');
+        self::assertFalse($collection->containsKey('non-existent'), "Doesn't contain key");
     }
 
     public function testEmpty() : void
     {
         $collection = $this->buildCollection();
-        $this->assertTrue($collection->isEmpty(), 'Empty collection');
+        self::assertTrue($collection->isEmpty(), 'Empty collection');
 
         $collection->add(1);
-        $this->assertFalse($collection->isEmpty(), 'Not empty collection');
+        self::assertFalse($collection->isEmpty(), 'Not empty collection');
     }
 
     public function testContains() : void
@@ -230,10 +230,10 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        $this->assertTrue($collection->contains(0), 'Contains Zero');
-        $this->assertTrue($collection->contains('a'), 'Contains "a"');
-        $this->assertTrue($collection->contains(null), 'Contains Null');
-        $this->assertFalse($collection->contains('non-existent'), "Doesn't contain an element");
+        self::assertTrue($collection->contains(0), 'Contains Zero');
+        self::assertTrue($collection->contains('a'), 'Contains "a"');
+        self::assertTrue($collection->contains(null), 'Contains Null');
+        self::assertFalse($collection->contains('non-existent'), "Doesn't contain an element");
     }
 
     public function testExists() : void
@@ -241,11 +241,11 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        $this->assertTrue($collection->exists(function ($key, $element) {
+        self::assertTrue($collection->exists(function ($key, $element) {
             return $key == 'A' && $element == 'a';
         }), 'Element exists');
 
-        $this->assertFalse($collection->exists(function ($key, $element) {
+        self::assertFalse($collection->exists(function ($key, $element) {
             return $key == 'non-existent' && $element == 'non-existent';
         }), 'Element not exists');
     }
@@ -255,9 +255,9 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(array_search(2, $elements, true), $collection->indexOf(2), 'Index of 2');
-        $this->assertSame(array_search(null, $elements, true), $collection->indexOf(null), 'Index of null');
-        $this->assertSame(array_search('non-existent', $elements, true), $collection->indexOf('non-existent'), 'Index of non existent');
+        self::assertSame(array_search(2, $elements, true), $collection->indexOf(2), 'Index of 2');
+        self::assertSame(array_search(null, $elements, true), $collection->indexOf(null), 'Index of null');
+        self::assertSame(array_search('non-existent', $elements, true), $collection->indexOf('non-existent'), 'Index of non existent');
     }
 
     public function testGet() : void
@@ -265,9 +265,9 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        $this->assertSame(2, $collection->get(1), 'Get element by index');
-        $this->assertSame('a', $collection->get('A'), 'Get element by name');
-        $this->assertSame(null, $collection->get('non-existent'), 'Get non existent element');
+        self::assertSame(2, $collection->get(1), 'Get element by index');
+        self::assertSame('a', $collection->get('A'), 'Get element by name');
+        self::assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
 
     public function testMatchingWithSortingPreservesyKeys() : void
@@ -287,7 +287,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 
-        $this->assertSame(
+        self::assertSame(
             [
                 'object2' => $object2,
                 'object1' => $object1,
@@ -316,7 +316,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 
-        $this->assertSame(
+        self::assertSame(
             $expected,
             $collection
                 ->matching(new Criteria(null, ['foo' => Criteria::DESC, 'bar' => Criteria::DESC]))
