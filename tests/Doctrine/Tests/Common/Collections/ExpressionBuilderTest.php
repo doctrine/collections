@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Expr\CompositeExpression;
 /**
  * @group DDC-1637
  */
-class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
+class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ExpressionBuilder

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
 
-class CriteriaTest extends \PHPUnit_Framework_TestCase
+class CriteriaTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate() : void
     {

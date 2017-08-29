@@ -25,7 +25,7 @@ use Doctrine\Tests\DerivedArrayCollection;
 /**
  * @author Alexander Golovnya <snsanich@gmail.com>
  */
-class DerivedCollectionTest extends \PHPUnit_Framework_TestCase
+class DerivedCollectionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests that methods that create a new instance can be called in a derived

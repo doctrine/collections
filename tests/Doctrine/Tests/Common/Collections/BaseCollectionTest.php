@@ -4,7 +4,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
 
-abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
+abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Collection

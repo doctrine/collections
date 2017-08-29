@@ -25,7 +25,7 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 /**
  * @group DDC-1637
  */
-class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
+class ClosureExpressionVisitorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ClosureExpressionVisitor

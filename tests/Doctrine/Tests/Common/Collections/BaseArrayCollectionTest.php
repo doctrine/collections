@@ -23,7 +23,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 
-abstract class BaseArrayCollectionTest extends \PHPUnit_Framework_TestCase
+abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 {
     abstract protected function buildCollection(array $elements = []) : Collection;
 
