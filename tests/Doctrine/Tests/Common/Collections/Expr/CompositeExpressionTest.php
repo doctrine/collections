@@ -27,7 +27,7 @@ class CompositeExpressionTest extends TestCase
      */
     public function testExceptions($expression) : void
     {
-        $type = CompositeExpression::TYPE_AND;
+        $type        = CompositeExpression::TYPE_AND;
         $expressions = [
             $expression,
         ];
@@ -41,7 +41,7 @@ class CompositeExpressionTest extends TestCase
         $compositeExpression = $this->createCompositeExpression();
 
         $expectedType = CompositeExpression::TYPE_AND;
-        $actualType = $compositeExpression->getType();
+        $actualType   = $compositeExpression->getType();
 
         self::assertSame($expectedType, $actualType);
     }

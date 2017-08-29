@@ -34,7 +34,7 @@ class DerivedCollectionTest extends \PHPUnit\Framework\TestCase
     public function testDerivedClassCreation() : void
     {
         $collection = new DerivedArrayCollection(new \stdClass());
-        $closure = function () {
+        $closure    = function () {
             return $allMatches = false;
         };
 

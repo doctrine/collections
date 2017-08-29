@@ -84,9 +84,9 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
         while (true) {
             $collectionNext = $collection->next();
-            $arrayNext = next($elements);
+            $arrayNext      = next($elements);
 
-            if (!$collectionNext || !$arrayNext) {
+            if ( ! $collectionNext || ! $arrayNext) {
                 break;
             }
 
@@ -168,7 +168,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testRemove() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3];
+        $elements   = [1, 'A' => 'a', 2, 'B' => 'b', 3];
         $collection = $this->buildCollection($elements);
 
         self::assertEquals(1, $collection->remove(0));
@@ -188,7 +188,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testRemoveElement() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b'];
+        $elements   = [1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
 
         self::assertTrue($collection->removeElement(1));
@@ -207,7 +207,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testContainsKey() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b'];
+        $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
 
         self::assertTrue($collection->containsKey(0), 'Contains index 0');
@@ -227,7 +227,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testContains() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
+        $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         self::assertTrue($collection->contains(0), 'Contains Zero');
@@ -238,7 +238,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testExists() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
+        $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         self::assertTrue($collection->exists(function ($key, $element) {
@@ -252,7 +252,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testIndexOf() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
+        $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         self::assertSame(array_search(2, $elements, true), $collection->indexOf(2), 'Index of 2');
@@ -262,7 +262,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testGet() : void
     {
-        $elements = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
+        $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
         self::assertSame(2, $collection->get(1), 'Get element by index');
@@ -283,7 +283,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
             'object2' => $object2,
         ]);
 
-        if (!$this->isSelectable($collection)) {
+        if ( ! $this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 
@@ -312,7 +312,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
             0 => ['foo' => 1, 'bar' => 2]
         ];
 
-        if (!$this->isSelectable($collection)) {
+        if ( ! $this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 

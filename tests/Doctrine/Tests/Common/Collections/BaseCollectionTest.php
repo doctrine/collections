@@ -143,7 +143,7 @@ abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $this->collection[] = true;
         $this->collection[] = false;
-        $partition = $this->collection->partition(function ($k, $e) {
+        $partition          = $this->collection->partition(function ($k, $e) {
             return $e == true;
         });
         self::assertEquals($partition[0][0], true);
@@ -162,7 +162,7 @@ abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
-        $el = $this->collection->remove(0);
+        $el                 = $this->collection->remove(0);
 
         self::assertEquals('one', $el);
         self::assertEquals($this->collection->contains('one'), false);
@@ -198,12 +198,12 @@ abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
 
     protected function fillMatchingFixture() : void
     {
-        $std1 = new \stdClass();
-        $std1->foo = 'bar';
+        $std1               = new \stdClass();
+        $std1->foo          = 'bar';
         $this->collection[] = $std1;
 
-        $std2 = new \stdClass();
-        $std2->foo = 'baz';
+        $std2               = new \stdClass();
+        $std2->foo          = 'baz';
         $this->collection[] = $std2;
     }
 

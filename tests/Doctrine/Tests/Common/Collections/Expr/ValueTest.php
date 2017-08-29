@@ -14,7 +14,7 @@ class ValueTest extends TestCase
 {
     public function testGetter() : void
     {
-        $value = 'foo';
+        $value           = 'foo';
         $valueExpression = new Value($value);
 
         $actualValue = $valueExpression->getValue();
@@ -30,7 +30,7 @@ class ValueTest extends TestCase
             ->method('walkValue');
 
         /** @var ExpressionVisitor $visitor */
-        $value = 'foo';
+        $value           = 'foo';
         $valueExpression = new Value($value);
         $valueExpression->visit($visitor);
     }

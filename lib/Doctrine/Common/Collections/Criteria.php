@@ -33,7 +33,7 @@ class Criteria
     /**
      * @var string
      */
-    const ASC  = 'ASC';
+    const ASC = 'ASC';
 
     /**
      * @var string

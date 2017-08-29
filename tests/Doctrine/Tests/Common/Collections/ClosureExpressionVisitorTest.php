@@ -233,7 +233,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit\Framework\TestCase
     public function testSortByFieldAscending() : void
     {
         $objects = [new TestObject("b"), new TestObject("a"), new TestObject("c")];
-        $sort = ClosureExpressionVisitor::sortByField("foo");
+        $sort    = ClosureExpressionVisitor::sortByField("foo");
 
         usort($objects, $sort);
 
@@ -245,7 +245,7 @@ class ClosureExpressionVisitorTest extends \PHPUnit\Framework\TestCase
     public function testSortByFieldDescending() : void
     {
         $objects = [new TestObject("b"), new TestObject("a"), new TestObject("c")];
-        $sort = ClosureExpressionVisitor::sortByField("foo", -1);
+        $sort    = ClosureExpressionVisitor::sortByField("foo", -1);
 
         usort($objects, $sort);
 
@@ -257,8 +257,8 @@ class ClosureExpressionVisitorTest extends \PHPUnit\Framework\TestCase
     public function testSortDelegate() : void
     {
         $objects = [new TestObject("a", "c"), new TestObject("a", "b"), new TestObject("a", "a")];
-        $sort = ClosureExpressionVisitor::sortByField("bar", 1);
-        $sort = ClosureExpressionVisitor::sortByField("foo", 1, $sort);
+        $sort    = ClosureExpressionVisitor::sortByField("bar", 1);
+        $sort    = ClosureExpressionVisitor::sortByField("foo", 1, $sort);
 
         usort($objects, $sort);
 
@@ -336,7 +336,7 @@ class TestObjectBothCamelCaseAndUnderscore
     public function __construct(int $foo_bar = null, int $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
-        $this->fooBar = $fooBar;
+        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar() : ?int
@@ -353,7 +353,7 @@ class TestObjectPublicCamelCaseAndPrivateUnderscore
     public function __construct(int $foo_bar = null, int $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
-        $this->fooBar = $fooBar;
+        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar() : ?int
@@ -370,7 +370,7 @@ class TestObjectBothPublic
     public function __construct($foo_bar = null, $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
-        $this->fooBar = $fooBar;
+        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar()

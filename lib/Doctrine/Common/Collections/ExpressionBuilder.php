@@ -195,6 +195,5 @@ class ExpressionBuilder
     public function endsWith($field, $value)
     {
         return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
-    }    
-
+    }
 }
