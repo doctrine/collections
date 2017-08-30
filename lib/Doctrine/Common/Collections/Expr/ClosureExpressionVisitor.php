@@ -74,7 +74,9 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
 
         // camelcase field name to support different variable naming conventions
-        $ccField   = preg_replace_callback('/_(.?)/', function($matches) { return strtoupper($matches[1]); }, $field);
+        $ccField = preg_replace_callback('/_(.?)/', function ($matches) {
+            return strtoupper($matches[1]);
+        }, $field);
 
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
@@ -102,7 +104,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     public static function sortByField($name, $orientation = 1, \Closure $next = null)
     {
         if ( ! $next) {
-            $next = function() : int {
+            $next = function () : int {
                 return 0;
             };
         }
@@ -176,7 +178,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             case Comparison::MEMBER_OF:
                 return function ($object) use ($field, $value) : bool {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    if (!is_array($fieldValues)) {
+                    if ( ! is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
                     }
                     return in_array($value, $fieldValues, true);
@@ -217,7 +219,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             $expressionList[] = $this->dispatch($child);
         }
 
-        switch($expr->getType()) {
+        switch ($expr->getType()) {
             case CompositeExpression::TYPE_AND:
                 return $this->andExpressions($expressionList);
 

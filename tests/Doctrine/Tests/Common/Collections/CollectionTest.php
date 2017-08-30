@@ -16,7 +16,7 @@ class CollectionTest extends BaseCollectionTest
     public function testToString() : void
     {
         $this->collection->add('testing');
-        $this->assertTrue(is_string((string) $this->collection));
+        self::assertTrue(is_string((string) $this->collection));
     }
 
     /**
@@ -27,9 +27,9 @@ class CollectionTest extends BaseCollectionTest
         $this->fillMatchingFixture();
 
         $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('foo', 'bar')));
-        $this->assertInstanceOf(Collection::class, $col);
-        $this->assertNotSame($col, $this->collection);
-        $this->assertEquals(1, count($col));
+        self::assertInstanceOf(Collection::class, $col);
+        self::assertNotSame($col, $this->collection);
+        self::assertEquals(1, count($col));
     }
 
     /**
@@ -41,11 +41,11 @@ class CollectionTest extends BaseCollectionTest
 
         $col = $this->collection->matching(new Criteria(null, ['foo' => 'DESC']));
 
-        $this->assertInstanceOf(Collection::class, $col);
-        $this->assertNotSame($col, $this->collection);
-        $this->assertEquals(2, count($col));
-        $this->assertEquals('baz', $col->first()->foo);
-        $this->assertEquals('bar', $col->last()->foo);
+        self::assertInstanceOf(Collection::class, $col);
+        self::assertNotSame($col, $this->collection);
+        self::assertEquals(2, count($col));
+        self::assertEquals('baz', $col->first()->foo);
+        self::assertEquals('bar', $col->last()->foo);
     }
 
     /**
@@ -57,9 +57,9 @@ class CollectionTest extends BaseCollectionTest
 
         $col = $this->collection->matching(new Criteria(null, null, 1, 1));
 
-        $this->assertInstanceOf(Collection::class, $col);
-        $this->assertNotSame($col, $this->collection);
-        $this->assertEquals(1, count($col));
-        $this->assertEquals('baz', $col[0]->foo);
+        self::assertInstanceOf(Collection::class, $col);
+        self::assertNotSame($col, $this->collection);
+        self::assertEquals(1, count($col));
+        self::assertEquals('baz', $col[0]->foo);
     }
 }
