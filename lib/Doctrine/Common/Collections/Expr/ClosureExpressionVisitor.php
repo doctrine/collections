@@ -9,6 +9,7 @@ use function in_array;
 use function is_array;
 use function iterator_to_array;
 use function method_exists;
+use function preg_match;
 use function preg_replace_callback;
 use function strlen;
 use function strpos;
@@ -44,11 +45,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         foreach ($accessors as $accessor) {
             $accessor .= $field;
 
-            if (! method_exists($object, $accessor)) {
-                continue;
+            if (method_exists($object, $accessor)) {
+                return $object->$accessor();
             }
+        }
 
-            return $object->$accessor();
+        if (preg_match('/^is[A-Z]+/', $field) === 1 && method_exists($object, $field)) {
+            return $object->$field();
         }
 
         // __call should be triggered for get.
@@ -74,11 +77,9 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
 
-            if (! method_exists($object, $accessor)) {
-                continue;
+            if (method_exists($object, $accessor)) {
+                return $object->$accessor();
             }
-
-            return $object->$accessor();
         }
 
         return $object->$field;
