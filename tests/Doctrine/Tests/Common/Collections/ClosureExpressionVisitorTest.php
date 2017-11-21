@@ -267,6 +267,18 @@ class ClosureExpressionVisitorTest extends \PHPUnit\Framework\TestCase
         self::assertEquals("c", $objects[2]->getBar());
     }
 
+    public function testSortByLiteralPublicAccessor()
+    {
+        $objects = [new TestObjectWithLiteralPublicAccessor("a"), new TestObjectWithLiteralPublicAccessor("b"), new TestObjectWithLiteralPublicAccessor("c")];
+        $sort    = ClosureExpressionVisitor::sortByField("foo", 1);
+
+        usort($objects, $sort);
+
+        self::assertEquals("a", $objects[0]->foo());
+        self::assertEquals("b", $objects[1]->foo());
+        self::assertEquals("c", $objects[2]->foo());
+    }
+
     public function testArrayComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->eq("foo", 42));
@@ -359,6 +371,21 @@ class TestObjectPublicCamelCaseAndPrivateUnderscore
     public function getFooBar() : ?int
     {
         return $this->fooBar;
+    }
+}
+
+class TestObjectWithLiteralPublicAccessor
+{
+    private $foo;
+
+    public function __construct($foo)
+    {
+        $this->foo = $foo;
+    }
+
+    public function foo()
+    {
+        return $this->foo;
     }
 }
 
