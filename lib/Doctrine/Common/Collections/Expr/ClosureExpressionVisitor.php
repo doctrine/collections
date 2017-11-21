@@ -89,6 +89,10 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object->$accessor();
         }
 
+        if (method_exists($object, $field)) {
+            return $object->$field();
+        }
+
         return $object->$field;
     }
 
