@@ -8,16 +8,17 @@
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutTodoAnnotatedTests="true"
+         bootstrap="vendor/autoload.php"
 >
     <testsuites>
         <testsuite name="Doctrine Collections Test Suite">
-            <directory>./tests/Doctrine/</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./lib/Doctrine/</directory>
+            <directory>./lib</directory>
         </whitelist>
     </filter>
 </phpunit>

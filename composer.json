@@ -20,11 +20,11 @@
         "doctrine/coding-standard": "~0.1@dev"
     },
     "autoload": {
-        "psr-0": { "Doctrine\\Common\\Collections\\": "lib/" }
+        "psr-4": { "Doctrine\\Common\\Collections\\": "lib" }
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests/Doctrine/Tests"
+            "Doctrine\\Tests\\": "tests"
         }
     },
     "extra": {
