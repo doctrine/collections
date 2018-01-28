@@ -11,7 +11,7 @@ use Doctrine\Tests\LazyArrayCollection;
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
-class AbstractLazyCollectionTest extends BaseArrayCollectionTest
+class AbstractLazyArrayCollectionTest extends BaseArrayCollectionTest
 {
     protected function buildCollection(array $elements = []) : Collection
     {

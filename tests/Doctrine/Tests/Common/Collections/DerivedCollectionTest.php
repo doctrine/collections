@@ -4,11 +4,9 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Tests\DerivedArrayCollection;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @author Alexander Golovnya <snsanich@gmail.com>
- */
-class DerivedCollectionTest extends \PHPUnit\Framework\TestCase
+class DerivedCollectionTest extends TestCase
 {
     /**
      * Tests that methods that create a new instance can be called in a derived

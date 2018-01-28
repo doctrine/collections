@@ -6,9 +6,6 @@ use Closure;
 
 /**
  * Lazy collection that is backed by a concrete collection
- *
- * @author Michaël Gallego <mic.gallego@gmail.com>
- * @since  1.2
  */
 abstract class AbstractLazyCollection implements Collection
 {
@@ -306,12 +303,10 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * Initialize the collection
-     *
-     * @return void
      */
     protected function initialize()
     {
-        if ( ! $this->initialized) {
+        if (! $this->initialized) {
             $this->doInitialize();
             $this->initialized = true;
         }

@@ -18,20 +18,7 @@ branches.
 
 ## Coding Standard
 
-We use [doctrine coding standard](https://github.com/doctrine/coding-standard) which is PSR-1 and PSR-2:
-
-* https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
-* https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
-
-with some exceptions/differences:
-
-* Keep the nesting of control structures per method as small as possible
-* Align equals (=) signs
-* Add spaces between assignment, control and return statements
-* Prefer early exit over nesting conditions
-* Add spaces around a negation if condition ``if ( ! $cond)``
-* Add legal information at the beginning of each source file
-* Add ``@author`` [phpDoc](https://www.phpdoc.org/docs/latest/references/phpdoc/tags/author.html) comment at DockBlock of class/interface/trait that you create.
+We use the [Doctrine Coding Standard](https://github.com/doctrine/coding-standard).
 
 ## Unit-Tests
 

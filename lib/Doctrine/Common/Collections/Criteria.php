@@ -2,26 +2,25 @@
 
 namespace Doctrine\Common\Collections;
 
-use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Expression;
+use function array_map;
+use function strtoupper;
 
 /**
  * Criteria for filtering Selectable collections.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since 2.3
  */
 class Criteria
 {
     /**
      * @var string
      */
-    const ASC = 'ASC';
+    public const ASC = 'ASC';
 
     /**
      * @var string
      */
-    const DESC = 'DESC';
+    public const DESC = 'DESC';
 
     /**
      * @var \Doctrine\Common\Collections\ExpressionBuilder|null
@@ -75,27 +74,24 @@ class Criteria
     /**
      * Construct a new Criteria.
      *
-     * @param Expression    $expression
      * @param string[]|null $orderings
      * @param int|null      $firstResult
      * @param int|null      $maxResults
      */
-    public function __construct(Expression $expression = null, array $orderings = null, $firstResult = null, $maxResults = null)
+    public function __construct(?Expression $expression = null, ?array $orderings = null, $firstResult = null, $maxResults = null)
     {
         $this->expression = $expression;
 
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
 
-        if (null !== $orderings) {
+        if ($orderings !== null) {
             $this->orderBy($orderings);
         }
     }
 
     /**
      * Sets the where expression to evaluate when this Criteria is searched for.
-     *
-     * @param Expression $expression
      *
      * @return Criteria
      */
@@ -109,8 +105,6 @@ class Criteria
     /**
      * Appends the where expression to evaluate when this Criteria is searched for
      * using an AND with previous expression.
-     *
-     * @param Expression $expression
      *
      * @return Criteria
      */
@@ -131,8 +125,6 @@ class Criteria
     /**
      * Appends the where expression to evaluate when this Criteria is searched for
      * using an OR with previous expression.
-     *
-     * @param Expression $expression
      *
      * @return Criteria
      */
@@ -213,7 +205,7 @@ class Criteria
      */
     public function setFirstResult($firstResult)
     {
-        $this->firstResult = null === $firstResult ? null : (int) $firstResult;
+        $this->firstResult = $firstResult === null ? null : (int) $firstResult;
 
         return $this;
     }
@@ -237,7 +229,7 @@ class Criteria
      */
     public function setMaxResults($maxResults)
     {
-        $this->maxResults = null === $maxResults ? null : (int) $maxResults;
+        $this->maxResults = $maxResults === null ? null : (int) $maxResults;
 
         return $this;
     }
