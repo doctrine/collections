@@ -23,11 +23,6 @@ use IteratorAggregate;
  * You can not rely on the internal iterator of the collection being at a certain
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
- *
- * @since  2.0
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author Jonathan Wage <jonwage@gmail.com>
- * @author Roman Borschel <roman@code-factory.org>
  */
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -200,8 +195,6 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
-     *
-     * @param Closure $func
      *
      * @return Collection
      */

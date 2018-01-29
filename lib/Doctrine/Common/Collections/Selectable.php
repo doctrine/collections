@@ -13,17 +13,12 @@ namespace Doctrine\Common\Collections;
  * utilizing the query APIs, for example SQL in the ORM. Applications using
  * this API can implement efficient database access without having to ask the
  * EntityManager or Repositories.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
  */
 interface Selectable
 {
     /**
      * Selects all elements from a selectable that match the expression and
      * returns a new collection containing these elements.
-     *
-     * @param Criteria $criteria
      *
      * @return Collection
      */

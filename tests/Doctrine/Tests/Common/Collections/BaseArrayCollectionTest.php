@@ -5,8 +5,18 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
+use PHPUnit\Framework\TestCase;
+use function array_keys;
+use function array_search;
+use function array_values;
+use function count;
+use function current;
+use function end;
+use function key;
+use function next;
+use function reset;
 
-abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
+abstract class BaseArrayCollectionTest extends TestCase
 {
     abstract protected function buildCollection(array $elements = []) : Collection;
 
@@ -69,7 +79,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
             $collectionNext = $collection->next();
             $arrayNext      = next($elements);
 
-            if ( ! $collectionNext || ! $arrayNext) {
+            if (! $collectionNext || ! $arrayNext) {
                 break;
             }
 
@@ -133,7 +143,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
 
         $iterations = 0;
         foreach ($collection->getIterator() as $key => $item) {
-            self::assertSame($elements[$key], $item, "Item {$key} not match");
+            self::assertSame($elements[$key], $item, 'Item ' . $key . ' not match');
             ++$iterations;
         }
 
@@ -225,11 +235,11 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $collection = $this->buildCollection($elements);
 
         self::assertTrue($collection->exists(function ($key, $element) {
-            return $key == 'A' && $element == 'a';
+            return $key === 'A' && $element === 'a';
         }), 'Element exists');
 
         self::assertFalse($collection->exists(function ($key, $element) {
-            return $key == 'non-existent' && $element == 'non-existent';
+            return $key === 'non-existent' && $element === 'non-existent';
         }), 'Element not exists');
     }
 
@@ -266,7 +276,7 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
             'object2' => $object2,
         ]);
 
-        if ( ! $this->isSelectable($collection)) {
+        if (! $this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 
@@ -286,16 +296,16 @@ abstract class BaseArrayCollectionTest extends \PHPUnit\Framework\TestCase
         $collection = $this->buildCollection([
             ['foo' => 1, 'bar' => 2],
             ['foo' => 2, 'bar' => 4],
-            ['foo' => 2, 'bar' => 3]
+            ['foo' => 2, 'bar' => 3],
         ]);
 
         $expected = [
             1 => ['foo' => 2, 'bar' => 4],
             2 => ['foo' => 2, 'bar' => 3],
-            0 => ['foo' => 1, 'bar' => 2]
+            0 => ['foo' => 1, 'bar' => 2],
         ];
 
-        if ( ! $this->isSelectable($collection)) {
+        if (! $this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 

@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase as TestCase;
 
 /**
- * @author  Tobias Oberrauch <hello@tobiasoberrauch.com>
  * @covers  \Doctrine\Common\Collections\Expr\CompositeExpression
  */
 class CompositeExpressionTest extends TestCase
@@ -28,9 +27,7 @@ class CompositeExpressionTest extends TestCase
     public function testExceptions($expression) : void
     {
         $type        = CompositeExpression::TYPE_AND;
-        $expressions = [
-            $expression,
-        ];
+        $expressions = [$expression];
 
         $this->expectException(\RuntimeException::class);
         new CompositeExpression($type, $expressions);

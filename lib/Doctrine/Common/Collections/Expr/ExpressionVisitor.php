@@ -2,18 +2,16 @@
 
 namespace Doctrine\Common\Collections\Expr;
 
+use function get_class;
+
 /**
  * An Expression visitor walks a graph of expressions and turns them into a
  * query for the underlying implementation.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 abstract class ExpressionVisitor
 {
     /**
      * Converts a comparison expression into the target query language output.
-     *
-     * @param Comparison $comparison
      *
      * @return mixed
      */
@@ -22,8 +20,6 @@ abstract class ExpressionVisitor
     /**
      * Converts a value expression into the target query language part.
      *
-     * @param Value $value
-     *
      * @return mixed
      */
     abstract public function walkValue(Value $value);
@@ -31,16 +27,12 @@ abstract class ExpressionVisitor
     /**
      * Converts a composite expression into the target query language output.
      *
-     * @param CompositeExpression $expr
-     *
      * @return mixed
      */
     abstract public function walkCompositeExpression(CompositeExpression $expr);
 
     /**
      * Dispatches walking an expression to the appropriate handler.
-     *
-     * @param Expression $expr
      *
      * @return mixed
      *
@@ -59,7 +51,7 @@ abstract class ExpressionVisitor
                 return $this->walkCompositeExpression($expr);
 
             default:
-                throw new \RuntimeException("Unknown Expression " . get_class($expr));
+                throw new \RuntimeException('Unknown Expression ' . get_class($expr));
         }
     }
 }

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 final class DerivedArrayCollection extends ArrayCollection
 {
+    /** @var \stdClass */
     private $foo;
 
     public function __construct(\stdClass $foo, array $elements = [])
