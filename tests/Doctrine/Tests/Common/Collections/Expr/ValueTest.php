@@ -4,22 +4,21 @@ namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase as TestCase;
 
 /**
- * @author  Tobias Oberrauch <hello@tobiasoberrauch.com>
  * @covers  \Doctrine\Common\Collections\Expr\Value
  */
 class ValueTest extends TestCase
 {
     public function testGetter() : void
     {
-        $value = 'foo';
+        $value           = 'foo';
         $valueExpression = new Value($value);
 
         $actualValue = $valueExpression->getValue();
 
-        $this->assertEquals($value, $actualValue);
+        self::assertEquals($value, $actualValue);
     }
 
     public function testVisitor() : void
@@ -30,7 +29,7 @@ class ValueTest extends TestCase
             ->method('walkValue');
 
         /** @var ExpressionVisitor $visitor */
-        $value = 'foo';
+        $value           = 'foo';
         $valueExpression = new Value($value);
         $valueExpression->visit($visitor);
     }

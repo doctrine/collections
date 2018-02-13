@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase as TestCase;
 
 /**
- * @author  Tobias Oberrauch <hello@tobiasoberrauch.com>
  * @covers  \Doctrine\Common\Collections\Expr\CompositeExpression
  */
 class CompositeExpressionTest extends TestCase
@@ -27,10 +26,8 @@ class CompositeExpressionTest extends TestCase
      */
     public function testExceptions($expression) : void
     {
-        $type = CompositeExpression::TYPE_AND;
-        $expressions = [
-            $expression,
-        ];
+        $type        = CompositeExpression::TYPE_AND;
+        $expressions = [$expression];
 
         $this->expectException(\RuntimeException::class);
         new CompositeExpression($type, $expressions);
@@ -41,9 +38,9 @@ class CompositeExpressionTest extends TestCase
         $compositeExpression = $this->createCompositeExpression();
 
         $expectedType = CompositeExpression::TYPE_AND;
-        $actualType = $compositeExpression->getType();
+        $actualType   = $compositeExpression->getType();
 
-        $this->assertSame($expectedType, $actualType);
+        self::assertSame($expectedType, $actualType);
     }
 
     protected function createCompositeExpression() : CompositeExpression
@@ -60,7 +57,7 @@ class CompositeExpressionTest extends TestCase
         $expectedExpressionList = [$this->createMock(Expression::class)];
         $actualExpressionList   = $compositeExpression->getExpressionList();
 
-        $this->assertEquals($expectedExpressionList, $actualExpressionList);
+        self::assertEquals($expectedExpressionList, $actualExpressionList);
     }
 
     public function testVisitor() : void

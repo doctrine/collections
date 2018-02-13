@@ -1,31 +1,16 @@
 <?php
-/*
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
- * <http://www.doctrine-project.org>.
- */
 
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\ExpressionBuilder;
+use PHPUnit\Framework\TestCase;
+use function usort;
 
 /**
  * @group DDC-1637
  */
-class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
+class ClosureExpressionVisitorTest extends TestCase
 {
     /**
      * @var ClosureExpressionVisitor
@@ -47,235 +32,246 @@ class ClosureExpressionVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $object = new TestObject(1, 2, true);
 
-        $this->assertTrue($this->visitor->getObjectFieldValue($object, 'baz'));
+        self::assertTrue($this->visitor->getObjectFieldValue($object, 'baz'));
     }
 
     public function testGetObjectFieldValueIsAccessorCamelCase() : void
     {
         $object = new TestObjectNotCamelCase(1);
 
-        $this->assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        $this->assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        $this->assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueIsAccessorBoth() : void
     {
         $object = new TestObjectBothCamelCaseAndUnderscore(1, 2);
 
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueIsAccessorOnePublic() : void
     {
         $object = new TestObjectPublicCamelCaseAndPrivateUnderscore(1, 2);
 
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueIsAccessorBothPublic() : void
     {
         $object = new TestObjectPublicCamelCaseAndPrivateUnderscore(1, 2);
 
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        $this->assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueMagicCallMethod() : void
     {
         $object = new TestObject(1, 2, true, 3);
 
-        $this->assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
+        self::assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
     }
 
     public function testWalkEqualsComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->eq("foo", 1));
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo', 1));
 
-        $this->assertTrue($closure(new TestObject(1)));
-        $this->assertFalse($closure(new TestObject(2)));
+        self::assertTrue($closure(new TestObject(1)));
+        self::assertFalse($closure(new TestObject(2)));
     }
 
     public function testWalkNotEqualsComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->neq("foo", 1));
+        $closure = $this->visitor->walkComparison($this->builder->neq('foo', 1));
 
-        $this->assertFalse($closure(new TestObject(1)));
-        $this->assertTrue($closure(new TestObject(2)));
+        self::assertFalse($closure(new TestObject(1)));
+        self::assertTrue($closure(new TestObject(2)));
     }
 
     public function testWalkLessThanComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->lt("foo", 1));
+        $closure = $this->visitor->walkComparison($this->builder->lt('foo', 1));
 
-        $this->assertFalse($closure(new TestObject(1)));
-        $this->assertTrue($closure(new TestObject(0)));
+        self::assertFalse($closure(new TestObject(1)));
+        self::assertTrue($closure(new TestObject(0)));
     }
 
     public function testWalkLessThanEqualsComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->lte("foo", 1));
+        $closure = $this->visitor->walkComparison($this->builder->lte('foo', 1));
 
-        $this->assertFalse($closure(new TestObject(2)));
-        $this->assertTrue($closure(new TestObject(1)));
-        $this->assertTrue($closure(new TestObject(0)));
+        self::assertFalse($closure(new TestObject(2)));
+        self::assertTrue($closure(new TestObject(1)));
+        self::assertTrue($closure(new TestObject(0)));
     }
 
     public function testWalkGreaterThanEqualsComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->gte("foo", 1));
+        $closure = $this->visitor->walkComparison($this->builder->gte('foo', 1));
 
-        $this->assertTrue($closure(new TestObject(2)));
-        $this->assertTrue($closure(new TestObject(1)));
-        $this->assertFalse($closure(new TestObject(0)));
+        self::assertTrue($closure(new TestObject(2)));
+        self::assertTrue($closure(new TestObject(1)));
+        self::assertFalse($closure(new TestObject(0)));
     }
 
     public function testWalkGreaterThanComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->gt("foo", 1));
+        $closure = $this->visitor->walkComparison($this->builder->gt('foo', 1));
 
-        $this->assertTrue($closure(new TestObject(2)));
-        $this->assertFalse($closure(new TestObject(1)));
-        $this->assertFalse($closure(new TestObject(0)));
+        self::assertTrue($closure(new TestObject(2)));
+        self::assertFalse($closure(new TestObject(1)));
+        self::assertFalse($closure(new TestObject(0)));
     }
 
     public function testWalkInComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->in("foo", [1, 2, 3]));
+        $closure = $this->visitor->walkComparison($this->builder->in('foo', [1, 2, 3, '04']));
 
-        $this->assertTrue($closure(new TestObject(2)));
-        $this->assertTrue($closure(new TestObject(1)));
-        $this->assertFalse($closure(new TestObject(0)));
+        self::assertTrue($closure(new TestObject(2)));
+        self::assertTrue($closure(new TestObject(1)));
+        self::assertFalse($closure(new TestObject(0)));
+        self::assertFalse($closure(new TestObject(4)));
+        self::assertTrue($closure(new TestObject('04')));
     }
 
     public function testWalkNotInComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->notIn("foo", [1, 2, 3]));
+        $closure = $this->visitor->walkComparison($this->builder->notIn('foo', [1, 2, 3, '04']));
 
-        $this->assertFalse($closure(new TestObject(1)));
-        $this->assertFalse($closure(new TestObject(2)));
-        $this->assertTrue($closure(new TestObject(0)));
-        $this->assertTrue($closure(new TestObject(4)));
+        self::assertFalse($closure(new TestObject(1)));
+        self::assertFalse($closure(new TestObject(2)));
+        self::assertTrue($closure(new TestObject(0)));
+        self::assertTrue($closure(new TestObject(4)));
+        self::assertFalse($closure(new TestObject('04')));
     }
 
     public function testWalkContainsComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->contains('foo', 'hello'));
 
-        $this->assertTrue($closure(new TestObject('hello world')));
-        $this->assertFalse($closure(new TestObject('world')));
+        self::assertTrue($closure(new TestObject('hello world')));
+        self::assertFalse($closure(new TestObject('world')));
     }
 
     public function testWalkMemberOfComparisonWithObject() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->memberof("foo", 2));
+        $closure = $this->visitor->walkComparison($this->builder->memberof('foo', 2));
 
-        $this->assertTrue($closure(new TestObject([1,2,3])));
-        $this->assertTrue($closure(new TestObject([2])));
-        $this->assertFalse($closure(new TestObject([1,3,5])));
+        self::assertTrue($closure(new TestObject([1, 2, 3])));
+        self::assertTrue($closure(new TestObject([2])));
+        self::assertFalse($closure(new TestObject([1, 3, 5])));
+        self::assertFalse($closure(new TestObject([1, '02'])));
     }
 
     public function testWalkStartsWithComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->startsWith('foo', 'hello'));
 
-        $this->assertTrue($closure(new TestObject('hello world')));
-        $this->assertFalse($closure(new TestObject('world')));
+        self::assertTrue($closure(new TestObject('hello world')));
+        self::assertFalse($closure(new TestObject('world')));
     }
 
     public function testWalkEndsWithComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->endsWith('foo', 'world'));
 
-        $this->assertTrue($closure(new TestObject('hello world')));
-        $this->assertFalse($closure(new TestObject('hello')));
+        self::assertTrue($closure(new TestObject('hello world')));
+        self::assertFalse($closure(new TestObject('hello')));
     }
 
     public function testWalkAndCompositeExpression() : void
     {
         $closure = $this->visitor->walkCompositeExpression(
             $this->builder->andX(
-                $this->builder->eq("foo", 1),
-                $this->builder->eq("bar", 1)
+                $this->builder->eq('foo', 1),
+                $this->builder->eq('bar', 1)
             )
         );
 
-        $this->assertTrue($closure(new TestObject(1, 1)));
-        $this->assertFalse($closure(new TestObject(1, 0)));
-        $this->assertFalse($closure(new TestObject(0, 1)));
-        $this->assertFalse($closure(new TestObject(0, 0)));
+        self::assertTrue($closure(new TestObject(1, 1)));
+        self::assertFalse($closure(new TestObject(1, 0)));
+        self::assertFalse($closure(new TestObject(0, 1)));
+        self::assertFalse($closure(new TestObject(0, 0)));
     }
 
     public function testWalkOrCompositeExpression() : void
     {
         $closure = $this->visitor->walkCompositeExpression(
             $this->builder->orX(
-                $this->builder->eq("foo", 1),
-                $this->builder->eq("bar", 1)
+                $this->builder->eq('foo', 1),
+                $this->builder->eq('bar', 1)
             )
         );
 
-        $this->assertTrue($closure(new TestObject(1, 1)));
-        $this->assertTrue($closure(new TestObject(1, 0)));
-        $this->assertTrue($closure(new TestObject(0, 1)));
-        $this->assertFalse($closure(new TestObject(0, 0)));
+        self::assertTrue($closure(new TestObject(1, 1)));
+        self::assertTrue($closure(new TestObject(1, 0)));
+        self::assertTrue($closure(new TestObject(0, 1)));
+        self::assertFalse($closure(new TestObject(0, 0)));
     }
 
     public function testSortByFieldAscending() : void
     {
-        $objects = [new TestObject("b"), new TestObject("a"), new TestObject("c")];
-        $sort = ClosureExpressionVisitor::sortByField("foo");
+        $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
+        $sort    = ClosureExpressionVisitor::sortByField('foo');
 
         usort($objects, $sort);
 
-        $this->assertEquals("a", $objects[0]->getFoo());
-        $this->assertEquals("b", $objects[1]->getFoo());
-        $this->assertEquals("c", $objects[2]->getFoo());
+        self::assertEquals('a', $objects[0]->getFoo());
+        self::assertEquals('b', $objects[1]->getFoo());
+        self::assertEquals('c', $objects[2]->getFoo());
     }
 
     public function testSortByFieldDescending() : void
     {
-        $objects = [new TestObject("b"), new TestObject("a"), new TestObject("c")];
-        $sort = ClosureExpressionVisitor::sortByField("foo", -1);
+        $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
+        $sort    = ClosureExpressionVisitor::sortByField('foo', -1);
 
         usort($objects, $sort);
 
-        $this->assertEquals("c", $objects[0]->getFoo());
-        $this->assertEquals("b", $objects[1]->getFoo());
-        $this->assertEquals("a", $objects[2]->getFoo());
+        self::assertEquals('c', $objects[0]->getFoo());
+        self::assertEquals('b', $objects[1]->getFoo());
+        self::assertEquals('a', $objects[2]->getFoo());
     }
 
     public function testSortDelegate() : void
     {
-        $objects = [new TestObject("a", "c"), new TestObject("a", "b"), new TestObject("a", "a")];
-        $sort = ClosureExpressionVisitor::sortByField("bar", 1);
-        $sort = ClosureExpressionVisitor::sortByField("foo", 1, $sort);
+        $objects = [new TestObject('a', 'c'), new TestObject('a', 'b'), new TestObject('a', 'a')];
+        $sort    = ClosureExpressionVisitor::sortByField('bar', 1);
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, $sort);
 
         usort($objects, $sort);
 
-        $this->assertEquals("a", $objects[0]->getBar());
-        $this->assertEquals("b", $objects[1]->getBar());
-        $this->assertEquals("c", $objects[2]->getBar());
+        self::assertEquals('a', $objects[0]->getBar());
+        self::assertEquals('b', $objects[1]->getBar());
+        self::assertEquals('c', $objects[2]->getBar());
     }
 
     public function testArrayComparison() : void
     {
-        $closure = $this->visitor->walkComparison($this->builder->eq("foo", 42));
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo', 42));
 
-        $this->assertTrue($closure(['foo' => 42]));
+        self::assertTrue($closure(['foo' => 42]));
     }
 }
 
 class TestObject
 {
+    /** @var mixed */
     private $foo;
+
+    /** @var mixed */
     private $bar;
+
+    /** @var mixed */
     private $baz;
+
+    /** @var mixed */
     private $qux;
 
     public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
@@ -288,7 +284,7 @@ class TestObject
 
     public function __call(string $name, array $arguments)
     {
-        if ('getqux' === $name) {
+        if ($name === 'getqux') {
             return $this->qux;
         }
     }
@@ -311,6 +307,7 @@ class TestObject
 
 class TestObjectNotCamelCase
 {
+    /** @var int|null */
     private $foo_bar;
 
     public function __construct(?int $foo_bar)
@@ -326,13 +323,16 @@ class TestObjectNotCamelCase
 
 class TestObjectBothCamelCaseAndUnderscore
 {
+    /** @var int|null */
     private $foo_bar;
+
+    /** @var int|null */
     private $fooBar;
 
-    public function __construct(int $foo_bar = null, int $fooBar = null)
+    public function __construct(?int $foo_bar = null, ?int $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
-        $this->fooBar = $fooBar;
+        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar() : ?int
@@ -343,13 +343,16 @@ class TestObjectBothCamelCaseAndUnderscore
 
 class TestObjectPublicCamelCaseAndPrivateUnderscore
 {
+    /** @var int|null */
     private $foo_bar;
+
+    /** @var int|null */
     public $fooBar;
 
-    public function __construct(int $foo_bar = null, int $fooBar = null)
+    public function __construct(?int $foo_bar = null, ?int $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
-        $this->fooBar = $fooBar;
+        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar() : ?int
@@ -360,13 +363,15 @@ class TestObjectPublicCamelCaseAndPrivateUnderscore
 
 class TestObjectBothPublic
 {
+    /** @var mixed */
     public $foo_bar;
+    /** @var mixed */
     public $fooBar;
 
     public function __construct($foo_bar = null, $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
-        $this->fooBar = $fooBar;
+        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar()
