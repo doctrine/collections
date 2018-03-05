@@ -4,9 +4,7 @@ namespace Doctrine\Common\Collections\Expr;
 
 class Value implements Expression
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $value;
 
     /**

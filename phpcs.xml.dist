@@ -34,4 +34,8 @@
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.WriteOnlyProperty">
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
+        <exclude-pattern>lib/Doctrine/Common/Collections/AbstractLazyCollection.php</exclude-pattern>
+    </rule>
 </ruleset>

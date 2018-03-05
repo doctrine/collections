@@ -21,19 +21,13 @@ class Comparison implements Expression
     public const STARTS_WITH = 'STARTS_WITH';
     public const ENDS_WITH   = 'ENDS_WITH';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $field;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $op;
 
-    /**
-     * @var Value
-     */
+    /** @var Value */
     private $value;
 
     /**

@@ -12,14 +12,10 @@ use function usort;
  */
 class ClosureExpressionVisitorTest extends TestCase
 {
-    /**
-     * @var ClosureExpressionVisitor
-     */
+    /** @var ClosureExpressionVisitor */
     private $visitor;
 
-    /**
-     * @var ExpressionBuilder
-     */
+    /** @var ExpressionBuilder */
     private $builder;
 
     protected function setUp() : void

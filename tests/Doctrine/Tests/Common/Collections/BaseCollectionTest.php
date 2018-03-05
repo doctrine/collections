@@ -11,9 +11,7 @@ use function is_string;
 
 abstract class BaseCollectionTest extends TestCase
 {
-    /**
-     * @var Collection
-     */
+    /** @var Collection */
     protected $collection;
 
     public function testIssetAndUnset() : void

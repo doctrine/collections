@@ -114,7 +114,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed  $values
+     * @param array  $values
      *
      * @return Comparison
      */
@@ -125,7 +125,7 @@ class ExpressionBuilder
 
     /**
      * @param string $field
-     * @param mixed  $values
+     * @param array  $values
      *
      * @return Comparison
      */
