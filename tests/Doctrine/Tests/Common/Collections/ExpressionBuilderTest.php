@@ -12,9 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExpressionBuilderTest extends TestCase
 {
-    /**
-     * @var ExpressionBuilder
-     */
+    /** @var ExpressionBuilder */
     private $builder;
 
     protected function setUp() : void

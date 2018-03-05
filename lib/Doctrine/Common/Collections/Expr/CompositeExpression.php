@@ -10,14 +10,10 @@ class CompositeExpression implements Expression
     public const TYPE_AND = 'AND';
     public const TYPE_OR  = 'OR';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @var Expression[]
-     */
+    /** @var Expression[] */
     private $expressions = [];
 
     /**

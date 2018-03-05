@@ -22,29 +22,19 @@ class Criteria
      */
     public const DESC = 'DESC';
 
-    /**
-     * @var \Doctrine\Common\Collections\ExpressionBuilder|null
-     */
+    /** @var ExpressionBuilder|null */
     private static $expressionBuilder;
 
-    /**
-     * @var \Doctrine\Common\Collections\Expr\Expression|null
-     */
+    /** @var Expression|null */
     private $expression;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $orderings = [];
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $firstResult;
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $maxResults;
 
     /**
@@ -59,8 +49,7 @@ class Criteria
 
     /**
      * Returns the expression builder.
-     *
-     * @return \Doctrine\Common\Collections\ExpressionBuilder
+     * @return ExpressionBuilder
      */
     public static function expr()
     {
@@ -85,9 +74,11 @@ class Criteria
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
 
-        if ($orderings !== null) {
-            $this->orderBy($orderings);
+        if ($orderings === null) {
+            return;
         }
+
+        $this->orderBy($orderings);
     }
 
     /**
