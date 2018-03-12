@@ -245,7 +245,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $func The predicate.
      *
-     * @return Collection[]
+     * @return Collection[Collection]
      */
     public function extract(Closure $func);
 }

@@ -223,7 +223,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertTrue($this->collection->containsKey('key'));
     }
 
-    public function testExtract(): void
+    public function testExtract() : void
     {
         $this->collection->add([0, 1]);
         $this->collection->add([0, 2]);
@@ -231,13 +231,13 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add([1, 1]);
         $this->collection->add([2, 42]);
 
-        $res = $this->collection->extract(function($element){
+        $res      = $this->collection->extract(function ($element) {
             return [$element[0] + 1, $element[1]];
         });
         $expected = [
             1 => [1, 2, 3],
             2 => [1],
-            3 => [42]
+            3 => [42],
         ];
         foreach ($res as $i => $array) {
             self::assertEquals(count($expected[$i]), $array->count());
