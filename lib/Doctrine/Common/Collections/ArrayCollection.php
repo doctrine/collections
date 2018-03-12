@@ -407,4 +407,25 @@ class ArrayCollection implements Collection, Selectable
 
         return $this->createFrom($filtered);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function extract(Closure $func)
+    {
+        $extractedList = new ArrayCollection();
+
+        foreach ($this->elements as $element) {
+            $res = $func($element);
+            if ($res === null) {
+                continue;
+            }
+            if (! $extractedList->containsKey($res[0])) {
+                $extractedList[$res[0]] = new ArrayCollection();
+            }
+            $extractedList[$res[0]][] = $res[1];
+        }
+
+        return $extractedList;
+    }
 }

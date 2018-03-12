@@ -236,4 +236,16 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array
      */
     public function slice($offset, $length = null);
+
+    /**
+     * Extract elements into a Collection of Collection.
+     *
+     * The predicate must return an array where the first element is the key of the collection and the second element
+     * is the value. If the predicate return null, the value of the predicate is ignored.
+     *
+     * @param Closure $func The predicate.
+     *
+     * @return Collection[]
+     */
+    public function extract(Closure $func);
 }

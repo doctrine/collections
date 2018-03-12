@@ -313,6 +313,16 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function extract(Closure $func)
+    {
+        $this->initialize();
+        return $this->collection->extract($func);
+    }
+
+
+    /**
      * Do the initialization logic
      *
      * @return void
