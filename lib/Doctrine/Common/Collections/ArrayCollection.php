@@ -1,27 +1,27 @@
 <?php
-/*
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
- * <http://www.doctrine-project.org>.
- */
 
 namespace Doctrine\Common\Collections;
 
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use function array_filter;
+use function array_key_exists;
+use function array_keys;
+use function array_map;
+use function array_reverse;
+use function array_search;
+use function array_slice;
+use function array_values;
+use function count;
+use function current;
+use function end;
+use function in_array;
+use function key;
+use function next;
+use function reset;
+use function spl_object_hash;
+use function uasort;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
@@ -30,11 +30,6 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
  * and may break when we change the internals in the future. If you need to
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
- *
- * @since  2.0
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author Jonathan Wage <jonwage@gmail.com>
- * @author Roman Borschel <roman@code-factory.org>
  */
 class ArrayCollection implements Collection, Selectable
 {
@@ -123,7 +118,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function remove($key)
     {
-        if ( ! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
+        if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
             return null;
         }
 
@@ -176,7 +171,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function offsetSet($offset, $value)
     {
-        if ( ! isset($offset)) {
+        if (! isset($offset)) {
             $this->add($value);
             return;
         }
@@ -326,7 +321,7 @@ class ArrayCollection implements Collection, Selectable
     public function forAll(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
-            if ( ! $p($key, $element)) {
+            if (! $p($key, $element)) {
                 return false;
             }
         }
@@ -392,10 +387,12 @@ class ArrayCollection implements Collection, Selectable
             $filtered = array_filter($filtered, $filter);
         }
 
-        if ($orderings = $criteria->getOrderings()) {
+        $orderings = $criteria->getOrderings();
+
+        if ($orderings) {
             $next = null;
             foreach (array_reverse($orderings) as $field => $ordering) {
-                $next = ClosureExpressionVisitor::sortByField($field, $ordering == Criteria::DESC ? -1 : 1, $next);
+                $next = ClosureExpressionVisitor::sortByField($field, $ordering === Criteria::DESC ? -1 : 1, $next);
             }
 
             uasort($filtered, $next);

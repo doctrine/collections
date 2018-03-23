@@ -5,6 +5,8 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use function count;
+use function is_string;
 
 class CollectionTest extends BaseCollectionTest
 {

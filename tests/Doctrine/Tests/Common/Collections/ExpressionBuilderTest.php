@@ -2,18 +2,17 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
-use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\ExpressionBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group DDC-1637
  */
-class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
+class ExpressionBuilderTest extends TestCase
 {
-    /**
-     * @var ExpressionBuilder
-     */
+    /** @var ExpressionBuilder */
     private $builder;
 
     protected function setUp() : void
@@ -23,7 +22,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testAndX() : void
     {
-        $expr = $this->builder->andX($this->builder->eq("a", "b"));
+        $expr = $this->builder->andX($this->builder->eq('a', 'b'));
 
         self::assertInstanceOf(CompositeExpression::class, $expr);
         self::assertEquals(CompositeExpression::TYPE_AND, $expr->getType());
@@ -31,7 +30,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testOrX() : void
     {
-        $expr = $this->builder->orX($this->builder->eq("a", "b"));
+        $expr = $this->builder->orX($this->builder->eq('a', 'b'));
 
         self::assertInstanceOf(CompositeExpression::class, $expr);
         self::assertEquals(CompositeExpression::TYPE_OR, $expr->getType());
@@ -40,12 +39,12 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
     public function testInvalidAndXArgument() : void
     {
         $this->expectException(\RuntimeException::class);
-        $this->builder->andX("foo");
+        $this->builder->andX('foo');
     }
 
     public function testEq() : void
     {
-        $expr = $this->builder->eq("a", "b");
+        $expr = $this->builder->eq('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::EQ, $expr->getOperator());
@@ -53,7 +52,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testNeq() : void
     {
-        $expr = $this->builder->neq("a", "b");
+        $expr = $this->builder->neq('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::NEQ, $expr->getOperator());
@@ -61,7 +60,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testLt() : void
     {
-        $expr = $this->builder->lt("a", "b");
+        $expr = $this->builder->lt('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::LT, $expr->getOperator());
@@ -69,7 +68,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testGt() : void
     {
-        $expr = $this->builder->gt("a", "b");
+        $expr = $this->builder->gt('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::GT, $expr->getOperator());
@@ -77,7 +76,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testGte() : void
     {
-        $expr = $this->builder->gte("a", "b");
+        $expr = $this->builder->gte('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::GTE, $expr->getOperator());
@@ -85,7 +84,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testLte() : void
     {
-        $expr = $this->builder->lte("a", "b");
+        $expr = $this->builder->lte('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::LTE, $expr->getOperator());
@@ -93,7 +92,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testIn() : void
     {
-        $expr = $this->builder->in("a", ["b"]);
+        $expr = $this->builder->in('a', ['b']);
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::IN, $expr->getOperator());
@@ -101,7 +100,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testNotIn() : void
     {
-        $expr = $this->builder->notIn("a", ["b"]);
+        $expr = $this->builder->notIn('a', ['b']);
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::NIN, $expr->getOperator());
@@ -109,7 +108,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testIsNull() : void
     {
-        $expr = $this->builder->isNull("a");
+        $expr = $this->builder->isNull('a');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::EQ, $expr->getOperator());
@@ -117,7 +116,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testContains() : void
     {
-        $expr = $this->builder->contains("a", "b");
+        $expr = $this->builder->contains('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::CONTAINS, $expr->getOperator());
@@ -125,7 +124,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testMemberOf() : void
     {
-        $expr = $this->builder->memberOf("b", ["a"]);
+        $expr = $this->builder->memberOf('b', ['a']);
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::MEMBER_OF, $expr->getOperator());
@@ -133,7 +132,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testStartsWith() : void
     {
-        $expr = $this->builder->startsWith("a", "b");
+        $expr = $this->builder->startsWith('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::STARTS_WITH, $expr->getOperator());
@@ -141,7 +140,7 @@ class ExpressionBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testEndsWith() : void
     {
-        $expr = $this->builder->endsWith("a", "b");
+        $expr = $this->builder->endsWith('a', 'b');
 
         self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::ENDS_WITH, $expr->getOperator());

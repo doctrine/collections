@@ -3,12 +3,15 @@
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\TestCase;
+use function count;
+use function is_array;
+use function is_numeric;
+use function is_string;
 
-abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
+abstract class BaseCollectionTest extends TestCase
 {
-    /**
-     * @var Collection
-     */
+    /** @var Collection */
     protected $collection;
 
     public function testIssetAndUnset() : void
@@ -30,11 +33,11 @@ abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
         $this->collection->add('one');
         $this->collection->add('two');
         $exists = $this->collection->exists(function ($k, $e) {
-            return $e == 'one';
+            return $e === 'one';
         });
         self::assertTrue($exists);
         $exists = $this->collection->exists(function ($k, $e) {
-            return $e == 'other';
+            return $e === 'other';
         });
         self::assertFalse($exists);
     }
@@ -144,7 +147,7 @@ abstract class BaseCollectionTest extends \PHPUnit\Framework\TestCase
         $this->collection[] = true;
         $this->collection[] = false;
         $partition          = $this->collection->partition(function ($k, $e) {
-            return $e == true;
+            return $e === true;
         });
         self::assertEquals($partition[0][0], true);
         self::assertEquals($partition[1][0], false);

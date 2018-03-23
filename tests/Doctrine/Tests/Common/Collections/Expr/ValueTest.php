@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase as TestCase;
 
 /**
- * @author  Tobias Oberrauch <hello@tobiasoberrauch.com>
  * @covers  \Doctrine\Common\Collections\Expr\Value
  */
 class ValueTest extends TestCase

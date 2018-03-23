@@ -10,7 +10,7 @@ use Doctrine\Tests\LazyArrayCollection;
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
-class LazyCollectionTest extends BaseCollectionTest
+class AbstractLazyCollectionTest extends BaseCollectionTest
 {
     protected function setUp() : void
     {
