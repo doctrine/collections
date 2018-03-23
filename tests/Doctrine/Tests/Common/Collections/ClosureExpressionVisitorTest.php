@@ -250,14 +250,14 @@ class ClosureExpressionVisitorTest extends TestCase
 
     public function testSortByLiteralPublicAccessor()
     {
-        $objects = [new TestObjectWithLiteralPublicAccessor("a"), new TestObjectWithLiteralPublicAccessor("b"), new TestObjectWithLiteralPublicAccessor("c")];
-        $sort    = ClosureExpressionVisitor::sortByField("foo", 1);
+        $objects = [new TestObjectWithLiteralPublicAccessor('a'), new TestObjectWithLiteralPublicAccessor('b'), new TestObjectWithLiteralPublicAccessor('c')];
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 1);
 
         usort($objects, $sort);
 
-        self::assertEquals("a", $objects[0]->foo());
-        self::assertEquals("b", $objects[1]->foo());
-        self::assertEquals("c", $objects[2]->foo());
+        self::assertEquals('a', $objects[0]->foo());
+        self::assertEquals('b', $objects[1]->foo());
+        self::assertEquals('c', $objects[2]->foo());
     }
 
     public function testArrayComparison() : void
@@ -371,9 +371,10 @@ class TestObjectPublicCamelCaseAndPrivateUnderscore
 
 class TestObjectWithLiteralPublicAccessor
 {
+    /** @var mixed */
     private $foo;
 
-    public function __construct($foo)
+    public function __construct($foo = null)
     {
         $this->foo = $foo;
     }
