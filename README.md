@@ -8,9 +8,14 @@ Collections Abstraction library
 
 ## Changelog
 
+### v1.5.0
+
+* [Require PHP 7.1+](https://github.com/doctrine/collections/pull/105)
+* [Drop HHVM support](https://github.com/doctrine/collections/pull/118)
+
 ### v1.4.0
 
-* [Upgraded to PHP 5.6 minimum](https://github.com/doctrine/collections/pull/105)
+* [Require PHP 5.6+](https://github.com/doctrine/collections/pull/105)
 * [Add `ArrayCollection::createFrom()`](https://github.com/doctrine/collections/pull/91)
 * [Support non-camel-case naming](https://github.com/doctrine/collections/pull/57)
 * [Comparison `START_WITH`, `END_WITH`](https://github.com/doctrine/collections/pull/78)
