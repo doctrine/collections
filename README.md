@@ -8,6 +8,15 @@ Collections Abstraction library
 
 ## Changelog
 
+### v1.4.0
+
+* [Upgraded to PHP 5.6 minimum](https://github.com/doctrine/collections/pull/105)
+* [Add `ArrayCollection::createFrom()`](https://github.com/doctrine/collections/pull/91)
+* [Support non-camel-case naming](https://github.com/doctrine/collections/pull/57)
+* [Comparison `START_WITH`, `END_WITH`](https://github.com/doctrine/collections/pull/78)
+* [Comparison `MEMBER_OF`](https://github.com/doctrine/collections/pull/66)
+* [Add Contributing guide](https://github.com/doctrine/collections/pull/103)
+
 ### v1.3.0
 
 * [Explicit casting of first and max results in criteria API](https://github.com/doctrine/collections/pull/26)
