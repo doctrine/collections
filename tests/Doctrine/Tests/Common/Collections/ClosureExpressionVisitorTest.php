@@ -74,6 +74,13 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
     }
 
+    public function testGetObjectFieldValueSameNameMethod() : void
+    {
+        $object = new TestObject(1, 2, true, 3, 4);
+
+        self::assertEquals(4, $this->visitor->getObjectFieldValue($object, 'kat'));
+    }
+
     public function testWalkEqualsComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->eq('foo', 1));
@@ -270,12 +277,16 @@ class TestObject
     /** @var mixed */
     private $qux;
 
-    public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
+    /** @var mixed */
+    private $kat;
+
+    public function __construct($foo = null, $bar = null, $baz = null, $qux = null, $kat = null)
     {
         $this->foo = $foo;
         $this->bar = $bar;
         $this->baz = $baz;
         $this->qux = $qux;
+        $this->kat = $kat;
     }
 
     public function __call(string $name, array $arguments)
@@ -298,6 +309,11 @@ class TestObject
     public function isBaz()
     {
         return $this->baz;
+    }
+
+    public function kat()
+    {
+        return $this->kat;
     }
 }
 
