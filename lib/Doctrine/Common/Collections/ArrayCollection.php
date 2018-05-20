@@ -123,7 +123,7 @@ class ArrayCollection implements Collection, Selectable
         }
 
         $removed = $this->elements[$key];
-        unset($this->elements[$key]);
+        array_splice($this->elements, $key, 1);
 
         return $removed;
     }
@@ -139,7 +139,7 @@ class ArrayCollection implements Collection, Selectable
             return false;
         }
 
-        unset($this->elements[$key]);
+        array_splice($this->elements, $key, 1);
 
         return true;
     }
