@@ -6,6 +6,7 @@ use ArrayAccess;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use JsonSerializable;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
@@ -24,7 +25,7 @@ use IteratorAggregate;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  */
-interface Collection extends Countable, IteratorAggregate, ArrayAccess
+interface Collection extends Countable, IteratorAggregate, ArrayAccess, JsonSerializable
 {
     /**
      * Adds an element at the end of the collection.
@@ -128,6 +129,13 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array
      */
     public function toArray();
+
+    /**
+     * Gets a native PHP array representation of the collection for the json encoder. Enables automatic serialization
+     *
+     * @return array
+     */
+    public function jsonSerialize();
 
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.

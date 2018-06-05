@@ -407,4 +407,12 @@ class ArrayCollection implements Collection, Selectable
 
         return $this->createFrom($filtered);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
 }
