@@ -139,6 +139,14 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function first()
     {
         $this->initialize();
