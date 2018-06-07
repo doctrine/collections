@@ -2,6 +2,7 @@
 
 namespace Doctrine\Common\Collections\Expr;
 
+use DateTimeInterface;
 use function in_array;
 use function is_array;
 use function iterator_to_array;
@@ -11,7 +12,6 @@ use function strlen;
 use function strpos;
 use function strtoupper;
 use function substr;
-use DateTimeInterface;
 
 /**
  * Walks an expression graph and turns it into a PHP closure.

@@ -2,11 +2,11 @@
 
 namespace Doctrine\Tests\Common\Collections;
 
+use DateTime;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use PHPUnit\Framework\TestCase;
 use function usort;
-use DateTime;
 
 /**
  * @group DDC-1637
@@ -85,7 +85,7 @@ class ClosureExpressionVisitorTest extends TestCase
 
     public function testWalkEqualsComparisonForDateTimeInterface() : void
     {
-        $dateTime = new DateTime('now');
+        $dateTime        = new DateTime('now');
         $compareDateTime = clone $dateTime;
 
         $closure = $this->visitor->walkComparison($this->builder->eq('foo', $dateTime));
@@ -104,7 +104,7 @@ class ClosureExpressionVisitorTest extends TestCase
 
     public function testWalkNotEqualsComparisonForDateTimeInterface() : void
     {
-        $dateTime = new DateTime('now');
+        $dateTime        = new DateTime('now');
         $compareDateTime = clone $dateTime;
 
         $closure = $this->visitor->walkComparison($this->builder->neq('foo', $dateTime));
