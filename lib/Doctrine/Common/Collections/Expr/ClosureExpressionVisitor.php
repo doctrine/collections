@@ -11,6 +11,7 @@ use function strlen;
 use function strpos;
 use function strtoupper;
 use function substr;
+use DateTimeInterface;
 
 /**
  * Walks an expression graph and turns it into a PHP closure.
@@ -120,14 +121,18 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         switch ($comparison->getOperator()) {
             case Comparison::EQ:
                 return function ($object) use ($field, $value) : bool {
+                    if ($value instanceof DateTimeInterface) {
+                        return ClosureExpressionVisitor::getObjectFieldValue($object, $field) == $value;
+                    }
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
                 };
-
             case Comparison::NEQ:
                 return function ($object) use ($field, $value) : bool {
+                    if ($value instanceof DateTimeInterface) {
+                        return ClosureExpressionVisitor::getObjectFieldValue($object, $field) != $value;
+                    }
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };
-
             case Comparison::LT:
                 return function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;

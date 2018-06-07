@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use PHPUnit\Framework\TestCase;
 use function usort;
+use DateTime;
 
 /**
  * @group DDC-1637
@@ -82,12 +83,34 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertFalse($closure(new TestObject(2)));
     }
 
+    public function testWalkEqualsComparisonForDateTimeInterface() : void
+    {
+        $dateTime = new DateTime('now');
+        $compareDateTime = clone $dateTime;
+
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo', $dateTime));
+
+        self::assertTrue($closure(new TestObject($compareDateTime)));
+        self::assertFalse($closure(new TestObject(new DateTime())));
+    }
+
     public function testWalkNotEqualsComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->neq('foo', 1));
 
         self::assertFalse($closure(new TestObject(1)));
         self::assertTrue($closure(new TestObject(2)));
+    }
+
+    public function testWalkNotEqualsComparisonForDateTimeInterface() : void
+    {
+        $dateTime = new DateTime('now');
+        $compareDateTime = clone $dateTime;
+
+        $closure = $this->visitor->walkComparison($this->builder->neq('foo', $dateTime));
+
+        self::assertFalse($closure(new TestObject($compareDateTime)));
+        self::assertTrue($closure(new TestObject(new DateTime())));
     }
 
     public function testWalkLessThanComparison() : void
