@@ -134,7 +134,7 @@ Sets the internal iterator to the first element in the collection and returns th
 .. code-block:: php
     $collection = new Collection(['first', 'second', 'third']);
 
-    $first = $collection->first(); // furst
+    $first = $collection->first(); // first
 
 exists
 ------
