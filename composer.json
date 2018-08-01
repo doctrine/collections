@@ -13,7 +13,8 @@
         {"name": "Johannes Schmitt", "email": "schmittjoh@gmail.com"}
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "phpcollection/phpcollection": "^0.5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0",

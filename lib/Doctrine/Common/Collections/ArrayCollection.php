@@ -19,6 +19,7 @@ use function end;
 use function in_array;
 use function key;
 use function next;
+use PhpCollection\SortableInterface;
 use function reset;
 use function spl_object_hash;
 use function uasort;
@@ -31,7 +32,7 @@ use function uasort;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  */
-class ArrayCollection implements Collection, Selectable
+class ArrayCollection implements Collection, Selectable, SortableInterface
 {
     /**
      * An array containing the entries of this collection.
@@ -118,7 +119,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function remove($key)
     {
-        if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
+        if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
             return null;
         }
 
@@ -171,8 +172,9 @@ class ArrayCollection implements Collection, Selectable
      */
     public function offsetSet($offset, $value)
     {
-        if (! isset($offset)) {
+        if (!isset($offset)) {
             $this->add($value);
+
             return;
         }
 
@@ -321,7 +323,7 @@ class ArrayCollection implements Collection, Selectable
     public function forAll(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
-            if (! $p($key, $element)) {
+            if (!$p($key, $element)) {
                 return false;
             }
         }
@@ -378,12 +380,12 @@ class ArrayCollection implements Collection, Selectable
      */
     public function matching(Criteria $criteria)
     {
-        $expr     = $criteria->getWhereExpression();
+        $expr = $criteria->getWhereExpression();
         $filtered = $this->elements;
 
         if ($expr) {
-            $visitor  = new ClosureExpressionVisitor();
-            $filter   = $visitor->dispatch($expr);
+            $visitor = new ClosureExpressionVisitor();
+            $filter = $visitor->dispatch($expr);
             $filtered = array_filter($filtered, $filter);
         }
 
@@ -402,9 +404,21 @@ class ArrayCollection implements Collection, Selectable
         $length = $criteria->getMaxResults();
 
         if ($offset || $length) {
-            $filtered = array_slice($filtered, (int) $offset, $length);
+            $filtered = array_slice($filtered, (int)$offset, $length);
         }
 
         return $this->createFrom($filtered);
+    }
+
+    /**
+     * @param $callable
+     * @return ArrayCollection
+     */
+    public function sortWith($callable): self
+    {
+        $iterator = $this->getIterator();
+        $iterator->uasort($callable);
+
+        return $this->createFrom(iterator_to_array($iterator));
     }
 }
