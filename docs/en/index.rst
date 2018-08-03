@@ -16,8 +16,8 @@ arrays of data. Here is an example using the simple
         return $count > 1;
     }); // [2, 3]
 
-Available Methods
-=================
+Collection Methods
+==================
 
 Doctrine Collections provides an interface named ``Doctrine\Common\Collections\Collection``
 that resembles the nature of a regular PHP array. That is,
@@ -216,35 +216,6 @@ Applies the given function to each element in the collection and returns a new c
         return $value + 1;
     }); // [2, 3, 4]
 
-matching
---------
-
-Selects all elements from a selectable that match the expression and
-returns a new collection containing these elements.
-
-.. code-block:: php
-    use Doctrine\Common\Collections\Criteria;
-    use Doctrine\Common\Collections\Expr\Comparison;
-
-    $collection = new ArrayCollection([
-        [
-            'name' => 'jwage',
-        ],
-        [
-            'name' => 'romanb',
-        ],
-    ]);
-
-    $expr = new Comparison('name', '=', 'jwage');
-
-    $criteria = new Criteria();
-
-    $criteria->where($expr);
-
-    $matched = $collection->matching($criteria); // ['jwage']
-
-You can read more about expressions :ref:`here <index#expressions>`.
-
 next
 ----
 
@@ -316,3 +287,41 @@ Gets a native PHP array representation of the collection.
     $collection = new ArrayCollection([0, 1, 2, 3, 4, 5]);
 
     $array = $collection->toArray(); // [0, 1, 2, 3, 4, 5]
+
+Selectable Methods
+==================
+
+Some Doctrine Collections, like ``Doctrine\Common\Collections\ArrayCollection``,
+implement an interface named ``Doctrine\Common\Collections\Selectable``
+that offers the usage of a powerful expressions API, where conditions
+can be applied to a collection to get a result with matching elements
+only.
+
+matching
+--------
+
+Selects all elements from a selectable that match the expression and
+returns a new collection containing these elements.
+
+.. code-block:: php
+    use Doctrine\Common\Collections\Criteria;
+    use Doctrine\Common\Collections\Expr\Comparison;
+
+    $collection = new ArrayCollection([
+        [
+            'name' => 'jwage',
+        ],
+        [
+            'name' => 'romanb',
+        ],
+    ]);
+
+    $expr = new Comparison('name', '=', 'jwage');
+
+    $criteria = new Criteria();
+
+    $criteria->where($expr);
+
+    $matched = $collection->matching($criteria); // ['jwage']
+
+You can read more about expressions :ref:`here <expressions>`.
