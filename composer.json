@@ -1,8 +1,13 @@
 {
     "name": "doctrine/collections",
     "type": "library",
-    "description": "Collections Abstraction library",
-    "keywords": ["collections", "array", "iterator"],
+    "description": "PHP Doctrine Collections library that adds additional functionality on top of PHP arrays.",
+    "keywords": [
+        "php",
+        "collections",
+        "array",
+        "iterators"
+    ],
     "homepage": "http://www.doctrine-project.org",
     "license": "MIT",
     "authors": [
