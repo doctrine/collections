@@ -22,6 +22,7 @@ use function next;
 use function reset;
 use function spl_object_hash;
 use function uasort;
+use function array_unshift;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
