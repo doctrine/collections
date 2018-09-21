@@ -12,6 +12,7 @@ use function array_map;
 use function array_reverse;
 use function array_search;
 use function array_slice;
+use function array_unshift;
 use function array_values;
 use function count;
 use function current;
@@ -22,7 +23,6 @@ use function next;
 use function reset;
 use function spl_object_hash;
 use function uasort;
-use function array_unshift;
 
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.

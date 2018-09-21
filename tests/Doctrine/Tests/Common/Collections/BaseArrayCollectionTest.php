@@ -317,7 +317,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         );
     }
 
-    public function testAdd(): void
+    public function testAdd() : void
     {
         $collection = $this->buildCollection([0]);
         $collection->add(1);
@@ -326,7 +326,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(1, $collection->last());
     }
 
-    public function testPrepend(): void
+    public function testPrepend() : void
     {
         $collection = $this->buildCollection([0]);
         $collection->prepend(1);
