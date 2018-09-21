@@ -280,6 +280,16 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
+    public function prepend($element)
+    {
+        array_unshift($this->elements, $element);
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function isEmpty()
     {
         return empty($this->elements);

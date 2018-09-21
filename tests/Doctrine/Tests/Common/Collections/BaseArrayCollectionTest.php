@@ -316,4 +316,22 @@ abstract class BaseArrayCollectionTest extends TestCase
                 ->toArray()
         );
     }
+
+    public function testAdd(): void
+    {
+        $collection = $this->buildCollection([0]);
+        $collection->add(1);
+
+        self::assertTrue($collection->contains(1));
+        self::assertSame(1, $collection->last());
+    }
+
+    public function testPrepend(): void
+    {
+        $collection = $this->buildCollection([0]);
+        $collection->prepend(1);
+
+        self::assertTrue($collection->contains(1));
+        self::assertSame(1, $collection->first());
+    }
 }

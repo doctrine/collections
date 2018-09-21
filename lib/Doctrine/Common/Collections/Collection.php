@@ -36,6 +36,15 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function add($element);
 
     /**
+     * Adds an element at the begin of the collection.
+     *
+     * @param mixed $element The element to add.
+     *
+     * @return bool Always TRUE.
+     */
+    public function prepend($element);
+
+    /**
      * Clears the collection, removing all elements.
      *
      * @return void
