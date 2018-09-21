@@ -12,6 +12,7 @@ use function array_map;
 use function array_reverse;
 use function array_search;
 use function array_slice;
+use function array_unshift;
 use function array_values;
 use function count;
 use function current;
@@ -273,6 +274,16 @@ class ArrayCollection implements Collection, Selectable
     public function add($element)
     {
         $this->elements[] = $element;
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prepend($element)
+    {
+        array_unshift($this->elements, $element);
 
         return true;
     }

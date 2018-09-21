@@ -40,6 +40,15 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function prepend($element)
+    {
+        $this->initialize();
+        return $this->collection->prepend($element);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function clear()
     {
         $this->initialize();
