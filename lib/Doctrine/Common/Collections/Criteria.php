@@ -12,14 +12,8 @@ use function strtoupper;
  */
 class Criteria
 {
-    /**
-     * @var string
-     */
     public const ASC = 'ASC';
 
-    /**
-     * @var string
-     */
     public const DESC = 'DESC';
 
     /** @var ExpressionBuilder|null */
@@ -49,6 +43,7 @@ class Criteria
 
     /**
      * Returns the expression builder.
+     *
      * @return ExpressionBuilder
      */
     public static function expr()
@@ -168,7 +163,7 @@ class Criteria
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
-            function (string $ordering) : string {
+            static function (string $ordering) : string {
                 return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
             },
             $orderings

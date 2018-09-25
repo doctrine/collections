@@ -4,6 +4,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use function count;
 use function is_array;
 use function is_numeric;
@@ -32,11 +33,11 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->add('one');
         $this->collection->add('two');
-        $exists = $this->collection->exists(function ($k, $e) {
+        $exists = $this->collection->exists(static function ($k, $e) {
             return $e === 'one';
         });
         self::assertTrue($exists);
-        $exists = $this->collection->exists(function ($k, $e) {
+        $exists = $this->collection->exists(static function ($k, $e) {
             return $e === 'other';
         });
         self::assertFalse($exists);
@@ -46,7 +47,7 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->add(1);
         $this->collection->add(2);
-        $res = $this->collection->map(function ($e) {
+        $res = $this->collection->map(static function ($e) {
             return $e * 2;
         });
         self::assertEquals([2, 4], $res->toArray());
@@ -57,7 +58,7 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(1);
         $this->collection->add('foo');
         $this->collection->add(3);
-        $res = $this->collection->filter(function ($e) {
+        $res = $this->collection->filter(static function ($e) {
             return is_numeric($e);
         });
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
@@ -134,10 +135,10 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
-        self::assertEquals($this->collection->forAll(function ($k, $e) {
+        self::assertEquals($this->collection->forAll(static function ($k, $e) {
             return is_string($e);
         }), true);
-        self::assertEquals($this->collection->forAll(function ($k, $e) {
+        self::assertEquals($this->collection->forAll(static function ($k, $e) {
             return is_array($e);
         }), false);
     }
@@ -146,7 +147,7 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection[] = true;
         $this->collection[] = false;
-        $partition          = $this->collection->partition(function ($k, $e) {
+        $partition          = $this->collection->partition(static function ($k, $e) {
             return $e === true;
         });
         self::assertEquals($partition[0][0], true);
@@ -201,11 +202,11 @@ abstract class BaseCollectionTest extends TestCase
 
     protected function fillMatchingFixture() : void
     {
-        $std1               = new \stdClass();
+        $std1               = new stdClass();
         $std1->foo          = 'bar';
         $this->collection[] = $std1;
 
-        $std2               = new \stdClass();
+        $std2               = new stdClass();
         $std2->foo          = 'baz';
         $this->collection[] = $std2;
     }

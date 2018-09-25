@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use function array_keys;
 use function array_search;
 use function array_values;
@@ -234,11 +235,11 @@ abstract class BaseArrayCollectionTest extends TestCase
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        self::assertTrue($collection->exists(function ($key, $element) {
+        self::assertTrue($collection->exists(static function ($key, $element) {
             return $key === 'A' && $element === 'a';
         }), 'Element exists');
 
-        self::assertFalse($collection->exists(function ($key, $element) {
+        self::assertFalse($collection->exists(static function ($key, $element) {
             return $key === 'non-existent' && $element === 'non-existent';
         }), 'Element not exists');
     }
@@ -265,8 +266,8 @@ abstract class BaseArrayCollectionTest extends TestCase
 
     public function testMatchingWithSortingPreservesyKeys() : void
     {
-        $object1 = new \stdClass();
-        $object2 = new \stdClass();
+        $object1 = new stdClass();
+        $object2 = new stdClass();
 
         $object1->sortField = 2;
         $object2->sortField = 1;

@@ -6,7 +6,8 @@ use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
-use PHPUnit\Framework\TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * @covers  \Doctrine\Common\Collections\Expr\CompositeExpression
@@ -29,7 +30,7 @@ class CompositeExpressionTest extends TestCase
         $type        = CompositeExpression::TYPE_AND;
         $expressions = [$expression];
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         new CompositeExpression($type, $expressions);
     }
 
