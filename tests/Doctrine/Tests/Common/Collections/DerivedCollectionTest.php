@@ -5,6 +5,7 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Tests\DerivedArrayCollection;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class DerivedCollectionTest extends TestCase
 {
@@ -14,8 +15,8 @@ class DerivedCollectionTest extends TestCase
      */
     public function testDerivedClassCreation() : void
     {
-        $collection = new DerivedArrayCollection(new \stdClass());
-        $closure    = function () {
+        $collection = new DerivedArrayCollection(new stdClass());
+        $closure    = static function () {
             return $allMatches = false;
         };
 

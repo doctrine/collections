@@ -354,7 +354,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function __toString()
     {
-        return __CLASS__ . '@' . spl_object_hash($this);
+        return self::class . '@' . spl_object_hash($this);
     }
 
     /**

@@ -12,6 +12,7 @@ class LazyArrayCollection extends AbstractLazyCollection
 {
     /**
      * Apply the collection only in method doInitialize
+     *
      * @var Collection
      */
     private $collectionOnInitialization;

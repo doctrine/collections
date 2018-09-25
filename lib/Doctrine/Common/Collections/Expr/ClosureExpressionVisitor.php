@@ -2,6 +2,9 @@
 
 namespace Doctrine\Common\Collections\Expr;
 
+use ArrayAccess;
+use Closure;
+use RuntimeException;
 use function in_array;
 use function is_array;
 use function iterator_to_array;
@@ -55,7 +58,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             return $object->$accessor();
         }
 
-        if ($object instanceof \ArrayAccess) {
+        if ($object instanceof ArrayAccess) {
             return $object[$field];
         }
 
@@ -64,7 +67,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
 
         // camelcase field name to support different variable naming conventions
-        $ccField = preg_replace_callback('/_(.?)/', function ($matches) {
+        $ccField = preg_replace_callback('/_(.?)/', static function ($matches) {
             return strtoupper($matches[1]);
         }, $field);
 
@@ -87,17 +90,17 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * @param string $name
      * @param int    $orientation
      *
-     * @return \Closure
+     * @return Closure
      */
-    public static function sortByField($name, $orientation = 1, ?\Closure $next = null)
+    public static function sortByField($name, $orientation = 1, ?Closure $next = null)
     {
         if (! $next) {
-            $next = function () : int {
+            $next = static function () : int {
                 return 0;
             };
         }
 
-        return function ($a, $b) use ($name, $next, $orientation) : int {
+        return static function ($a, $b) use ($name, $next, $orientation) : int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
 
@@ -105,7 +108,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 return $next($a, $b);
             }
 
-            return (($aValue > $bValue) ? 1 : -1) * $orientation;
+            return ($aValue > $bValue ? 1 : -1) * $orientation;
         };
     }
 
@@ -119,52 +122,52 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
         switch ($comparison->getOperator()) {
             case Comparison::EQ:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
                 };
 
             case Comparison::NEQ:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };
 
             case Comparison::LT:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
                 };
 
             case Comparison::LTE:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
                 };
 
             case Comparison::GT:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
                 };
 
             case Comparison::GTE:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
                 };
 
             case Comparison::IN:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value, true);
                 };
 
             case Comparison::NIN:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value, true);
                 };
 
             case Comparison::CONTAINS:
-                return function ($object) use ($field, $value) {
+                return static function ($object) use ($field, $value) {
                     return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) !== false;
                 };
 
             case Comparison::MEMBER_OF:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
                     if (! is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
@@ -173,17 +176,17 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 };
 
             case Comparison::STARTS_WITH:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) === 0;
                 };
 
             case Comparison::ENDS_WITH:
-                return function ($object) use ($field, $value) : bool {
+                return static function ($object) use ($field, $value) : bool {
                     return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
 
             default:
-                throw new \RuntimeException('Unknown comparison operator: ' . $comparison->getOperator());
+                throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator());
         }
     }
 
@@ -214,7 +217,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 return $this->orExpressions($expressionList);
 
             default:
-                throw new \RuntimeException('Unknown composite ' . $expr->getType());
+                throw new RuntimeException('Unknown composite ' . $expr->getType());
         }
     }
 
@@ -223,7 +226,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     private function andExpressions(array $expressions) : callable
     {
-        return function ($object) use ($expressions) : bool {
+        return static function ($object) use ($expressions) : bool {
             foreach ($expressions as $expression) {
                 if (! $expression($object)) {
                     return false;
@@ -239,7 +242,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     private function orExpressions(array $expressions) : callable
     {
-        return function ($object) use ($expressions) : bool {
+        return static function ($object) use ($expressions) : bool {
             foreach ($expressions as $expression) {
                 if ($expression($object)) {
                     return true;
