@@ -62,7 +62,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Removes the element at the specified index from the collection.
      *
-     * @param string|int $key The kex/index of the element to remove.
+     * @param string|int $key The key/index of the element to remove.
      *
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      */
