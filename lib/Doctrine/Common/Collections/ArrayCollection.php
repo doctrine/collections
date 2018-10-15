@@ -5,6 +5,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use const ARRAY_FILTER_USE_BOTH;
 use function array_filter;
 use function array_key_exists;
 use function array_keys;
@@ -312,7 +313,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function filter(Closure $p)
     {
-        return $this->createFrom(array_filter($this->elements, $p));
+        return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
     /**
