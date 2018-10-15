@@ -312,7 +312,7 @@ class ArrayCollection implements Collection, Selectable
      */
     public function filter(Closure $p)
     {
-        return $this->createFrom(array_filter($this->elements, $p));
+        return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
     /**
