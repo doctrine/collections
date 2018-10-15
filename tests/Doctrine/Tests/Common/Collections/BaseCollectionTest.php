@@ -74,7 +74,7 @@ abstract class BaseCollectionTest extends TestCase
         $res = $this->collection->filter(static function ($v, $k) {
             return is_numeric($v) && $k % 2 === 0;
         });
-        self::assertEquals([0 => 1, 2 => 3, 4 => 5], $res->toArray());
+        self::assertSame([0 => 1, 2 => 3, 4 => 5], $res->toArray());
     }
 
     public function testFirstAndLast() : void
