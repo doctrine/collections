@@ -58,8 +58,8 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(1);
         $this->collection->add('foo');
         $this->collection->add(3);
-        $res = $this->collection->filter(static function ($v) {
-            return is_numeric($v);
+        $res = $this->collection->filter(static function ($e) {
+            return is_numeric($e);
         });
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
