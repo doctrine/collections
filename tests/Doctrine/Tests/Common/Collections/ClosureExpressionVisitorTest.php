@@ -136,6 +136,17 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($closure(new TestObject('04')));
     }
 
+    public function testWalkInComparisonObjects() : void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->in('foo', [new TestObject(1), new TestObject(2)]));
+
+        self::assertTrue($closure(new TestObject(new TestObject(2))));
+        self::assertTrue($closure(new TestObject(new TestObject(1))));
+        self::assertFalse($closure(new TestObject(new TestObject(0))));
+        self::assertFalse($closure(new TestObject(4)));
+        self::assertFalse($closure(new TestObject('04')));
+    }
+
     public function testWalkNotInComparison() : void
     {
         $closure = $this->visitor->walkComparison($this->builder->notIn('foo', [1, 2, 3, '04']));
@@ -145,6 +156,17 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($closure(new TestObject(0)));
         self::assertTrue($closure(new TestObject(4)));
         self::assertFalse($closure(new TestObject('04')));
+    }
+
+    public function testWalkNotInComparisonObjects() : void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->notIn('foo', [new TestObject(1), new TestObject(2)]));
+
+        self::assertFalse($closure(new TestObject(new TestObject(1))));
+        self::assertFalse($closure(new TestObject(new TestObject(1))));
+        self::assertTrue($closure(new TestObject(new TestObject(0))));
+        self::assertTrue($closure(new TestObject(4)));
+        self::assertTrue($closure(new TestObject('04')));
     }
 
     public function testWalkContainsComparison() : void
