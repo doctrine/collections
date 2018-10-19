@@ -7,6 +7,7 @@ use Closure;
 use RuntimeException;
 use function in_array;
 use function is_array;
+use function is_scalar;
 use function iterator_to_array;
 use function method_exists;
 use function preg_replace_callback;
