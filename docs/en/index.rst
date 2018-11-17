@@ -169,7 +169,7 @@ Tests whether the given predicate holds for all elements of this collection.
     $collection = new ArrayCollection([1, 2, 3]);
 
     $forAll = $collection->forAll(function($key, $value) {
-        return $count > 1;
+        return $value > 1;
     }); // false
 
 indexOf
