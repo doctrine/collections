@@ -292,6 +292,31 @@ abstract class BaseArrayCollectionTest extends TestCase
         );
     }
 
+    public function testMatchingWithSlicingPreserveKeys() : void
+    {
+
+        $collection = $this->buildCollection([
+            0 => 1,
+            1 => 2,
+            2 => 3,
+            3 => 4,
+        ]);
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
+        self::assertSame(
+            [
+                1 => 2,
+                2 => 3,
+            ],
+            $collection
+                ->matching(new Criteria(null, null, 1, 2))
+                ->toArray()
+        );
+    }
+
     public function testMultiColumnSortAppliesAllSorts() : void
     {
         $collection = $this->buildCollection([
