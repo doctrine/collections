@@ -97,6 +97,6 @@ class CollectionTest extends BaseCollectionTest
         self::assertInstanceOf(Collection::class, $col);
         self::assertNotSame($col, $this->collection);
         self::assertEquals(1, count($col));
-        self::assertEquals('baz', $col[0]->foo);
+        self::assertEquals('baz', $col[1]->foo);
     }
 }
