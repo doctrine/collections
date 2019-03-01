@@ -292,29 +292,92 @@ abstract class BaseArrayCollectionTest extends TestCase
         );
     }
 
-    public function testMatchingWithSlicingPreserveKeys() : void
+    /**
+     * @param int[] $array
+     * @param int[] $slicedArray
+     *
+     * @dataProvider provideSlices
+     */
+    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, ?int $firstResult, ?int $maxResult) : void
     {
-
-        $collection = $this->buildCollection([
-            0 => 1,
-            1 => 2,
-            2 => 3,
-            3 => 4,
-        ]);
+        $collection = $this->buildCollection($array);
 
         if (! $this->isSelectable($collection)) {
             $this->markTestSkipped('Collection does not support Selectable interface');
         }
 
         self::assertSame(
-            [
-                1 => 2,
-                2 => 3,
-            ],
+            $slicedArray,
             $collection
-                ->matching(new Criteria(null, null, 1, 2))
+                ->matching(new Criteria(null, null, $firstResult, $maxResult))
                 ->toArray()
         );
+    }
+
+    /**
+     * @return mixed[][]
+     */
+    public function provideSlices() : array
+    {
+        return [
+            'preserve numeric keys' => [
+                [
+                    0 => 1,
+                    1 => 2,
+                    2 => 3,
+                    3 => 4,
+                ],
+                [
+                    1 => 2,
+                    2 => 3,
+                ],
+                1,
+                2,
+            ],
+            'preserve string keys' => [
+                [
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                [
+                    'b' => 2,
+                    'c' => 3,
+                ],
+                1,
+                2,
+            ],
+            'preserve keys on firstresult only' => [
+                [
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                [
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                1,
+                null,
+            ],
+            'preserve keys on maxresult only' => [
+                [
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                [
+                    'a' => 1,
+                    'b' => 2,
+                ],
+                null,
+                2,
+            ],
+        ];
     }
 
     public function testMultiColumnSortAppliesAllSorts() : void
