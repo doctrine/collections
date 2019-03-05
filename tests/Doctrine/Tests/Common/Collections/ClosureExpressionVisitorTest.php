@@ -31,6 +31,13 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($this->visitor->getObjectFieldValue($object, 'baz'));
     }
 
+    public function testGetObjectFieldValueIsAccessorWithIsPrefix() : void
+    {
+        $object = new TestObject(1, 2, true);
+
+        self::assertTrue($this->visitor->getObjectFieldValue($object, 'isBaz'));
+    }
+
     public function testGetObjectFieldValueIsAccessorCamelCase() : void
     {
         $object = new TestObjectNotCamelCase(1);
