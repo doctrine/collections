@@ -31,12 +31,15 @@ use function uasort;
  * and may break when we change the internals in the future. If you need to
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
+ *
+ * @template T
  */
 class ArrayCollection implements Collection, Selectable
 {
     /**
      * An array containing the entries of this collection.
      *
+     * @psalm-var T[]
      * @var array
      */
     private $elements;
@@ -45,6 +48,8 @@ class ArrayCollection implements Collection, Selectable
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
+     *
+     * @psalm-param T[]
      */
     public function __construct(array $elements = [])
     {
@@ -60,6 +65,9 @@ class ArrayCollection implements Collection, Selectable
      * @param array $elements Elements.
      *
      * @return static
+     *
+     * @psalm-param T[]
+     * @psalm-return ArrayCollection<T>
      */
     protected function createFrom(array $elements)
     {
@@ -301,6 +309,9 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
+     *
+     * @template U
+     * @psalm-return ArrayCollection<U>
      */
     public function map(Closure $func)
     {
@@ -311,6 +322,9 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
+     *
+     * @template U
+     * @psalm-return ArrayCollection<U>
      */
     public function filter(Closure $p)
     {
@@ -397,7 +411,9 @@ class ArrayCollection implements Collection, Selectable
                 $next = ClosureExpressionVisitor::sortByField($field, $ordering === Criteria::DESC ? -1 : 1, $next);
             }
 
-            uasort($filtered, $next);
+            if ($next) {
+                uasort($filtered, $next);
+            }
         }
 
         $offset = $criteria->getFirstResult();

@@ -61,6 +61,8 @@ class Criteria
      * @param string[]|null $orderings
      * @param int|null      $firstResult
      * @param int|null      $maxResults
+     *
+     * @return void
      */
     public function __construct(?Expression $expression = null, ?array $orderings = null, $firstResult = null, $maxResults = null)
     {

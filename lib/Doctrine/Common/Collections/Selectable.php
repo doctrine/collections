@@ -13,6 +13,8 @@ namespace Doctrine\Common\Collections;
  * utilizing the query APIs, for example SQL in the ORM. Applications using
  * this API can implement efficient database access without having to ask the
  * EntityManager or Repositories.
+ *
+ * @template T
  */
 interface Selectable
 {
@@ -21,6 +23,8 @@ interface Selectable
      * returns a new collection containing these elements.
      *
      * @return Collection
+     *
+     * @psalm-return Collection<T>
      */
     public function matching(Criteria $criteria);
 }
