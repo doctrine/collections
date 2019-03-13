@@ -8,6 +8,7 @@ use Closure;
  * Lazy collection that is backed by a concrete collection
  *
  * @template T
+ * @template-extends Collection<T>
  */
 abstract class AbstractLazyCollection implements Collection
 {

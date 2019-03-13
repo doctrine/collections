@@ -9,6 +9,7 @@
         <directory name="lib" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="lib/Doctrine/Common/Collections/Expr"/>
         </ignoreFiles>
     </projectFiles>
 

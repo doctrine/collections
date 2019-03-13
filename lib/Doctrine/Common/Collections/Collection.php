@@ -25,6 +25,8 @@ use IteratorAggregate;
  * external iterators.
  *
  * @template T
+ * @template-extends IteratorAggregate<int|string, T>
+ * @template-extends ArrayAccess<int|string, T>
  */
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -122,7 +124,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array The values of all elements in the collection, in the order they
      *               appear in the collection.
      *
-     * @psalm-return T[]
+     * @psalm-return array<T>
      */
     public function getValues();
 
@@ -143,7 +145,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      *
-     * @psalm-return T[]
+     * @psalm-return array<T>
      */
     public function toArray();
 
@@ -277,7 +279,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      *
-     * @psalm-return T[]
+     * @psalm-return array<T>
      */
     public function slice($offset, $length = null);
 }
