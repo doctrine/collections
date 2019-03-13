@@ -250,7 +250,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *                      contains the collection of elements where the predicate returned FALSE.
      *
      * @psalm-param Closure(int|string, T):bool $p
-     * @psalm-return Collection<T>[]
+     * @psalm-return array{0: Collection<T>, 1: Collection<T>}
      */
     public function partition(Closure $p);
 
