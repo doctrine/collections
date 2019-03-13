@@ -26,7 +26,7 @@ use IteratorAggregate;
  *
  * @template T
  * @template-extends IteratorAggregate<int|string, T>
- * @template-extends ArrayAccess<int|string, T>
+ * @template-extends ArrayAccess<int|string|null, T>
  */
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -124,7 +124,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array The values of all elements in the collection, in the order they
      *               appear in the collection.
      *
-     * @psalm-return array<T>
+     * @psalm-return array<array-key,T>
      */
     public function getValues();
 
@@ -145,7 +145,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      *
-     * @psalm-return array<T>
+     * @psalm-return array<array-key,T>
      */
     public function toArray();
 
@@ -154,7 +154,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      *
-     * @psalm-return T
+     * @psalm-return T|false
      */
     public function first();
 
@@ -163,7 +163,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      *
-     * @psalm-return T
+     * @psalm-return T|false
      */
     public function last();
 
@@ -179,7 +179,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      *
-     * @psalm-return T
+     * @psalm-return T|false
      */
     public function current();
 
@@ -188,7 +188,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      *
-     * @psalm-return T
+     * @psalm-return T|false
      */
     public function next();
 
@@ -264,6 +264,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
      *
      * @psalm-param T $element
+     * @psalm-return int|string|false
      */
     public function indexOf($element);
 
@@ -279,7 +280,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      *
-     * @psalm-return array<T>
+     * @psalm-return array<array-key,T>
      */
     public function slice($offset, $length = null);
 }
