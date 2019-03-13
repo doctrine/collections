@@ -17,6 +17,9 @@
         {"name": "Jonathan Wage", "email": "jonwage@gmail.com"},
         {"name": "Johannes Schmitt", "email": "schmittjoh@gmail.com"}
     ],
+    "suggest": {
+        "vimeo/psalm": "Psalm allows you to enforce template types for your collections."
+    },
     "require": {
         "php": "^7.1.3"
     },
