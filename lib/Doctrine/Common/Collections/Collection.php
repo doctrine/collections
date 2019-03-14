@@ -24,9 +24,10 @@ use IteratorAggregate;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  *
+ * @template TKey of array-key
  * @template T
- * @template-extends IteratorAggregate<int|string, T>
- * @template-extends ArrayAccess<int|string|null, T>
+ * @template-extends IteratorAggregate<TKey, T>
+ * @template-extends ArrayAccess<TKey|null, T>
  */
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -38,6 +39,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return bool Always TRUE.
      *
      * @psalm-param T $element
+     * @psalm-return true
      */
     public function add($element);
 
@@ -74,6 +76,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      *
+     * @psalm-param TKey $key
      * @psalm-return T|null
      */
     public function remove($key);
@@ -96,6 +99,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if the collection contains an element with the specified key/index,
      *              FALSE otherwise.
+     *
+     * @psalm-param TKey $key
      */
     public function containsKey($key);
 
@@ -106,6 +111,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      *
+     * @psalm-param TKey $key
      * @psalm-return T|null
      */
     public function get($key);
@@ -115,6 +121,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return int[]|string[] The keys/indices of the collection, in the order of the corresponding
      *               elements in the collection.
+     *
+     * @psalm-return TKey[]
      */
     public function getKeys();
 
@@ -136,6 +144,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return void
      *
+     * @psalm-param TKey $key
      * @psalm-param T $value
      */
     public function set($key, $value);
@@ -145,7 +154,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      *
-     * @psalm-return array<array-key,T>
+     * @psalm-return array<TKey,T>
      */
     public function toArray();
 
@@ -171,6 +180,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Gets the key/index of the element at the current iterator position.
      *
      * @return int|string
+     *
+     * @psalm-return TKey
      */
     public function key();
 
@@ -199,7 +210,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      *
-     * @psalm-param Closure(int|string, T):bool $p
+     * @psalm-param Closure(TKey, T):bool $p
      */
     public function exists(Closure $p);
 
@@ -212,7 +223,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return Collection A collection with the results of the filter operation.
      *
      * @psalm-param Closure(T):bool $p
-     * @psalm-return Collection<T>
+     * @psalm-return Collection<TKey, T>
      */
     public function filter(Closure $p);
 
@@ -223,7 +234,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      *
-     * @psalm-param Closure(int|string, T):bool $p
+     * @psalm-param Closure(TKey, T):bool $p
      */
     public function forAll(Closure $p);
 
@@ -235,7 +246,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @template U
      * @psalm-param Closure(T):U $func
-     * @psalm-return Collection<U>
+     * @psalm-return Collection<array-key, U>
      */
     public function map(Closure $func);
 
@@ -249,8 +260,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *                      of elements where the predicate returned TRUE, the second element
      *                      contains the collection of elements where the predicate returned FALSE.
      *
-     * @psalm-param Closure(int|string, T):bool $p
-     * @psalm-return array{0: Collection<T>, 1: Collection<T>}
+     * @psalm-param Closure(TKey, T):bool $p
+     * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
     public function partition(Closure $p);
 
@@ -264,7 +275,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
      *
      * @psalm-param T $element
-     * @psalm-return int|string|false
+     * @psalm-return TKey|false
      */
     public function indexOf($element);
 
@@ -280,7 +291,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      *
-     * @psalm-return array<array-key,T>
+     * @psalm-return array<TKey,T>
      */
     public function slice($offset, $length = null);
 }

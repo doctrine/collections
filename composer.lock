@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7014339bd22658dfdc6a95cff353a5e2",
+    "content-hash": "663068946b0b278bdafdd8bb777bb4c2",
     "packages": [],
     "packages-dev": [
         {
@@ -1593,6 +1593,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-02-15T05:27:38+00:00"
         },
         {
@@ -2537,16 +2538,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.1.3",
+            "version": "3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "6efa978680b891ef4e4ca5718323073d809cea01"
+                "reference": "3704e75049703e861cda4585b66d49e3eb6810bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/6efa978680b891ef4e4ca5718323073d809cea01",
-                "reference": "6efa978680b891ef4e4ca5718323073d809cea01",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/3704e75049703e861cda4585b66d49e3eb6810bd",
+                "reference": "3704e75049703e861cda4585b66d49e3eb6810bd",
                 "shasum": ""
             },
             "require": {
@@ -2613,7 +2614,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-03-12T12:55:38+00:00"
+            "time": "2019-03-14T14:23:26+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -2765,7 +2766,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1"
+        "php": "^7.1.3"
     },
     "platform-dev": []
 }
