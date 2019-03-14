@@ -211,7 +211,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      *
-     * @psalm-param Closure(TKey, T):bool $p
+     * @psalm-param Closure(TKey=, T=):bool $p
      */
     public function exists(Closure $p);
 
@@ -223,7 +223,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return Collection A collection with the results of the filter operation.
      *
-     * @psalm-param Closure(T):bool $p
+     * @psalm-param Closure(T=):bool $p
      * @psalm-return Collection<TKey, T>
      */
     public function filter(Closure $p);
@@ -235,7 +235,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      *
-     * @psalm-param Closure(TKey, T):bool $p
+     * @psalm-param Closure(TKey=, T=):bool $p
      */
     public function forAll(Closure $p);
 
@@ -246,7 +246,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return Collection
      *
      * @template U
-     * @psalm-param Closure(T):U $func
+     * @psalm-param Closure(T=):U $func
      * @psalm-return Collection<TKey, U>
      */
     public function map(Closure $func);
