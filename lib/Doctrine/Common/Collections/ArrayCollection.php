@@ -32,7 +32,7 @@ use function uasort;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
- * @template TKey of string|int
+ * @template TKey of array-key
  * @template T
  * @template-implements Collection<TKey,T>
  * @template-implements Selectable<TKey,T>
