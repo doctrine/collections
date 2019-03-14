@@ -40,7 +40,6 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @psalm-param T $element
      * @psalm-return true
-     * @psalm-return true
      */
     public function add($element);
 
