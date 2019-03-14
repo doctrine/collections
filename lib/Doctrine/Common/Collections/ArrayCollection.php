@@ -34,15 +34,15 @@ use function uasort;
  *
  * @template TKey of string|int
  * @template T
- * @template-implements Collection<T>
- * @template-implements Selectable<T>
+ * @template-implements Collection<TKey,T>
+ * @template-implements Selectable<TKey,T>
  */
 class ArrayCollection implements Collection, Selectable
 {
     /**
      * An array containing the entries of this collection.
      *
-     * @psalm-var T[]
+     * @psalm-var array<TKey,T>
      * @var array
      */
     private $elements;
@@ -52,7 +52,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @param array $elements
      *
-     * @psalm-param array<T> $elements
+     * @psalm-param array<TKey,T> $elements
      */
     public function __construct(array $elements = [])
     {
@@ -85,8 +85,8 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      *
-     * @psalm-param array<T> $elements
-     * @psalm-return ArrayCollection<T>
+     * @psalm-param array<TKey,T> $elements
+     * @psalm-return ArrayCollection<TKey,T>
      */
     protected function createFrom(array $elements)
     {
@@ -323,7 +323,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      *
-     * @psalm-return ArrayCollection<T>
+     * @psalm-return ArrayCollection<TKey,T>
      */
     public function filter(Closure $p)
     {

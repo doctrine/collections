@@ -40,6 +40,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @psalm-param T $element
      * @psalm-return true
+     * @psalm-return true
      */
     public function add($element);
 
@@ -132,7 +133,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return array The values of all elements in the collection, in the order they
      *               appear in the collection.
      *
-     * @psalm-return array<array-key,T>
+     * @psalm-return T[]
      */
     public function getValues();
 
@@ -246,7 +247,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @template U
      * @psalm-param Closure(T):U $func
-     * @psalm-return Collection<array-key, U>
+     * @psalm-return Collection<TKey, U>
      */
     public function map(Closure $func);
 

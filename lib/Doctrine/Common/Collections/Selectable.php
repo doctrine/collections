@@ -15,6 +15,7 @@ namespace Doctrine\Common\Collections;
  * EntityManager or Repositories.
  *
  * @template T
+ * @template TKey
  */
 interface Selectable
 {
@@ -24,7 +25,7 @@ interface Selectable
      *
      * @return Collection
      *
-     * @psalm-return Collection<T>
+     * @psalm-return Collection<TKey,T>
      */
     public function matching(Criteria $criteria);
 }
