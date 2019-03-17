@@ -103,6 +103,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
         return static function ($a, $b) use ($name, $next, $orientation) : int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
+
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
 
             if ($aValue === $bValue) {
@@ -170,9 +171,11 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             case Comparison::MEMBER_OF:
                 return static function ($object) use ($field, $value) : bool {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
                     if (! is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
                     }
+
                     return in_array($value, $fieldValues, true);
                 };
 
@@ -213,10 +216,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         switch ($expr->getType()) {
             case CompositeExpression::TYPE_AND:
                 return $this->andExpressions($expressionList);
-
             case CompositeExpression::TYPE_OR:
                 return $this->orExpressions($expressionList);
-
             default:
                 throw new RuntimeException('Unknown composite ' . $expr->getType());
         }
