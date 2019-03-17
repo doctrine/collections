@@ -174,6 +174,7 @@ class ArrayCollection implements Collection, Selectable
     {
         if (! isset($offset)) {
             $this->add($value);
+
             return;
         }
 
