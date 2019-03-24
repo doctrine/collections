@@ -47,3 +47,8 @@ jobs:
       env: STATIC_ANALYSIS
       install: travis_retry composer install --prefer-dist
       script: vendor/bin/phpstan analyse -l 3 lib
+
+    - stage: Code Quality
+      env: STATIC_ANALYSIS
+      install: travis_retry composer install --prefer-dist
+      script: vendor/bin/psalm

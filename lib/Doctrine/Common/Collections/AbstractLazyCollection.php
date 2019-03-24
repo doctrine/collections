@@ -6,12 +6,17 @@ use Closure;
 
 /**
  * Lazy collection that is backed by a concrete collection
+ *
+ * @template TKey of array-key
+ * @template T
+ * @template-implements Collection<TKey,T>
  */
 abstract class AbstractLazyCollection implements Collection
 {
     /**
      * The backed collection to use
      *
+     * @psalm-var Collection<TKey,T>
      * @var Collection
      */
     protected $collection;
@@ -327,6 +332,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * Initialize the collection
+     *
+     * @return void
      */
     protected function initialize()
     {
