@@ -52,3 +52,8 @@ jobs:
       env: STATIC_ANALYSIS
       install: travis_retry composer install --prefer-dist
       script: vendor/bin/psalm
+
+    - stage: Backwards Compatibility
+      env: STATIC_ANALYSIS
+      install: travis_retry composer install --prefer-dist
+      script: vendor/bin/roave-backward-compatibility-check --from=v1.5.0
