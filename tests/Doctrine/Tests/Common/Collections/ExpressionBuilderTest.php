@@ -123,6 +123,14 @@ class ExpressionBuilderTest extends TestCase
         self::assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
 
+    public function testIContains() : void
+    {
+        $expr = $this->builder->iContains("a", "b");
+
+        $this->assertInstanceOf(Comparison::class, $expr);
+        $this->assertEquals(Comparison::ICONTAINS, $expr->getOperator());
+    }
+
     public function testMemberOf() : void
     {
         $expr = $this->builder->memberOf('b', ['a']);
