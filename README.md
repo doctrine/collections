@@ -8,6 +8,24 @@ Collections Abstraction library
 
 ## Changelog
 
+### v1.6.1
+
+This release, combined with the release of [`doctrine/collections` `v1.6.1`](https://github.com/doctrine/collections/releases/tag/v1.6.1),
+fixes an issue where parsing annotations was not possible
+for classes within `doctrine/collections`.
+
+Specifically, `v1.6.0` introduced Psalm-specific annotations
+such as (for example) `@template` and `@template-implements`,
+which were both incorrectly recognized as `@template`.
+
+`@template` has therefore been removed, and instead we use
+the prefixed `@psalm-template`, which is no longer parsed
+by `doctrine/collections` `v1.6.1`
+
+Total issues resolved: **1**
+
+- [186: Use `@psalm-template` annotation to avoid clashes](https://github.com/doctrine/collections/pull/186) thanks to @muglug
+
 ### v1.6.0
 
 This release bumps the minimum required PHP version to 7.1.3.
