@@ -24,8 +24,8 @@ use IteratorAggregate;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  *
- * @template TKey of array-key
- * @template T
+ * @psalm-template TKey of array-key
+ * @psalm-template T
  * @template-extends IteratorAggregate<TKey, T>
  * @template-extends ArrayAccess<TKey|null, T>
  */
@@ -243,7 +243,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return Collection
      *
-     * @template U
+     * @psalm-template U
      * @psalm-param Closure(T=):U $func
      * @psalm-return Collection<TKey, U>
      */
