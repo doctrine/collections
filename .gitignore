@@ -2,3 +2,4 @@ vendor/
 build/
 /phpcs.xml
 /.phpcs-cache
+infection.log
