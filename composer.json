@@ -24,7 +24,8 @@
         "phpunit/phpunit": "^7.0",
         "doctrine/coding-standard": "^6.0",
         "phpstan/phpstan-shim": "^0.9.2",
-        "vimeo/psalm": "^3.2.2"
+        "vimeo/psalm": "^3.2.2",
+        "infection/infection": "^0.12.2"
     },
     "autoload": {
         "psr-4": { "Doctrine\\Common\\Collections\\": "lib/Doctrine/Common/Collections" }
