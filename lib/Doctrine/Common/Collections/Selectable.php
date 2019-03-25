@@ -14,8 +14,8 @@ namespace Doctrine\Common\Collections;
  * this API can implement efficient database access without having to ask the
  * EntityManager or Repositories.
  *
- * @template TKey as array-key
- * @template T
+ * @psalm-template TKey as array-key
+ * @psalm-template T
  */
 interface Selectable
 {
