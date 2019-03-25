@@ -221,7 +221,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return Collection A collection with the results of the filter operation.
      *
-     * @psalm-param Closure(T=):bool $p
+     * @psalm-param Closure(T=, TKey=):bool $p
      * @psalm-return Collection<TKey, T>
      */
     public function filter(Closure $p);
