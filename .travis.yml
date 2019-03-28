@@ -10,7 +10,7 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - nightly
+  - 7.4snapshot
 
 before_install:
   - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
@@ -24,7 +24,7 @@ script: ./vendor/bin/phpunit
 
 jobs:
   allow_failures:
-    - php: nightly
+    - php: 7.4snapshot
 
   include:
     - stage: Test
@@ -33,7 +33,8 @@ jobs:
         - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{.disabled,}
         - if [[ ! $(php -m | grep -si xdebug) ]]; then echo "xdebug required for coverage"; exit 1; fi
       script:
-        - ./vendor/bin/phpunit --coverage-clover clover.xml
+        - ./vendor/bin/phpunit --coverage-clover clover.xml  --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
+        - ./vendor/bin/infection --coverage=build/coverage --threads=4 --min-msi=82 --min-covered-msi=84
       after_script:
         - travis_retry wget https://scrutinizer-ci.com/ocular.phar
         - travis_retry php ocular.phar code-coverage:upload --format=php-clover clover.xml
@@ -47,3 +48,8 @@ jobs:
       env: STATIC_ANALYSIS
       install: travis_retry composer install --prefer-dist
       script: vendor/bin/phpstan analyse -l 3 lib
+
+    - stage: Code Quality
+      env: STATIC_ANALYSIS
+      install: travis_retry composer install --prefer-dist
+      script: vendor/bin/psalm

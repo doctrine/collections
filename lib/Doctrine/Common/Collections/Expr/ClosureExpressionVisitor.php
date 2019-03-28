@@ -10,6 +10,7 @@ use function is_array;
 use function is_scalar;
 use function iterator_to_array;
 use function method_exists;
+use function preg_match;
 use function preg_replace_callback;
 use function strlen;
 use function strpos;
@@ -45,11 +46,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         foreach ($accessors as $accessor) {
             $accessor .= $field;
 
-            if (! method_exists($object, $accessor)) {
-                continue;
+            if (method_exists($object, $accessor)) {
+                return $object->$accessor();
             }
+        }
 
-            return $object->$accessor();
+        if (preg_match('/^is[A-Z]+/', $field) === 1 && method_exists($object, $field)) {
+            return $object->$field();
         }
 
         // __call should be triggered for get.
@@ -75,11 +78,9 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
 
-            if (! method_exists($object, $accessor)) {
-                continue;
+            if (method_exists($object, $accessor)) {
+                return $object->$accessor();
             }
-
-            return $object->$accessor();
         }
 
         return $object->$field;
@@ -103,6 +104,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
         return static function ($a, $b) use ($name, $next, $orientation) : int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
+
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
 
             if ($aValue === $bValue) {
@@ -174,9 +176,11 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             case Comparison::MEMBER_OF:
                 return static function ($object) use ($field, $value) : bool {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
                     if (! is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
                     }
+
                     return in_array($value, $fieldValues, true);
                 };
 
@@ -217,10 +221,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         switch ($expr->getType()) {
             case CompositeExpression::TYPE_AND:
                 return $this->andExpressions($expressionList);
-
             case CompositeExpression::TYPE_OR:
                 return $this->orExpressions($expressionList);
-
             default:
                 throw new RuntimeException('Unknown composite ' . $expr->getType());
         }

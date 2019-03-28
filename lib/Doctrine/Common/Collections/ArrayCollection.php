@@ -31,12 +31,18 @@ use function uasort;
  * and may break when we change the internals in the future. If you need to
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
+ *
+ * @psalm-template TKey of array-key
+ * @psalm-template T
+ * @template-implements Collection<TKey,T>
+ * @template-implements Selectable<TKey,T>
  */
 class ArrayCollection implements Collection, Selectable
 {
     /**
      * An array containing the entries of this collection.
      *
+     * @psalm-var array<TKey,T>
      * @var array
      */
     private $elements;
@@ -45,25 +51,12 @@ class ArrayCollection implements Collection, Selectable
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
+     *
+     * @psalm-param array<TKey,T> $elements
      */
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
-    }
-
-    /**
-     * Creates a new instance from the specified elements.
-     *
-     * This method is provided for derived classes to specify how a new
-     * instance should be created when constructor semantics have changed.
-     *
-     * @param array $elements Elements.
-     *
-     * @return static
-     */
-    protected function createFrom(array $elements)
-    {
-        return new static($elements);
     }
 
     /**
@@ -80,6 +73,24 @@ class ArrayCollection implements Collection, Selectable
     public function first()
     {
         return reset($this->elements);
+    }
+
+    /**
+     * Creates a new instance from the specified elements.
+     *
+     * This method is provided for derived classes to specify how a new
+     * instance should be created when constructor semantics have changed.
+     *
+     * @param array $elements Elements.
+     *
+     * @return static
+     *
+     * @psalm-param array<TKey,T> $elements
+     * @psalm-return ArrayCollection<TKey,T>
+     */
+    protected function createFrom(array $elements)
+    {
+        return new static($elements);
     }
 
     /**
@@ -174,6 +185,7 @@ class ArrayCollection implements Collection, Selectable
     {
         if (! isset($offset)) {
             $this->add($value);
+
             return;
         }
 
@@ -310,6 +322,8 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
+     *
+     * @psalm-return ArrayCollection<TKey,T>
      */
     public function filter(Closure $p)
     {
