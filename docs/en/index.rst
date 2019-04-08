@@ -302,17 +302,17 @@ matching
 --------
 
 Selects all elements from a selectable that match the expression and
-returns a new collection containing these elements.
+returns a new collection containing these elements and preserved keys.
 
 .. code-block:: php
     use Doctrine\Common\Collections\Criteria;
     use Doctrine\Common\Collections\Expr\Comparison;
 
     $collection = new ArrayCollection([
-        [
+        'wage' => [
             'name' => 'jwage',
         ],
-        [
+        'roman' => [
             'name' => 'romanb',
         ],
     ]);
@@ -323,6 +323,6 @@ returns a new collection containing these elements.
 
     $criteria->where($expr);
 
-    $matched = $collection->matching($criteria); // ['jwage']
+    $matchingCollection = $collection->matching($criteria); // [ 'wage' => [ 'name' => 'jwage' ]]
 
 You can read more about expressions :ref:`here <expressions>`.
