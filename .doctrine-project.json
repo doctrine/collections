@@ -8,10 +8,13 @@
 			"name": "master",
 			"branchName": "master",
 			"slug": "latest",
-			"aliases": [
-				"current",
-				"stable"
-			]
-		}
+			"upcoming": true
+		},
+        {
+            "name": "1.6",
+            "branchName": "1.6",
+            "slug": "1.6",
+            "current": true
+        }
 	]
 }
