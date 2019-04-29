@@ -51,10 +51,7 @@ class Comparison implements Expression
         return $this->field;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue() : Value
     {
         return $this->value;
     }

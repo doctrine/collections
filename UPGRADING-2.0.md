@@ -1,15 +1,12 @@
 Upgrading from 1.x to 2.0
 =========================
 
-
 ## BC breaking changes
 
 Native parameter and return types were added.
 As a consequence, some signatures were changed and will have to be adjusted in sub-classes.
 
-
 Note that in order to keep compatibility with both 1.x and 2.x versions, extending code would have to omit the added parameter types and add the return types. This would only work in PHP 7.2+ which is the first version featuring [parameter widening](https://wiki.php.net/rfc/parameter-no-type-variance).
-
 
 You can find a list of major changes to public API below.
 
