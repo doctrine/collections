@@ -154,7 +154,7 @@ class Criteria
      * @see Criteria::ASC
      * @see Criteria::DESC
      *
-     * @param string[] $orderings
+     * @param array<string, string> $orderings
      *
      * @return Criteria
      */
