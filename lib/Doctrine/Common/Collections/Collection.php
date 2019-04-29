@@ -119,8 +119,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Gets all keys/indices of the collection.
      *
-     * @return int[]|string[] The keys/indices of the collection, in the order of the corresponding
-     *               elements in the collection.
+     * @return array<int, int|string> The keys/indices of the collection, in the order of the corresponding
+     *                                elements in the collection.
      *
      * @psalm-return TKey[]
      */
@@ -254,9 +254,9 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate on which to partition.
      *
-     * @return Collection[] An array with two elements. The first element contains the collection
-     *                      of elements where the predicate returned TRUE, the second element
-     *                      contains the collection of elements where the predicate returned FALSE.
+     * @return array<int, Collection> An array with two elements. The first element contains the collection
+     *                                of elements where the predicate returned TRUE, the second element
+     *                                contains the collection of elements where the predicate returned FALSE.
      *
      * @psalm-param Closure(TKey=, T=):bool $p
      * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
