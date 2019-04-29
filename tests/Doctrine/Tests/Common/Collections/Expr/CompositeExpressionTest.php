@@ -25,6 +25,8 @@ class CompositeExpressionTest extends TestCase
     }
 
     /**
+     * @param string|Value $expression
+     *
      * @dataProvider invalidDataProvider
      */
     public function testExceptions($expression) : void

@@ -184,7 +184,7 @@ class Criteria
      */
     public function setFirstResult(?int $firstResult) : self
     {
-        $this->firstResult = $firstResult === null ? null : (int) $firstResult;
+        $this->firstResult = $firstResult;
 
         return $this;
     }
@@ -206,7 +206,7 @@ class Criteria
      */
     public function setMaxResults(?int $maxResults) : self
     {
-        $this->maxResults = $maxResults === null ? null : (int) $maxResults;
+        $this->maxResults = $maxResults;
 
         return $this;
     }

@@ -6,8 +6,8 @@ namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\Value;
-use function func_get_args;
 
 /**
  * Builder for Expressions in the {@link Selectable} interface.
@@ -18,20 +18,14 @@ use function func_get_args;
  */
 class ExpressionBuilder
 {
-    /**
-     * @param mixed $x
-     */
-    public function andX($x = null) : CompositeExpression
+    public function andX(Expression ...$expressions) : CompositeExpression
     {
-        return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
+        return new CompositeExpression(CompositeExpression::TYPE_AND, $expressions);
     }
 
-    /**
-     * @param mixed $x
-     */
-    public function orX($x = null) : CompositeExpression
+    public function orX(Expression ...$expressions) : CompositeExpression
     {
-        return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
+        return new CompositeExpression(CompositeExpression::TYPE_OR, $expressions);
     }
 
     /**
@@ -51,12 +45,9 @@ class ExpressionBuilder
     }
 
     /**
-     * @param string $field
-     * @param mixed  $value
-     *
-     * @return Comparison
+     * @param mixed $value
      */
-    public function lt($field, $value)
+    public function lt(string $field, $value) : Comparison
     {
         return new Comparison($field, Comparison::LT, new Value($value));
     }

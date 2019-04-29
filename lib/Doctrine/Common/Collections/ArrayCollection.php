@@ -17,6 +17,7 @@ use function array_reverse;
 use function array_search;
 use function array_slice;
 use function array_values;
+use function assert;
 use function count;
 use function current;
 use function end;
@@ -163,6 +164,8 @@ class ArrayCollection implements Collection, Selectable
      * Required by interface ArrayAccess.
      *
      * {@inheritDoc}
+     *
+     * @param int|string $offset
      */
     public function offsetExists($offset) : bool
     {
@@ -172,7 +175,9 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param int|string $offset
+     *
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -182,11 +187,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param int|string|null $offset
+     * @param mixed           $value
      */
     public function offsetSet($offset, $value) : void
     {
-        if (! isset($offset)) {
+        if ($offset === null) {
             $this->add($value);
 
             return;
@@ -198,7 +204,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param int|string $offset
      */
     public function offsetUnset($offset) : void
     {
@@ -305,6 +311,8 @@ class ArrayCollection implements Collection, Selectable
      * Required by interface IteratorAggregate.
      *
      * {@inheritDoc}
+     *
+     * @psalm-return Traversable<TKey, T>
      */
     public function getIterator() : Traversable
     {
@@ -411,9 +419,9 @@ class ArrayCollection implements Collection, Selectable
                 $next = ClosureExpressionVisitor::sortByField($field, $ordering === Criteria::DESC ? -1 : 1, $next);
             }
 
-            if ($next instanceof Closure) {
-                uasort($filtered, $next);
-            }
+            assert($next instanceof Closure);
+
+            uasort($filtered, $next);
         }
 
         $offset = $criteria->getFirstResult();

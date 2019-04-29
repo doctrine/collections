@@ -287,6 +287,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @param int|string $offset
      */
     public function offsetExists($offset) : bool
     {
@@ -297,6 +299,10 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @param int|string $offset
+     *
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -307,6 +313,9 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @param int|string $offset
+     * @param mixed      $value
      */
     public function offsetSet($offset, $value) : void
     {
@@ -316,6 +325,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @param int|string $offset
      */
     public function offsetUnset($offset) : void
     {

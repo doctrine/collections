@@ -293,33 +293,30 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      */
     public function slice(int $offset, ?int $length = null) : array;
 
-    /**
-     * {@inheritdoc}
-     */
     public function count() : int;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator() : Traversable;
 
     /**
-     * {@inheritdoc}
+     * @param int|string $offset
+     *
+     * @return mixed
      */
     public function offsetGet($offset);
 
     /**
-     * {@inheritdoc}
+     * @param int|string $offset
+     * @param mixed      $value
      */
     public function offsetSet($offset, $value) : void;
 
     /**
-     * {@inheritdoc}
+     * @param int|string $offset
      */
     public function offsetUnset($offset) : void;
 
     /**
-     * {@inheritdoc}
+     * @param int|string $offset
      */
     public function offsetExists($offset) : bool;
 }
