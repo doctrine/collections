@@ -411,7 +411,9 @@ class ArrayCollection implements Collection, Selectable
                 $next = ClosureExpressionVisitor::sortByField($field, $ordering === Criteria::DESC ? -1 : 1, $next);
             }
 
-            uasort($filtered, $next);
+            if ($next instanceof Closure) {
+                uasort($filtered, $next);
+            }
         }
 
         $offset = $criteria->getFirstResult();
