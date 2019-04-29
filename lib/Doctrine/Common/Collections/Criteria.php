@@ -26,7 +26,7 @@ class Criteria
     /** @var Expression|null */
     private $expression;
 
-    /** @var string[] */
+    /** @var array<string, string> */
     private $orderings = [];
 
     /** @var int|null */
@@ -60,7 +60,7 @@ class Criteria
     /**
      * Construct a new Criteria.
      *
-     * @param string[]|null $orderings
+     * @param array<string, string>|null $orderings
      */
     public function __construct(?Expression $expression = null, ?array $orderings = null, ?int $firstResult = null, ?int $maxResults = null)
     {
@@ -139,7 +139,7 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
-     * @return string[]
+     * @return array<string, string>
      */
     public function getOrderings() : array
     {
