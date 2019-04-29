@@ -417,7 +417,7 @@ class ArrayCollection implements Collection, Selectable
         $length = $criteria->getMaxResults();
 
         if ($offset || $length) {
-            $filtered = array_slice($filtered, (int) $offset, $length);
+            $filtered = array_slice($filtered, (int) $offset, $length, true);
         }
 
         return $this->createFrom($filtered);
