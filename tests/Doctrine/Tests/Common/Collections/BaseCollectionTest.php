@@ -219,14 +219,14 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection[] = 'two';
         $this->collection[] = 'three';
 
-        $slice = $this->collection->slice(0, 1);
+        $slice = $this->collection->slice(0, 1)->toArray();
         self::assertIsArray($slice);
         self::assertEquals(['one'], $slice);
 
-        $slice = $this->collection->slice(1);
+        $slice = $this->collection->slice(1)->toArray();
         self::assertEquals([1 => 'two', 2 => 'three'], $slice);
 
-        $slice = $this->collection->slice(1, 1);
+        $slice = $this->collection->slice(1, 1)->toArray();
         self::assertEquals([1 => 'two'], $slice);
     }
 

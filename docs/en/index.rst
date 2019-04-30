@@ -296,12 +296,16 @@ Sets an element in the collection at the specified key/index.
 slice
 -----
 
-Extracts a slice of $length elements starting at position $offset from the Collection. If $length is null it returns all elements from $offset to the end of the Collection. Keys have to be preserved by this method. Calling this method will only return the selected slice and NOT change the elements contained in the collection slice is called on.
+Extracts a slice of ``$length`` elements starting at position $offset from
+the Collection. If ``$length`` is null it returns all elements from $offset
+to the end of the Collection. Keys have to be preserved by this method.
+Calling this method will only return the selected slice and NOT change
+the elements contained in the collection slice is called on.
 
 .. code-block:: php
     $collection = new ArrayCollection([0, 1, 2, 3, 4, 5]);
 
-    $slice = $collection->slice(1, 2); // [1, 2]
+    $slice = $collection->slice(1, 2); // new ArrayCollection([1, 2])
 
 toArray
 -------

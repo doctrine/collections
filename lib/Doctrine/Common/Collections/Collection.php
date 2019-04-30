@@ -290,5 +290,5 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return mixed[]
      * @psalm-return array<TKey,T>
      */
-    public function slice(int $offset, ?int $length = null): array;
+    public function slice(int $offset, ?int $length = null): self;
 }

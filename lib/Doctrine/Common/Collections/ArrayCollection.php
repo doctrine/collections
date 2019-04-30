@@ -381,9 +381,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, ?int $length = null): array
+    public function slice(int $offset, ?int $length = null) : Collection
     {
-        return array_slice($this->elements, $offset, $length, true);
+        return $this->createFrom(array_slice($this->elements, $offset, $length, true));
     }
 
     /**

@@ -84,3 +84,7 @@ You can find a list of major changes to public API below.
 |             before           |                   after                  |
 |-----------------------------:|:-----------------------------------------|
 | matching(Criteria $criteria) | matching(Criteria $criteria): Collection |
+
+#### Doctrine\Common\Collections\Collection::slice()
+
+The `Collection::slice()` method returns a new `Collection` instance now instead of an array.
