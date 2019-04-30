@@ -8,7 +8,6 @@ use ArrayAccess;
 use Closure;
 use Countable;
 use IteratorAggregate;
-use Traversable;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
@@ -292,31 +291,4 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-return array<TKey,T>
      */
     public function slice(int $offset, ?int $length = null) : array;
-
-    public function count() : int;
-
-    public function getIterator() : Traversable;
-
-    /**
-     * @param int|string $offset
-     *
-     * @return mixed
-     */
-    public function offsetGet($offset);
-
-    /**
-     * @param int|string $offset
-     * @param mixed      $value
-     */
-    public function offsetSet($offset, $value) : void;
-
-    /**
-     * @param int|string $offset
-     */
-    public function offsetUnset($offset) : void;
-
-    /**
-     * @param int|string $offset
-     */
-    public function offsetExists($offset) : bool;
 }
