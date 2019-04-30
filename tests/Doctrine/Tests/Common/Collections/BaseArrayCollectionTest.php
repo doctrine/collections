@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
@@ -21,15 +23,17 @@ abstract class BaseArrayCollectionTest extends TestCase
 {
     abstract protected function buildCollection(array $elements = []) : Collection;
 
-    protected function isSelectable($obj) : bool
+    protected function isSelectable(object $obj) : bool
     {
         return $obj instanceof Selectable;
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testToArray($elements) : void
+    public function testToArray(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -37,27 +41,33 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testFirst($elements) : void
+    public function testFirst(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(reset($elements), $collection->first());
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testLast($elements) : void
+    public function testLast(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(end($elements), $collection->last());
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testKey($elements) : void
+    public function testKey(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -70,9 +80,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testNext($elements) : void
+    public function testNext(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -91,9 +103,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testCurrent($elements) : void
+    public function testCurrent(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -106,9 +120,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testGetKeys($elements) : void
+    public function testGetKeys(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -116,9 +132,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testGetValues($elements) : void
+    public function testGetValues(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -126,9 +144,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testCount($elements) : void
+    public function testCount(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -136,9 +156,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testIterator($elements) : void
+    public function testIterator(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 

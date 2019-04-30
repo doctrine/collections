@@ -5,7 +5,7 @@
 	"docsSlug": "doctrine-collections",
 	"versions": [
 		{
-			"name": "master",
+			"name": "2.0",
 			"branchName": "master",
 			"slug": "latest",
 			"upcoming": true

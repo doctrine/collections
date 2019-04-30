@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
@@ -277,6 +279,12 @@ class TestObject
     /** @var mixed */
     private $qux;
 
+    /**
+     * @param mixed $foo
+     * @param mixed $bar
+     * @param mixed $baz
+     * @param mixed $qux
+     */
     public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
     {
         $this->foo = $foo;
@@ -285,6 +293,11 @@ class TestObject
         $this->qux = $qux;
     }
 
+    /**
+     * @param array<int, mixed> $arguments
+     *
+     * @return mixed
+     */
     public function __call(string $name, array $arguments)
     {
         if ($name === 'getqux') {
@@ -292,16 +305,25 @@ class TestObject
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getFoo()
     {
         return $this->foo;
     }
 
+    /**
+     * @return mixed
+     */
     public function getBar()
     {
         return $this->bar;
     }
 
+    /**
+     * @return mixed
+     */
     public function isBaz()
     {
         return $this->baz;
@@ -318,7 +340,7 @@ class TestObjectNotCamelCase
         $this->foo_bar = $foo_bar;
     }
 
-    public function getFooBar()
+    public function getFooBar() : ?int
     {
         return $this->foo_bar;
     }
@@ -368,15 +390,23 @@ class TestObjectBothPublic
 {
     /** @var mixed */
     public $foo_bar;
+
     /** @var mixed */
     public $fooBar;
 
+    /**
+     * @param mixed $foo_bar
+     * @param mixed $fooBar
+     */
     public function __construct($foo_bar = null, $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
         $this->fooBar  = $fooBar;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFooBar()
     {
         return $this->foo_bar;

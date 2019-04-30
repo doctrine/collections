@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Common\Collections;
 
 /**
@@ -27,5 +29,5 @@ interface Selectable
      *
      * @psalm-return Collection<TKey,T>
      */
-    public function matching(Criteria $criteria);
+    public function matching(Criteria $criteria) : Collection;
 }

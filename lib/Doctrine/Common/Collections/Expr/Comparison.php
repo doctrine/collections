@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Common\Collections\Expr;
 
 /**
@@ -31,11 +33,9 @@ class Comparison implements Expression
     private $value;
 
     /**
-     * @param string $field
-     * @param string $operator
-     * @param mixed  $value
+     * @param mixed $value
      */
-    public function __construct($field, $operator, $value)
+    public function __construct(string $field, string $operator, $value)
     {
         if (! ($value instanceof Value)) {
             $value = new Value($value);
@@ -46,26 +46,17 @@ class Comparison implements Expression
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getField()
+    public function getField() : string
     {
         return $this->field;
     }
 
-    /**
-     * @return Value
-     */
-    public function getValue()
+    public function getValue() : Value
     {
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
-    public function getOperator()
+    public function getOperator() : string
     {
         return $this->op;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Common\Collections\Expr;
 
 use RuntimeException;
@@ -15,16 +17,15 @@ class CompositeExpression implements Expression
     /** @var string */
     private $type;
 
-    /** @var Expression[] */
+    /** @var array<int, Expression> */
     private $expressions = [];
 
     /**
-     * @param string $type
-     * @param array  $expressions
+     * @param array<int, Expression> $expressions
      *
      * @throws RuntimeException
      */
-    public function __construct($type, array $expressions)
+    public function __construct(string $type, array $expressions)
     {
         $this->type = $type;
 
@@ -43,17 +44,14 @@ class CompositeExpression implements Expression
     /**
      * Returns the list of expressions nested in this composite.
      *
-     * @return Expression[]
+     * @return array<int, Expression>
      */
-    public function getExpressionList()
+    public function getExpressionList() : array
     {
         return $this->expressions;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }

@@ -13,10 +13,6 @@
     <file>tests</file>
 
     <rule ref="Doctrine">
-        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
-
         <!-- Since Collections are built around mixed content, this has no value here -->
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification"/>
