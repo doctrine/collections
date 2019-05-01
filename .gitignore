@@ -1,5 +1,6 @@
-vendor/
-build/
+/vendor
+/build
 /phpcs.xml
 /.phpcs-cache
-infection.log
+/infection.log
+/.phpunit.result.cache
