@@ -9,6 +9,9 @@
         "text": "infection.log"
     },
     "mutators": {
-        "@default": true
+        "@default": true,
+        "Equal": false,
+        "EqualIdentical": false,
+        "NotEqual": false
     }
 }
