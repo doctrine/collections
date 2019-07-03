@@ -164,7 +164,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     return ! in_array($fieldValue, $value, is_scalar($fieldValue));
                 };
             case Comparison::CONTAINS:
-                return static function ($object) use ($field, $value) {
+                return static function ($object) use ($field, $value) : bool {
                     return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) !== false;
                 };
             case Comparison::MEMBER_OF:
