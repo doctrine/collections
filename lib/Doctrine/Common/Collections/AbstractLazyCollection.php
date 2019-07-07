@@ -109,11 +109,11 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function get($key)
+    public function get($key, $default = null)
     {
         $this->initialize();
 
-        return $this->collection->get($key);
+        return $this->collection->get($key, $default);
     }
 
     /**

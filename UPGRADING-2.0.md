@@ -20,6 +20,7 @@ You can find a list of major changes to public API below.
 | isEmpty()                      | isEmpty(): bool                                |
 | removeElement($element)        | removeElement($element): bool                  |
 | containsKey($key)              | containsKey($key): bool                        |
+| get($key)                      | get($key, $default = null)                     |
 | getKeys()                      | getKeys(): array                               |
 | getValues()                    | getValues(): array                             |
 | set($key, $value)              | set($key, $value): void                        |

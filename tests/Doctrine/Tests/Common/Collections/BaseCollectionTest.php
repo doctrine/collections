@@ -122,6 +122,7 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection[0] = 'test';
         self::assertEquals('test', $this->collection->get(0));
+        self::assertEquals('test', $this->collection->get(1, 'test'));
     }
 
     public function testGetKeys() : void

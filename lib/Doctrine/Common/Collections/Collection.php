@@ -106,14 +106,16 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Gets the element at the specified key/index.
      *
-     * @param string|int $key The key/index of the element to retrieve.
+     * @param string|int $key     The key/index of the element to retrieve.
+     * @param mixed|null $default Default value if target element is not found.
      *
      * @return mixed
      *
      * @psalm-param TKey $key
+     * @psalm-param T|null $default
      * @psalm-return T|null
      */
-    public function get($key);
+    public function get($key, $default = null);
 
     /**
      * Gets all keys/indices of the collection.

@@ -252,9 +252,9 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function get($key)
+    public function get($key, $default = null)
     {
-        return $this->elements[$key] ?? null;
+        return array_key_exists($key, $this->elements) ? $this->elements[$key] : $default;
     }
 
     /**

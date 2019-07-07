@@ -284,6 +284,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(2, $collection->get(1), 'Get element by index');
         self::assertSame('a', $collection->get('A'), 'Get element by name');
         self::assertSame(null, $collection->get('non-existent'), 'Get non existent element');
+        self::assertSame(4, $collection->get('non-existent', 4), 'Get default value of non existent element');
     }
 
     public function testMatchingWithSortingPreservesyKeys() : void
