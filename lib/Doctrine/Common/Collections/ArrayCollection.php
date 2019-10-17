@@ -49,7 +49,7 @@ class ArrayCollection implements Collection, Selectable
      * @psalm-var array<TKey,T>
      * @var array
      */
-    private $elements;
+    private $elements = [];
 
     /**
      * Initializes a new ArrayCollection.

@@ -26,7 +26,8 @@
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
         "phpunit/phpunit": "^8.0",
-        "vimeo/psalm": "^3.2.2"
+        "vimeo/psalm": "^3.2.2",
+        "ext-json": "*"
     },
     "config": {
         "sort-packages": true
