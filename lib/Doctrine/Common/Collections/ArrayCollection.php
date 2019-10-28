@@ -312,6 +312,10 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
+     *
+     * @psalm-template U
+     * @psalm-param Closure(T=):U $func
+     * @psalm-return static<TKey, U>
      */
     public function map(Closure $func)
     {
