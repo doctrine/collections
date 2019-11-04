@@ -22,9 +22,6 @@ install:
 script: ./vendor/bin/phpunit
 
 jobs:
-  allow_failures:
-    - php: 7.4snapshot
-
   include:
     - stage: Test
       env: COVERAGE

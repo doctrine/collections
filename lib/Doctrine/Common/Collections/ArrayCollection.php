@@ -90,7 +90,7 @@ class ArrayCollection implements Collection, Selectable
      * @return static
      *
      * @psalm-param array<TKey,T> $elements
-     * @psalm-return ArrayCollection<TKey,T>
+     * @psalm-return static<TKey,T>
      */
     protected function createFrom(array $elements)
     {
@@ -323,6 +323,10 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
+     *
+     * @psalm-template U
+     * @psalm-param Closure(T=):U $func
+     * @psalm-return static<TKey, U>
      */
     public function map(Closure $func) : Collection
     {
@@ -334,7 +338,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      *
-     * @psalm-return ArrayCollection<TKey,T>
+     * @psalm-return static<TKey,T>
      */
     public function filter(Closure $p) : Collection
     {
