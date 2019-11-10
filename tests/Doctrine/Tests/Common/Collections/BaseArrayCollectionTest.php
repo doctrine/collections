@@ -86,9 +86,10 @@ abstract class BaseArrayCollectionTest extends TestCase
      */
     public function testNext(array $elements) : void
     {
+        $count      = count($elements);
         $collection = $this->buildCollection($elements);
 
-        while (true) {
+        for ($i = 0; $i < $count; $i++) {
             $collectionNext = $collection->next();
             $arrayNext      = next($elements);
 
@@ -100,6 +101,8 @@ abstract class BaseArrayCollectionTest extends TestCase
             self::assertSame(key($elements), $collection->key(), 'Keys not match');
             self::assertSame(current($elements), $collection->current(), 'Current values not match');
         }
+
+        self::assertFalse($collection->next());
     }
 
     /**
