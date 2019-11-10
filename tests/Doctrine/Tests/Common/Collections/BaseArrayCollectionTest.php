@@ -86,7 +86,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      */
     public function testNext(array $elements) : void
     {
-        $count = count($elements);
+        $count      = count($elements);
         $collection = $this->buildCollection($elements);
 
         for ($i = 0; $i < $count; $i++) {
