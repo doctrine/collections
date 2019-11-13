@@ -17,7 +17,7 @@ use function func_get_args;
 class ExpressionBuilder
 {
     /**
-     * @param mixed $x
+     * @param mixed ...$x
      *
      * @return CompositeExpression
      */
@@ -27,7 +27,7 @@ class ExpressionBuilder
     }
 
     /**
-     * @param mixed $x
+     * @param mixed ...$x
      *
      * @return CompositeExpression
      */
