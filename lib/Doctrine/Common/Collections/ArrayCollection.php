@@ -32,8 +32,8 @@ use function uasort;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
- * @psalm-template TKey of array-key
- * @psalm-template T
+ * @psalm-template-covariant TKey of array-key
+ * @psalm-template-covariant T
  * @template-implements Collection<TKey,T>
  * @template-implements Selectable<TKey,T>
  */

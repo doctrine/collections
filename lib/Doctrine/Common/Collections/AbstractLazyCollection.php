@@ -7,8 +7,8 @@ use Closure;
 /**
  * Lazy collection that is backed by a concrete collection
  *
- * @psalm-template TKey of array-key
- * @psalm-template T
+ * @psalm-template-covariant TKey of array-key
+ * @psalm-template-covariant T
  * @template-implements Collection<TKey,T>
  */
 abstract class AbstractLazyCollection implements Collection
