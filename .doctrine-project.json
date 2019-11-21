@@ -1,20 +1,20 @@
 {
-	"active": true,
-	"name": "Collections",
-	"slug": "collections",
-	"docsSlug": "doctrine-collections",
-	"versions": [
-		{
-			"name": "2.0",
-			"branchName": "master",
-			"slug": "latest",
-			"upcoming": true
-		},
+    "active": true,
+    "name": "Collections",
+    "slug": "collections",
+    "docsSlug": "doctrine-collections",
+    "versions": [
+        {
+            "name": "2.0",
+            "branchName": "master",
+            "slug": "latest",
+            "upcoming": true
+        },
         {
             "name": "1.6",
-            "branchName": "1.6",
+            "branchName": "1.6.x",
             "slug": "1.6",
             "current": true
         }
-	]
+    ]
 }
