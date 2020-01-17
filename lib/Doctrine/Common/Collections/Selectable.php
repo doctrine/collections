@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Common\Collections;
 
 /**
@@ -21,11 +23,11 @@ interface Selectable
 {
     /**
      * Selects all elements from a selectable that match the expression and
-     * returns a new collection containing these elements.
+     * returns a new collection containing these elements and preserved keys.
      *
      * @return Collection
      *
      * @psalm-return Collection<TKey,T>
      */
-    public function matching(Criteria $criteria);
+    public function matching(Criteria $criteria) : Collection;
 }

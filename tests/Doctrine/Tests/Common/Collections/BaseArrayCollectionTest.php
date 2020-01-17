@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
@@ -21,15 +23,17 @@ abstract class BaseArrayCollectionTest extends TestCase
 {
     abstract protected function buildCollection(array $elements = []) : Collection;
 
-    protected function isSelectable($obj) : bool
+    protected function isSelectable(object $obj) : bool
     {
         return $obj instanceof Selectable;
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testToArray($elements) : void
+    public function testToArray(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -37,27 +41,33 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testFirst($elements) : void
+    public function testFirst(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(reset($elements), $collection->first());
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testLast($elements) : void
+    public function testLast(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(end($elements), $collection->last());
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testKey($elements) : void
+    public function testKey(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -70,13 +80,16 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testNext($elements) : void
+    public function testNext(array $elements) : void
     {
+        $count      = count($elements);
         $collection = $this->buildCollection($elements);
 
-        while (true) {
+        for ($i = 0; $i < $count; $i++) {
             $collectionNext = $collection->next();
             $arrayNext      = next($elements);
 
@@ -88,12 +101,16 @@ abstract class BaseArrayCollectionTest extends TestCase
             self::assertSame(key($elements), $collection->key(), 'Keys not match');
             self::assertSame(current($elements), $collection->current(), 'Current values not match');
         }
+
+        self::assertFalse($collection->next());
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testCurrent($elements) : void
+    public function testCurrent(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -106,9 +123,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testGetKeys($elements) : void
+    public function testGetKeys(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -116,9 +135,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testGetValues($elements) : void
+    public function testGetValues(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -126,9 +147,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testCount($elements) : void
+    public function testCount(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -136,9 +159,11 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param array<string|int, string|int> $elements
+     *
      * @dataProvider provideDifferentElements
      */
-    public function testIterator($elements) : void
+    public function testIterator(array $elements) : void
     {
         $collection = $this->buildCollection($elements);
 
@@ -290,6 +315,94 @@ abstract class BaseArrayCollectionTest extends TestCase
                 ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
                 ->toArray()
         );
+    }
+
+    /**
+     * @param int[] $array
+     * @param int[] $slicedArray
+     *
+     * @dataProvider provideSlices
+     */
+    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, ?int $firstResult, ?int $maxResult) : void
+    {
+        $collection = $this->buildCollection($array);
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
+        self::assertSame(
+            $slicedArray,
+            $collection
+                ->matching(new Criteria(null, null, $firstResult, $maxResult))
+                ->toArray()
+        );
+    }
+
+    /**
+     * @return mixed[][]
+     */
+    public function provideSlices() : array
+    {
+        return [
+            'preserve numeric keys' => [
+                [
+                    0 => 1,
+                    1 => 2,
+                    2 => 3,
+                    3 => 4,
+                ],
+                [
+                    1 => 2,
+                    2 => 3,
+                ],
+                1,
+                2,
+            ],
+            'preserve string keys' => [
+                [
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                [
+                    'b' => 2,
+                    'c' => 3,
+                ],
+                1,
+                2,
+            ],
+            'preserve keys on firstresult only' => [
+                [
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                [
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                1,
+                null,
+            ],
+            'preserve keys on maxresult only' => [
+                [
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                ],
+                [
+                    'a' => 1,
+                    'b' => 2,
+                ],
+                null,
+                2,
+            ],
+        ];
     }
 
     public function testMultiColumnSortAppliesAllSorts() : void

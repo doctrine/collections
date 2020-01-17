@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
@@ -203,7 +205,7 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection[] = 'three';
 
         $slice = $this->collection->slice(0, 1);
-        self::assertInternalType('array', $slice);
+        self::assertIsArray($slice);
         self::assertEquals(['one'], $slice);
 
         $slice = $this->collection->slice(1);

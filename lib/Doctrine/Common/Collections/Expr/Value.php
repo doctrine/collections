@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Common\Collections\Expr;
 
 class Value implements Expression

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
@@ -23,6 +25,8 @@ class CompositeExpressionTest extends TestCase
     }
 
     /**
+     * @param string|Value $expression
+     *
      * @dataProvider invalidDataProvider
      */
     public function testExceptions($expression) : void

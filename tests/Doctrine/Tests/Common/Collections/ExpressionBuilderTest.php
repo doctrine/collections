@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
 /**
  * @group DDC-1637
@@ -35,12 +36,6 @@ class ExpressionBuilderTest extends TestCase
 
         self::assertInstanceOf(CompositeExpression::class, $expr);
         self::assertEquals(CompositeExpression::TYPE_OR, $expr->getType());
-    }
-
-    public function testInvalidAndXArgument() : void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->builder->andX('foo');
     }
 
     public function testEq() : void

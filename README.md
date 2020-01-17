@@ -10,7 +10,7 @@ Collections Abstraction library
 
 ### v1.6.1
 
-This release, combined with the release of [`doctrine/collections` `v1.6.1`](https://github.com/doctrine/collections/releases/tag/v1.6.1),
+This release, combined with the release of [`doctrine/annotations` `v1.6.1`](https://github.com/doctrine/annotations/releases/tag/v1.6.1),
 fixes an issue where parsing annotations was not possible
 for classes within `doctrine/collections`.
 
