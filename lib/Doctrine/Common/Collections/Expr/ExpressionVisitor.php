@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections\Expr;
 
 use RuntimeException;
-use function get_class;
 
 /**
  * An Expression visitor walks a graph of expressions and turns them into a
