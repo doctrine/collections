@@ -228,6 +228,16 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
+    public function find(Closure $func)
+    {
+        $this->initialize();
+
+        return $this->collection->find($func);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function forAll(Closure $p) : bool
     {
         $this->initialize();

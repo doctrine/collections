@@ -348,6 +348,17 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
+    public function find(Closure $func)
+    {
+        foreach ($this->elements as $key => $element) {
+            if ($func($element, $key) === true) return $element;
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function forAll(Closure $p) : bool
     {
         foreach ($this->elements as $key => $element) {

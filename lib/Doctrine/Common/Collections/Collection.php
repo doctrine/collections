@@ -153,7 +153,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @psalm-return array<TKey,T>
      */
-    public function toArray() : array;
+    public function toArray(): array;
 
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.
@@ -223,6 +223,18 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-return Collection<TKey, T>
      */
     public function filter(Closure $p) : self;
+
+    /**
+     * Return the value of first element found in array of elements that satisfies the $func.
+     * 
+     * @param Closure $func The predicate used to find element.
+     * 
+     * @return mixed|null The element if found or NULL if not.
+     * 
+     * @psalm-param Closure(T=, TKey=):bool $func
+     * @psalm-return T|null
+     */
+    public function find(Closure $func);
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
