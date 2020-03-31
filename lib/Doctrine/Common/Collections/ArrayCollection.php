@@ -351,8 +351,11 @@ class ArrayCollection implements Collection, Selectable
     public function find(Closure $func)
     {
         foreach ($this->elements as $key => $element) {
-            if ($func($element, $key) === true) return $element;
+            if ($func($element, $key) === true) {
+                return $element;
+            }
         }
+
         return null;
     }
 

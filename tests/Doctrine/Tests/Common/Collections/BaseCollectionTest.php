@@ -97,7 +97,7 @@ abstract class BaseCollectionTest extends TestCase
         $resThree = $this->collection->find(static function ($element) {
             return $element === 4;
         });
-        
+
         self::assertEquals(3, $resOne);
         self::assertNull($resTwo);
         self::assertNull($resThree);
@@ -117,7 +117,7 @@ abstract class BaseCollectionTest extends TestCase
         $resTwo = $this->collection->find(static function ($_, $key) {
             return $key === 17;
         });
-        
+
         self::assertEquals('foo', $resOne);
         self::assertNull($resTwo);
     }
