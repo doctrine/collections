@@ -235,6 +235,28 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertFalse($collection->containsKey('non-existent'), "Doesn't contain key");
     }
 
+    public function testFindElement() : void
+    {
+        $elements   = [1, 2, 3, 17];
+        $collection = $this->buildCollection($elements);
+
+        self::assertNull($collection->find(static function ($element) {
+            return $element === 0;
+        }));
+
+        self::assertEquals($collection->find(static function ($element) {
+            return $element === 2;
+        }), 2);
+
+        self::assertNull($collection->find(static function ($element) {
+            return $element === 4;
+        }));
+
+        self::assertEquals($collection->find(static function ($_, $key) {
+            return $key === 3;
+        }), 17);
+    }
+
     public function testEmpty() : void
     {
         $collection = $this->buildCollection();

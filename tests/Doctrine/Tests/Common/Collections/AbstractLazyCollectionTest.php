@@ -50,6 +50,18 @@ class AbstractLazyCollectionTest extends BaseCollectionTest
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
 
+    public function testFindInitializes() : void
+    {
+        /** @var LazyArrayCollection $collection */
+        $collection = $this->buildCollection([1, 3, 'foo']);
+
+        $res = $collection->find(static function ($value) {
+            return $value === 3;
+        });
+
+        self::assertEquals(3, $res);
+    }
+
     public function testForAllInitializes() : void
     {
         $collection = $this->buildCollection(['foo', 'bar']);

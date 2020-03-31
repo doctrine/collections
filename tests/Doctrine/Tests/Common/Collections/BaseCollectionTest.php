@@ -79,6 +79,49 @@ abstract class BaseCollectionTest extends TestCase
         self::assertSame([0 => 1, 2 => 3, 4 => 5], $res->toArray());
     }
 
+    public function testFindByElement() : void
+    {
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $this->collection->add('foo');
+        $this->collection->add(3);
+
+        $resOne = $this->collection->find(static function ($element) {
+            return $element === 3;
+        });
+
+        $resTwo = $this->collection->find(static function ($element) {
+            return $element === 0;
+        });
+
+        $resThree = $this->collection->find(static function ($element) {
+            return $element === 4;
+        });
+        
+        self::assertEquals(3, $resOne);
+        self::assertNull($resTwo);
+        self::assertNull($resThree);
+    }
+
+    public function testFindByKey() : void
+    {
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $this->collection->add('foo');
+        $this->collection->add(3);
+
+        $resOne = $this->collection->find(static function ($_, $key) {
+            return $key === 2;
+        });
+
+        $resTwo = $this->collection->find(static function ($_, $key) {
+            return $key === 17;
+        });
+        
+        self::assertEquals('foo', $resOne);
+        self::assertNull($resTwo);
+    }
+
     public function testFirstAndLast() : void
     {
         $this->collection->add('one');
