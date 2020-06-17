@@ -198,7 +198,27 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($closure(new TestObject('4')));
         self::assertTrue($closure(new TestObject(5)));
         self::assertTrue($closure(new TestObject('5')));
+        self::assertTrue($closure(new TestObject(12)));
+        self::assertTrue($closure(new TestObject('12')));
         self::assertFalse($closure(new TestObject(2)));
+        self::assertFalse($closure(new TestObject('2')));
+        self::assertFalse($closure(new TestObject(8)));
+        self::assertFalse($closure(new TestObject('8')));
+        self::assertFalse($closure(new TestObject(11)));
+        self::assertFalse($closure(new TestObject('11')));
+
+        $closure = $this->visitor->walkComparison($this->builder->bitAnd('foo', 6));
+
+        self::assertTrue($closure(new TestObject(6)));
+        self::assertTrue($closure(new TestObject('6')));
+        self::assertTrue($closure(new TestObject(7)));
+        self::assertTrue($closure(new TestObject('7')));
+        self::assertFalse($closure(new TestObject(4)));
+        self::assertFalse($closure(new TestObject('4')));
+        self::assertFalse($closure(new TestObject(5)));
+        self::assertFalse($closure(new TestObject('5')));
+        self::assertFalse($closure(new TestObject(24)));
+        self::assertFalse($closure(new TestObject('24')));
     }
 
     public function testWalkAndCompositeExpression() : void

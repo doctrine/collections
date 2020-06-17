@@ -146,7 +146,6 @@ class ExpressionBuilderTest extends TestCase
     {
         $expr = $this->builder->bitAnd('b', 4);
 
-        self::assertInstanceOf(Comparison::class, $expr);
         self::assertEquals(Comparison::BIT_AND, $expr->getOperator());
     }
 }
