@@ -26,6 +26,7 @@ use IteratorAggregate;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  *
+ * @phpstan-template TKey
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-extends IteratorAggregate<TKey, T>
