@@ -9,7 +9,7 @@ cache:
 php:
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 before_install:
   - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
@@ -22,7 +22,17 @@ install:
 script: ./vendor/bin/phpunit
 
 jobs:
+  allow_failures:
+    - php: nightly
+
   include:
+    -   stage: Test
+        php: nightly
+        before_install:
+            - composer config platform.php 7.4.99
+        install:
+            - travis_retry composer update --prefer-dist
+
     - stage: Test
       env: COVERAGE
       before_script:
@@ -32,8 +42,7 @@ jobs:
         - ./vendor/bin/phpunit --coverage-clover clover.xml  --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
         - ./vendor/bin/infection --coverage=build/coverage --threads=4 --min-msi=82 --min-covered-msi=84
       after_script:
-        - travis_retry wget https://scrutinizer-ci.com/ocular.phar
-        - travis_retry php ocular.phar code-coverage:upload --format=php-clover clover.xml
+        - bash <(curl -s https://codecov.io/bash)
 
     - stage: Code Quality
       env: CODING_STANDARDS

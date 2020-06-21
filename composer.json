@@ -18,7 +18,7 @@
         {"name": "Johannes Schmitt", "email": "schmittjoh@gmail.com"}
     ],
     "require": {
-        "php": "^7.2"
+        "php": "^7.2 || ^8.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^6.0",
@@ -26,7 +26,7 @@
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
         "phpunit/phpunit": "^8.0",
-        "vimeo/psalm": "^3.2.2",
+        "vimeo/psalm": "^3.8.1",
         "ext-json": "*"
     },
     "config": {
