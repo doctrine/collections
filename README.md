@@ -1,7 +1,7 @@
 # Doctrine Collections
 
 [![Build Status](https://travis-ci.org/doctrine/collections.svg?branch=master)](https://travis-ci.org/doctrine/collections)
-[![Code Coverage](https://codecov.io/gh/doctrine/collections/branch/cache/graph/badge.svg)](https://codecov.io/gh/doctrine/collections/branch/master)
+[![Code Coverage](https://codecov.io/gh/doctrine/collections/branch/master/graph/badge.svg)](https://codecov.io/gh/doctrine/collections/branch/master)
 
 Collections Abstraction library
 
