@@ -7,6 +7,7 @@ use Closure;
 use RuntimeException;
 use function in_array;
 use function is_array;
+use function is_scalar;
 use function iterator_to_array;
 use function method_exists;
 use function preg_match;
@@ -155,12 +156,16 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             case Comparison::IN:
                 return static function ($object) use ($field, $value) : bool {
-                    return in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value, true);
+                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                    return in_array($fieldValue, $value, is_scalar($fieldValue));
                 };
 
             case Comparison::NIN:
                 return static function ($object) use ($field, $value) : bool {
-                    return ! in_array(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value, true);
+                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                    return ! in_array($fieldValue, $value, is_scalar($fieldValue));
                 };
 
             case Comparison::CONTAINS:
