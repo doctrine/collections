@@ -24,6 +24,13 @@ class ClosureExpressionVisitorTest extends TestCase
         $this->builder = new ExpressionBuilder();
     }
 
+    public function testEmbeddedObjectComparison() : void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo.foo', 1));
+        $this->assertTrue($closure(new TestObject(new TestObject(1))));
+        $this->assertFalse($closure(new TestObject(new TestObject(2))));
+    }
+
     public function testGetObjectFieldValueIsAccessor() : void
     {
         $object = new TestObject(1, 2, true);
