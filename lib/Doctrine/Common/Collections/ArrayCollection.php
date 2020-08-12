@@ -361,6 +361,17 @@ class ArrayCollection implements Collection, Selectable
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
+    public function findOne(Closure $p)
+    {
+        foreach ($this->elements as $key => $element) {
+            if ($p($key, $element)) {
+                return $element;
+            }
+        }
+
+        return null;
+    }
+
     public function forAll(Closure $p): bool
     {
         foreach ($this->elements as $key => $element) {

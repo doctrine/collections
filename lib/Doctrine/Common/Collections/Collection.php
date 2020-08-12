@@ -213,6 +213,19 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function exists(Closure $p): bool;
 
     /**
+     * Returns the first element of this collection that satisfies the predicate p.
+     *
+     * @param Closure $p The predicate.
+     *
+     * @return mixed The first element respecting the predicate,
+     *               null if no element respects the predicate.
+     *
+     * @psalm-param Closure(TKey=, T=):bool $p
+     * @psalm-return T|null
+     */
+    public function findOne(Closure $p);
+
+    /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
      *
