@@ -229,6 +229,18 @@ Applies the given function to each element in the collection and returns a new c
         return $value + 1;
     }); // [2, 3, 4]
 
+reduce
+------
+
+Applies iteratively the given function to each element in the collection, so as to reduce the collection to a single value.
+
+.. code-block:: php
+    $collection = new ArrayCollection([1, 2, 3]);
+
+    $reduce = $collection->reduce(function(int $accumulator, int $value): int {
+        return $accumulator + $value;
+    }, 0); // 6
+
 next
 ----
 

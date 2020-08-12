@@ -13,6 +13,7 @@ use function array_filter;
 use function array_key_exists;
 use function array_keys;
 use function array_map;
+use function array_reduce;
 use function array_reverse;
 use function array_search;
 use function array_slice;
@@ -347,6 +348,14 @@ class ArrayCollection implements Collection, Selectable
     public function map(Closure $func): Collection
     {
         return $this->createFrom(array_map($func, $this->elements));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function reduce(Closure $func, $initial = null)
+    {
+        return array_reduce($this->elements, $func, $initial);
     }
 
     /**
