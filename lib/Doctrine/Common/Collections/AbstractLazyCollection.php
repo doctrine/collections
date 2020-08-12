@@ -219,6 +219,13 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->exists($p);
     }
 
+    public function findOne(Closure $func)
+    {
+        $this->initialize();
+
+        return $this->collection->findOne($func);
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -148,6 +148,18 @@ Tests for the existence of an element that satisfies the given predicate.
         return $value === 'first';
     }); // true
 
+findOne
+-------
+
+Returns the first element of this collection that satisfies the given predicate.
+
+.. code-block:: php
+    $collection = new Collection([1, 2, 3, 2, 1]);
+
+    $one = $collection->findOne(function(int $key, int $value): bool {
+        return $value > 2 && $key > 1;
+    }); // 3
+
 filter
 ------
 
