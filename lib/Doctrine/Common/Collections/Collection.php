@@ -248,6 +248,22 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function map(Closure $func): self;
 
     /**
+     * Applies iteratively the given function to each element in the collection,
+     * so as to reduce the collection to a single value.
+     *
+     * @param mixed $initial
+     *
+     * @return mixed
+     *
+     * @psalm-template TReturn
+     * @psalm-template TInitial
+     * @psalm-param Closure(TReturn|TInitial, T):TReturn $func
+     * @psalm-param TInitial|null $initial
+     * @psalm-return TReturn|TInitial|null
+     */
+    public function reduce(Closure $func, $initial = null);
+
+    /**
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
      *

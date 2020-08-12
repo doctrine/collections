@@ -76,6 +76,19 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals([2, 4], $res->toArray());
     }
 
+    public function testReduce(): void
+    {
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $this->collection->add(3);
+        $this->collection->add(4);
+
+        $res = $this->collection->reduce(static function ($sum, $e) {
+            return $sum + $e;
+        });
+        self::assertSame(10, $res);
+    }
+
     public function testFilter(): void
     {
         $this->collection->add(1);
