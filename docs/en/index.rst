@@ -12,8 +12,8 @@ arrays of data. Here is an example using the simple
 
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $filteredCollection = $collection->filter(function($number) {
-        return $number > 1;
+    $filteredCollection = $collection->filter(function($element) {
+        return $element > 1;
     }); // [2, 3]
 
 Collection Methods
@@ -157,8 +157,8 @@ The order of the elements is preserved.
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $filteredCollection = $collection->filter(function($number) {
-        return $number > 1;
+    $filteredCollection = $collection->filter(function($element) {
+        return $element > 1;
     }); // [2, 3]
 
 forAll
