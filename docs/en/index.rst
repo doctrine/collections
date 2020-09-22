@@ -152,7 +152,7 @@ filter
 ------
 
 Returns all the elements of this collection for which your callback function returns `true`.
-The order of the elements is preserved.
+The order and keys of the elements are preserved.
 
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
