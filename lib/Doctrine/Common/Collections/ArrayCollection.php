@@ -438,4 +438,12 @@ class ArrayCollection implements Collection, Selectable
 
         return $this->createFrom($filtered);
     }
+
+    /**
+     * Rebuilds the collection with new keys
+     */
+    public function rebuildKeys()
+    {
+        return $this->createFrom(array_values($this->elements));
+    }
 }
