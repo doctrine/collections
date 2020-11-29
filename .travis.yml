@@ -17,8 +17,7 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - rm composer.lock
-  - travis_retry composer -n --prefer-source install
+  - travis_retry composer -n --prefer-source update
 
 script: ./vendor/bin/phpunit
 
@@ -46,15 +45,15 @@ jobs:
 
     - stage: Code Quality
       env: CODING_STANDARDS
-      install: travis_retry composer install --prefer-dist
+      install: travis_retry composer update --prefer-dist
       script: ./vendor/bin/phpcs
 
     - stage: Code Quality
       env: STATIC_ANALYSIS
-      install: travis_retry composer install --prefer-dist
+      install: travis_retry composer update --prefer-dist
       script: vendor/bin/phpstan analyse -l 3 lib
 
     - stage: Code Quality
       env: STATIC_ANALYSIS
-      install: travis_retry composer install --prefer-dist
+      install: travis_retry composer update --prefer-dist
       script: vendor/bin/psalm
