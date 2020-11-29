@@ -28,7 +28,7 @@ class LazyArrayCollection extends AbstractLazyCollection
     /**
      * Do the initialization logic.
      */
-    protected function doInitialize() : void
+    protected function doInitialize(): void
     {
         $this->collection = $this->collectionOnInitialization;
     }

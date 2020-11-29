@@ -14,7 +14,7 @@ use RuntimeException;
  */
 class CompositeExpressionTest extends TestCase
 {
-    public function invalidDataProvider() : array
+    public function invalidDataProvider(): array
     {
         return [
             ['expression' => new Value('value')],
@@ -25,7 +25,7 @@ class CompositeExpressionTest extends TestCase
     /**
      * @dataProvider invalidDataProvider
      */
-    public function testExceptions($expression) : void
+    public function testExceptions($expression): void
     {
         $type        = CompositeExpression::TYPE_AND;
         $expressions = [$expression];
@@ -34,7 +34,7 @@ class CompositeExpressionTest extends TestCase
         new CompositeExpression($type, $expressions);
     }
 
-    public function testGetType() : void
+    public function testGetType(): void
     {
         $compositeExpression = $this->createCompositeExpression();
 
@@ -44,7 +44,7 @@ class CompositeExpressionTest extends TestCase
         self::assertSame($expectedType, $actualType);
     }
 
-    protected function createCompositeExpression() : CompositeExpression
+    protected function createCompositeExpression(): CompositeExpression
     {
         $type        = CompositeExpression::TYPE_AND;
         $expressions = [$this->createMock(Expression::class)];
@@ -52,7 +52,7 @@ class CompositeExpressionTest extends TestCase
         return new CompositeExpression($type, $expressions);
     }
 
-    public function testGetExpressionList() : void
+    public function testGetExpressionList(): void
     {
         $compositeExpression    = $this->createCompositeExpression();
         $expectedExpressionList = [$this->createMock(Expression::class)];
@@ -61,7 +61,7 @@ class CompositeExpressionTest extends TestCase
         self::assertEquals($expectedExpressionList, $actualExpressionList);
     }
 
-    public function testVisitor() : void
+    public function testVisitor(): void
     {
         $compositeExpression = $this->createCompositeExpression();
 

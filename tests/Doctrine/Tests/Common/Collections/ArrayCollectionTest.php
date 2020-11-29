@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\Collection;
  */
 class ArrayCollectionTest extends BaseArrayCollectionTest
 {
-    protected function buildCollection(array $elements = []) : Collection
+    protected function buildCollection(array $elements = []): Collection
     {
         return new ArrayCollection($elements);
     }

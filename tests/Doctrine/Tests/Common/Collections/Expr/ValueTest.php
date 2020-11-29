@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ValueTest extends TestCase
 {
-    public function testGetter() : void
+    public function testGetter(): void
     {
         $value           = 'foo';
         $valueExpression = new Value($value);
@@ -21,7 +21,7 @@ class ValueTest extends TestCase
         self::assertEquals($value, $actualValue);
     }
 
-    public function testVisitor() : void
+    public function testVisitor(): void
     {
         $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
         $visitor
