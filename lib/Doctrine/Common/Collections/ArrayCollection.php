@@ -86,8 +86,12 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      *
-     * @psalm-param array<TKey,T> $elements
-     * @psalm-return static<TKey,T>
+     * @psalm-template K of array-key
+     * @psalm-template V
+     * @phpstan-template K
+     *
+     * @psalm-param array<K,V> $elements
+     * @psalm-return static<K,V>
      */
     protected function createFrom(array $elements)
     {
