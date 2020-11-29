@@ -28,7 +28,6 @@ class ValueTest extends TestCase
             ->expects($this->once())
             ->method('walkValue');
 
-        /** @var ExpressionVisitor $visitor */
         $value           = 'foo';
         $valueExpression = new Value($value);
         $valueExpression->visit($visitor);

@@ -46,7 +46,7 @@ class ArrayCollection implements Collection, Selectable
      * An array containing the entries of this collection.
      *
      * @psalm-var array<TKey,T>
-     * @var array
+     * @var mixed[]
      */
     private $elements;
 

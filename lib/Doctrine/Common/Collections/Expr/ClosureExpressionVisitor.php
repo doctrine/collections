@@ -31,8 +31,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * directly or indirectly (through an accessor get*, is*, or a magic
      * method, __get, __call).
      *
-     * @param object|array $object
-     * @param string       $field
+     * @param object|mixed[] $object
+     * @param string         $field
      *
      * @return mixed
      */
@@ -232,7 +232,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
-     * @param array $expressions
+     * @param callable[] $expressions
      */
     private function andExpressions(array $expressions): callable
     {
@@ -248,7 +248,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
-     * @param array $expressions
+     * @param callable[] $expressions
      */
     private function orExpressions(array $expressions): callable
     {

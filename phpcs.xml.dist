@@ -40,4 +40,11 @@
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
         <exclude-pattern>lib/Doctrine/Common/Collections/AbstractLazyCollection.php</exclude-pattern>
     </rule>
+
+    <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
+        <exclude-pattern>tests/Doctrine/Tests/Common/Collections/ClosureExpressionVisitorTest.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
+        <exclude-pattern>tests/Doctrine/Tests/Common/Collections/ClosureExpressionVisitorTest.php</exclude-pattern>
+    </rule>
 </ruleset>

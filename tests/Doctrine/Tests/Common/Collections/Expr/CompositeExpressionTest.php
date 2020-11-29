@@ -14,6 +14,9 @@ use RuntimeException;
  */
 class CompositeExpressionTest extends TestCase
 {
+    /**
+     * @return list<array{expression: mixed}>
+     */
     public function invalidDataProvider(): array
     {
         return [
@@ -23,6 +26,8 @@ class CompositeExpressionTest extends TestCase
     }
 
     /**
+     * @param mixed $expression
+     *
      * @dataProvider invalidDataProvider
      */
     public function testExceptions($expression): void
@@ -70,7 +75,6 @@ class CompositeExpressionTest extends TestCase
             ->expects($this->once())
             ->method('walkCompositeExpression');
 
-        /** @var ExpressionVisitor $visitor */
         $compositeExpression->visit($visitor);
     }
 }

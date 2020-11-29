@@ -15,6 +15,11 @@ use function assert;
  */
 class AbstractLazyArrayCollectionTest extends BaseArrayCollectionTest
 {
+    /**
+     * @param mixed[] $elements
+     *
+     * @return Collection<mixed>
+     */
     protected function buildCollection(array $elements = []): Collection
     {
         return new LazyArrayCollection(new ArrayCollection($elements));

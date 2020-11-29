@@ -20,14 +20,24 @@ use function reset;
 
 abstract class BaseArrayCollectionTest extends TestCase
 {
+    /**
+     * @param mixed[] $elements
+     *
+     * @return Collection<mixed>
+     */
     abstract protected function buildCollection(array $elements = []): Collection;
 
+    /**
+     * @param object $obj
+     */
     protected function isSelectable($obj): bool
     {
         return $obj instanceof Selectable;
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testToArray($elements): void
@@ -38,6 +48,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testFirst($elements): void
@@ -47,6 +59,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testLast($elements): void
@@ -56,6 +70,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testKey($elements): void
@@ -71,6 +87,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testNext($elements): void
@@ -92,6 +110,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testCurrent($elements): void
@@ -107,6 +127,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testGetKeys($elements): void
@@ -117,6 +139,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testGetValues($elements): void
@@ -127,6 +151,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testCount($elements): void
@@ -137,6 +163,8 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /**
+     * @param mixed[] $elements
+     *
      * @dataProvider provideDifferentElements
      */
     public function testIterator($elements): void
@@ -152,6 +180,9 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
+    /**
+     * @psalm-return array<string, array{mixed[]}>
+     */
     public function provideDifferentElements(): array
     {
         return [

@@ -19,8 +19,8 @@ class CompositeExpression implements Expression
     private $expressions = [];
 
     /**
-     * @param string $type
-     * @param array  $expressions
+     * @param string  $type
+     * @param mixed[] $expressions
      *
      * @throws RuntimeException
      */

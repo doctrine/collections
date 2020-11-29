@@ -13,12 +13,12 @@ class LazyArrayCollection extends AbstractLazyCollection
     /**
      * Apply the collection only in method doInitialize
      *
-     * @var Collection
+     * @var Collection<mixed>
      */
     private $collectionOnInitialization;
 
     /**
-     * @param Collection $collection
+     * @param Collection<mixed> $collection
      */
     public function __construct(Collection $collection)
     {
