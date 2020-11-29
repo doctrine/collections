@@ -42,18 +42,3 @@ jobs:
         - ./vendor/bin/phpunit --coverage-clover clover.xml
       after_success:
         - bash <(curl -s https://codecov.io/bash)
-
-    - stage: Code Quality
-      env: CODING_STANDARDS
-      install: travis_retry composer update --prefer-dist
-      script: ./vendor/bin/phpcs
-
-    - stage: Code Quality
-      env: STATIC_ANALYSIS
-      install: travis_retry composer update --prefer-dist
-      script: vendor/bin/phpstan analyse -l 3 lib
-
-    - stage: Code Quality
-      env: STATIC_ANALYSIS
-      install: travis_retry composer update --prefer-dist
-      script: vendor/bin/psalm
