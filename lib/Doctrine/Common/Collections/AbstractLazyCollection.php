@@ -18,7 +18,7 @@ abstract class AbstractLazyCollection implements Collection
      * The backed collection to use
      *
      * @psalm-var Collection<TKey,T>
-     * @var Collection
+     * @var Collection<mixed>
      */
     protected $collection;
 

@@ -1,0 +1,14 @@
+parameters:
+    level: 3
+    paths:
+        - lib
+    ignoreErrors:
+        # Making classes final as suggested would be a BC-break
+        -
+            message: '~Unsafe usage of new static\(\)\.~'
+            paths:
+                - 'lib/Doctrine/Common/Collections/ArrayCollection.php'
+                - 'lib/Doctrine/Common/Collections/Criteria.php'
+        -
+            message: '~Array \(array\<TKey, T\>\) does not accept key int\.~'
+            path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
