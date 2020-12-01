@@ -1,6 +1,6 @@
 # Doctrine Collections
 
-[![Build Status](https://github.com/doctrine/collection/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/collection/actions)
+[![Build Status](https://github.com/doctrine/collections/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/collection/actions)
 [![Code Coverage](https://codecov.io/gh/doctrine/collections/branch/master/graph/badge.svg)](https://codecov.io/gh/doctrine/collections/branch/master)
 
 Collections Abstraction library
