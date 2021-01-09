@@ -223,7 +223,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-param Closure(TKey=, T=):bool $p
      * @psalm-return T|null
      */
-    public function findOne(Closure $p);
+    public function findFirst(Closure $p);
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
