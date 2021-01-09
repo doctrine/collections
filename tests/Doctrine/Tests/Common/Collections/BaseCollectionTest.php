@@ -46,21 +46,21 @@ abstract class BaseCollectionTest extends TestCase
         self::assertFalse($exists);
     }
 
-    public function testFindOne(): void
+    public function testFindFirst(): void
     {
         $this->collection->add('one');
         $this->collection->add('two');
-        $one = $this->collection->findOne(static function ($k, $e) {
+        $one = $this->collection->findFirst(static function ($k, $e) {
             return $e === 'one';
         });
         self::assertSame('one', $one);
     }
 
-    public function testFindOneNotFound(): void
+    public function testFindFirstNotFound(): void
     {
         $this->collection->add('one');
         $this->collection->add('two');
-        $other = $this->collection->findOne(static function ($k, $e) {
+        $other = $this->collection->findFirst(static function ($k, $e) {
             return $e === 'other';
         });
         self::assertNull($other);

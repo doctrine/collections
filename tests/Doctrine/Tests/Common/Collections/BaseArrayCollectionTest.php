@@ -281,22 +281,22 @@ abstract class BaseArrayCollectionTest extends TestCase
         }), 'Element not exists');
     }
 
-    public function testFindOne(): void
+    public function testFindFirst(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        self::assertSame('a', $collection->findOne(static function ($key, $element) {
+        self::assertSame('a', $collection->findFirst(static function ($key, $element) {
             return $key === 'A' && $element === 'a';
         }), 'Element exists');
     }
 
-    public function testFindOneNotFound(): void
+    public function testFindFirstNotFound(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        self::assertNull($collection->findOne(static function ($key, $element) {
+        self::assertNull($collection->findFirst(static function ($key, $element) {
             return $key === 'non-existent' && $element === 'non-existent';
         }), 'Element does not exists');
     }
