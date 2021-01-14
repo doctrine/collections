@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Common\Collections;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function count;
@@ -205,14 +207,14 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection[] = 'three';
 
         $slice = $this->collection->slice(0, 1);
-        self::assertIsArray($slice);
-        self::assertEquals(['one'], $slice);
+        self::assertInstanceOf(Collection::class, $slice);
+        self::assertEquals(new ArrayCollection(['one']), $slice);
 
         $slice = $this->collection->slice(1);
-        self::assertEquals([1 => 'two', 2 => 'three'], $slice);
+        self::assertEquals(new ArrayCollection([1 => 'two', 2 => 'three']), $slice);
 
         $slice = $this->collection->slice(1, 1);
-        self::assertEquals([1 => 'two'], $slice);
+        self::assertEquals(new ArrayCollection([1 => 'two']), $slice);
     }
 
     protected function fillMatchingFixture() : void

@@ -269,7 +269,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, ?int $length = null) : array
+    public function slice(int $offset, ?int $length = null) : Collection
     {
         $this->initialize();
 

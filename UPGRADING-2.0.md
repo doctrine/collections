@@ -46,10 +46,11 @@ You can find a list of major changes to public API below.
 
 #### Doctrine\Common\Collections\ArrayCollection
 
-|            before           |               after               |
-|----------------------------:|:----------------------------------|
-| createFrom(array $elements) | createFrom(array $elements): self |
-| __toString()                | __toString(): string              |
+|            before                         |               after                            |
+|------------------------------------------:|:-----------------------------------------------|
+| createFrom(array $elements)               | createFrom(array $elements): self              |
+| int $offset, ?int $length = null) : array | int $offset, ?int $length = null) : Collection |
+| __toString()                              | __toString(): string                           |
 
 #### Doctrine\Common\Collections\Selectable
 
