@@ -5,7 +5,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
-use const ARRAY_FILTER_USE_BOTH;
+
 use function array_filter;
 use function array_key_exists;
 use function array_keys;
@@ -24,6 +24,8 @@ use function reset;
 use function spl_object_hash;
 use function uasort;
 
+use const ARRAY_FILTER_USE_BOTH;
+
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
  *
@@ -37,6 +39,7 @@ use function uasort;
  * @psalm-template T
  * @template-implements Collection<TKey,T>
  * @template-implements Selectable<TKey,T>
+ * @psalm-consistent-constructor
  */
 class ArrayCollection implements Collection, Selectable
 {
@@ -44,7 +47,7 @@ class ArrayCollection implements Collection, Selectable
      * An array containing the entries of this collection.
      *
      * @psalm-var array<TKey,T>
-     * @var array
+     * @var mixed[]
      */
     private $elements;
 
@@ -86,8 +89,12 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      *
-     * @psalm-param array<TKey,T> $elements
-     * @psalm-return static<TKey,T>
+     * @psalm-template K of array-key
+     * @psalm-template V
+     * @phpstan-template K
+     *
+     * @psalm-param array<K,V> $elements
+     * @psalm-return static<K,V>
      */
     protected function createFrom(array $elements)
     {

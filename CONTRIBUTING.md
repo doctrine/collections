@@ -40,11 +40,11 @@ curl -sS https://getcomposer.org/installer | php --
 ./composer.phar install
 ```
 
-## Travis
+## Github Actions
 
-We automatically run your pull request through [Travis CI](https://www.travis-ci.org)
-against supported PHP versions. If you break the tests, we cannot merge your code,
-so please make sure that your code is working before opening up a Pull-Request.
+We automatically run your pull request through Github Actions against supported
+PHP versions. If you break the tests, we cannot merge your code, so please make
+sure that your code is working before opening up a Pull-Request.
 
 ## Getting merged
 

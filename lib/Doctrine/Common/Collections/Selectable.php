@@ -24,7 +24,7 @@ interface Selectable
      * Selects all elements from a selectable that match the expression and
      * returns a new collection containing these elements.
      *
-     * @return Collection
+     * @return Collection<mixed>
      *
      * @psalm-return Collection<TKey,T>
      */

@@ -129,8 +129,8 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Gets all values of the collection.
      *
-     * @return array The values of all elements in the collection, in the order they
-     *               appear in the collection.
+     * @return mixed[] The values of all elements in the collection, in the
+     *                 order they appear in the collection.
      *
      * @psalm-return T[]
      */
@@ -152,7 +152,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Gets a native PHP array representation of the collection.
      *
-     * @return array
+     * @return mixed[]
      *
      * @psalm-return array<TKey,T>
      */
@@ -220,7 +220,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate used for filtering.
      *
-     * @return Collection A collection with the results of the filter operation.
+     * @return Collection<mixed> A collection with the results of the filter operation.
      *
      * @psalm-param Closure(T=):bool $p
      * @psalm-return Collection<TKey, T>
@@ -242,7 +242,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
      *
-     * @return Collection
+     * @return Collection<mixed>
      *
      * @psalm-template U
      * @psalm-param Closure(T=):U $func
@@ -256,7 +256,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param Closure $p The predicate on which to partition.
      *
-     * @return Collection[] An array with two elements. The first element contains the collection
+     * @return Collection<mixed> An array with two elements. The first element contains the collection
      *                      of elements where the predicate returned TRUE, the second element
      *                      contains the collection of elements where the predicate returned FALSE.
      *
@@ -289,7 +289,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @param int      $offset The offset to start from.
      * @param int|null $length The maximum number of elements to return, or null for no limit.
      *
-     * @return array
+     * @return mixed[]
      *
      * @psalm-return array<TKey,T>
      */

@@ -12,7 +12,7 @@ use Doctrine\Tests\LazyArrayCollection;
  */
 class AbstractLazyCollectionTest extends BaseCollectionTest
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->collection = new LazyArrayCollection(new ArrayCollection());
     }

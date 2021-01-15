@@ -5,17 +5,18 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+
 use function count;
 use function is_string;
 
 class CollectionTest extends BaseCollectionTest
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->collection = new ArrayCollection();
     }
 
-    public function testToString() : void
+    public function testToString(): void
     {
         $this->collection->add('testing');
         self::assertTrue(is_string((string) $this->collection));
@@ -24,7 +25,7 @@ class CollectionTest extends BaseCollectionTest
     /**
      * @group DDC-1637
      */
-    public function testMatching() : void
+    public function testMatching(): void
     {
         $this->fillMatchingFixture();
 
@@ -37,7 +38,7 @@ class CollectionTest extends BaseCollectionTest
     /**
      * @group DDC-1637
      */
-    public function testMatchingOrdering() : void
+    public function testMatchingOrdering(): void
     {
         $this->fillMatchingFixture();
 
@@ -53,7 +54,7 @@ class CollectionTest extends BaseCollectionTest
     /**
      * @group DDC-1637
      */
-    public function testMatchingSlice() : void
+    public function testMatchingSlice(): void
     {
         $this->fillMatchingFixture();
 

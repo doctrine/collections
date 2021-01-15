@@ -4,11 +4,14 @@ namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
+
 use function array_map;
 use function strtoupper;
 
 /**
  * Criteria for filtering Selectable collections.
+ *
+ * @psalm-consistent-constructor
  */
 class Criteria
 {
@@ -163,7 +166,7 @@ class Criteria
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
-            static function (string $ordering) : string {
+            static function (string $ordering): string {
                 return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
             },
             $orderings
@@ -191,7 +194,7 @@ class Criteria
      */
     public function setFirstResult($firstResult)
     {
-        $this->firstResult = $firstResult === null ? null : (int) $firstResult;
+        $this->firstResult = $firstResult;
 
         return $this;
     }
@@ -215,7 +218,7 @@ class Criteria
      */
     public function setMaxResults($maxResults)
     {
-        $this->maxResults = $maxResults === null ? null : (int) $maxResults;
+        $this->maxResults = $maxResults;
 
         return $this;
     }
