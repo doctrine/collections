@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections\Expr;
 
 use RuntimeException;
-use function get_class;
 
 /**
  * An Expression visitor walks a graph of expressions and turns them into a
@@ -43,15 +42,6 @@ abstract class ExpressionVisitor
      */
     public function dispatch(Expression $expr)
     {
-        switch (true) {
-            case $expr instanceof Comparison:
-                return $this->walkComparison($expr);
-            case $expr instanceof Value:
-                return $this->walkValue($expr);
-            case $expr instanceof CompositeExpression:
-                return $this->walkCompositeExpression($expr);
-            default:
-                throw new RuntimeException('Unknown Expression ' . get_class($expr));
-        }
+        return $expr->visit($this);
     }
 }
