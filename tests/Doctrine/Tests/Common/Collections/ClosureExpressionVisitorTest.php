@@ -40,6 +40,13 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($this->visitor->getObjectFieldValue($object, 'isBaz'));
     }
 
+    public function testGetObjectFieldValueAccessorWithoutPrefix() : void
+    {
+        $object = new TestObject(1, 2, 3, true);
+
+        self::assertTrue($this->visitor->getObjectFieldValue($object, 'quux'));
+    }
+
     public function testGetObjectFieldValueIsAccessorCamelCase() : void
     {
         $object = new TestObjectNotCamelCase(1);
@@ -279,18 +286,22 @@ class TestObject
     /** @var mixed */
     private $qux;
 
+    /** @var mixed */
+    private $quux;
+
     /**
      * @param mixed $foo
      * @param mixed $bar
      * @param mixed $baz
      * @param mixed $qux
      */
-    public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
+    public function __construct($foo = null, $bar = null, $baz = null, $qux = null, $quux = null)
     {
         $this->foo = $foo;
         $this->bar = $bar;
         $this->baz = $baz;
         $this->qux = $qux;
+        $this->quux = $qux;
     }
 
     /**
@@ -327,6 +338,14 @@ class TestObject
     public function isBaz()
     {
         return $this->baz;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function quux()
+    {
+        return $this->quux;
     }
 }
 
