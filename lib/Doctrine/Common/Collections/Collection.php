@@ -287,9 +287,9 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @param int      $offset The offset to start from.
      * @param int|null $length The maximum number of elements to return, or null for no limit.
      *
-     * @return array
+     * @return Collection
      *
-     * @psalm-return array<TKey,T>
+     * @psalm-return Collection<TKey,T>
      */
-    public function slice(int $offset, ?int $length = null) : array;
+    public function slice(int $offset, ?int $length = null) : Collection;
 }
