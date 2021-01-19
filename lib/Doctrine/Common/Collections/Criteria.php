@@ -43,6 +43,31 @@ class Criteria
     }
 
     /**
+     * Creates an instance with same behaviour as criteria parameters passed on ORM find methods.
+     *
+     * @param mixed[] $findCriteria Array of different keys and values. Gets the same format as argument expected on
+     *                              Doctrine\Common\Persistence\ObjectRepository::findBy and
+     *                              Doctrine\Common\Persistence\ObjectRepository::findOneBy methods.
+     *
+     * @return Criteria
+     */
+    public static function fromFindCriteria(array $findCriteria)
+    {
+        $criteria = static::create();
+
+        foreach ($findCriteria as $key => $value) {
+            $criteria->andWhere(!is_array($value)
+                ? static::expr()->eq($key, $value)
+                : new CompositeExpression(CompositeExpression::TYPE_OR, \array_map(function ($v) use ($key) {
+                    return static::expr()->eq($key, $v);
+                }, $value))
+            );
+        }
+
+        return $criteria;
+    }
+
+    /**
      * Returns the expression builder.
      */
     public static function expr() : ExpressionBuilder
