@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
 use function array_keys;
 use function array_search;
 use function array_values;
@@ -21,9 +22,14 @@ use function reset;
 
 abstract class BaseArrayCollectionTest extends TestCase
 {
-    abstract protected function buildCollection(array $elements = []) : Collection;
+    /**
+     * @param mixed[] $elements
+     *
+     * @return Collection<mixed>
+     */
+    abstract protected function buildCollection(array $elements = []): Collection;
 
-    protected function isSelectable(object $obj) : bool
+    protected function isSelectable(object $obj): bool
     {
         return $obj instanceof Selectable;
     }
@@ -33,7 +39,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testToArray(array $elements) : void
+    public function testToArray(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -45,7 +51,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testFirst(array $elements) : void
+    public function testFirst(array $elements): void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(reset($elements), $collection->first());
@@ -56,7 +62,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testLast(array $elements) : void
+    public function testLast(array $elements): void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(end($elements), $collection->last());
@@ -67,7 +73,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testKey(array $elements) : void
+    public function testKey(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -84,7 +90,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testNext(array $elements) : void
+    public function testNext(array $elements): void
     {
         $count      = count($elements);
         $collection = $this->buildCollection($elements);
@@ -110,7 +116,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testCurrent(array $elements) : void
+    public function testCurrent(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -127,7 +133,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testGetKeys(array $elements) : void
+    public function testGetKeys(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -139,7 +145,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testGetValues(array $elements) : void
+    public function testGetValues(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -151,7 +157,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testCount(array $elements) : void
+    public function testCount(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -163,7 +169,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideDifferentElements
      */
-    public function testIterator(array $elements) : void
+    public function testIterator(array $elements): void
     {
         $collection = $this->buildCollection($elements);
 
@@ -176,7 +182,10 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
-    public function provideDifferentElements() : array
+    /**
+     * @psalm-return array<string, array{mixed[]}>
+     */
+    public function provideDifferentElements(): array
     {
         return [
             'indexed'     => [[1, 2, 3, 4, 5]],
@@ -185,7 +194,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         ];
     }
 
-    public function testRemove() : void
+    public function testRemove(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'B' => 'b', 3];
         $collection = $this->buildCollection($elements);
@@ -205,7 +214,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertEquals($elements, $collection->toArray());
     }
 
-    public function testRemoveElement() : void
+    public function testRemoveElement(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
@@ -224,7 +233,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertEquals($elements, $collection->toArray());
     }
 
-    public function testContainsKey() : void
+    public function testContainsKey(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b'];
         $collection = $this->buildCollection($elements);
@@ -235,7 +244,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertFalse($collection->containsKey('non-existent'), "Doesn't contain key");
     }
 
-    public function testEmpty() : void
+    public function testEmpty(): void
     {
         $collection = $this->buildCollection();
         self::assertTrue($collection->isEmpty(), 'Empty collection');
@@ -244,7 +253,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertFalse($collection->isEmpty(), 'Not empty collection');
     }
 
-    public function testContains() : void
+    public function testContains(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -255,7 +264,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertFalse($collection->contains('non-existent'), "Doesn't contain an element");
     }
 
-    public function testExists() : void
+    public function testExists(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -269,7 +278,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         }), 'Element not exists');
     }
 
-    public function testIndexOf() : void
+    public function testIndexOf(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -279,7 +288,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(array_search('non-existent', $elements, true), $collection->indexOf('non-existent'), 'Index of non existent');
     }
 
-    public function testGet() : void
+    public function testGet(): void
     {
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
@@ -289,7 +298,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
 
-    public function testMatchingWithSortingPreservesyKeys() : void
+    public function testMatchingWithSortingPreservesyKeys(): void
     {
         $object1 = new stdClass();
         $object2 = new stdClass();
@@ -323,7 +332,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideSlices
      */
-    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, ?int $firstResult, ?int $maxResult) : void
+    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, ?int $firstResult, ?int $maxResult): void
     {
         $collection = $this->buildCollection($array);
 
@@ -342,7 +351,7 @@ abstract class BaseArrayCollectionTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function provideSlices() : array
+    public function provideSlices(): array
     {
         return [
             'preserve numeric keys' => [
@@ -405,7 +414,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         ];
     }
 
-    public function testMultiColumnSortAppliesAllSorts() : void
+    public function testMultiColumnSortAppliesAllSorts(): void
     {
         $collection = $this->buildCollection([
             ['foo' => 1, 'bar' => 2],

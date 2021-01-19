@@ -18,12 +18,12 @@ use Doctrine\Common\Collections\Expr\Value;
  */
 class ExpressionBuilder
 {
-    public function andX(Expression ...$expressions) : CompositeExpression
+    public function andX(Expression ...$expressions): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_AND, $expressions);
     }
 
-    public function orX(Expression ...$expressions) : CompositeExpression
+    public function orX(Expression ...$expressions): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_OR, $expressions);
     }
@@ -31,7 +31,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function eq(string $field, $value) : Comparison
+    public function eq(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value($value));
     }
@@ -39,7 +39,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function gt(string $field, $value) : Comparison
+    public function gt(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::GT, new Value($value));
     }
@@ -47,7 +47,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function lt(string $field, $value) : Comparison
+    public function lt(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::LT, new Value($value));
     }
@@ -55,7 +55,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function gte(string $field, $value) : Comparison
+    public function gte(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::GTE, new Value($value));
     }
@@ -63,7 +63,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function lte(string $field, $value) : Comparison
+    public function lte(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::LTE, new Value($value));
     }
@@ -71,28 +71,28 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function neq(string $field, $value) : Comparison
+    public function neq(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::NEQ, new Value($value));
     }
 
-    public function isNull(string $field) : Comparison
+    public function isNull(string $field): Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value(null));
     }
 
     /**
-     * @param array $values
+     * @param mixed[] $values
      */
-    public function in(string $field, array $values) : Comparison
+    public function in(string $field, array $values): Comparison
     {
         return new Comparison($field, Comparison::IN, new Value($values));
     }
 
     /**
-     * @param array $values
+     * @param mixed[] $values
      */
-    public function notIn(string $field, array $values) : Comparison
+    public function notIn(string $field, array $values): Comparison
     {
         return new Comparison($field, Comparison::NIN, new Value($values));
     }
@@ -100,7 +100,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function contains(string $field, $value) : Comparison
+    public function contains(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
@@ -108,7 +108,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function memberOf(string $field, $value) : Comparison
+    public function memberOf(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
     }
@@ -116,7 +116,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function startsWith(string $field, $value) : Comparison
+    public function startsWith(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
     }
@@ -124,7 +124,7 @@ class ExpressionBuilder
     /**
      * @param mixed $value
      */
-    public function endsWith(string $field, $value) : Comparison
+    public function endsWith(string $field, $value): Comparison
     {
         return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
     }

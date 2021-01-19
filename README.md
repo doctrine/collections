@@ -1,7 +1,7 @@
 # Doctrine Collections
 
-[![Build Status](https://travis-ci.org/doctrine/collections.svg?branch=2.0.x)](https://travis-ci.org/doctrine/collections)
-[![Code Coverage](https://codecov.io/gh/doctrine/collections/branch/cache/graph/badge.svg)](https://codecov.io/gh/doctrine/collections/branch/2.0.x)
+[![Build Status](https://github.com/doctrine/collections/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/collections/actions)
+[![Code Coverage](https://codecov.io/gh/doctrine/collections/branch/2.0.x/graph/badge.svg)](https://codecov.io/gh/doctrine/collections/branch/2.0.x)
 
 Collections Abstraction library
 

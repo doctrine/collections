@@ -21,17 +21,14 @@ abstract class AbstractLazyCollection implements Collection
      * The backed collection to use
      *
      * @psalm-var Collection<TKey,T>
-     * @var Collection
+     * @var Collection<mixed>
      */
     protected $collection;
 
     /** @var bool */
     protected $initialized = false;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function count() : int
+    public function count(): int
     {
         $this->initialize();
 
@@ -41,17 +38,14 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function add($element) : bool
+    public function add($element): bool
     {
         $this->initialize();
 
         return $this->collection->add($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clear() : void
+    public function clear(): void
     {
         $this->initialize();
         $this->collection->clear();
@@ -60,17 +54,14 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function contains($element) : bool
+    public function contains($element): bool
     {
         $this->initialize();
 
         return $this->collection->contains($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         $this->initialize();
 
@@ -90,7 +81,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function removeElement($element) : bool
+    public function removeElement($element): bool
     {
         $this->initialize();
 
@@ -100,7 +91,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function containsKey($key) : bool
+    public function containsKey($key): bool
     {
         $this->initialize();
 
@@ -120,7 +111,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function getKeys() : array
+    public function getKeys(): array
     {
         $this->initialize();
 
@@ -130,7 +121,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function getValues() : array
+    public function getValues(): array
     {
         $this->initialize();
 
@@ -140,7 +131,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value) : void
+    public function set($key, $value): void
     {
         $this->initialize();
         $this->collection->set($key, $value);
@@ -149,7 +140,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         $this->initialize();
 
@@ -206,10 +197,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->next();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function exists(Closure $p) : bool
+    public function exists(Closure $p): bool
     {
         $this->initialize();
 
@@ -217,19 +205,18 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @return Collection<mixed>
+     *
+     * @psalm-return Collection<TKey, T>
      */
-    public function filter(Closure $p) : Collection
+    public function filter(Closure $p): Collection
     {
         $this->initialize();
 
         return $this->collection->filter($p);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function forAll(Closure $p) : bool
+    public function forAll(Closure $p): bool
     {
         $this->initialize();
 
@@ -237,9 +224,13 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @return Collection<mixed>
+     *
+     * @psalm-template U
+     * @psalm-param Closure(T=):U $func
+     * @psalm-return Collection<TKey, U>
      */
-    public function map(Closure $func) : Collection
+    public function map(Closure $func): Collection
     {
         $this->initialize();
 
@@ -249,7 +240,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p) : array
+    public function partition(Closure $p): array
     {
         $this->initialize();
 
@@ -269,7 +260,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, ?int $length = null) : array
+    public function slice(int $offset, ?int $length = null): array
     {
         $this->initialize();
 
@@ -277,9 +268,11 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @return Traversable<mixed>
+     *
+     * @psalm-return Traversable<TKey, T>
      */
-    public function getIterator() : Traversable
+    public function getIterator(): Traversable
     {
         $this->initialize();
 
@@ -293,7 +286,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @psalm-param TKey $offset
      */
-    public function offsetExists($offset) : bool
+    public function offsetExists($offset): bool
     {
         $this->initialize();
 
@@ -324,7 +317,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @psalm-param TKey $offset
      */
-    public function offsetSet($offset, $value) : void
+    public function offsetSet($offset, $value): void
     {
         $this->initialize();
         $this->collection->offsetSet($offset, $value);
@@ -337,7 +330,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @psalm-param TKey $offset
      */
-    public function offsetUnset($offset) : void
+    public function offsetUnset($offset): void
     {
         $this->initialize();
         $this->collection->offsetUnset($offset);
@@ -346,7 +339,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * Is the lazy collection already initialized?
      */
-    public function isInitialized() : bool
+    public function isInitialized(): bool
     {
         return $this->initialized;
     }
@@ -354,7 +347,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * Initialize the collection
      */
-    protected function initialize() : void
+    protected function initialize(): void
     {
         if ($this->initialized) {
             return;
@@ -367,5 +360,5 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * Do the initialization logic
      */
-    abstract protected function doInitialize() : void;
+    abstract protected function doInitialize(): void;
 }

@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Serializable;
+
 use function json_decode;
 use function json_encode;
 use function serialize;
@@ -19,12 +20,17 @@ use function unserialize;
  */
 class ArrayCollectionTest extends BaseArrayCollectionTest
 {
-    protected function buildCollection(array $elements = []) : Collection
+    /**
+     * @param mixed[] $elements
+     *
+     * @return Collection<mixed>
+     */
+    protected function buildCollection(array $elements = []): Collection
     {
         return new ArrayCollection($elements);
     }
 
-    public function testUnserializeEmptyArrayCollection() : void
+    public function testUnserializeEmptyArrayCollection(): void
     {
         $collection            = new SerializableArrayCollection();
         $serializeCollection   = serialize($collection);
@@ -40,13 +46,13 @@ class ArrayCollectionTest extends BaseArrayCollectionTest
  */
 class SerializableArrayCollection extends ArrayCollection implements Serializable
 {
-    public function serialize() : string
+    public function serialize(): string
     {
         return json_encode($this->getKeys());
     }
 
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-    public function unserialize($serialized) : void
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+    public function unserialize($serialized): void
     {
         foreach (json_decode($serialized) as $value) {
             parent::add($value);
