@@ -128,4 +128,12 @@ class ExpressionBuilder
     {
         return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
     }
+
+    /**
+     * @param mixed $value
+     */
+    public function bitAnd(string $field, $value) : Comparison
+    {
+        return new Comparison($field, Comparison::BIT_AND, new Value($value));
+    }
 }

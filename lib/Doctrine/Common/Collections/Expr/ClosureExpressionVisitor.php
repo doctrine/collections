@@ -173,6 +173,12 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 return static function ($object) use ($field, $value) : bool {
                     return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
+            case Comparison::BIT_AND:
+                return static function ($object) use ($field, $value) : bool {
+                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                    return ($fieldValue & $value) === $value;
+                };
             default:
                 throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator());
         }

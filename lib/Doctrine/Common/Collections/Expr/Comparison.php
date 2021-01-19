@@ -22,6 +22,7 @@ class Comparison implements Expression
     public const MEMBER_OF   = 'MEMBER_OF';
     public const STARTS_WITH = 'STARTS_WITH';
     public const ENDS_WITH   = 'ENDS_WITH';
+    public const BIT_AND     = 'BIT_AND';
 
     /** @var string */
     private $field;
