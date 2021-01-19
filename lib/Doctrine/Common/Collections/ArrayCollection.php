@@ -8,7 +8,7 @@ use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Traversable;
-use const ARRAY_FILTER_USE_BOTH;
+
 use function array_filter;
 use function array_key_exists;
 use function array_keys;
@@ -28,6 +28,8 @@ use function reset;
 use function spl_object_hash;
 use function uasort;
 
+use const ARRAY_FILTER_USE_BOTH;
+
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
  *
@@ -41,6 +43,7 @@ use function uasort;
  * @psalm-template T
  * @template-implements Collection<TKey,T>
  * @template-implements Selectable<TKey,T>
+ * @psalm-consistent-constructor
  */
 class ArrayCollection implements Collection, Selectable
 {
@@ -48,7 +51,7 @@ class ArrayCollection implements Collection, Selectable
      * An array containing the entries of this collection.
      *
      * @psalm-var array<TKey,T>
-     * @var array
+     * @var mixed[]
      */
     private $elements = [];
 
@@ -67,7 +70,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->elements;
     }
@@ -90,8 +93,12 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return static
      *
-     * @psalm-param array<TKey,T> $elements
-     * @psalm-return static<TKey,T>
+     * @psalm-template K of array-key
+     * @psalm-template V
+     * @phpstan-template K
+     *
+     * @psalm-param array<K,V> $elements
+     * @psalm-return static<K,V>
      */
     protected function createFrom(array $elements)
     {
@@ -148,7 +155,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function removeElement($element) : bool
+    public function removeElement($element): bool
     {
         $key = array_search($element, $this->elements, true);
 
@@ -170,7 +177,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-param TKey $offset
      */
-    public function offsetExists($offset) : bool
+    public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -196,8 +203,10 @@ class ArrayCollection implements Collection, Selectable
      *
      * @param int|string|null $offset
      * @param mixed           $value
+     *
+     * @psalm-param TKey|null $offset
      */
-    public function offsetSet($offset, $value) : void
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             $this->add($value);
@@ -217,7 +226,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-param TKey $offset
      */
-    public function offsetUnset($offset) : void
+    public function offsetUnset($offset): void
     {
         $this->remove($offset);
     }
@@ -225,7 +234,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function containsKey($key) : bool
+    public function containsKey($key): bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
@@ -233,15 +242,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function contains($element) : bool
+    public function contains($element): bool
     {
         return in_array($element, $this->elements, true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function exists(Closure $p) : bool
+    public function exists(Closure $p): bool
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -271,7 +277,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function getKeys() : array
+    public function getKeys(): array
     {
         return array_keys($this->elements);
     }
@@ -279,15 +285,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function getValues() : array
+    public function getValues(): array
     {
         return array_values($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function count() : int
+    public function count(): int
     {
         return count($this->elements);
     }
@@ -295,7 +298,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value) : void
+    public function set($key, $value): void
     {
         $this->elements[$key] = $value;
     }
@@ -308,17 +311,14 @@ class ArrayCollection implements Collection, Selectable
      * This breaks assumptions about the template type, but it would
      * be a backwards-incompatible change to remove this method
      */
-    public function add($element) : bool
+    public function add($element): bool
     {
         $this->elements[] = $element;
 
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return empty($this->elements);
     }
@@ -330,7 +330,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-return Traversable<TKey, T>
      */
-    public function getIterator() : Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->elements);
     }
@@ -344,7 +344,7 @@ class ArrayCollection implements Collection, Selectable
      * @psalm-param Closure(T=):U $func
      * @psalm-return static<TKey, U>
      */
-    public function map(Closure $func) : Collection
+    public function map(Closure $func): Collection
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
@@ -356,15 +356,12 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-return static<TKey,T>
      */
-    public function filter(Closure $p) : Collection
+    public function filter(Closure $p): Collection
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function forAll(Closure $p) : bool
+    public function forAll(Closure $p): bool
     {
         foreach ($this->elements as $key => $element) {
             if (! $p($key, $element)) {
@@ -378,7 +375,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p) : array
+    public function partition(Closure $p): array
     {
         $matches = $noMatches = [];
 
@@ -396,15 +393,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Returns a string representation of this object.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return self::class . '@' . spl_object_hash($this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clear() : void
+    public function clear(): void
     {
         $this->elements = [];
     }
@@ -412,15 +406,15 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, ?int $length = null) : array
+    public function slice(int $offset, ?int $length = null): array
     {
         return array_slice($this->elements, $offset, $length, true);
     }
 
     /**
-     * {@inheritDoc}
+     * @psalm-return Collection<TKey, T>
      */
-    public function matching(Criteria $criteria) : Collection
+    public function matching(Criteria $criteria): Collection
     {
         $expr     = $criteria->getWhereExpression();
         $filtered = $this->elements;

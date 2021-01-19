@@ -46,17 +46,17 @@ class Comparison implements Expression
         $this->value = $value;
     }
 
-    public function getField() : string
+    public function getField(): string
     {
         return $this->field;
     }
 
-    public function getValue() : Value
+    public function getValue(): Value
     {
         return $this->value;
     }
 
-    public function getOperator() : string
+    public function getOperator(): string
     {
         return $this->op;
     }

@@ -21,12 +21,12 @@
         "php": "^7.2 || ^8.0"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^6.0",
-        "infection/infection": "^0.14.2",
-        "phpstan/phpstan": "^0.11",
-        "phpstan/phpstan-phpunit": "^0.11",
-        "phpunit/phpunit": "^8.0",
-        "vimeo/psalm": "^3.8.1",
+        "doctrine/coding-standard": "^6.0 || ^8.0",
+        "infection/infection": "^0.14.2 || ^0.20.2",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-phpunit": "^0.12",
+        "phpunit/phpunit": "^7.5 || ^8.5 || ^9.1.5",
+        "vimeo/psalm": "^4.2.1",
         "ext-json": "*"
     },
     "config": {
@@ -38,11 +38,6 @@
     "autoload-dev": {
         "psr-4": {
             "Doctrine\\Tests\\": "tests/Doctrine/Tests"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
         }
     }
 }

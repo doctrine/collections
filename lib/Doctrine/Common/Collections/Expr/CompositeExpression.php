@@ -33,6 +33,7 @@ class CompositeExpression implements Expression
             if ($expr instanceof Value) {
                 throw new RuntimeException('Values are not supported expressions as children of and/or expressions.');
             }
+
             if (! ($expr instanceof Expression)) {
                 throw new RuntimeException('No expression given to CompositeExpression.');
             }
@@ -46,12 +47,12 @@ class CompositeExpression implements Expression
      *
      * @return array<int, Expression>
      */
-    public function getExpressionList() : array
+    public function getExpressionList(): array
     {
         return $this->expressions;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }

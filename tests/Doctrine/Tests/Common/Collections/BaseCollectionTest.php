@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
 use function count;
 use function is_array;
 use function is_numeric;
@@ -14,10 +15,10 @@ use function is_string;
 
 abstract class BaseCollectionTest extends TestCase
 {
-    /** @var Collection */
+    /** @var Collection<mixed> */
     protected $collection;
 
-    public function testIssetAndUnset() : void
+    public function testIssetAndUnset(): void
     {
         self::assertFalse(isset($this->collection[0]));
         $this->collection->add('testing');
@@ -26,12 +27,12 @@ abstract class BaseCollectionTest extends TestCase
         self::assertFalse(isset($this->collection[0]));
     }
 
-    public function testRemovingNonExistentEntryReturnsNull() : void
+    public function testRemovingNonExistentEntryReturnsNull(): void
     {
         self::assertEquals(null, $this->collection->remove('testing_does_not_exist'));
     }
 
-    public function testExists() : void
+    public function testExists(): void
     {
         $this->collection->add('one');
         $this->collection->add('two');
@@ -45,7 +46,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertFalse($exists);
     }
 
-    public function testMap() : void
+    public function testMap(): void
     {
         $this->collection->add(1);
         $this->collection->add(2);
@@ -55,7 +56,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals([2, 4], $res->toArray());
     }
 
-    public function testFilter() : void
+    public function testFilter(): void
     {
         $this->collection->add(1);
         $this->collection->add('foo');
@@ -66,7 +67,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
 
-    public function testFilterByValueAndKey() : void
+    public function testFilterByValueAndKey(): void
     {
         $this->collection->add(1);
         $this->collection->add('foo');
@@ -79,7 +80,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertSame([0 => 1, 2 => 3, 4 => 5], $res->toArray());
     }
 
-    public function testFirstAndLast() : void
+    public function testFirstAndLast(): void
     {
         $this->collection->add('one');
         $this->collection->add('two');
@@ -88,7 +89,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals($this->collection->last(), 'two');
     }
 
-    public function testArrayAccess() : void
+    public function testArrayAccess(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -100,45 +101,45 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals($this->collection->count(), 1);
     }
 
-    public function testContainsKey() : void
+    public function testContainsKey(): void
     {
         $this->collection[5] = 'five';
         self::assertTrue($this->collection->containsKey(5));
     }
 
-    public function testContains() : void
+    public function testContains(): void
     {
         $this->collection[0] = 'test';
         self::assertTrue($this->collection->contains('test'));
     }
 
-    public function testSearch() : void
+    public function testSearch(): void
     {
         $this->collection[0] = 'test';
         self::assertEquals(0, $this->collection->indexOf('test'));
     }
 
-    public function testGet() : void
+    public function testGet(): void
     {
         $this->collection[0] = 'test';
         self::assertEquals('test', $this->collection->get(0));
     }
 
-    public function testGetKeys() : void
+    public function testGetKeys(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
         self::assertEquals([0, 1], $this->collection->getKeys());
     }
 
-    public function testGetValues() : void
+    public function testGetValues(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
         self::assertEquals(['one', 'two'], $this->collection->getValues());
     }
 
-    public function testCount() : void
+    public function testCount(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -146,7 +147,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals(count($this->collection), 2);
     }
 
-    public function testForAll() : void
+    public function testForAll(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -158,7 +159,7 @@ abstract class BaseCollectionTest extends TestCase
         }), false);
     }
 
-    public function testPartition() : void
+    public function testPartition(): void
     {
         $this->collection[] = true;
         $this->collection[] = false;
@@ -169,7 +170,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals($partition[1][0], false);
     }
 
-    public function testClear() : void
+    public function testClear(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -177,7 +178,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals($this->collection->isEmpty(), true);
     }
 
-    public function testRemove() : void
+    public function testRemove(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -188,7 +189,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertNull($this->collection->remove(0));
     }
 
-    public function testRemoveElement() : void
+    public function testRemoveElement(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -198,7 +199,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertFalse($this->collection->removeElement('two'));
     }
 
-    public function testSlice() : void
+    public function testSlice(): void
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
@@ -215,7 +216,7 @@ abstract class BaseCollectionTest extends TestCase
         self::assertEquals([1 => 'two'], $slice);
     }
 
-    protected function fillMatchingFixture() : void
+    protected function fillMatchingFixture(): void
     {
         $std1               = new stdClass();
         $std1->foo          = 'bar';
@@ -226,14 +227,14 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection[] = $std2;
     }
 
-    public function testCanRemoveNullValuesByKey() : void
+    public function testCanRemoveNullValuesByKey(): void
     {
         $this->collection->add(null);
         $this->collection->remove(0);
         self::assertTrue($this->collection->isEmpty());
     }
 
-    public function testCanVerifyExistingKeysWithNullValues() : void
+    public function testCanVerifyExistingKeysWithNullValues(): void
     {
         $this->collection->set('key', null);
         self::assertTrue($this->collection->containsKey('key'));
