@@ -3,6 +3,7 @@
 namespace Doctrine\Common\Collections;
 
 use Closure;
+use Traversable;
 
 /**
  * Lazy collection that is backed by a concrete collection
@@ -27,6 +28,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function count()
     {
@@ -275,6 +278,10 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @return Traversable<int|string, mixed>
+     *
+     * @psalm-return Traversable<TKey,T>
      */
     public function getIterator()
     {
@@ -285,6 +292,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @return bool
      *
      * @psalm-param TKey $offset
      */
