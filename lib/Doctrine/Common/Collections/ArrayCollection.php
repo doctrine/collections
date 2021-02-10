@@ -5,6 +5,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Traversable;
 
 use function array_filter;
 use function array_key_exists;
@@ -169,6 +170,8 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      *
+     * @return bool
+     *
      * @psalm-param TKey $offset
      */
     public function offsetExists($offset)
@@ -280,6 +283,8 @@ class ArrayCollection implements Collection, Selectable
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function count()
     {
@@ -318,9 +323,11 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Required by interface IteratorAggregate.
-     *
      * {@inheritDoc}
+     *
+     * @return Traversable<int|string, mixed>
+     *
+     * @psalm-return Traversable<TKey,T>
      */
     public function getIterator()
     {
