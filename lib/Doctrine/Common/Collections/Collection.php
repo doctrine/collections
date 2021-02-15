@@ -257,7 +257,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @psalm-template TReturn
      * @psalm-template TInitial
-     * @psalm-param Closure(TReturn|TInitial, T):TReturn $func
+     * @psalm-param Closure(TReturn|TInitial|null, T):(TInitial|TReturn) $func
      * @psalm-param TInitial|null $initial
      * @psalm-return TReturn|TInitial|null
      */
