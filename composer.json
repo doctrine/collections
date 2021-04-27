@@ -27,7 +27,10 @@
         "vimeo/psalm": "^4.2.1"
     },
     "autoload": {
-        "psr-4": { "Doctrine\\Common\\Collections\\": "lib/Doctrine/Common/Collections" }
+        "psr-4": {
+            "Doctrine\\Common\\Collections\\": "lib/Doctrine/Common/Collections",
+            "Doctrine\\Collections\\": "lib/Doctrine/Collections"
+        }
     },
     "autoload-dev": {
         "psr-4": {
