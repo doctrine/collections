@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Common\Collections;
+namespace Doctrine\Collections;
 
 /**
  * Interface for collections that allow efficient filtering with an expression API.

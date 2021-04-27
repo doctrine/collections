@@ -1,11 +1,10 @@
 <?php
 
-namespace Doctrine\Common\Collections;
+namespace Doctrine\Collections;
 
-use Doctrine\Common\Collections\Expr\Comparison;
-use Doctrine\Common\Collections\Expr\CompositeExpression;
-use Doctrine\Common\Collections\Expr\Value;
-
+use Doctrine\Collections\Expr\Comparison;
+use Doctrine\Collections\Expr\CompositeExpression;
+use Doctrine\Collections\Expr\Value;
 use function func_get_args;
 
 /**

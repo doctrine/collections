@@ -1,10 +1,9 @@
 <?php
 
-namespace Doctrine\Common\Collections;
+namespace Doctrine\Collections;
 
-use Doctrine\Common\Collections\Expr\CompositeExpression;
-use Doctrine\Common\Collections\Expr\Expression;
-
+use Doctrine\Collections\Expr\CompositeExpression;
+use Doctrine\Collections\Expr\Expression;
 use function array_map;
 use function strtoupper;
 

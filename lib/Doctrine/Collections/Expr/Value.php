@@ -1,8 +1,10 @@
 <?php
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Collections\Expr;
 
-class Value implements Expression
+use Doctrine\Common\Collections\Expr\Expression as OldExpression;
+
+class Value implements OldExpression
 {
     /** @var mixed */
     private $value;

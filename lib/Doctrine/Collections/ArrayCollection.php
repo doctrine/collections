@@ -1,12 +1,14 @@
 <?php
 
-namespace Doctrine\Common\Collections;
+namespace Doctrine\Collections;
 
 use ArrayIterator;
 use Closure;
-use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Doctrine\Collections\Expr\ClosureExpressionVisitor;
+use Doctrine\Common\Collections\Collection as OldCollection;
+use Doctrine\Common\Collections\Selectable as OldSelectable;
 use Traversable;
-
+use const ARRAY_FILTER_USE_BOTH;
 use function array_filter;
 use function array_key_exists;
 use function array_keys;
@@ -25,8 +27,6 @@ use function reset;
 use function spl_object_hash;
 use function uasort;
 
-use const ARRAY_FILTER_USE_BOTH;
-
 /**
  * An ArrayCollection is a Collection implementation that wraps a regular PHP array.
  *
@@ -42,7 +42,7 @@ use const ARRAY_FILTER_USE_BOTH;
  * @template-implements Selectable<TKey,T>
  * @psalm-consistent-constructor
  */
-class ArrayCollection implements Collection, Selectable
+class ArrayCollection implements OldCollection, OldSelectable
 {
     /**
      * An array containing the entries of this collection.

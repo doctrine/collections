@@ -1,13 +1,14 @@
 <?php
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Collections\Expr;
 
+use Doctrine\Common\Collections\Expr\Expression as OldExpression;
 use RuntimeException;
 
 /**
  * Expression of Expressions combined by AND or OR operation.
  */
-class CompositeExpression implements Expression
+class CompositeExpression implements OldExpression
 {
     public const TYPE_AND = 'AND';
     public const TYPE_OR  = 'OR';

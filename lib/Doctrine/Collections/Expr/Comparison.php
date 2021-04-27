@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Collections\Expr;
 
 /**
  * Comparison of a field with a value by the given operator.

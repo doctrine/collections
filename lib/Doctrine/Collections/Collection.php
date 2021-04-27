@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Common\Collections;
+namespace Doctrine\Collections;
 
 use ArrayAccess;
 use Closure;

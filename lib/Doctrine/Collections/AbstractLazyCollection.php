@@ -1,8 +1,9 @@
 <?php
 
-namespace Doctrine\Common\Collections;
+namespace Doctrine\Collections;
 
 use Closure;
+use Doctrine\Common\Collections\Collection as OldCollection;
 use Traversable;
 
 /**
@@ -13,7 +14,7 @@ use Traversable;
  * @psalm-template T
  * @template-implements Collection<TKey,T>
  */
-abstract class AbstractLazyCollection implements Collection
+abstract class AbstractLazyCollection implements OldCollection
 {
     /**
      * The backed collection to use

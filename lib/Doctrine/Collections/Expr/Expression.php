@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Common\Collections\Expr;
+namespace Doctrine\Collections\Expr;
 
 /**
  * Expression for the {@link Selectable} interface.
