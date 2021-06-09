@@ -49,5 +49,10 @@
         <RawObjectIteration errorLevel="info" />
 
         <InvalidStringClass errorLevel="info" />
+        <UnsafeGenericInstantiation>
+            <errorLevel type="suppress">
+                <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
+            </errorLevel>
+        </UnsafeGenericInstantiation>
     </issueHandlers>
 </psalm>
