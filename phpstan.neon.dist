@@ -10,5 +10,5 @@ parameters:
                 - 'lib/Doctrine/Common/Collections/ArrayCollection.php'
                 - 'lib/Doctrine/Common/Collections/Criteria.php'
         -
-            message: '~Array \(array\<TKey, T\>\) does not accept key int\.~'
+            message: '~Array \(array\<TKey of \(int\|string\), T\>\) does not accept key int\.~'
             path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
