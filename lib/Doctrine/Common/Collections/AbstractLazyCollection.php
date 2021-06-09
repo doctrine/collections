@@ -8,7 +8,6 @@ use Traversable;
 /**
  * Lazy collection that is backed by a concrete collection
  *
- * @phpstan-template TKey
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-implements Collection<TKey,T>

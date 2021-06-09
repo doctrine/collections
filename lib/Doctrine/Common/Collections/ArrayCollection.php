@@ -35,7 +35,6 @@ use const ARRAY_FILTER_USE_BOTH;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
- * @phpstan-template TKey
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-implements Collection<TKey,T>
@@ -92,7 +91,6 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-template K of array-key
      * @psalm-template V
-     * @phpstan-template K
      *
      * @psalm-param array<K,V> $elements
      * @psalm-return static<K,V>
