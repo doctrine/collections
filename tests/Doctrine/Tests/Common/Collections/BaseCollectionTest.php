@@ -46,6 +46,26 @@ abstract class BaseCollectionTest extends TestCase
         self::assertFalse($exists);
     }
 
+    public function testFindFirst(): void
+    {
+        $this->collection->add('one');
+        $this->collection->add('two');
+        $one = $this->collection->findFirst(static function ($k, $e) {
+            return $e === 'one';
+        });
+        self::assertSame('one', $one);
+    }
+
+    public function testFindFirstNotFound(): void
+    {
+        $this->collection->add('one');
+        $this->collection->add('two');
+        $other = $this->collection->findFirst(static function ($k, $e) {
+            return $e === 'other';
+        });
+        self::assertNull($other);
+    }
+
     public function testMap(): void
     {
         $this->collection->add(1);
@@ -54,6 +74,19 @@ abstract class BaseCollectionTest extends TestCase
             return $e * 2;
         });
         self::assertEquals([2, 4], $res->toArray());
+    }
+
+    public function testReduce(): void
+    {
+        $this->collection->add(1);
+        $this->collection->add(2);
+        $this->collection->add(3);
+        $this->collection->add(4);
+
+        $res = $this->collection->reduce(static function ($sum, $e) {
+            return $sum + $e;
+        });
+        self::assertSame(10, $res);
     }
 
     public function testFilter(): void

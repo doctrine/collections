@@ -213,6 +213,19 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     public function exists(Closure $p): bool;
 
     /**
+     * Returns the first element of this collection that satisfies the predicate p.
+     *
+     * @param Closure $p The predicate.
+     *
+     * @return mixed The first element respecting the predicate,
+     *               null if no element respects the predicate.
+     *
+     * @psalm-param Closure(TKey=, T=):bool $p
+     * @psalm-return T|null
+     */
+    public function findFirst(Closure $p);
+
+    /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
      *
@@ -247,6 +260,22 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-return Collection<TKey, U>
      */
     public function map(Closure $func): self;
+
+    /**
+     * Applies iteratively the given function to each element in the collection,
+     * so as to reduce the collection to a single value.
+     *
+     * @param mixed $initial
+     *
+     * @return mixed
+     *
+     * @psalm-template TReturn
+     * @psalm-template TInitial
+     * @psalm-param Closure(TReturn|TInitial|null, T):(TInitial|TReturn) $func
+     * @psalm-param TInitial|null $initial
+     * @psalm-return TReturn|TInitial|null
+     */
+    public function reduce(Closure $func, $initial = null);
 
     /**
      * Partitions this collection in two collections according to a predicate.

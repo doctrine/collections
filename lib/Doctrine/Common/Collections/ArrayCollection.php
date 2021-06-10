@@ -13,6 +13,7 @@ use function array_filter;
 use function array_key_exists;
 use function array_keys;
 use function array_map;
+use function array_reduce;
 use function array_reverse;
 use function array_search;
 use function array_slice;
@@ -351,6 +352,14 @@ class ArrayCollection implements Collection, Selectable
 
     /**
      * {@inheritDoc}
+     */
+    public function reduce(Closure $func, $initial = null)
+    {
+        return array_reduce($this->elements, $func, $initial);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @return static
      *
@@ -359,6 +368,20 @@ class ArrayCollection implements Collection, Selectable
     public function filter(Closure $p): Collection
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findFirst(Closure $p)
+    {
+        foreach ($this->elements as $key => $element) {
+            if ($p($key, $element)) {
+                return $element;
+            }
+        }
+
+        return null;
     }
 
     public function forAll(Closure $p): bool

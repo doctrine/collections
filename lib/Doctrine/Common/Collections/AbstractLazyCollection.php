@@ -205,6 +205,16 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function findFirst(Closure $func)
+    {
+        $this->initialize();
+
+        return $this->collection->findFirst($func);
+    }
+
+    /**
      * @return Collection<mixed>
      *
      * @psalm-return Collection<TKey, T>
@@ -235,6 +245,16 @@ abstract class AbstractLazyCollection implements Collection
         $this->initialize();
 
         return $this->collection->map($func);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function reduce(Closure $func, $initial = null)
+    {
+        $this->initialize();
+
+        return $this->collection->reduce($func, $initial);
     }
 
     /**
