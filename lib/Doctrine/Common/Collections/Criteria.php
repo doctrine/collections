@@ -19,7 +19,7 @@ class Criteria
 
     public const DESC = 'DESC';
 
-    /** @var ExpressionBuilder|null */
+    /** @var ExpressionBuilder */
     private static $expressionBuilder;
 
     /** @var Expression|null */
