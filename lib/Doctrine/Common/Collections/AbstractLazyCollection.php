@@ -279,7 +279,6 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @return Traversable<int|string, mixed>
-     *
      * @psalm-return Traversable<TKey,T>
      */
     public function getIterator()
@@ -292,9 +291,9 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      *
-     * @return bool
-     *
      * @psalm-param TKey $offset
+     *
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -307,10 +306,9 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @param int|string $offset
+     * @psalm-param TKey $offset
      *
      * @return mixed
-     *
-     * @psalm-param TKey $offset
      */
     public function offsetGet($offset)
     {
@@ -323,7 +321,6 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @param mixed $value
-     *
      * @psalm-param TKey $offset
      */
     public function offsetSet($offset, $value)

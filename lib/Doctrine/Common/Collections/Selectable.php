@@ -24,7 +24,6 @@ interface Selectable
      * returns a new collection containing these elements.
      *
      * @return Collection<mixed>
-     *
      * @psalm-return Collection<TKey,T>
      */
     public function matching(Criteria $criteria);
