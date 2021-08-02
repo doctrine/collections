@@ -342,12 +342,12 @@ class ArrayCollection implements Collection, Selectable
      * @return static
      *
      * @psalm-template U
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param Closure(T=, TKey=):U $func
      * @psalm-return static<TKey, U>
      */
     public function map(Closure $func): Collection
     {
-        return $this->createFrom(array_map($func, $this->elements));
+        return $this->createFrom(array_map($func, $this->elements, array_keys($this->elements)));
     }
 
     /**
