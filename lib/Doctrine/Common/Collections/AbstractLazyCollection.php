@@ -3,6 +3,7 @@
 namespace Doctrine\Common\Collections;
 
 use Closure;
+use ReturnTypeWillChange;
 use Traversable;
 
 /**
@@ -30,6 +31,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         $this->initialize();
@@ -281,6 +283,7 @@ abstract class AbstractLazyCollection implements Collection
      * @return Traversable<int|string, mixed>
      * @psalm-return Traversable<TKey,T>
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         $this->initialize();
@@ -295,6 +298,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         $this->initialize();
@@ -310,6 +314,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $this->initialize();
@@ -323,6 +328,7 @@ abstract class AbstractLazyCollection implements Collection
      * @param mixed $value
      * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->initialize();
@@ -334,6 +340,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->initialize();

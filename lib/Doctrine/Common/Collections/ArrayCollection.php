@@ -5,6 +5,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use ReturnTypeWillChange;
 use Traversable;
 
 use function array_filter;
@@ -170,6 +171,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->containsKey($offset);
@@ -182,6 +184,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -192,6 +195,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (! isset($offset)) {
@@ -210,6 +214,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->remove($offset);
@@ -282,6 +287,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->elements);
@@ -324,6 +330,7 @@ class ArrayCollection implements Collection, Selectable
      * @return Traversable<int|string, mixed>
      * @psalm-return Traversable<TKey,T>
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->elements);

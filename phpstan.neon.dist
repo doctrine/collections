@@ -12,3 +12,6 @@ parameters:
         -
             message: '~Array \(array\<TKey of \(int\|string\), T\>\) does not accept key int\.~'
             path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
+
+        # This class is new in PHP 8.1 and PHPStan does not know it yet.
+        - '/Attribute class ReturnTypeWillChange does not exist./'
