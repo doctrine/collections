@@ -55,7 +55,6 @@ class ArrayCollection implements Collection, Selectable
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
-     *
      * @psalm-param array<TKey,T> $elements
      */
     public function __construct(array $elements = [])
@@ -86,14 +85,13 @@ class ArrayCollection implements Collection, Selectable
      * instance should be created when constructor semantics have changed.
      *
      * @param array $elements Elements.
+     * @psalm-param array<K,V> $elements
      *
      * @return static
+     * @psalm-return static<K,V>
      *
      * @psalm-template K of array-key
      * @psalm-template V
-     *
-     * @psalm-param array<K,V> $elements
-     * @psalm-return static<K,V>
      */
     protected function createFrom(array $elements)
     {
@@ -168,9 +166,9 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      *
-     * @return bool
-     *
      * @psalm-param TKey $offset
+     *
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -324,7 +322,6 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return Traversable<int|string, mixed>
-     *
      * @psalm-return Traversable<TKey,T>
      */
     public function getIterator()
@@ -335,11 +332,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      *
+     * @psalm-param Closure(T=):U $func
+     *
      * @return static
+     * @psalm-return static<TKey, U>
      *
      * @psalm-template U
-     * @psalm-param Closure(T=):U $func
-     * @psalm-return static<TKey, U>
      */
     public function map(Closure $func)
     {
@@ -350,7 +348,6 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
-     *
      * @psalm-return static<TKey,T>
      */
     public function filter(Closure $p)
