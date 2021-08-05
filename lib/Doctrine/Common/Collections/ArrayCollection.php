@@ -5,6 +5,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use ReturnTypeWillChange;
 use Traversable;
 
 use function array_filter;
@@ -35,7 +36,6 @@ use const ARRAY_FILTER_USE_BOTH;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
- * @phpstan-template TKey
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-implements Collection<TKey,T>
@@ -56,7 +56,6 @@ class ArrayCollection implements Collection, Selectable
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
-     *
      * @psalm-param array<TKey,T> $elements
      */
     public function __construct(array $elements = [])
@@ -87,15 +86,13 @@ class ArrayCollection implements Collection, Selectable
      * instance should be created when constructor semantics have changed.
      *
      * @param array $elements Elements.
+     * @psalm-param array<K,V> $elements
      *
      * @return static
+     * @psalm-return static<K,V>
      *
      * @psalm-template K of array-key
      * @psalm-template V
-     * @phpstan-template K
-     *
-     * @psalm-param array<K,V> $elements
-     * @psalm-return static<K,V>
      */
     protected function createFrom(array $elements)
     {
@@ -170,10 +167,11 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      *
-     * @return bool
-     *
      * @psalm-param TKey $offset
+     *
+     * @return bool
      */
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->containsKey($offset);
@@ -186,6 +184,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -196,6 +195,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (! isset($offset)) {
@@ -214,6 +214,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->remove($offset);
@@ -286,6 +287,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->elements);
@@ -326,9 +328,9 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return Traversable<int|string, mixed>
-     *
      * @psalm-return Traversable<TKey,T>
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->elements);
@@ -337,11 +339,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      *
+     * @psalm-param Closure(T=):U $func
+     *
      * @return static
+     * @psalm-return static<TKey, U>
      *
      * @psalm-template U
-     * @psalm-param Closure(T=):U $func
-     * @psalm-return static<TKey, U>
      */
     public function map(Closure $func)
     {
@@ -352,7 +355,6 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
-     *
      * @psalm-return static<TKey,T>
      */
     public function filter(Closure $p)
