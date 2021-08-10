@@ -327,6 +327,8 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @param mixed $value
      * @psalm-param TKey $offset
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
@@ -339,6 +341,8 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @psalm-param TKey $offset
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetUnset($offset)
