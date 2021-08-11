@@ -183,6 +183,8 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @psalm-param TKey $offset
+     *
+     * @return mixed
      */
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
@@ -194,6 +196,8 @@ class ArrayCollection implements Collection, Selectable
      * Required by interface ArrayAccess.
      *
      * {@inheritDoc}
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
@@ -213,6 +217,8 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @psalm-param TKey $offset
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetUnset($offset)
