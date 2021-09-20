@@ -294,8 +294,6 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      *
-     * @psalm-param TKey $offset
-     *
      * @return bool
      */
     #[ReturnTypeWillChange]
@@ -308,9 +306,6 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
-     *
-     * @param int|string $offset
-     * @psalm-param TKey $offset
      *
      * @return mixed
      */
@@ -325,9 +320,6 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      *
-     * @param mixed $value
-     * @psalm-param TKey $offset
-     *
      * @return void
      */
     #[ReturnTypeWillChange]
@@ -339,8 +331,6 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
-     *
-     * @psalm-param TKey $offset
      *
      * @return void
      */
