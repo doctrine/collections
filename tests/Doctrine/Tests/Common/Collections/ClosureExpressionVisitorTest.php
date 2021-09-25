@@ -371,8 +371,7 @@ class ClosureExpressionVisitorTest extends TestCase
 
         usort($objects, $sort);
 
-        self::assertSame($firstElement, $objects[0]);
-        self::assertSame($secondElement, $objects[1]);
+        self::assertSame([$firstElement, $secondElement], $objects);
     }
 
     public function testSortDelegate(): void
