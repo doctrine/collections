@@ -81,6 +81,14 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
+    public function testGetObjectFieldValueBlankAccessor(): void
+    {
+        $object = new TestObjectBlankGetter(1);
+
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
+    }
+
     public function testGetObjectFieldValueMagicCallMethod(): void
     {
         $object = new TestObject(1, 2, true, 3);
@@ -539,5 +547,21 @@ class TestObjectBothPublic
     public function getFooBar()
     {
         return $this->foo_bar;
+    }
+}
+
+class TestObjectBlankGetter
+{
+    /** @var int|null */
+    public $fooBar;
+
+    public function __construct(?int $fooBar = null)
+    {
+        $this->fooBar = $fooBar;
+    }
+
+    public function fooBar(): ?int
+    {
+        return $this->fooBar;
     }
 }
