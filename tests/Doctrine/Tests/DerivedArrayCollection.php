@@ -13,6 +13,9 @@ final class DerivedArrayCollection extends ArrayCollection
     /** @var stdClass */
     private $foo;
 
+    /**
+     * @param mixed[] $elements
+     */
     public function __construct(stdClass $foo, array $elements = [])
     {
         $this->foo = $foo;
@@ -20,7 +23,12 @@ final class DerivedArrayCollection extends ArrayCollection
         parent::__construct($elements);
     }
 
-    protected function createFrom(array $elements) : self
+    /**
+     * @param mixed[] $elements
+     *
+     * @return self<mixed>
+     */
+    protected function createFrom(array $elements): self
     {
         return new static($this->foo, $elements);
     }

@@ -6,6 +6,8 @@
     <arg name="cache" value=".phpcs-cache"/>
     <arg name="colors"/>
 
+    <config name="php_version" value="70100"/>
+
     <!-- Ignore warnings, show progress of the run and show sniff names -->
     <arg value="nps"/>
 
@@ -14,8 +16,8 @@
 
     <rule ref="Doctrine">
         <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"/>
 
         <!-- Since Collections are built around mixed content, this has no value here -->
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification"/>
@@ -31,11 +33,14 @@
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.WriteOnlyProperty">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
         <exclude-pattern>lib/Doctrine/Common/Collections/AbstractLazyCollection.php</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
+        <exclude-pattern>tests/Doctrine/Tests/Common/Collections/ClosureExpressionVisitorTest.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
+        <exclude-pattern>tests/Doctrine/Tests/Common/Collections/ClosureExpressionVisitorTest.php</exclude-pattern>
     </rule>
 </ruleset>

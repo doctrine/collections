@@ -33,7 +33,6 @@
         <MissingReturnType errorLevel="info" />
         <MissingPropertyType errorLevel="info" />
         <InvalidDocblock errorLevel="info" />
-        <MisplacedRequiredParam errorLevel="info" />
 
         <PropertyNotSetInConstructor errorLevel="info" />
         <MissingConstructor errorLevel="info" />
@@ -50,5 +49,17 @@
         <RawObjectIteration errorLevel="info" />
 
         <InvalidStringClass errorLevel="info" />
+        <UnsafeGenericInstantiation>
+            <errorLevel type="suppress">
+                <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
+            </errorLevel>
+        </UnsafeGenericInstantiation>
+
+        <UndefinedAttributeClass>
+            <errorLevel type="suppress">
+                <!-- This class is new in PHP 8.1 and Psalm does not know it yet. -->
+                <referencedClass name="ReturnTypeWillChange"/>
+            </errorLevel>
+        </UndefinedAttributeClass>
     </issueHandlers>
 </psalm>
