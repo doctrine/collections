@@ -27,7 +27,7 @@ use IteratorAggregate;
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-extends IteratorAggregate<TKey, T>
- * @template-extends ArrayAccess<TKey|null, T>
+ * @template-extends ArrayAccess<TKey, T>
  */
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -123,7 +123,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed[] The values of all elements in the collection, in the
      *                 order they appear in the collection.
-     * @psalm-return T[]
+     * @psalm-return list<T>
      */
     public function getValues();
 
