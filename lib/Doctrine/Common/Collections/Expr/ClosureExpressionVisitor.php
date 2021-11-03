@@ -5,6 +5,7 @@ namespace Doctrine\Common\Collections\Expr;
 use ArrayAccess;
 use Closure;
 use RuntimeException;
+
 use function explode;
 use function in_array;
 use function is_array;
