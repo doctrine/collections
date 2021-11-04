@@ -6,6 +6,7 @@ use ArrayAccess;
 use Closure;
 use RuntimeException;
 
+use function explode;
 use function in_array;
 use function is_array;
 use function is_scalar;
@@ -38,6 +39,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function getObjectFieldValue($object, $field)
     {
+        if (strpos($field, '.') !== false) {
+            [$field, $subField] = explode('.', $field, 2);
+            $object             = self::getObjectFieldValue($object, $field);
+
+            return self::getObjectFieldValue($object, $subField);
+        }
+
         if (is_array($object)) {
             return $object[$field];
         }
