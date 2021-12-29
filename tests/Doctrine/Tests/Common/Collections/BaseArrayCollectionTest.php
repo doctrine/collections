@@ -296,7 +296,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(null, $collection->get('non-existent'), 'Get non existent element');
     }
 
-    public function testMatchingWithSortingPreservesyKeys(): void
+    public function testMatchingWithSortingPreserveKeys(): void
     {
         $object1 = new stdClass();
         $object2 = new stdClass();
