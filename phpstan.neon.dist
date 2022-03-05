@@ -10,8 +10,5 @@ parameters:
                 - 'lib/Doctrine/Common/Collections/ArrayCollection.php'
                 - 'lib/Doctrine/Common/Collections/Criteria.php'
         -
-            message: '~Array \(array\<TKey of \(int\|string\), T\>\) does not accept key int\.~'
-            path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
-        -
             message: '~Parameter #1 \$key of method Doctrine\\Common\\Collections\\ArrayCollection<TKey of \(int\|string\),T>::set\(\) expects TKey of \(int\|string\), int\|string given\.~'
             path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
