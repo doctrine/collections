@@ -158,6 +158,16 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
+     * @return list<T>
+     */
+    public function toList(): array
+    {
+        $this->initialize();
+
+        return $this->collection->toList();
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function first()

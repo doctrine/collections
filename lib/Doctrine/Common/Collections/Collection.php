@@ -28,6 +28,8 @@ use IteratorAggregate;
  * @psalm-template T
  * @template-extends IteratorAggregate<TKey, T>
  * @template-extends ArrayAccess<TKey, T>
+ *
+ * @method array toList()
  */
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -146,6 +148,13 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-return array<TKey,T>
      */
     public function toArray();
+
+    ///**
+    // * Gets a native PHP list representation of the collection.
+    // *
+    // * @psalm-return list<T>
+    // */
+    //public function toList(): array;
 
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.

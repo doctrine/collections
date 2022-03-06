@@ -99,4 +99,19 @@ class CollectionTest extends BaseCollectionTest
         self::assertEquals(1, count($col));
         self::assertEquals('baz', $col[0]->foo);
     }
+
+    public function testToList(): void
+    {
+        $this->assertSame([], $this->collection->toList());
+
+        $this->collection->add('foo');
+        $this->collection->add('bar');
+        $this->assertSame(['foo', 'bar'], $this->collection->toList());
+        $this->collection->clear();
+
+        $this->collection->set('key1', 'foo');
+        $this->collection->set('key2', 'bar');
+        $this->assertSame(['foo', 'bar'], $this->collection->toList());
+        $this->collection->clear();
+    }
 }
