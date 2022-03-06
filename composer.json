@@ -23,8 +23,8 @@
     "require-dev": {
         "phpunit/phpunit": "^7.5 || ^8.5 || ^9.1.5",
         "doctrine/coding-standard": "^9.0",
-        "phpstan/phpstan": "^1",
-        "vimeo/psalm": "^4.2.1"
+        "phpstan/phpstan": "^1.4.8",
+        "vimeo/psalm": "^4.22"
     },
     "autoload": {
         "psr-4": { "Doctrine\\Common\\Collections\\": "lib/Doctrine/Common/Collections" }

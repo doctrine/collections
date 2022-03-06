@@ -292,7 +292,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @param TKey $offset
      *
      * @return bool
      */
@@ -305,7 +305,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @param TKey $offset
      *
      * @return mixed
      */
@@ -318,7 +318,8 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @param TKey|null $offset
+     * @param T         $value
      *
      * @return void
      */
@@ -330,7 +331,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @param TKey $offset
      *
      * @return void
      */
