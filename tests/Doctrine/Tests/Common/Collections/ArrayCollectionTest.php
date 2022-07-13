@@ -22,7 +22,7 @@ class ArrayCollectionTest extends BaseArrayCollectionTest
     /**
      * @param mixed[] $elements
      *
-     * @return Collection<mixed>
+     * @return ArrayCollection<mixed>
      */
     protected function buildCollection(array $elements = []): Collection
     {
@@ -37,6 +37,12 @@ class ArrayCollectionTest extends BaseArrayCollectionTest
 
         $this->assertIsArray($unserializeCollection->getValues());
         $this->assertCount(0, $unserializeCollection->getValues());
+    }
+
+    public function testToList(): void
+    {
+        $this->assertSame(['foo', 'bar'], $this->buildCollection(['foo', 'bar'])->toList());
+        $this->assertSame(['foo', 'bar'], $this->buildCollection(['key1' => 'foo', 'key2' => 'bar'])->toList());
     }
 }
 

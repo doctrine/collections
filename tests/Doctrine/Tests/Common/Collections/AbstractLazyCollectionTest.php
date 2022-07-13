@@ -113,4 +113,10 @@ class AbstractLazyCollectionTest extends BaseCollectionTest
         self::assertCount(1, $collection);
         self::assertFalse(isset($collection[0]));
     }
+
+    public function testToList(): void
+    {
+        $this->assertSame(['foo', 'bar'], $this->buildCollection(['foo', 'bar'])->toList());
+        $this->assertSame(['foo', 'bar'], $this->buildCollection(['key1' => 'foo', 'key2' => 'bar'])->toList());
+    }
 }

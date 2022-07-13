@@ -75,6 +75,17 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
+     * @return list<T>
+     */
+    public function toList(): array
+    {
+        if (\PHP_VERSION_ID >= 80100 && \array_is_list($this->elements)) {
+            return $this->elements;
+        }
+        return \array_values($this->elements);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function first()
