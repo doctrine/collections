@@ -3,12 +3,6 @@ parameters:
     paths:
         - lib
     ignoreErrors:
-        # Making classes final as suggested would be a BC-break
-        -
-            message: '~Unsafe usage of new static\(\)\.~'
-            paths:
-                - 'lib/Doctrine/Common/Collections/ArrayCollection.php'
-                - 'lib/Doctrine/Common/Collections/Criteria.php'
         -
             message: '~Parameter #1 \$key of method Doctrine\\Common\\Collections\\ArrayCollection<TKey of \(int\|string\),T>::set\(\) expects TKey of \(int\|string\), int\|string given\.~'
             path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
