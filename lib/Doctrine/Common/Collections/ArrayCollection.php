@@ -7,6 +7,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Stringable;
 use Traversable;
 
 use function array_filter;
@@ -44,7 +45,7 @@ use const ARRAY_FILTER_USE_BOTH;
  * @template-implements Selectable<TKey,T>
  * @psalm-consistent-constructor
  */
-class ArrayCollection implements Collection, Selectable
+class ArrayCollection implements Collection, Selectable, Stringable
 {
     /**
      * An array containing the entries of this collection.
@@ -87,7 +88,6 @@ class ArrayCollection implements Collection, Selectable
      * @param array $elements Elements.
      * @psalm-param array<K,V> $elements
      *
-     * @return static
      * @psalm-return static<K,V>
      *
      * @psalm-template K of array-key

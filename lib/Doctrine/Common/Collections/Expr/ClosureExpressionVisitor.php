@@ -16,10 +16,10 @@ use function iterator_to_array;
 use function method_exists;
 use function preg_match;
 use function preg_replace_callback;
-use function strlen;
-use function strpos;
+use function str_contains;
+use function str_ends_with;
+use function str_starts_with;
 use function strtoupper;
-use function substr;
 
 /**
  * Walks an expression graph and turns it into a PHP closure.
@@ -38,7 +38,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function getObjectFieldValue(object|array $object, string $field): mixed
     {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             [$field, $subField] = explode('.', $field, 2);
             $object             = self::getObjectFieldValue($object, $field);
 
@@ -79,9 +79,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
 
         // camelcase field name to support different variable naming conventions
-        $ccField = preg_replace_callback('/_(.?)/', static function ($matches) {
-            return strtoupper($matches[1]);
-        }, $field);
+        $ccField = preg_replace_callback('/_(.?)/', static fn ($matches) => strtoupper((string) $matches[1]), $field);
 
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
@@ -100,9 +98,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     public static function sortByField(string $name, int $orientation = 1, ?Closure $next = null): Closure
     {
         if (! $next) {
-            $next = static function (): int {
-                return 0;
-            };
+            $next = static fn (): int => 0;
         }
 
         return static function ($a, $b) use ($name, $next, $orientation): int {
@@ -118,85 +114,42 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
-    public function walkComparison(Comparison $comparison): mixed
+    public function walkComparison(Comparison $comparison): Closure
     {
         $field = $comparison->getField();
-        $value = $comparison->getValue()->getValue(); // shortcut for walkValue()
+        $value = $comparison->getValue()->getValue();
 
-        switch ($comparison->getOperator()) {
-            case Comparison::EQ:
-                return static function ($object) use ($field, $value): bool {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
-                };
+        return match ($comparison->getOperator()) {
+            Comparison::EQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) === $value,
+            Comparison::NEQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) !== $value,
+            Comparison::LT => static fn ($object): bool => self::getObjectFieldValue($object, $field) < $value,
+            Comparison::LTE => static fn ($object): bool => self::getObjectFieldValue($object, $field) <= $value,
+            Comparison::GT => static fn ($object): bool => self::getObjectFieldValue($object, $field) > $value,
+            Comparison::GTE => static fn ($object): bool => self::getObjectFieldValue($object, $field) >= $value,
+            Comparison::IN => static function ($object) use ($field, $value): bool {
+                $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
-            case Comparison::NEQ:
-                return static function ($object) use ($field, $value): bool {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
-                };
+                return in_array($fieldValue, $value, is_scalar($fieldValue));
+            },
+            Comparison::NIN => static function ($object) use ($field, $value): bool {
+                $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
-            case Comparison::LT:
-                return static function ($object) use ($field, $value): bool {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
-                };
+                return ! in_array($fieldValue, $value, is_scalar($fieldValue));
+            },
+            Comparison::CONTAINS => static fn ($object): bool => str_contains((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
+                $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
-            case Comparison::LTE:
-                return static function ($object) use ($field, $value): bool {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
-                };
+                if (! is_array($fieldValues)) {
+                    $fieldValues = iterator_to_array($fieldValues);
+                }
 
-            case Comparison::GT:
-                return static function ($object) use ($field, $value): bool {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
-                };
-
-            case Comparison::GTE:
-                return static function ($object) use ($field, $value): bool {
-                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
-                };
-
-            case Comparison::IN:
-                return static function ($object) use ($field, $value): bool {
-                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-
-                    return in_array($fieldValue, $value, is_scalar($fieldValue));
-                };
-
-            case Comparison::NIN:
-                return static function ($object) use ($field, $value): bool {
-                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-
-                    return ! in_array($fieldValue, $value, is_scalar($fieldValue));
-                };
-
-            case Comparison::CONTAINS:
-                return static function ($object) use ($field, $value): bool {
-                    return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) !== false;
-                };
-
-            case Comparison::MEMBER_OF:
-                return static function ($object) use ($field, $value): bool {
-                    $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-
-                    if (! is_array($fieldValues)) {
-                        $fieldValues = iterator_to_array($fieldValues);
-                    }
-
-                    return in_array($value, $fieldValues, true);
-                };
-
-            case Comparison::STARTS_WITH:
-                return static function ($object) use ($field, $value): bool {
-                    return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) === 0;
-                };
-
-            case Comparison::ENDS_WITH:
-                return static function ($object) use ($field, $value): bool {
-                    return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
-                };
-
-            default:
-                throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator());
-        }
+                return in_array($value, $fieldValues, true);
+            },
+            Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) self::getObjectFieldValue($object, $field), (string) $value),
+            default => throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
+        };
     }
 
     public function walkValue(Value $value): mixed
@@ -204,7 +157,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         return $value->getValue();
     }
 
-    public function walkCompositeExpression(CompositeExpression $expr): mixed
+    public function walkCompositeExpression(CompositeExpression $expr): callable
     {
         $expressionList = [];
 
@@ -212,22 +165,17 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             $expressionList[] = $this->dispatch($child);
         }
 
-        switch ($expr->getType()) {
-            case CompositeExpression::TYPE_AND:
-                return $this->andExpressions($expressionList);
-
-            case CompositeExpression::TYPE_OR:
-                return $this->orExpressions($expressionList);
-
-            default:
-                throw new RuntimeException('Unknown composite ' . $expr->getType());
-        }
+        return match ($expr->getType()) {
+            CompositeExpression::TYPE_AND => $this->andExpressions($expressionList),
+            CompositeExpression::TYPE_OR => $this->orExpressions($expressionList),
+            default => throw new RuntimeException('Unknown composite ' . $expr->getType()),
+        };
     }
 
     /**
      * @param callable[] $expressions
      */
-    private function andExpressions(array $expressions): callable
+    private function andExpressions(array $expressions): Closure
     {
         return static function ($object) use ($expressions): bool {
             foreach ($expressions as $expression) {
@@ -243,7 +191,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     /**
      * @param callable[] $expressions
      */
-    private function orExpressions(array $expressions): callable
+    private function orExpressions(array $expressions): Closure
     {
         return static function ($object) use ($expressions): bool {
             foreach ($expressions as $expression) {

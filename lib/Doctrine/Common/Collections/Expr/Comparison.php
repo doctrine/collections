@@ -9,34 +9,28 @@ namespace Doctrine\Common\Collections\Expr;
  */
 class Comparison implements Expression
 {
-    public const EQ          = '=';
-    public const NEQ         = '<>';
-    public const LT          = '<';
-    public const LTE         = '<=';
-    public const GT          = '>';
-    public const GTE         = '>=';
-    public const IS          = '='; // no difference with EQ
-    public const IN          = 'IN';
-    public const NIN         = 'NIN';
-    public const CONTAINS    = 'CONTAINS';
-    public const MEMBER_OF   = 'MEMBER_OF';
-    public const STARTS_WITH = 'STARTS_WITH';
-    public const ENDS_WITH   = 'ENDS_WITH';
+    final public const EQ          = '=';
+    final public const NEQ         = '<>';
+    final public const LT          = '<';
+    final public const LTE         = '<=';
+    final public const GT          = '>';
+    final public const GTE         = '>=';
+    final public const IS          = '='; // no difference with EQ
+    final public const IN          = 'IN';
+    final public const NIN         = 'NIN';
+    final public const CONTAINS    = 'CONTAINS';
+    final public const MEMBER_OF   = 'MEMBER_OF';
+    final public const STARTS_WITH = 'STARTS_WITH';
+    final public const ENDS_WITH   = 'ENDS_WITH';
 
-    private string $field;
+    private readonly Value $value;
 
-    private string $op;
-
-    private Value $value;
-
-    public function __construct(string $field, string $operator, mixed $value)
+    public function __construct(private readonly string $field, private readonly string $op, mixed $value)
     {
         if (! ($value instanceof Value)) {
             $value = new Value($value);
         }
 
-        $this->field = $field;
-        $this->op    = $operator;
         $this->value = $value;
     }
 

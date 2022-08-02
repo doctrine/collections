@@ -6,11 +6,8 @@ namespace Doctrine\Common\Collections\Expr;
 
 class Value implements Expression
 {
-    private mixed $value;
-
-    public function __construct(mixed $value)
+    public function __construct(private readonly mixed $value)
     {
-        $this->value = $value;
     }
 
     public function getValue(): mixed

@@ -269,13 +269,9 @@ abstract class BaseArrayCollectionTest extends TestCase
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        self::assertTrue($collection->exists(static function ($key, $element) {
-            return $key === 'A' && $element === 'a';
-        }), 'Element exists');
+        self::assertTrue($collection->exists(static fn ($key, $element) => $key === 'A' && $element === 'a'), 'Element exists');
 
-        self::assertFalse($collection->exists(static function ($key, $element) {
-            return $key === 'non-existent' && $element === 'non-existent';
-        }), 'Element not exists');
+        self::assertFalse($collection->exists(static fn ($key, $element) => $key === 'non-existent' && $element === 'non-existent'), 'Element not exists');
     }
 
     public function testFindFirst(): void
@@ -283,9 +279,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        self::assertSame('a', $collection->findFirst(static function ($key, $element) {
-            return $key === 'A' && $element === 'a';
-        }), 'Element exists');
+        self::assertSame('a', $collection->findFirst(static fn ($key, $element) => $key === 'A' && $element === 'a'), 'Element exists');
     }
 
     public function testFindFirstNotFound(): void
@@ -293,9 +287,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         $elements   = [1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0];
         $collection = $this->buildCollection($elements);
 
-        self::assertNull($collection->findFirst(static function ($key, $element) {
-            return $key === 'non-existent' && $element === 'non-existent';
-        }), 'Element does not exists');
+        self::assertNull($collection->findFirst(static fn ($key, $element) => $key === 'non-existent' && $element === 'non-existent'), 'Element does not exists');
     }
 
     public function testIndexOf(): void
