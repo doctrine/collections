@@ -17,11 +17,11 @@ class CompositeExpression implements Expression
     /** @var string */
     private $type;
 
-    /** @var array<int, Expression> */
+    /** @var list<Expression> */
     private $expressions = [];
 
     /**
-     * @param array<int, Expression> $expressions
+     * @param Expression[] $expressions
      *
      * @throws RuntimeException
      */
@@ -45,7 +45,7 @@ class CompositeExpression implements Expression
     /**
      * Returns the list of expressions nested in this composite.
      *
-     * @return array<int, Expression>
+     * @return list<Expression>
      */
     public function getExpressionList(): array
     {

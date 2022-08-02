@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
+    errorLevel="1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -14,40 +14,28 @@
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="info" />
+        <MixedArgument errorLevel="info" />
+        <MixedArgumentTypeCoercion errorLevel="info" />
+        <MixedAssignment errorLevel="info" />
 
-        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
+        <PossiblyNullArgument>
+            <errorLevel type="suppress">
+                <!-- Remove when https://github.com/vimeo/psalm/pull/7759 is released -->
+                <referencedFunction name="Doctrine\Common\Collections\Collection::offsetSet" />
+            </errorLevel>
+        </PossiblyNullArgument>
 
-        <DeprecatedMethod errorLevel="info" />
-        <DeprecatedProperty errorLevel="info" />
-        <DeprecatedClass errorLevel="info" />
-        <DeprecatedConstant errorLevel="info" />
-        <DeprecatedInterface errorLevel="info" />
-        <DeprecatedTrait errorLevel="info" />
+        <UnsafeGenericInstantiation>
+            <errorLevel type="suppress">
+                <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
+            </errorLevel>
+        </UnsafeGenericInstantiation>
 
-        <InternalMethod errorLevel="info" />
-        <InternalProperty errorLevel="info" />
-        <InternalClass errorLevel="info" />
-
-        <MissingClosureReturnType errorLevel="info" />
-        <MissingReturnType errorLevel="info" />
-        <MissingPropertyType errorLevel="info" />
-        <InvalidDocblock errorLevel="info" />
-
-        <PropertyNotSetInConstructor errorLevel="info" />
-        <MissingConstructor errorLevel="info" />
-        <MissingClosureParamType errorLevel="info" />
-        <MissingParamType errorLevel="info" />
-
-        <RedundantCondition errorLevel="info" />
-
-        <DocblockTypeContradiction errorLevel="info" />
-        <RedundantConditionGivenDocblockType errorLevel="info" />
-
-        <UnresolvableInclude errorLevel="info" />
-
-        <RawObjectIteration errorLevel="info" />
-
-        <InvalidStringClass errorLevel="info" />
+        <UndefinedAttributeClass>
+            <errorLevel type="suppress">
+                <!-- This class is new in PHP 8.1 and Psalm does not know it yet. -->
+                <referencedClass name="ReturnTypeWillChange"/>
+            </errorLevel>
+        </UndefinedAttributeClass>
     </issueHandlers>
 </psalm>

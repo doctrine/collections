@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use Closure;
+use ReturnTypeWillChange;
 use Traversable;
 
 /**
  * Lazy collection that is backed by a concrete collection
  *
- * @phpstan-template TKey
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-implements Collection<TKey,T>
@@ -207,16 +207,17 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function findFirst(Closure $func)
+    public function findFirst(Closure $p)
     {
         $this->initialize();
 
-        return $this->collection->findFirst($func);
+        return $this->collection->findFirst($p);
     }
 
     /**
-     * @return Collection<mixed>
+     * @psalm-param Closure(T=, TKey=):bool $p
      *
+     * @return Collection<mixed>
      * @psalm-return Collection<TKey, T>
      */
     public function filter(Closure $p): Collection
@@ -234,11 +235,12 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
+     * @psalm-param Closure(T=):U $func
+     *
      * @return Collection<mixed>
+     * @psalm-return Collection<TKey, U>
      *
      * @psalm-template U
-     * @psalm-param Closure(T=):U $func
-     * @psalm-return Collection<TKey, U>
      */
     public function map(Closure $func): Collection
     {
@@ -288,9 +290,8 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * @return Traversable<mixed>
-     *
-     * @psalm-return Traversable<TKey, T>
+     * @return Traversable<int|string, mixed>
+     * @psalm-return Traversable<TKey,T>
      */
     public function getIterator(): Traversable
     {
@@ -300,11 +301,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
-     *
-     * @psalm-param TKey $offset
+     * @param TKey $offset
      */
     public function offsetExists($offset): bool
     {
@@ -314,14 +311,11 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
+     * @param TKey $offset
      *
      * @return mixed
-     *
-     * @psalm-param TKey $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $this->initialize();
@@ -330,12 +324,8 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
-     * @param mixed      $value
-     *
-     * @psalm-param TKey $offset
+     * @param TKey|null $offset
+     * @param T         $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -344,11 +334,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
-     *
-     * @psalm-param TKey $offset
+     * @param TKey $offset
      */
     public function offsetUnset($offset): void
     {

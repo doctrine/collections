@@ -18,7 +18,6 @@ use function array_reverse;
 use function array_search;
 use function array_slice;
 use function array_values;
-use function assert;
 use function count;
 use function current;
 use function end;
@@ -39,7 +38,6 @@ use const ARRAY_FILTER_USE_BOTH;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
- * @phpstan-template TKey
  * @psalm-template TKey of array-key
  * @psalm-template T
  * @template-implements Collection<TKey,T>
@@ -60,7 +58,6 @@ class ArrayCollection implements Collection, Selectable
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
-     *
      * @psalm-param array<TKey,T> $elements
      */
     public function __construct(array $elements = [])
@@ -91,15 +88,13 @@ class ArrayCollection implements Collection, Selectable
      * instance should be created when constructor semantics have changed.
      *
      * @param array $elements Elements.
+     * @psalm-param array<K,V> $elements
      *
      * @return static
+     * @psalm-return static<K,V>
      *
      * @psalm-template K of array-key
      * @psalm-template V
-     * @phpstan-template K
-     *
-     * @psalm-param array<K,V> $elements
-     * @psalm-return static<K,V>
      */
     protected function createFrom(array $elements)
     {
@@ -172,11 +167,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
-     *
-     * @psalm-param TKey $offset
+     * @param TKey $offset
      */
     public function offsetExists($offset): bool
     {
@@ -186,13 +177,9 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
+     * @param TKey $offset
      *
      * @return mixed
-     *
-     * @psalm-param TKey $offset
      */
     public function offsetGet($offset)
     {
@@ -202,10 +189,8 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * @param int|string|null $offset
-     * @param mixed           $value
-     *
-     * @psalm-param TKey|null $offset
+     * @param TKey|null $offset
+     * @param T         $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -221,11 +206,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
-     *
-     * @param int|string $offset
-     *
-     * @psalm-param TKey $offset
+     * @param TKey $offset
      */
     public function offsetUnset($offset): void
     {
@@ -325,10 +306,9 @@ class ArrayCollection implements Collection, Selectable
     }
 
     /**
-     * Required by interface IteratorAggregate.
-     *
      * {@inheritDoc}
      *
+     * @return Traversable<int|string, mixed>
      * @psalm-return Traversable<TKey, T>
      */
     public function getIterator(): Traversable
@@ -339,11 +319,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      *
+     * @psalm-param Closure(T=):U $func
+     *
      * @return static
+     * @psalm-return static<TKey, U>
      *
      * @psalm-template U
-     * @psalm-param Closure(T=):U $func
-     * @psalm-return static<TKey, U>
      */
     public function map(Closure $func): Collection
     {
@@ -362,7 +343,6 @@ class ArrayCollection implements Collection, Selectable
      * {@inheritDoc}
      *
      * @return static
-     *
      * @psalm-return static<TKey,T>
      */
     public function filter(Closure $p): Collection
@@ -455,8 +435,6 @@ class ArrayCollection implements Collection, Selectable
             foreach (array_reverse($orderings) as $field => $ordering) {
                 $next = ClosureExpressionVisitor::sortByField($field, $ordering === Criteria::DESC ? -1 : 1, $next);
             }
-
-            assert($next instanceof Closure);
 
             uasort($filtered, $next);
         }
