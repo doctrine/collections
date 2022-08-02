@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use Closure;
-use ReturnTypeWillChange;
 use Traversable;
 
 /**
@@ -23,10 +22,9 @@ abstract class AbstractLazyCollection implements Collection
      * @psalm-var Collection<TKey,T>
      * @var Collection<mixed>
      */
-    protected $collection;
+    protected Collection $collection;
 
-    /** @var bool */
-    protected $initialized = false;
+    protected bool $initialized = false;
 
     public function count(): int
     {
@@ -312,11 +310,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * @param TKey $offset
-     *
-     * @return mixed
      */
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         $this->initialize();
 

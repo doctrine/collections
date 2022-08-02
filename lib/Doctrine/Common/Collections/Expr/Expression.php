@@ -9,8 +9,5 @@ namespace Doctrine\Common\Collections\Expr;
  */
 interface Expression
 {
-    /**
-     * @return mixed
-     */
-    public function visit(ExpressionVisitor $visitor);
+    public function visit(ExpressionVisitor $visitor): mixed;
 }

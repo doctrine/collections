@@ -28,11 +28,9 @@ class CompositeExpressionTest extends TestCase
     }
 
     /**
-     * @param string|Value $expression
-     *
      * @dataProvider invalidDataProvider
      */
-    public function testExceptions($expression): void
+    public function testExceptions(string|Value $expression): void
     {
         $type        = CompositeExpression::TYPE_AND;
         $expressions = [$expression];

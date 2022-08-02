@@ -20,20 +20,16 @@ class Criteria
     public const ASC  = 'ASC';
     public const DESC = 'DESC';
 
-    /** @var ExpressionBuilder|null */
-    private static $expressionBuilder;
+    private static ?ExpressionBuilder $expressionBuilder = null;
 
-    /** @var Expression|null */
-    private $expression;
+    private ?Expression $expression = null;
 
     /** @var array<string, string> */
-    private $orderings = [];
+    private array $orderings = [];
 
-    /** @var int|null */
-    private $firstResult;
+    private ?int $firstResult = null;
 
-    /** @var int|null */
-    private $maxResults;
+    private ?int $maxResults = null;
 
     /**
      * Creates an instance of the class.

@@ -52,7 +52,7 @@ class ArrayCollection implements Collection, Selectable
      * @psalm-var array<TKey,T>
      * @var mixed[]
      */
-    private $elements = [];
+    private array $elements = [];
 
     /**
      * Initializes a new ArrayCollection.
@@ -96,7 +96,7 @@ class ArrayCollection implements Collection, Selectable
      * @psalm-template K of array-key
      * @psalm-template V
      */
-    protected function createFrom(array $elements)
+    protected function createFrom(array $elements): static
     {
         return new static($elements);
     }
@@ -178,10 +178,8 @@ class ArrayCollection implements Collection, Selectable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     *
-     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->get($offset);
     }

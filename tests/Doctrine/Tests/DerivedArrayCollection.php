@@ -12,8 +12,7 @@ use stdClass;
  */
 final class DerivedArrayCollection extends ArrayCollection
 {
-    /** @var stdClass */
-    private $foo;
+    private stdClass $foo;
 
     /**
      * @param mixed[] $elements

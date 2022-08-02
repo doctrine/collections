@@ -34,10 +34,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * method, __get, __call).
      *
      * @param object|mixed[] $object
-     *
-     * @return mixed
      */
-    public static function getObjectFieldValue($object, string $field)
+    public static function getObjectFieldValue(object|array $object, string $field): mixed
     {
         if (is_array($object)) {
             return $object[$field];

@@ -41,7 +41,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return true Always TRUE.
      */
-    public function add($element): bool;
+    public function add(mixed $element): bool;
 
     /**
      * Clears the collection, removing all elements.
@@ -57,7 +57,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if the collection contains the element, FALSE otherwise.
      */
-    public function contains($element): bool;
+    public function contains(mixed $element): bool;
 
     /**
      * Checks whether the collection is empty (contains no elements).
@@ -75,7 +75,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      * @psalm-return T|null
      */
-    public function remove($key);
+    public function remove(string|int $key): mixed;
 
     /**
      * Removes the specified element from the collection, if it is found.
@@ -85,7 +85,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeElement($element): bool;
+    public function removeElement(mixed $element): bool;
 
     /**
      * Checks whether the collection contains an element with the specified key/index.
@@ -96,7 +96,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return bool TRUE if the collection contains an element with the specified key/index,
      *              FALSE otherwise.
      */
-    public function containsKey($key): bool;
+    public function containsKey(string|int $key): bool;
 
     /**
      * Gets the element at the specified key/index.
@@ -104,10 +104,9 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @param string|int $key The key/index of the element to retrieve.
      * @psalm-param TKey $key
      *
-     * @return mixed
      * @psalm-return T|null
      */
-    public function get($key);
+    public function get(string|int $key): mixed;
 
     /**
      * Gets all keys/indices of the collection.
@@ -135,7 +134,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-param TKey $key
      * @psalm-param T $value
      */
-    public function set($key, $value): void;
+    public function set(string|int $key, mixed $value): void;
 
     /**
      * Gets a native PHP array representation of the collection.
@@ -148,42 +147,37 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.
      *
-     * @return mixed
      * @psalm-return T|false
      */
-    public function first();
+    public function first(): mixed;
 
     /**
      * Sets the internal iterator to the last element in the collection and returns this element.
      *
-     * @return mixed
      * @psalm-return T|false
      */
-    public function last();
+    public function last(): mixed;
 
     /**
      * Gets the key/index of the element at the current iterator position.
      *
-     * @return int|string|null
      * @psalm-return TKey|null
      */
-    public function key();
+    public function key(): int|string|null;
 
     /**
      * Gets the element of the collection at the current iterator position.
      *
-     * @return mixed
      * @psalm-return T|false
      */
-    public function current();
+    public function current(): mixed;
 
     /**
      * Moves the internal iterator position to the next element and returns this element.
      *
-     * @return mixed
      * @psalm-return T|false
      */
-    public function next();
+    public function next(): mixed;
 
     /**
      * Tests for the existence of an element that satisfies the given predicate.
@@ -205,7 +199,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      *               null if no element respects the predicate.
      * @psalm-return T|null
      */
-    public function findFirst(Closure $p);
+    public function findFirst(Closure $p): mixed;
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
@@ -246,17 +240,15 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Applies iteratively the given function to each element in the collection,
      * so as to reduce the collection to a single value.
      *
-     * @param mixed $initial
      * @psalm-param Closure(TReturn|TInitial|null, T):(TInitial|TReturn) $func
      * @psalm-param TInitial|null $initial
      *
-     * @return mixed
      * @psalm-return TReturn|TInitial|null
      *
      * @psalm-template TReturn
      * @psalm-template TInitial
      */
-    public function reduce(Closure $func, $initial = null);
+    public function reduce(Closure $func, mixed $initial = null): mixed;
 
     /**
      * Partitions this collection in two collections according to a predicate.
@@ -283,7 +275,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
      * @psalm-return TKey|false
      */
-    public function indexOf($element);
+    public function indexOf(mixed $element): int|string|bool;
 
     /**
      * Extracts a slice of $length elements starting at position $offset from the Collection.

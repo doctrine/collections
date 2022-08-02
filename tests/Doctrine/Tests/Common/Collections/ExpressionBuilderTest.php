@@ -15,8 +15,7 @@ use TypeError;
  */
 class ExpressionBuilderTest extends TestCase
 {
-    /** @var ExpressionBuilder */
-    private $builder;
+    private ExpressionBuilder $builder;
 
     protected function setUp(): void
     {
