@@ -275,7 +275,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
      * @psalm-return TKey|false
      */
-    public function indexOf(mixed $element): int|string|bool;
+    public function indexOf(mixed $element): int|string|false;
 
     /**
      * Extracts a slice of $length elements starting at position $offset from the Collection.

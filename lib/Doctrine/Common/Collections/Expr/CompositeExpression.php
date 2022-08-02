@@ -56,10 +56,7 @@ class CompositeExpression implements Expression
         return $this->type;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function visit(ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkCompositeExpression($this);
     }

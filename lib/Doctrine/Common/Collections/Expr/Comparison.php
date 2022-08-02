@@ -55,10 +55,7 @@ class Comparison implements Expression
         return $this->op;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function visit(ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkComparison($this);
     }
