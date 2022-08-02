@@ -13,9 +13,9 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory>./lib/Doctrine/</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>
