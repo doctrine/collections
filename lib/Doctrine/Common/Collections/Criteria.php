@@ -4,8 +4,10 @@ namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
+use Doctrine\Deprecations\Deprecation;
 
 use function array_map;
+use function func_num_args;
 use function strtoupper;
 
 /**
@@ -68,6 +70,15 @@ class Criteria
     public function __construct(?Expression $expression = null, ?array $orderings = null, $firstResult = null, $maxResults = null)
     {
         $this->expression = $expression;
+
+        if ($firstResult === null && func_num_args() > 2) {
+            Deprecation::trigger(
+                'doctrine/collections',
+                'https://github.com/doctrine/collections/pull/311',
+                'Passing null as $firstResult to the constructor of %s is deprecated. Pass 0 instead or omit the argument.',
+                self::class
+            );
+        }
 
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
@@ -194,6 +205,15 @@ class Criteria
      */
     public function setFirstResult($firstResult)
     {
+        if ($firstResult === null) {
+            Deprecation::triggerIfCalledFromOutside(
+                'doctrine/collections',
+                'https://github.com/doctrine/collections/pull/311',
+                'Passing null to %s() is deprecated, pass 0 instead.',
+                __METHOD__
+            );
+        }
+
         $this->firstResult = $firstResult;
 
         return $this;
