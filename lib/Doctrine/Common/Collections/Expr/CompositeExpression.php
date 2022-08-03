@@ -14,8 +14,7 @@ class CompositeExpression implements Expression
     public const TYPE_AND = 'AND';
     public const TYPE_OR  = 'OR';
 
-    /** @var string */
-    private $type;
+    private string $type;
 
     /** @var list<Expression> */
     private $expressions = [];
@@ -57,10 +56,7 @@ class CompositeExpression implements Expression
         return $this->type;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function visit(ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkCompositeExpression($this);
     }

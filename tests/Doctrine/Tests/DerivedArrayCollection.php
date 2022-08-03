@@ -12,8 +12,7 @@ use stdClass;
  */
 final class DerivedArrayCollection extends ArrayCollection
 {
-    /** @var stdClass */
-    private $foo;
+    private stdClass $foo;
 
     /**
      * @param mixed[] $elements
@@ -30,7 +29,7 @@ final class DerivedArrayCollection extends ArrayCollection
      *
      * @return self<mixed>
      */
-    protected function createFrom(array $elements): self
+    protected function createFrom(array $elements): static
     {
         return new static($this->foo, $elements);
     }

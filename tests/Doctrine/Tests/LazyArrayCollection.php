@@ -17,7 +17,7 @@ class LazyArrayCollection extends AbstractLazyCollection
      *
      * @var Collection<mixed>
      */
-    private $collectionOnInitialization;
+    private Collection $collectionOnInitialization;
 
     /**
      * @param Collection<mixed> $collection

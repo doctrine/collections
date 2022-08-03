@@ -23,19 +23,13 @@ class Comparison implements Expression
     public const STARTS_WITH = 'STARTS_WITH';
     public const ENDS_WITH   = 'ENDS_WITH';
 
-    /** @var string */
-    private $field;
+    private string $field;
 
-    /** @var string */
-    private $op;
+    private string $op;
 
-    /** @var Value */
-    private $value;
+    private Value $value;
 
-    /**
-     * @param mixed $value
-     */
-    public function __construct(string $field, string $operator, $value)
+    public function __construct(string $field, string $operator, mixed $value)
     {
         if (! ($value instanceof Value)) {
             $value = new Value($value);
@@ -61,10 +55,7 @@ class Comparison implements Expression
         return $this->op;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function visit(ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkComparison($this);
     }

@@ -34,10 +34,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * method, __get, __call).
      *
      * @param object|mixed[] $object
-     *
-     * @return mixed
      */
-    public static function getObjectFieldValue($object, string $field)
+    public static function getObjectFieldValue(object|array $object, string $field): mixed
     {
         if (is_array($object)) {
             return $object[$field];
@@ -112,10 +110,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function walkComparison(Comparison $comparison)
+    public function walkComparison(Comparison $comparison): mixed
     {
         $field = $comparison->getField();
         $value = $comparison->getValue()->getValue(); // shortcut for walkValue()
@@ -196,18 +191,12 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function walkValue(Value $value)
+    public function walkValue(Value $value): mixed
     {
         return $value->getValue();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function walkCompositeExpression(CompositeExpression $expr)
+    public function walkCompositeExpression(CompositeExpression $expr): mixed
     {
         $expressionList = [];
 

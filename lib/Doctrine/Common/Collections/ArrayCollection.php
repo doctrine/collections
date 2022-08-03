@@ -52,7 +52,7 @@ class ArrayCollection implements Collection, Selectable
      * @psalm-var array<TKey,T>
      * @var mixed[]
      */
-    private $elements = [];
+    private array $elements = [];
 
     /**
      * Initializes a new ArrayCollection.
@@ -73,10 +73,7 @@ class ArrayCollection implements Collection, Selectable
         return $this->elements;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function first()
+    public function first(): mixed
     {
         return reset($this->elements);
     }
@@ -96,47 +93,32 @@ class ArrayCollection implements Collection, Selectable
      * @psalm-template K of array-key
      * @psalm-template V
      */
-    protected function createFrom(array $elements)
+    protected function createFrom(array $elements): static
     {
         return new static($elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function last()
+    public function last(): mixed
     {
         return end($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function key()
+    public function key(): int|string|null
     {
         return key($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function next()
+    public function next(): mixed
     {
         return next($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function current()
+    public function current(): mixed
     {
         return current($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function remove($key)
+    public function remove(string|int $key): mixed
     {
         if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
             return null;
@@ -178,10 +160,8 @@ class ArrayCollection implements Collection, Selectable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     *
-     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->get($offset);
     }
@@ -243,15 +223,12 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function indexOf($element)
+    public function indexOf($element): int|string|false
     {
         return array_search($element, $this->elements, true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get($key)
+    public function get(string|int $key): mixed
     {
         return $this->elements[$key] ?? null;
     }
@@ -293,7 +270,7 @@ class ArrayCollection implements Collection, Selectable
      * This breaks assumptions about the template type, but it would
      * be a backwards-incompatible change to remove this method
      */
-    public function add($element): bool
+    public function add(mixed $element): bool
     {
         $this->elements[] = $element;
 
@@ -334,7 +311,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, $initial = null)
+    public function reduce(Closure $func, $initial = null): mixed
     {
         return array_reduce($this->elements, $func, $initial);
     }
@@ -350,10 +327,7 @@ class ArrayCollection implements Collection, Selectable
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function findFirst(Closure $p)
+    public function findFirst(Closure $p): mixed
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {

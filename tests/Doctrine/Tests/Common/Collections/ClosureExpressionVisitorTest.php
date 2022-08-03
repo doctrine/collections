@@ -21,11 +21,9 @@ use function usort;
  */
 class ClosureExpressionVisitorTest extends TestCase
 {
-    /** @var ClosureExpressionVisitor */
-    private $visitor;
+    private ClosureExpressionVisitor $visitor;
 
-    /** @var ExpressionBuilder */
-    private $builder;
+    private ExpressionBuilder $builder;
 
     protected function setUp(): void
     {
@@ -399,25 +397,15 @@ class ClosureExpressionVisitorTest extends TestCase
 
 class TestObject
 {
-    /** @var mixed */
-    private $foo;
+    private mixed $foo;
 
-    /** @var mixed */
-    private $bar;
+    private mixed $bar;
 
-    /** @var mixed */
-    private $baz;
+    private mixed $baz;
 
-    /** @var mixed */
-    private $qux;
+    private mixed $qux;
 
-    /**
-     * @param mixed $foo
-     * @param mixed $bar
-     * @param mixed $baz
-     * @param mixed $qux
-     */
-    public function __construct($foo = null, $bar = null, $baz = null, $qux = null)
+    public function __construct(mixed $foo = null, mixed $bar = null, mixed $baz = null, mixed $qux = null)
     {
         $this->foo = $foo;
         $this->bar = $bar;
@@ -427,36 +415,25 @@ class TestObject
 
     /**
      * @param array<int, mixed> $arguments
-     *
-     * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         if ($name === 'getqux') {
             return $this->qux;
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFoo()
+    public function getFoo(): mixed
     {
         return $this->foo;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBar()
+    public function getBar(): mixed
     {
         return $this->bar;
     }
 
-    /**
-     * @return mixed
-     */
-    public function isBaz()
+    public function isBaz(): mixed
     {
         return $this->baz;
     }
@@ -464,8 +441,7 @@ class TestObject
 
 class TestObjectNotCamelCase
 {
-    /** @var int|null */
-    private $foo_bar;
+    private ?int $foo_bar = null;
 
     public function __construct(?int $foo_bar)
     {
@@ -480,11 +456,9 @@ class TestObjectNotCamelCase
 
 class TestObjectBothCamelCaseAndUnderscore
 {
-    /** @var int|null */
-    private $foo_bar;
+    private ?int $foo_bar = null;
 
-    /** @var int|null */
-    private $fooBar;
+    private ?int $fooBar = null;
 
     public function __construct(?int $foo_bar = null, ?int $fooBar = null)
     {
@@ -500,11 +474,9 @@ class TestObjectBothCamelCaseAndUnderscore
 
 class TestObjectPublicCamelCaseAndPrivateUnderscore
 {
-    /** @var int|null */
-    private $foo_bar;
+    private ?int $foo_bar = null;
 
-    /** @var int|null */
-    public $fooBar;
+    public ?int $fooBar = null;
 
     public function __construct(?int $foo_bar = null, ?int $fooBar = null)
     {
@@ -520,26 +492,17 @@ class TestObjectPublicCamelCaseAndPrivateUnderscore
 
 class TestObjectBothPublic
 {
-    /** @var mixed */
-    public $foo_bar;
+    public mixed $foo_bar;
 
-    /** @var mixed */
-    public $fooBar;
+    public mixed $fooBar;
 
-    /**
-     * @param mixed $foo_bar
-     * @param mixed $fooBar
-     */
-    public function __construct($foo_bar = null, $fooBar = null)
+    public function __construct(mixed $foo_bar = null, mixed $fooBar = null)
     {
         $this->foo_bar = $foo_bar;
         $this->fooBar  = $fooBar;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFooBar()
+    public function getFooBar(): mixed
     {
         return $this->foo_bar;
     }

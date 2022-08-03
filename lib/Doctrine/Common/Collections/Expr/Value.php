@@ -6,29 +6,19 @@ namespace Doctrine\Common\Collections\Expr;
 
 class Value implements Expression
 {
-    /** @var mixed */
-    private $value;
+    private mixed $value;
 
-    /**
-     * @param mixed $value
-     */
-    public function __construct($value)
+    public function __construct(mixed $value)
     {
         $this->value = $value;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function visit(ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkValue($this);
     }
