@@ -75,7 +75,7 @@ class Criteria
     /**
      * Sets the where expression to evaluate when this Criteria is searched for.
      *
-     * @return Criteria
+     * @return $this
      */
     public function where(Expression $expression): self
     {
@@ -88,7 +88,7 @@ class Criteria
      * Appends the where expression to evaluate when this Criteria is searched for
      * using an AND with previous expression.
      *
-     * @return Criteria
+     * @return $this
      */
     public function andWhere(Expression $expression): self
     {
@@ -108,7 +108,7 @@ class Criteria
      * Appends the where expression to evaluate when this Criteria is searched for
      * using an OR with previous expression.
      *
-     * @return Criteria
+     * @return $this
      */
     public function orWhere(Expression $expression): self
     {
@@ -152,7 +152,7 @@ class Criteria
      *
      * @param array<string, string> $orderings
      *
-     * @return Criteria
+     * @return $this
      */
     public function orderBy(array $orderings): self
     {
@@ -179,7 +179,7 @@ class Criteria
      *
      * @param int|null $firstResult The value to set.
      *
-     * @return Criteria
+     * @return $this
      */
     public function setFirstResult(?int $firstResult): self
     {
@@ -201,7 +201,7 @@ class Criteria
      *
      * @param int|null $maxResults The value to set.
      *
-     * @return Criteria
+     * @return $this
      */
     public function setMaxResults(?int $maxResults): self
     {

@@ -31,6 +31,13 @@ class ClosureExpressionVisitorTest extends TestCase
         $this->builder = new ExpressionBuilder();
     }
 
+    public function testEmbeddedObjectComparison(): void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo.foo', 1));
+        $this->assertTrue($closure(new TestObject(new TestObject(1))));
+        $this->assertFalse($closure(new TestObject(new TestObject(2))));
+    }
+
     public function testGetObjectFieldValueIsAccessor(): void
     {
         $object = new TestObject(1, 2, true);
@@ -79,6 +86,14 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
+    }
+
+    public function testGetObjectFieldValueBlankAccessor(): void
+    {
+        $object = new TestObjectBlankGetter(1);
+
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
+        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueMagicCallMethod(): void
@@ -505,5 +520,20 @@ class TestObjectBothPublic
     public function getFooBar(): mixed
     {
         return $this->foo_bar;
+    }
+}
+
+class TestObjectBlankGetter
+{
+    public ?int $fooBar = null;
+
+    public function __construct(?int $fooBar = null)
+    {
+        $this->fooBar = $fooBar;
+    }
+
+    public function fooBar(): ?int
+    {
+        return $this->fooBar;
     }
 }
