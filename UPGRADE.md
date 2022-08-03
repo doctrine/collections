@@ -68,6 +68,17 @@ You can find a list of major changes to public API below.
 | createFrom(array $elements) | createFrom(array $elements): static |
 | __toString()                | __toString(): string                |
 
+### Doctrine\Common\Collections\Criteria
+
+|            before                       |               after                       |
+|----------------------------------------:|:------------------------------------------|
+| where(Expression $expression): self     | where(Expression $expression): static     |
+| andWhere(Expression $expression): self  | andWhere(Expression $expression): static  |
+| orWhere(Expression $expression): self   | orWhere(Expression $expression): static   |
+| orderBy(array $orderings): self         | orderBy(array $orderings): static         |
+| setFirstResult(?int $firstResult): self | setFirstResult(?int $firstResult): static |
+| setMaxResult(?int $maxResults): self    | setMaxResults(?int $maxResults): static   |
+
 ### Doctrine\Common\Collections\Selectable
 
 |             before           |                   after                  |

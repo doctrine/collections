@@ -74,7 +74,7 @@ class Criteria
      *
      * @return $this
      */
-    public function where(Expression $expression): self
+    public function where(Expression $expression): static
     {
         $this->expression = $expression;
 
@@ -87,7 +87,7 @@ class Criteria
      *
      * @return $this
      */
-    public function andWhere(Expression $expression): self
+    public function andWhere(Expression $expression): static
     {
         if ($this->expression === null) {
             return $this->where($expression);
@@ -107,7 +107,7 @@ class Criteria
      *
      * @return $this
      */
-    public function orWhere(Expression $expression): self
+    public function orWhere(Expression $expression): static
     {
         if ($this->expression === null) {
             return $this->where($expression);
@@ -151,7 +151,7 @@ class Criteria
      *
      * @return $this
      */
-    public function orderBy(array $orderings): self
+    public function orderBy(array $orderings): static
     {
         $this->orderings = array_map(
             static fn (string $ordering): string => strtoupper($ordering) === self::ASC ? self::ASC : self::DESC,
@@ -176,7 +176,7 @@ class Criteria
      *
      * @return $this
      */
-    public function setFirstResult(?int $firstResult): self
+    public function setFirstResult(?int $firstResult): static
     {
         $this->firstResult = $firstResult;
 
@@ -198,7 +198,7 @@ class Criteria
      *
      * @return $this
      */
-    public function setMaxResults(?int $maxResults): self
+    public function setMaxResults(?int $maxResults): static
     {
         $this->maxResults = $maxResults;
 
