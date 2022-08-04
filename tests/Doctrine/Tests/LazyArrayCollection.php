@@ -13,18 +13,11 @@ use Doctrine\Common\Collections\Collection;
 class LazyArrayCollection extends AbstractLazyCollection
 {
     /**
-     * Apply the collection only in method doInitialize
-     *
-     * @var Collection<mixed>
+     * @param Collection<mixed> $collectionOnInitialization Apply the collection only in method doInitialize
      */
-    private Collection $collectionOnInitialization;
-
-    /**
-     * @param Collection<mixed> $collection
-     */
-    public function __construct(Collection $collection)
-    {
-        $this->collectionOnInitialization = $collection;
+    public function __construct(
+        private readonly Collection $collectionOnInitialization
+    ) {
     }
 
     /**

@@ -13,6 +13,8 @@ use function json_encode;
 use function serialize;
 use function unserialize;
 
+use const JSON_THROW_ON_ERROR;
+
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}.
  *
@@ -48,13 +50,12 @@ class SerializableArrayCollection extends ArrayCollection implements Serializabl
 {
     public function serialize(): string
     {
-        return json_encode($this->getKeys());
+        return json_encode($this->getKeys(), JSON_THROW_ON_ERROR);
     }
 
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
-    public function unserialize($serialized): void
+    public function unserialize(string $serialized): void
     {
-        foreach (json_decode($serialized) as $value) {
+        foreach (json_decode(json: $serialized, flags: JSON_THROW_ON_ERROR) as $value) {
             parent::add($value);
         }
     }

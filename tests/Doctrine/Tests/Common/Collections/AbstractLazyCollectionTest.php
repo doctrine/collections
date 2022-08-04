@@ -48,9 +48,7 @@ class AbstractLazyCollectionTest extends BaseCollectionTest
         $collection = $this->buildCollection([1, 'foo', 3]);
         assert($collection instanceof LazyArrayCollection);
 
-        $res = $collection->filter(static function ($value) {
-            return is_numeric($value);
-        });
+        $res = $collection->filter(static fn ($value) => is_numeric($value));
 
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
@@ -59,31 +57,23 @@ class AbstractLazyCollectionTest extends BaseCollectionTest
     {
         $collection = $this->buildCollection(['foo', 'bar']);
 
-        self::assertEquals($collection->forAll(static function ($k, $e) {
-            return is_string($e);
-        }), true);
+        self::assertEquals($collection->forAll(static fn ($k, $e) => is_string($e)), true);
 
-        self::assertEquals($collection->forAll(static function ($k, $e) {
-            return is_array($e);
-        }), false);
+        self::assertEquals($collection->forAll(static fn ($k, $e) => is_array($e)), false);
     }
 
     public function testMapInitializes(): void
     {
         $collection = $this->buildCollection([1, 2]);
 
-        $res = $collection->map(static function ($e) {
-            return $e * 2;
-        });
+        $res = $collection->map(static fn ($e) => $e * 2);
         self::assertEquals([2, 4], $res->toArray());
     }
 
     public function testPartitionInitializes(): void
     {
         $collection = $this->buildCollection([true, false]);
-        $partition  = $collection->partition(static function ($k, $e) {
-            return $e === true;
-        });
+        $partition  = $collection->partition(static fn ($k, $e) => $e === true);
         self::assertEquals($partition[0][0], true);
         self::assertEquals($partition[1][0], false);
     }

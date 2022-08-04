@@ -412,20 +412,12 @@ class ClosureExpressionVisitorTest extends TestCase
 
 class TestObject
 {
-    private mixed $foo;
-
-    private mixed $bar;
-
-    private mixed $baz;
-
-    private mixed $qux;
-
-    public function __construct(mixed $foo = null, mixed $bar = null, mixed $baz = null, mixed $qux = null)
-    {
-        $this->foo = $foo;
-        $this->bar = $bar;
-        $this->baz = $baz;
-        $this->qux = $qux;
+    public function __construct(
+        private readonly mixed $foo = null,
+        private readonly mixed $bar = null,
+        private readonly mixed $baz = null,
+        private readonly mixed $qux = null,
+    ) {
     }
 
     /**
@@ -456,11 +448,8 @@ class TestObject
 
 class TestObjectNotCamelCase
 {
-    private ?int $foo_bar = null;
-
-    public function __construct(?int $foo_bar)
+    public function __construct(private readonly ?int $foo_bar)
     {
-        $this->foo_bar = $foo_bar;
     }
 
     public function getFooBar(): ?int
@@ -471,14 +460,8 @@ class TestObjectNotCamelCase
 
 class TestObjectBothCamelCaseAndUnderscore
 {
-    private ?int $foo_bar = null;
-
-    private ?int $fooBar = null;
-
-    public function __construct(?int $foo_bar = null, ?int $fooBar = null)
+    public function __construct(private readonly ?int $foo_bar = null, private readonly ?int $fooBar = null)
     {
-        $this->foo_bar = $foo_bar;
-        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar(): ?int
@@ -489,14 +472,8 @@ class TestObjectBothCamelCaseAndUnderscore
 
 class TestObjectPublicCamelCaseAndPrivateUnderscore
 {
-    private ?int $foo_bar = null;
-
-    public ?int $fooBar = null;
-
-    public function __construct(?int $foo_bar = null, ?int $fooBar = null)
+    public function __construct(private readonly ?int $foo_bar = null, public ?int $fooBar = null)
     {
-        $this->foo_bar = $foo_bar;
-        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar(): ?int
@@ -507,14 +484,8 @@ class TestObjectPublicCamelCaseAndPrivateUnderscore
 
 class TestObjectBothPublic
 {
-    public mixed $foo_bar;
-
-    public mixed $fooBar;
-
-    public function __construct(mixed $foo_bar = null, mixed $fooBar = null)
+    public function __construct(public mixed $foo_bar = null, public mixed $fooBar = null)
     {
-        $this->foo_bar = $foo_bar;
-        $this->fooBar  = $fooBar;
     }
 
     public function getFooBar(): mixed
@@ -525,11 +496,8 @@ class TestObjectBothPublic
 
 class TestObjectBlankGetter
 {
-    public ?int $fooBar = null;
-
-    public function __construct(?int $fooBar = null)
+    public function __construct(public ?int $fooBar = null)
     {
-        $this->fooBar = $fooBar;
     }
 
     public function fooBar(): ?int

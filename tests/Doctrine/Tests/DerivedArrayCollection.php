@@ -12,15 +12,11 @@ use stdClass;
  */
 final class DerivedArrayCollection extends ArrayCollection
 {
-    private stdClass $foo;
-
     /**
      * @param mixed[] $elements
      */
-    public function __construct(stdClass $foo, array $elements = [])
+    public function __construct(private readonly stdClass $foo, array $elements = [])
     {
-        $this->foo = $foo;
-
         parent::__construct($elements);
     }
 

@@ -36,13 +36,9 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->add('one');
         $this->collection->add('two');
-        $exists = $this->collection->exists(static function ($k, $e) {
-            return $e === 'one';
-        });
+        $exists = $this->collection->exists(static fn ($k, $e) => $e === 'one');
         self::assertTrue($exists);
-        $exists = $this->collection->exists(static function ($k, $e) {
-            return $e === 'other';
-        });
+        $exists = $this->collection->exists(static fn ($k, $e) => $e === 'other');
         self::assertFalse($exists);
     }
 
@@ -50,9 +46,7 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->add('one');
         $this->collection->add('two');
-        $one = $this->collection->findFirst(static function ($k, $e) {
-            return $e === 'one';
-        });
+        $one = $this->collection->findFirst(static fn ($k, $e) => $e === 'one');
         self::assertSame('one', $one);
     }
 
@@ -60,9 +54,7 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->add('one');
         $this->collection->add('two');
-        $other = $this->collection->findFirst(static function ($k, $e) {
-            return $e === 'other';
-        });
+        $other = $this->collection->findFirst(static fn ($k, $e) => $e === 'other');
         self::assertNull($other);
     }
 
@@ -70,9 +62,7 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->add(1);
         $this->collection->add(2);
-        $res = $this->collection->map(static function ($e) {
-            return $e * 2;
-        });
+        $res = $this->collection->map(static fn ($e) => $e * 2);
         self::assertEquals([2, 4], $res->toArray());
     }
 
@@ -83,9 +73,7 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(3);
         $this->collection->add(4);
 
-        $res = $this->collection->reduce(static function ($sum, $e) {
-            return $sum + $e;
-        });
+        $res = $this->collection->reduce(static fn ($sum, $e) => $sum + $e);
         self::assertSame(10, $res);
     }
 
@@ -94,9 +82,7 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(1);
         $this->collection->add('foo');
         $this->collection->add(3);
-        $res = $this->collection->filter(static function ($e) {
-            return is_numeric($e);
-        });
+        $res = $this->collection->filter(static fn ($e) => is_numeric($e));
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
     }
 
@@ -107,9 +93,7 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(3);
         $this->collection->add(4);
         $this->collection->add(5);
-        $res = $this->collection->filter(static function ($v, $k) {
-            return is_numeric($v) && $k % 2 === 0;
-        });
+        $res = $this->collection->filter(static fn ($v, $k) => is_numeric($v) && $k % 2 === 0);
         self::assertSame([0 => 1, 2 => 3, 4 => 5], $res->toArray());
     }
 
@@ -184,21 +168,15 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection[] = 'one';
         $this->collection[] = 'two';
-        self::assertEquals($this->collection->forAll(static function ($k, $e) {
-            return is_string($e);
-        }), true);
-        self::assertEquals($this->collection->forAll(static function ($k, $e) {
-            return is_array($e);
-        }), false);
+        self::assertEquals($this->collection->forAll(static fn ($k, $e) => is_string($e)), true);
+        self::assertEquals($this->collection->forAll(static fn ($k, $e) => is_array($e)), false);
     }
 
     public function testPartition(): void
     {
         $this->collection[] = true;
         $this->collection[] = false;
-        $partition          = $this->collection->partition(static function ($k, $e) {
-            return $e === true;
-        });
+        $partition          = $this->collection->partition(static fn ($k, $e) => $e === true);
         self::assertEquals($partition[0][0], true);
         self::assertEquals($partition[1][0], false);
     }

@@ -11,23 +11,19 @@ use RuntimeException;
  */
 class CompositeExpression implements Expression
 {
-    public const TYPE_AND = 'AND';
-    public const TYPE_OR  = 'OR';
-
-    private string $type;
+    final public const TYPE_AND = 'AND';
+    final public const TYPE_OR  = 'OR';
 
     /** @var list<Expression> */
-    private $expressions = [];
+    private array $expressions = [];
 
     /**
      * @param Expression[] $expressions
      *
      * @throws RuntimeException
      */
-    public function __construct(string $type, array $expressions)
+    public function __construct(private readonly string $type, array $expressions)
     {
-        $this->type = $type;
-
         foreach ($expressions as $expr) {
             if ($expr instanceof Value) {
                 throw new RuntimeException('Values are not supported expressions as children of and/or expressions.');

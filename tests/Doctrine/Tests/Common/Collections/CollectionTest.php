@@ -48,9 +48,7 @@ class CollectionTest extends BaseCollectionTest
 
         $col = $this->collection->matching(
             new Criteria(
-                new Value(static function (stdClass $test): bool {
-                    return $test->foo === 1;
-                })
+                new Value(static fn (stdClass $test): bool => $test->foo === 1)
             )
         );
 

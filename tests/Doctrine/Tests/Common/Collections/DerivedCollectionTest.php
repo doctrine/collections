@@ -18,9 +18,7 @@ class DerivedCollectionTest extends TestCase
     public function testDerivedClassCreation(): void
     {
         $collection = new DerivedArrayCollection(new stdClass());
-        $closure    = static function () {
-            return $allMatches = false;
-        };
+        $closure    = static fn () => $allMatches = false;
 
         self::assertInstanceOf(DerivedArrayCollection::class, $collection->map($closure));
         self::assertInstanceOf(DerivedArrayCollection::class, $collection->filter($closure));
