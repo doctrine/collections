@@ -39,9 +39,9 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @param mixed $element The element to add.
      * @psalm-param T $element
      *
-     * @return true Always TRUE.
+     * @return void we will require a native return type declaration in 3.0
      */
-    public function add(mixed $element): bool;
+    public function add(mixed $element);
 
     /**
      * Clears the collection, removing all elements.
