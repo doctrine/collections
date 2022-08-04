@@ -157,7 +157,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         return $value->getValue();
     }
 
-    public function walkCompositeExpression(CompositeExpression $expr): callable
+    public function walkCompositeExpression(CompositeExpression $expr): Closure
     {
         $expressionList = [];
 
