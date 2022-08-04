@@ -33,11 +33,11 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->count();
     }
 
-    public function add(mixed $element): bool
+    public function add(mixed $element)
     {
         $this->initialize();
 
-        return $this->collection->add($element);
+        $this->collection->add($element);
     }
 
     public function clear(): void

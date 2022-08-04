@@ -270,11 +270,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * This breaks assumptions about the template type, but it would
      * be a backwards-incompatible change to remove this method
      */
-    public function add(mixed $element): bool
+    public function add(mixed $element)
     {
         $this->elements[] = $element;
-
-        return true;
     }
 
     public function isEmpty(): bool

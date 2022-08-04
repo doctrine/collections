@@ -24,7 +24,7 @@ You can find a list of major changes to public API below.
 
 |             before             |                  after                         |
 |-------------------------------:|:-----------------------------------------------|
-| add($element)                  | add(mixed $element): bool                      |
+| add($element)                  | add(mixed $element)                            |
 | clear()                        | clear(): void                                  |
 | contains($element)             | contains(mixed $element): bool                 |
 | isEmpty()                      | isEmpty(): bool                                |
