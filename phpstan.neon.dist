@@ -6,3 +6,6 @@ parameters:
         -
             message: '~Parameter #1 \$key of method Doctrine\\Common\\Collections\\ArrayCollection<TKey of \(int\|string\),T>::set\(\) expects TKey of \(int\|string\), int\|string given\.~'
             path: 'lib/Doctrine/Common/Collections/ArrayCollection.php'
+        -
+            message: '~Cannot call method .* on Doctrine\\Common\\Collections\\Collection<TKey of \(int\|string\), T>\|null\.~'
+            path: 'lib/Doctrine/Common/Collections/AbstractLazyCollection.php'
