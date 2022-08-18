@@ -3,6 +3,8 @@
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -10,6 +12,7 @@ use function count;
 use function is_array;
 use function is_numeric;
 use function is_string;
+use function sprintf;
 
 abstract class BaseCollectionTest extends TestCase
 {
@@ -236,5 +239,17 @@ abstract class BaseCollectionTest extends TestCase
     {
         $this->collection->set('key', null);
         self::assertTrue($this->collection->containsKey('key'));
+    }
+
+    public function testMatchingAlwaysReturnsCollection(): void
+    {
+        if (! $this->collection instanceof Selectable) {
+            self::markTestSkipped(sprintf('Collection does not implement %s', Selectable::class));
+        }
+
+        $criteria = Criteria::create();
+
+        self::assertInstanceOf(Collection::class, $this->collection->matching($criteria));
+        self::assertInstanceOf(Selectable::class, $this->collection->matching($criteria));
     }
 }
