@@ -387,7 +387,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     /**
-     * @psalm-return Collection<TKey, T>
+     * @psalm-return Collection<TKey, T>&Selectable<TKey,T>
      */
     public function matching(Criteria $criteria): Collection
     {
