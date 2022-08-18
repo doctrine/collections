@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use Closure;
+use LogicException;
 use Traversable;
 
 /**
@@ -19,10 +20,10 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * The backed collection to use
      *
-     * @psalm-var Collection<TKey,T>
-     * @var Collection<mixed>
+     * @psalm-var Collection<TKey,T>|null
+     * @var Collection<mixed>|null
      */
-    protected Collection $collection;
+    protected ?Collection $collection;
 
     protected bool $initialized = false;
 
@@ -320,6 +321,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * Initialize the collection
+     *
+     * @psalm-assert Collection<TKey,T> $this->collection
      */
     protected function initialize(): void
     {
@@ -329,6 +332,10 @@ abstract class AbstractLazyCollection implements Collection
 
         $this->doInitialize();
         $this->initialized = true;
+
+        if ($this->collection === null) {
+            throw new LogicException('You must initialize the collection property in the doInitialize() method.');
+        }
     }
 
     /**
