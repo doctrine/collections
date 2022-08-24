@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use ArrayIterator;
-use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Stringable;
 use Traversable;
@@ -209,7 +208,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return in_array($element, $this->elements, true);
     }
 
-    public function exists(Closure $p): bool
+    public function exists(callable $p): bool
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -294,14 +293,14 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param callable(T=):U $func
      *
      * @return static
      * @psalm-return static<TKey, U>
      *
      * @psalm-template U
      */
-    public function map(Closure $func): Collection
+    public function map(callable $func): Collection
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
@@ -309,7 +308,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, $initial = null): mixed
+    public function reduce(callable $func, $initial = null): mixed
     {
         return array_reduce($this->elements, $func, $initial);
     }
@@ -320,12 +319,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @return static
      * @psalm-return static<TKey,T>
      */
-    public function filter(Closure $p): Collection
+    public function filter(callable $p): Collection
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
-    public function findFirst(Closure $p): mixed
+    public function findFirst(callable $p): mixed
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -336,7 +335,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return null;
     }
 
-    public function forAll(Closure $p): bool
+    public function forAll(callable $p): bool
     {
         foreach ($this->elements as $key => $element) {
             if (! $p($key, $element)) {
@@ -350,7 +349,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p): array
+    public function partition(callable $p): array
     {
         $matches = $noMatches = [];
 

@@ -43,6 +43,15 @@ abstract class BaseCollectionTest extends TestCase
         self::assertTrue($exists);
         $exists = $this->collection->exists(static fn ($k, $e) => $e === 'other');
         self::assertFalse($exists);
+
+        // Check support for callable
+        $exists = $this->collection->exists([$this, 'oneCallable']);
+        self::assertTrue($exists);
+    }
+
+    public function oneCallable(int $k, string $e): bool
+    {
+        return $e === 'one';
     }
 
     public function testFindFirst(): void
@@ -50,6 +59,10 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add('one');
         $this->collection->add('two');
         $one = $this->collection->findFirst(static fn ($k, $e) => $e === 'one');
+        self::assertSame('one', $one);
+
+        // Check support for callable
+        $one = $this->collection->findFirst([$this, 'oneCallable']);
         self::assertSame('one', $one);
     }
 
@@ -67,6 +80,15 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(2);
         $res = $this->collection->map(static fn ($e) => $e * 2);
         self::assertEquals([2, 4], $res->toArray());
+
+        // Check support for callable
+        $res = $this->collection->map([$this, 'mapCallable']);
+        self::assertEquals([2, 4], $res->toArray());
+    }
+
+    public function mapCallable(int $e): int
+    {
+        return $e * 2;
     }
 
     public function testReduce(): void
@@ -78,6 +100,15 @@ abstract class BaseCollectionTest extends TestCase
 
         $res = $this->collection->reduce(static fn ($sum, $e) => $sum + $e);
         self::assertSame(10, $res);
+
+        // Check support for callable
+        $res = $this->collection->reduce([$this, 'reduceCallable']);
+        self::assertSame(10, $res);
+    }
+
+    public function reduceCallable(?int $sum, int $e): int
+    {
+        return $sum + $e;
     }
 
     public function testFilter(): void
@@ -87,6 +118,15 @@ abstract class BaseCollectionTest extends TestCase
         $this->collection->add(3);
         $res = $this->collection->filter(static fn ($e) => is_numeric($e));
         self::assertEquals([0 => 1, 2 => 3], $res->toArray());
+
+        // Check support for callable
+        $res = $this->collection->filter([$this, 'filterCallable']);
+        self::assertEquals([0 => 1, 2 => 3], $res->toArray());
+    }
+
+    public function filterCallable(string|int $e): bool
+    {
+        return is_numeric($e);
     }
 
     public function testFilterByValueAndKey(): void

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use ArrayAccess;
-use Closure;
 use Countable;
 use IteratorAggregate;
 
@@ -182,65 +181,65 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Tests for the existence of an element that satisfies the given predicate.
      *
-     * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @param callable $p The predicate.
+     * @psalm-param callable(TKey=, T=):bool $p
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    public function exists(Closure $p): bool;
+    public function exists(callable $p): bool;
 
     /**
      * Returns the first element of this collection that satisfies the predicate p.
      *
-     * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @param callable $p The predicate.
+     * @psalm-param callable(TKey=, T=):bool $p
      *
      * @return mixed The first element respecting the predicate,
      *               null if no element respects the predicate.
      * @psalm-return T|null
      */
-    public function findFirst(Closure $p): mixed;
+    public function findFirst(callable $p): mixed;
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
      *
-     * @param Closure $p The predicate used for filtering.
-     * @psalm-param Closure(T=, TKey=):bool $p
+     * @param callable $p The predicate used for filtering.
+     * @psalm-param callable(T=, TKey=):bool $p
      *
      * @return Collection<mixed> A collection with the results of the filter operation.
      * @psalm-return Collection<TKey, T>
      */
-    public function filter(Closure $p): self;
+    public function filter(callable $p): self;
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
      *
-     * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @param callable $p The predicate.
+     * @psalm-param callable(TKey=, T=):bool $p
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    public function forAll(Closure $p): bool;
+    public function forAll(callable $p): bool;
 
     /**
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
      *
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param callable(T=):U $func
      *
      * @return Collection<mixed>
      * @psalm-return Collection<TKey, U>
      *
      * @psalm-template U
      */
-    public function map(Closure $func): self;
+    public function map(callable $func): self;
 
     /**
      * Applies iteratively the given function to each element in the collection,
      * so as to reduce the collection to a single value.
      *
-     * @psalm-param Closure(TReturn|TInitial|null, T):(TInitial|TReturn) $func
+     * @psalm-param callable(TReturn|TInitial|null, T):(TInitial|TReturn) $func
      * @psalm-param TInitial|null $initial
      *
      * @psalm-return TReturn|TInitial|null
@@ -248,21 +247,21 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @psalm-template TReturn
      * @psalm-template TInitial
      */
-    public function reduce(Closure $func, mixed $initial = null): mixed;
+    public function reduce(callable $func, mixed $initial = null): mixed;
 
     /**
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
      *
-     * @param Closure $p The predicate on which to partition.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @param callable $p The predicate on which to partition.
+     * @psalm-param callable(TKey=, T=):bool $p
      *
      * @return Collection<mixed>[] An array with two elements. The first element contains the collection
      *                                of elements where the predicate returned TRUE, the second element
      *                                contains the collection of elements where the predicate returned FALSE.
      * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
-    public function partition(Closure $p): array;
+    public function partition(callable $p): array;
 
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,

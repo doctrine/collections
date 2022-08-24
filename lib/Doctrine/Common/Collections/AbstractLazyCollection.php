@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections;
 
-use Closure;
 use LogicException;
 use Traversable;
 
@@ -172,14 +171,14 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->next();
     }
 
-    public function exists(Closure $p): bool
+    public function exists(callable $p): bool
     {
         $this->initialize();
 
         return $this->collection->exists($p);
     }
 
-    public function findFirst(Closure $p): mixed
+    public function findFirst(callable $p): mixed
     {
         $this->initialize();
 
@@ -187,19 +186,19 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * @psalm-param Closure(T=, TKey=):bool $p
+     * @psalm-param callable(T=, TKey=):bool $p
      *
      * @return Collection<mixed>
      * @psalm-return Collection<TKey, T>
      */
-    public function filter(Closure $p): Collection
+    public function filter(callable $p): Collection
     {
         $this->initialize();
 
         return $this->collection->filter($p);
     }
 
-    public function forAll(Closure $p): bool
+    public function forAll(callable $p): bool
     {
         $this->initialize();
 
@@ -207,14 +206,14 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param callable(T=):U $func
      *
      * @return Collection<mixed>
      * @psalm-return Collection<TKey, U>
      *
      * @psalm-template U
      */
-    public function map(Closure $func): Collection
+    public function map(callable $func): Collection
     {
         $this->initialize();
 
@@ -224,7 +223,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, $initial = null): mixed
+    public function reduce(callable $func, $initial = null): mixed
     {
         $this->initialize();
 
@@ -234,7 +233,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p): array
+    public function partition(callable $p): array
     {
         $this->initialize();
 
