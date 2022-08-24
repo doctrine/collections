@@ -37,5 +37,12 @@
                 <referencedClass name="ReturnTypeWillChange"/>
             </errorLevel>
         </UndefinedAttributeClass>
+
+        <InvalidTemplateParam>
+            <errorLevel type="suppress">
+                <!-- https://github.com/vimeo/psalm/issues/8212 -->
+                <file name="lib/Doctrine/Common/Collections/ReadableCollection.php"/>
+            </errorLevel>
+        </InvalidTemplateParam>
     </issueHandlers>
 </psalm>
