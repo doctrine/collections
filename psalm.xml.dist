@@ -30,5 +30,18 @@
                 <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
             </errorLevel>
         </UnsafeGenericInstantiation>
+
+        <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <!-- Remove when https://github.com/vimeo/psalm/pull/8435 is released -->
+                <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
+            </errorLevel>
+        </MixedInferredReturnType>
+        <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <!-- Remove when https://github.com/vimeo/psalm/pull/8435 is released -->
+                <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
+            </errorLevel>
+        </MixedReturnStatement>
     </issueHandlers>
 </psalm>
