@@ -20,6 +20,21 @@ types. This would only work in PHP 7.2+ which is the first version featuring
 
 You can find a list of major changes to public API below.
 
+### Closure vs callable
+
+While 1.x branch is using `Closure` as param type declaration, 2.x is using `callable`.
+If you want to support both branches you can use `Closure|callable` (or no type declaration at all).
+
+```php
+class MyCollection implements Collection
+{
+    public function exists(Closure|callable $p): bool
+    {
+        // ...
+    }
+}
+```
+
 ### Doctrine\Common\Collections\Collection
 
 |             before             |                  after                         |
