@@ -7,17 +7,13 @@ class Value implements Expression
     /** @var mixed */
     private $value;
 
-    /**
-     * @param mixed $value
-     */
+    /** @param mixed $value */
     public function __construct($value)
     {
         $this->value = $value;
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function getValue()
     {
         return $this->value;

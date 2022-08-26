@@ -6,9 +6,7 @@ use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers  \Doctrine\Common\Collections\Expr\Value
- */
+/** @covers  \Doctrine\Common\Collections\Expr\Value */
 class ValueTest extends TestCase
 {
     public function testGetter(): void

@@ -14,9 +14,7 @@ use stdClass;
 
 use function usort;
 
-/**
- * @group DDC-1637
- */
+/** @group DDC-1637 */
 class ClosureExpressionVisitorTest extends TestCase
 {
     /** @var ClosureExpressionVisitor */
@@ -450,25 +448,19 @@ class TestObject
         }
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function getFoo()
     {
         return $this->foo;
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function getBar()
     {
         return $this->bar;
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function isBaz()
     {
         return $this->baz;
@@ -548,9 +540,7 @@ class TestObjectBothPublic
         $this->fooBar  = $fooBar;
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function getFooBar()
     {
         return $this->foo_bar;

@@ -8,9 +8,7 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-/**
- * @group DDC-1637
- */
+/** @group DDC-1637 */
 class ExpressionBuilderTest extends TestCase
 {
     /** @var ExpressionBuilder */

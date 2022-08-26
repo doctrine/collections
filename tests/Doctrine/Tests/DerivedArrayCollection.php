@@ -13,9 +13,7 @@ final class DerivedArrayCollection extends ArrayCollection
     /** @var stdClass */
     private $foo;
 
-    /**
-     * @param mixed[] $elements
-     */
+    /** @param mixed[] $elements */
     public function __construct(stdClass $foo, array $elements = [])
     {
         $this->foo = $foo;

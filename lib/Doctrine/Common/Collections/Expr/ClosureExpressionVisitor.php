@@ -239,9 +239,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
     }
 
-    /**
-     * @param callable[] $expressions
-     */
+    /** @param callable[] $expressions */
     private function andExpressions(array $expressions): callable
     {
         return static function ($object) use ($expressions): bool {
@@ -255,9 +253,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
-    /**
-     * @param callable[] $expressions
-     */
+    /** @param callable[] $expressions */
     private function orExpressions(array $expressions): callable
     {
         return static function ($object) use ($expressions): bool {
