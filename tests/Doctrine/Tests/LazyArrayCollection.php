@@ -17,9 +17,7 @@ class LazyArrayCollection extends AbstractLazyCollection
      */
     private $collectionOnInitialization;
 
-    /**
-     * @param Collection<mixed> $collection
-     */
+    /** @param Collection<mixed> $collection */
     public function __construct(Collection $collection)
     {
         $this->collectionOnInitialization = $collection;
