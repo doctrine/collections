@@ -51,9 +51,7 @@ class CompositeExpression implements Expression
         return $this->expressions;
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function getType()
     {
         return $this->type;

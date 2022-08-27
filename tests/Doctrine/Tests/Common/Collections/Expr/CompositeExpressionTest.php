@@ -9,14 +9,10 @@ use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-/**
- * @covers  \Doctrine\Common\Collections\Expr\CompositeExpression
- */
+/** @covers  \Doctrine\Common\Collections\Expr\CompositeExpression */
 class CompositeExpressionTest extends TestCase
 {
-    /**
-     * @return list<array{expression: mixed}>
-     */
+    /** @return list<array{expression: mixed}> */
     public function invalidDataProvider(): array
     {
         return [

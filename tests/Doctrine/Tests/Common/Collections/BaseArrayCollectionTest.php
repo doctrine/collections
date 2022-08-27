@@ -27,9 +27,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      */
     abstract protected function buildCollection(array $elements = []): Collection;
 
-    /**
-     * @param object $obj
-     */
+    /** @param object $obj */
     protected function isSelectable($obj): bool
     {
         return $obj instanceof Selectable;
@@ -180,9 +178,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
-    /**
-     * @psalm-return array<string, array{mixed[]}>
-     */
+    /** @psalm-return array<string, array{mixed[]}> */
     public function provideDifferentElements(): array
     {
         return [
