@@ -191,7 +191,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Tests for the existence of an element that satisfies the given predicate.
      *
      * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @psalm-param Closure(TKey, T):bool $p
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
@@ -202,7 +202,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * The order of the elements is preserved.
      *
      * @param Closure $p The predicate used for filtering.
-     * @psalm-param Closure(T=):bool $p
+     * @psalm-param Closure(T):bool $p
      *
      * @return Collection<mixed> A collection with the results of the filter operation.
      * @psalm-return Collection<TKey, T>
@@ -213,7 +213,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Tests whether the given predicate p holds for all elements of this collection.
      *
      * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @psalm-param Closure(TKey, T):bool $p
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
@@ -223,7 +223,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
      *
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param Closure(T):U $func
      *
      * @return Collection<mixed>
      * @psalm-return Collection<TKey, U>
@@ -237,7 +237,7 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * Keys are preserved in the resulting collections.
      *
      * @param Closure $p The predicate on which to partition.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @psalm-param Closure(TKey, T):bool $p
      *
      * @return Collection<mixed>[] An array with two elements. The first element contains the collection
      *                      of elements where the predicate returned TRUE, the second element
