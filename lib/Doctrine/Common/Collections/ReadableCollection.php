@@ -61,7 +61,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      *
      * @return int[]|string[] The keys/indices of the collection, in the order of the corresponding
      *               elements in the collection.
-     * @psalm-return TKey[]
+     * @psalm-return list<TKey>
      */
     public function getKeys();
 
