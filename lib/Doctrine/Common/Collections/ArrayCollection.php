@@ -340,7 +340,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param Closure(T):U $func
      *
      * @return static
      * @psalm-return static<TKey, U>
