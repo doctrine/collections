@@ -32,6 +32,11 @@ explicitly retrieve an iterator though ``getIterator()`` which can then be
 used to iterate over the collection. You can not rely on the internal iterator
 of the collection being at a certain position unless you explicitly positioned it before.
 
+Methods that do not alter the collection or have template types
+appearing in invariant or contravariant positions are not directly
+defined in ``Doctrine\Common\Collections\Collection``, but are inherited
+from the ``Doctrine\Common\Collections\ReadableCollection`` interface.
+
 The methods available on the interface are:
 
 add
