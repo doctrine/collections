@@ -8,14 +8,10 @@ use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversDefaultClass \Doctrine\Common\Collections\Expr\Comparison
- */
+/** @coversDefaultClass \Doctrine\Common\Collections\Expr\Comparison */
 class ComparisonTest extends TestCase
 {
-    /**
-     * @covers ::visit
-     */
+    /** @covers ::visit */
     public function testVisit(): void
     {
         $callableExpected = static function (): void {

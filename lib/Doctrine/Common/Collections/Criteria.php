@@ -22,13 +22,13 @@ class Criteria
     final public const ASC  = 'ASC';
     final public const DESC = 'DESC';
 
-    private static ?ExpressionBuilder $expressionBuilder = null;
+    private static ExpressionBuilder|null $expressionBuilder = null;
 
     /** @var array<string, string> */
     private array $orderings = [];
 
-    private ?int $firstResult = null;
-    private ?int $maxResults  = null;
+    private int|null $firstResult = null;
+    private int|null $maxResults  = null;
 
     /**
      * Creates an instance of the class.
@@ -56,10 +56,10 @@ class Criteria
      * @param array<string, string>|null $orderings
      */
     public function __construct(
-        private ?Expression $expression = null,
-        ?array $orderings = null,
-        ?int $firstResult = null,
-        ?int $maxResults = null,
+        private Expression|null $expression = null,
+        array|null $orderings = null,
+        int|null $firstResult = null,
+        int|null $maxResults = null,
     ) {
         $this->expression = $expression;
 
@@ -68,7 +68,7 @@ class Criteria
                 'doctrine/collections',
                 'https://github.com/doctrine/collections/pull/311',
                 'Passing null as $firstResult to the constructor of %s is deprecated. Pass 0 instead or omit the argument.',
-                self::class
+                self::class,
             );
         }
 
@@ -108,7 +108,7 @@ class Criteria
 
         $this->expression = new CompositeExpression(
             CompositeExpression::TYPE_AND,
-            [$this->expression, $expression]
+            [$this->expression, $expression],
         );
 
         return $this;
@@ -128,7 +128,7 @@ class Criteria
 
         $this->expression = new CompositeExpression(
             CompositeExpression::TYPE_OR,
-            [$this->expression, $expression]
+            [$this->expression, $expression],
         );
 
         return $this;
@@ -137,7 +137,7 @@ class Criteria
     /**
      * Gets the expression attached to this Criteria.
      */
-    public function getWhereExpression(): ?Expression
+    public function getWhereExpression(): Expression|null
     {
         return $this->expression;
     }
@@ -168,7 +168,7 @@ class Criteria
     {
         $this->orderings = array_map(
             static fn (string $ordering): string => strtoupper($ordering) === self::ASC ? self::ASC : self::DESC,
-            $orderings
+            $orderings,
         );
 
         return $this;
@@ -177,7 +177,7 @@ class Criteria
     /**
      * Gets the current first result option of this Criteria.
      */
-    public function getFirstResult(): ?int
+    public function getFirstResult(): int|null
     {
         return $this->firstResult;
     }
@@ -189,14 +189,14 @@ class Criteria
      *
      * @return $this
      */
-    public function setFirstResult(?int $firstResult): static
+    public function setFirstResult(int|null $firstResult): static
     {
         if ($firstResult === null) {
             Deprecation::triggerIfCalledFromOutside(
                 'doctrine/collections',
                 'https://github.com/doctrine/collections/pull/311',
                 'Passing null to %s() is deprecated, pass 0 instead.',
-                __METHOD__
+                __METHOD__,
             );
         }
 
@@ -208,7 +208,7 @@ class Criteria
     /**
      * Gets maxResults.
      */
-    public function getMaxResults(): ?int
+    public function getMaxResults(): int|null
     {
         return $this->maxResults;
     }
@@ -220,7 +220,7 @@ class Criteria
      *
      * @return $this
      */
-    public function setMaxResults(?int $maxResults): static
+    public function setMaxResults(int|null $maxResults): static
     {
         $this->maxResults = $maxResults;
 

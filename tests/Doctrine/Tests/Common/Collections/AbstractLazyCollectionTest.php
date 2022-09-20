@@ -24,9 +24,7 @@ class AbstractLazyCollectionTest extends BaseCollectionTest
         $this->collection = new LazyArrayCollection(new ArrayCollection());
     }
 
-    /**
-     * @psalm-param mixed[] $elements
-     */
+    /** @psalm-param mixed[] $elements */
     private function buildCollection(array $elements): LazyArrayCollection
     {
         return new LazyArrayCollection(new ArrayCollection($elements));

@@ -203,6 +203,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * {@inheritDoc}
+     *
+     * @template TMaybeContained
      */
     public function contains($element): bool
     {
@@ -222,6 +224,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-param TMaybeContained $element
+     *
+     * @psalm-return (TMaybeContained is T ? TKey|false : false)
+     *
+     * @template TMaybeContained
      */
     public function indexOf($element): int|string|false
     {
@@ -294,7 +302,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T=):U $func
+     * @psalm-param Closure(T):U $func
      *
      * @return static
      * @psalm-return static<TKey, U>
@@ -381,14 +389,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, ?int $length = null): array
+    public function slice(int $offset, int|null $length = null): array
     {
         return array_slice($this->elements, $offset, $length, true);
     }
 
-    /**
-     * @psalm-return Collection<TKey, T>&Selectable<TKey,T>
-     */
+    /** @psalm-return Collection<TKey, T>&Selectable<TKey,T> */
     public function matching(Criteria $criteria): Collection
     {
         $expr     = $criteria->getWhereExpression();

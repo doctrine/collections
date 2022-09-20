@@ -28,9 +28,7 @@ class CollectionTest extends BaseCollectionTest
         self::assertTrue(is_string((string) $this->collection));
     }
 
-    /**
-     * @group DDC-1637
-     */
+    /** @group DDC-1637 */
     public function testMatching(): void
     {
         $this->fillMatchingFixture();
@@ -49,7 +47,7 @@ class CollectionTest extends BaseCollectionTest
         $col = $this->collection->matching(
             new Criteria(
                 new Value(static fn (stdClass $test): bool => $test->foo === 1)
-            )
+            ),
         );
 
         self::assertInstanceOf(Collection::class, $col);
@@ -69,9 +67,7 @@ class CollectionTest extends BaseCollectionTest
         $this->collection->matching(new Criteria($genericExpression));
     }
 
-    /**
-     * @group DDC-1637
-     */
+    /** @group DDC-1637 */
     public function testMatchingOrdering(): void
     {
         $this->fillMatchingFixture();
@@ -85,9 +81,7 @@ class CollectionTest extends BaseCollectionTest
         self::assertEquals('bar', $col->last()->foo);
     }
 
-    /**
-     * @group DDC-1637
-     */
+    /** @group DDC-1637 */
     public function testMatchingSlice(): void
     {
         $this->fillMatchingFixture();

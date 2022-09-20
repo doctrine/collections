@@ -182,9 +182,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
-    /**
-     * @psalm-return array<string, array{mixed[]}>
-     */
+    /** @psalm-return array<string, array{mixed[]}> */
     public function provideDifferentElements(): array
     {
         return [
@@ -334,7 +332,7 @@ abstract class BaseArrayCollectionTest extends TestCase
             ],
             $collection
                 ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
-                ->toArray()
+                ->toArray(),
         );
     }
 
@@ -344,7 +342,7 @@ abstract class BaseArrayCollectionTest extends TestCase
      *
      * @dataProvider provideSlices
      */
-    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, ?int $firstResult, ?int $maxResult): void
+    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, int|null $firstResult, int|null $maxResult): void
     {
         $collection = $this->buildCollection($array);
 
@@ -356,13 +354,11 @@ abstract class BaseArrayCollectionTest extends TestCase
             $slicedArray,
             $collection
                 ->matching(new Criteria(null, null, $firstResult, $maxResult))
-                ->toArray()
+                ->toArray(),
         );
     }
 
-    /**
-     * @return mixed[][]
-     */
+    /** @return mixed[][] */
     public function provideSlices(): array
     {
         return [
@@ -448,7 +444,7 @@ abstract class BaseArrayCollectionTest extends TestCase
             $expected,
             $collection
                 ->matching(new Criteria(null, ['foo' => Criteria::DESC, 'bar' => Criteria::DESC]))
-                ->toArray()
+                ->toArray(),
         );
     }
 }

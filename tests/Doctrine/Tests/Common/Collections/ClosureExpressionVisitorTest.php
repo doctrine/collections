@@ -16,9 +16,7 @@ use stdClass;
 
 use function usort;
 
-/**
- * @group DDC-1637
- */
+/** @group DDC-1637 */
 class ClosureExpressionVisitorTest extends TestCase
 {
     private ClosureExpressionVisitor $visitor;
@@ -268,8 +266,8 @@ class ClosureExpressionVisitorTest extends TestCase
         $closure = $this->visitor->walkCompositeExpression(
             $this->builder->andX(
                 $this->builder->eq('foo', 1),
-                $this->builder->eq('bar', 1)
-            )
+                $this->builder->eq('bar', 1),
+            ),
         );
 
         self::assertTrue($closure(new TestObject(1, 1)));
@@ -283,8 +281,8 @@ class ClosureExpressionVisitorTest extends TestCase
         $closure = $this->visitor->walkCompositeExpression(
             $this->builder->orX(
                 $this->builder->eq('foo', 1),
-                $this->builder->eq('bar', 1)
-            )
+                $this->builder->eq('bar', 1),
+            ),
         );
 
         self::assertTrue($closure(new TestObject(1, 1)));
@@ -299,13 +297,13 @@ class ClosureExpressionVisitorTest extends TestCase
             $this->builder->orX(
                 $this->builder->andX(
                     $this->builder->eq('foo', 1),
-                    $this->builder->eq('bar', 1)
+                    $this->builder->eq('bar', 1),
                 ),
                 $this->builder->andX(
                     $this->builder->eq('foo', 2),
-                    $this->builder->eq('bar', 2)
-                )
-            )
+                    $this->builder->eq('bar', 2),
+                ),
+            ),
         );
 
         self::assertTrue($closure(new TestObject(1, 1)));
@@ -321,13 +319,13 @@ class ClosureExpressionVisitorTest extends TestCase
             $this->builder->andX(
                 $this->builder->orX(
                     $this->builder->eq('foo', 1),
-                    $this->builder->eq('foo', 2)
+                    $this->builder->eq('foo', 2),
                 ),
                 $this->builder->orX(
                     $this->builder->eq('bar', 3),
-                    $this->builder->eq('bar', 4)
-                )
-            )
+                    $this->builder->eq('bar', 4),
+                ),
+            ),
         );
 
         self::assertTrue($closure(new TestObject(1, 3)));
@@ -346,7 +344,7 @@ class ClosureExpressionVisitorTest extends TestCase
         self::expectExceptionMessage('Unknown composite Unknown');
 
         $closure = $this->visitor->walkCompositeExpression(
-            new CompositeExpression('Unknown', [])
+            new CompositeExpression('Unknown', []),
         );
 
         $closure(new TestObject());
@@ -420,9 +418,7 @@ class TestObject
     ) {
     }
 
-    /**
-     * @param array<int, mixed> $arguments
-     */
+    /** @param array<int, mixed> $arguments */
     public function __call(string $name, array $arguments): mixed
     {
         if ($name === 'getqux') {
@@ -448,11 +444,11 @@ class TestObject
 
 class TestObjectNotCamelCase
 {
-    public function __construct(private readonly ?int $foo_bar)
+    public function __construct(private readonly int|null $foo_bar)
     {
     }
 
-    public function getFooBar(): ?int
+    public function getFooBar(): int|null
     {
         return $this->foo_bar;
     }
@@ -460,11 +456,11 @@ class TestObjectNotCamelCase
 
 class TestObjectBothCamelCaseAndUnderscore
 {
-    public function __construct(private readonly ?int $foo_bar = null, private readonly ?int $fooBar = null)
+    public function __construct(private readonly int|null $foo_bar = null, private readonly int|null $fooBar = null)
     {
     }
 
-    public function getFooBar(): ?int
+    public function getFooBar(): int|null
     {
         return $this->fooBar;
     }
@@ -472,11 +468,11 @@ class TestObjectBothCamelCaseAndUnderscore
 
 class TestObjectPublicCamelCaseAndPrivateUnderscore
 {
-    public function __construct(private readonly ?int $foo_bar = null, public ?int $fooBar = null)
+    public function __construct(private readonly int|null $foo_bar = null, public int|null $fooBar = null)
     {
     }
 
-    public function getFooBar(): ?int
+    public function getFooBar(): int|null
     {
         return $this->fooBar;
     }
@@ -496,11 +492,11 @@ class TestObjectBothPublic
 
 class TestObjectBlankGetter
 {
-    public function __construct(public ?int $fooBar = null)
+    public function __construct(public int|null $fooBar = null)
     {
     }
 
-    public function fooBar(): ?int
+    public function fooBar(): int|null
     {
         return $this->fooBar;
     }

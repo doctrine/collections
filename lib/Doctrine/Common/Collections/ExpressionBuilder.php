@@ -63,17 +63,13 @@ class ExpressionBuilder
         return new Comparison($field, Comparison::EQ, new Value(null));
     }
 
-    /**
-     * @param mixed[] $values
-     */
+    /** @param mixed[] $values */
     public function in(string $field, array $values): Comparison
     {
         return new Comparison($field, Comparison::IN, new Value($values));
     }
 
-    /**
-     * @param mixed[] $values
-     */
+    /** @param mixed[] $values */
     public function notIn(string $field, array $values): Comparison
     {
         return new Comparison($field, Comparison::NIN, new Value($values));

@@ -10,9 +10,7 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
-/**
- * @group DDC-1637
- */
+/** @group DDC-1637 */
 class ExpressionBuilderTest extends TestCase
 {
     private ExpressionBuilder $builder;
