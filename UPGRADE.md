@@ -45,13 +45,13 @@ You can find a list of major changes to public API below.
 | forAll(Closure $p)             | forAll(Closure $p): bool                       |
 | map(Closure $func)             | map(Closure $func): self                       |
 | partition(Closure $p)          | partition(Closure $p): array                   |
-| indexOf(mixed $element)        | indexOf(mixed $element): int|string|false      |
+| indexOf($element)              | indexOf(mixed $element): int|string|false      |
 | slice($offset, $length = null) | slice(int $offset, ?int $length = null): array |
 | count()                        | count(): int                                   |
 | getIterator()                  | getIterator(): \Traversable                    |
-| offsetSet($offset, $value)     | offsetSet($offset, $value): void               |
-| offsetUnset($offset)           | offsetUnset($offset): void                     |
-| offsetExists($offset)          | offsetExists($offset): bool                    |
+| offsetSet($offset, $value)     | offsetSet(mixed $offset, mixed $value): void   |
+| offsetUnset($offset)           | offsetUnset(mixed $offset): void               |
+| offsetExists($offset)          | offsetExists(mixed $offset): bool              |
 
 ### Doctrine\Common\Collections\AbstractLazyCollection
 
