@@ -10,12 +10,16 @@ class Value implements Expression
     {
     }
 
-    public function getValue(): mixed
+    /** @return mixed */
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function visit(ExpressionVisitor $visitor): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkValue($this);
     }

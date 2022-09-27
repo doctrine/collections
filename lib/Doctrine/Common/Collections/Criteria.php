@@ -32,16 +32,20 @@ class Criteria
 
     /**
      * Creates an instance of the class.
+     *
+     * @return static
      */
-    public static function create(): static
+    public static function create()
     {
         return new static();
     }
 
     /**
      * Returns the expression builder.
+     *
+     * @return ExpressionBuilder
      */
-    public static function expr(): ExpressionBuilder
+    public static function expr()
     {
         if (self::$expressionBuilder === null) {
             self::$expressionBuilder = new ExpressionBuilder();
@@ -87,7 +91,7 @@ class Criteria
      *
      * @return $this
      */
-    public function where(Expression $expression): static
+    public function where(Expression $expression)
     {
         $this->expression = $expression;
 
@@ -100,7 +104,7 @@ class Criteria
      *
      * @return $this
      */
-    public function andWhere(Expression $expression): static
+    public function andWhere(Expression $expression)
     {
         if ($this->expression === null) {
             return $this->where($expression);
@@ -120,7 +124,7 @@ class Criteria
      *
      * @return $this
      */
-    public function orWhere(Expression $expression): static
+    public function orWhere(Expression $expression)
     {
         if ($this->expression === null) {
             return $this->where($expression);
@@ -136,8 +140,10 @@ class Criteria
 
     /**
      * Gets the expression attached to this Criteria.
+     *
+     * @return Expression|null
      */
-    public function getWhereExpression(): Expression|null
+    public function getWhereExpression()
     {
         return $this->expression;
     }
@@ -147,7 +153,7 @@ class Criteria
      *
      * @return array<string, string>
      */
-    public function getOrderings(): array
+    public function getOrderings()
     {
         return $this->orderings;
     }
@@ -164,7 +170,7 @@ class Criteria
      *
      * @return $this
      */
-    public function orderBy(array $orderings): static
+    public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
             static fn (string $ordering): string => strtoupper($ordering) === self::ASC ? self::ASC : self::DESC,
@@ -176,8 +182,10 @@ class Criteria
 
     /**
      * Gets the current first result option of this Criteria.
+     *
+     * @return int|null
      */
-    public function getFirstResult(): int|null
+    public function getFirstResult()
     {
         return $this->firstResult;
     }
@@ -189,7 +197,7 @@ class Criteria
      *
      * @return $this
      */
-    public function setFirstResult(int|null $firstResult): static
+    public function setFirstResult(int|null $firstResult)
     {
         if ($firstResult === null) {
             Deprecation::triggerIfCalledFromOutside(
@@ -207,8 +215,10 @@ class Criteria
 
     /**
      * Gets maxResults.
+     *
+     * @return int|null
      */
-    public function getMaxResults(): int|null
+    public function getMaxResults()
     {
         return $this->maxResults;
     }
@@ -220,7 +230,7 @@ class Criteria
      *
      * @return $this
      */
-    public function setMaxResults(int|null $maxResults): static
+    public function setMaxResults(int|null $maxResults)
     {
         $this->maxResults = $maxResults;
 

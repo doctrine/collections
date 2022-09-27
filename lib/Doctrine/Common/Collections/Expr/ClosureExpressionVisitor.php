@@ -35,8 +35,10 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * method, __get, __call).
      *
      * @param object|mixed[] $object
+     *
+     * @return mixed
      */
-    public static function getObjectFieldValue(object|array $object, string $field): mixed
+    public static function getObjectFieldValue(object|array $object, string $field)
     {
         if (str_contains($field, '.')) {
             [$field, $subField] = explode('.', $field, 2);
@@ -94,8 +96,10 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
     /**
      * Helper for sorting arrays of objects based on multiple fields + orientations.
+     *
+     * @return Closure
      */
-    public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null): Closure
+    public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null)
     {
         if (! $next) {
             $next = static fn (): int => 0;
@@ -114,7 +118,10 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
-    public function walkComparison(Comparison $comparison): Closure
+    /**
+     * {@inheritDoc}
+     */
+    public function walkComparison(Comparison $comparison)
     {
         $field = $comparison->getField();
         $value = $comparison->getValue()->getValue();
@@ -152,12 +159,18 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
-    public function walkValue(Value $value): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function walkValue(Value $value)
     {
         return $value->getValue();
     }
 
-    public function walkCompositeExpression(CompositeExpression $expr): Closure
+    /**
+     * {@inheritDoc}
+     */
+    public function walkCompositeExpression(CompositeExpression $expr)
     {
         $expressionList = [];
 

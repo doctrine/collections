@@ -14,7 +14,9 @@
     <file>lib</file>
     <file>tests</file>
 
-    <rule ref="Doctrine" />
+    <rule ref="Doctrine" >
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"/>
+    </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>tests/*</exclude-pattern>

@@ -22,51 +22,20 @@ You can find a list of major changes to public API below.
 
 ### Doctrine\Common\Collections\Collection
 
-|             before             |                  after                         |
-|-------------------------------:|:-----------------------------------------------|
-| add($element)                  | add(mixed $element)                            |
-| clear()                        | clear(): void                                  |
-| contains($element)             | contains(mixed $element): bool                 |
-| isEmpty()                      | isEmpty(): bool                                |
-| removeElement($element)        | removeElement(mixed $element): bool            |
-| containsKey($key)              | containsKey(string|int $key): bool             |
-| get()                          | get(string|int $key): mixed                    |
-| getKeys()                      | getKeys(): array                               |
-| getValues()                    | getValues(): array                             |
-| set($key, $value)              | set(string|int $key, $value): void             |
-| toArray()                      | toArray(): array                               |
-| first()                        | first(): mixed                                 |
-| last()                         | last(): mixed                                  |
-| key()                          | key(): int|string|null                         |
-| current()                      | current(): mixed                               |
-| next()                         | next(): mixed                                  |
-| exists(Closure $p)             | exists(Closure $p): bool                       |
-| filter(Closure $p)             | filter(Closure $p): self                       |
-| forAll(Closure $p)             | forAll(Closure $p): bool                       |
-| map(Closure $func)             | map(Closure $func): self                       |
-| partition(Closure $p)          | partition(Closure $p): array                   |
-| indexOf($element)              | indexOf(mixed $element): int|string|false      |
-| slice($offset, $length = null) | slice(int $offset, ?int $length = null): array |
-| count()                        | count(): int                                   |
-| getIterator()                  | getIterator(): \Traversable                    |
-| offsetSet($offset, $value)     | offsetSet(mixed $offset, mixed $value): void   |
-| offsetUnset($offset)           | offsetUnset(mixed $offset): void               |
-| offsetExists($offset)          | offsetExists(mixed $offset): bool              |
+|             before             |                  after                  |
+|-------------------------------:|:----------------------------------------|
+| add($element)                  | add(mixed $element)                     |
+| contains($element)             | contains(mixed $element)                |
+| removeElement($element)        | removeElement(mixed $element)           |
+| containsKey($key)              | containsKey(string|int $key)            |
+| get()                          | get(string|int $key)                    |
+| set($key, $value)              | set(string|int $key, $value)            |
+| indexOf($element)              | indexOf(mixed $element)                 |
+| slice($offset, $length = null) | slice(int $offset, ?int $length = null) |
+| offsetSet($offset, $value)     | offsetSet(mixed $offset, mixed $value)  |
+| offsetUnset($offset)           | offsetUnset(mixed $offset)              |
+| offsetExists($offset)          | offsetExists(mixed $offset)             |
 
-### Doctrine\Common\Collections\AbstractLazyCollection
-
-|      before     |         after         |
-|----------------:|:----------------------|
-| isInitialized() | isInitialized(): bool |
-| initialize()    | initialize(): void    |
-| doInitialize()  | doInitialize(): void  |
-
-### Doctrine\Common\Collections\ArrayCollection
-
-|            before           |               after                 |
-|----------------------------:|:------------------------------------|
-| createFrom(array $elements) | createFrom(array $elements): static |
-| __toString()                | __toString(): string                |
 
 ### Doctrine\Common\Collections\Criteria
 
@@ -78,9 +47,3 @@ You can find a list of major changes to public API below.
 | orderBy(array $orderings): self         | orderBy(array $orderings): static         |
 | setFirstResult(?int $firstResult): self | setFirstResult(?int $firstResult): static |
 | setMaxResult(?int $maxResults): self    | setMaxResults(?int $maxResults): static   |
-
-### Doctrine\Common\Collections\Selectable
-
-|             before           |                   after                  |
-|-----------------------------:|:-----------------------------------------|
-| matching(Criteria $criteria) | matching(Criteria $criteria): Collection |

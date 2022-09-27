@@ -34,22 +34,28 @@ class Comparison implements Expression
         $this->value = $value;
     }
 
-    public function getField(): string
+    /** @return string */
+    public function getField()
     {
         return $this->field;
     }
 
-    public function getValue(): Value
+    /** @return Value */
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function getOperator(): string
+    /** @return string */
+    public function getOperator()
     {
         return $this->op;
     }
 
-    public function visit(ExpressionVisitor $visitor): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkComparison($this);
     }
