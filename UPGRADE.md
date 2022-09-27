@@ -45,7 +45,7 @@ You can find a list of major changes to public API below.
 | forAll(Closure $p)             | forAll(Closure $p): bool                       |
 | map(Closure $func)             | map(Closure $func): self                       |
 | partition(Closure $p)          | partition(Closure $p): array                   |
-| indexOf(mixed $element)        | indexOf(mixed $element): int|string|false      |
+| indexOf($element)              | indexOf(mixed $element): int|string|false      |
 | slice($offset, $length = null) | slice(int $offset, ?int $length = null): array |
 | count()                        | count(): int                                   |
 | getIterator()                  | getIterator(): \Traversable                    |
