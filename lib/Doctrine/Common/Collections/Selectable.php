@@ -17,7 +17,7 @@ namespace Doctrine\Common\Collections;
  * EntityManager or Repositories.
  *
  * @psalm-template TKey as array-key
- * @psalm-template T
+ * @psalm-template-covariant T
  */
 interface Selectable
 {
@@ -25,8 +25,8 @@ interface Selectable
      * Selects all elements from a selectable that match the expression and
      * returns a new collection containing these elements and preserved keys.
      *
-     * @return Collection<mixed>&Selectable<mixed>
-     * @psalm-return Collection<TKey,T>&Selectable<TKey,T>
+     * @return ReadableCollection<mixed>&Selectable<mixed>
+     * @psalm-return ReadableCollection<TKey,T>&Selectable<TKey,T>
      */
-    public function matching(Criteria $criteria): Collection;
+    public function matching(Criteria $criteria): ReadableCollection;
 }
