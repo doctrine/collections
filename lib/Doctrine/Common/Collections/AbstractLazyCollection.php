@@ -52,7 +52,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @template TMaybeContained
      */
-    public function contains($element): bool
+    public function contains(mixed $element): bool
     {
         $this->initialize();
 
@@ -73,20 +73,14 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->remove($key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function removeElement($element): bool
+    public function removeElement(mixed $element): bool
     {
         $this->initialize();
 
         return $this->collection->removeElement($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function containsKey($key): bool
+    public function containsKey(string|int $key): bool
     {
         $this->initialize();
 
@@ -285,7 +279,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /** @param TKey $offset */
-    public function offsetGet($offset): mixed
+    public function offsetGet(mixed $offset): mixed
     {
         $this->initialize();
 
@@ -296,14 +290,14 @@ abstract class AbstractLazyCollection implements Collection
      * @param TKey|null $offset
      * @param T         $value
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->initialize();
         $this->collection->offsetSet($offset, $value);
     }
 
     /** @param TKey $offset */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         $this->initialize();
         $this->collection->offsetUnset($offset);

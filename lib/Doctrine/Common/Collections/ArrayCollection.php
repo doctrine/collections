@@ -130,10 +130,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return $removed;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function removeElement($element): bool
+    public function removeElement(mixed $element): bool
     {
         $key = array_search($element, $this->elements, true);
 
@@ -161,7 +158,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey $offset
      */
-    public function offsetGet($offset): mixed
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->get($offset);
     }
@@ -172,7 +169,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @param TKey|null $offset
      * @param T         $value
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
             $this->add($value);
@@ -188,15 +185,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey $offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         $this->remove($offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function containsKey($key): bool
+    public function containsKey(string|int $key): bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
@@ -206,7 +200,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @template TMaybeContained
      */
-    public function contains($element): bool
+    public function contains(mixed $element): bool
     {
         return in_array($element, $this->elements, true);
     }
