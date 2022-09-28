@@ -42,17 +42,21 @@ class CompositeExpression implements Expression
      *
      * @return list<Expression>
      */
-    public function getExpressionList(): array
+    public function getExpressionList()
     {
         return $this->expressions;
     }
 
-    public function getType(): string
+    /** @return string */
+    public function getType()
     {
         return $this->type;
     }
 
-    public function visit(ExpressionVisitor $visitor): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkCompositeExpression($this);
     }

@@ -28,5 +28,5 @@ interface Selectable
      * @return ReadableCollection<mixed>&Selectable<mixed>
      * @psalm-return ReadableCollection<TKey,T>&Selectable<TKey,T>
      */
-    public function matching(Criteria $criteria): ReadableCollection;
+    public function matching(Criteria $criteria);
 }

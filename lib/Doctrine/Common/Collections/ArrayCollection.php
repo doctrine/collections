@@ -7,6 +7,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use ReturnTypeWillChange;
 use Stringable;
 use Traversable;
 
@@ -69,12 +70,15 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function toArray(): array
+    public function toArray()
     {
         return $this->elements;
     }
 
-    public function first(): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function first()
     {
         return reset($this->elements);
     }
@@ -88,37 +92,53 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @param array $elements Elements.
      * @psalm-param array<K,V> $elements
      *
+     * @return static
      * @psalm-return static<K,V>
      *
      * @psalm-template K of array-key
      * @psalm-template V
      */
-    protected function createFrom(array $elements): static
+    protected function createFrom(array $elements)
     {
         return new static($elements);
     }
 
-    public function last(): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function last()
     {
         return end($this->elements);
     }
 
-    public function key(): int|string|null
+    /**
+     * {@inheritDoc}
+     */
+    public function key()
     {
         return key($this->elements);
     }
 
-    public function next(): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function next()
     {
         return next($this->elements);
     }
 
-    public function current(): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function current()
     {
         return current($this->elements);
     }
 
-    public function remove(string|int $key): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function remove(string|int $key)
     {
         if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
             return null;
@@ -130,7 +150,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return $removed;
     }
 
-    public function removeElement(mixed $element): bool
+    /**
+     * {@inheritDoc}
+     */
+    public function removeElement(mixed $element)
     {
         $key = array_search($element, $this->elements, true);
 
@@ -147,8 +170,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
+     * {@inheritDoc}
      */
-    public function offsetExists($offset): bool
+    #[ReturnTypeWillChange]
+    public function offsetExists(mixed $offset)
     {
         return $this->containsKey($offset);
     }
@@ -157,8 +182,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
+     * {@inheritDoc}
      */
-    public function offsetGet(mixed $offset): mixed
+    #[ReturnTypeWillChange]
+    public function offsetGet(mixed $offset)
     {
         return $this->get($offset);
     }
@@ -168,8 +195,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey|null $offset
      * @param T         $value
+     * {@inheritDoc}
      */
-    public function offsetSet(mixed $offset, mixed $value): void
+    #[ReturnTypeWillChange]
+    public function offsetSet(mixed $offset, mixed $value)
     {
         if ($offset === null) {
             $this->add($value);
@@ -184,13 +213,18 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
+     * {@inheritDoc}
      */
-    public function offsetUnset(mixed $offset): void
+    #[ReturnTypeWillChange]
+    public function offsetUnset(mixed $offset)
     {
         $this->remove($offset);
     }
 
-    public function containsKey(string|int $key): bool
+    /**
+     * {@inheritDoc}
+     */
+    public function containsKey(string|int $key)
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
@@ -200,12 +234,15 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @template TMaybeContained
      */
-    public function contains(mixed $element): bool
+    public function contains(mixed $element)
     {
         return in_array($element, $this->elements, true);
     }
 
-    public function exists(Closure $p): bool
+    /**
+     * {@inheritDoc}
+     */
+    public function exists(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -221,16 +258,20 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @psalm-param TMaybeContained $element
      *
+     * @return int|string|false
      * @psalm-return (TMaybeContained is T ? TKey|false : false)
      *
      * @template TMaybeContained
      */
-    public function indexOf($element): int|string|false
+    public function indexOf($element)
     {
         return array_search($element, $this->elements, true);
     }
 
-    public function get(string|int $key): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function get(string|int $key)
     {
         return $this->elements[$key] ?? null;
     }
@@ -238,7 +279,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function getKeys(): array
+    public function getKeys()
     {
         return array_keys($this->elements);
     }
@@ -246,12 +287,16 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function getValues(): array
+    public function getValues()
     {
         return array_values($this->elements);
     }
 
-    public function count(): int
+    /**
+     * {@inheritDoc}
+     */
+    #[ReturnTypeWillChange]
+    public function count()
     {
         return count($this->elements);
     }
@@ -259,7 +304,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value): void
+    public function set(string|int $key, mixed $value)
     {
         $this->elements[$key] = $value;
     }
@@ -277,7 +322,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
         $this->elements[] = $element;
     }
 
-    public function isEmpty(): bool
+    /**
+     * {@inheritDoc}
+     */
+    public function isEmpty()
     {
         return empty($this->elements);
     }
@@ -288,7 +336,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @return Traversable<int|string, mixed>
      * @psalm-return Traversable<TKey, T>
      */
-    public function getIterator(): Traversable
+    #[ReturnTypeWillChange]
+    public function getIterator()
     {
         return new ArrayIterator($this->elements);
     }
@@ -303,7 +352,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @psalm-template U
      */
-    public function map(Closure $func): Collection
+    public function map(Closure $func)
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
@@ -311,7 +360,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, $initial = null): mixed
+    public function reduce(Closure $func, $initial = null)
     {
         return array_reduce($this->elements, $func, $initial);
     }
@@ -322,12 +371,15 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @return static
      * @psalm-return static<TKey,T>
      */
-    public function filter(Closure $p): Collection
+    public function filter(Closure $p)
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
-    public function findFirst(Closure $p): mixed
+    /**
+     * {@inheritDoc}
+     */
+    public function findFirst(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -338,7 +390,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return null;
     }
 
-    public function forAll(Closure $p): bool
+    /**
+     * {@inheritDoc}
+     */
+    public function forAll(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
             if (! $p($key, $element)) {
@@ -352,7 +407,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p): array
+    public function partition(Closure $p)
     {
         $matches = $noMatches = [];
 
@@ -369,13 +424,17 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * Returns a string representation of this object.
+     * {@inheritDoc}
      */
-    public function __toString(): string
+    public function __toString()
     {
         return self::class . '@' . spl_object_hash($this);
     }
 
-    public function clear(): void
+    /**
+     * {@inheritDoc}
+     */
+    public function clear()
     {
         $this->elements = [];
     }
@@ -383,13 +442,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, int|null $length = null): array
+    public function slice(int $offset, int|null $length = null)
     {
         return array_slice($this->elements, $offset, $length, true);
     }
 
     /** @psalm-return Collection<TKey, T>&Selectable<TKey,T> */
-    public function matching(Criteria $criteria): Collection
+    public function matching(Criteria $criteria)
     {
         $expr     = $criteria->getWhereExpression();
         $filtered = $this->elements;

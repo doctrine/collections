@@ -14,25 +14,33 @@ abstract class ExpressionVisitor
 {
     /**
      * Converts a comparison expression into the target query language output.
+     *
+     * @return mixed
      */
-    abstract public function walkComparison(Comparison $comparison): mixed;
+    abstract public function walkComparison(Comparison $comparison);
 
     /**
      * Converts a value expression into the target query language part.
+     *
+     * @return mixed
      */
-    abstract public function walkValue(Value $value): mixed;
+    abstract public function walkValue(Value $value);
 
     /**
      * Converts a composite expression into the target query language output.
+     *
+     * @return mixed
      */
-    abstract public function walkCompositeExpression(CompositeExpression $expr): mixed;
+    abstract public function walkCompositeExpression(CompositeExpression $expr);
 
     /**
      * Dispatches walking an expression to the appropriate handler.
      *
+     * @return mixed
+     *
      * @throws RuntimeException
      */
-    public function dispatch(Expression $expr): mixed
+    public function dispatch(Expression $expr)
     {
         return match (true) {
             $expr instanceof Comparison => $this->walkComparison($expr),
