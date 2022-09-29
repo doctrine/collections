@@ -30,15 +30,15 @@ You can find a list of major changes to public API below.
 | `contains($element)`             | `contains(mixed $element): bool`                 |
 | `isEmpty()`                      | `isEmpty(): bool`                                |
 | `removeElement($element)`        | `removeElement(mixed $element): bool`            |
-| `containsKey($key)`              | `containsKey(string|int $key): bool`             |
-| `get()`                          | `get(string|int $key): mixed`                    |
+| `containsKey($key)`              | `containsKey(string\|int $key): bool`            |
+| `get()`                          | `get(string\|int $key): mixed`                   |
 | `getKeys()`                      | `getKeys(): array`                               |
 | `getValues()`                    | `getValues(): array`                             |
-| `set($key, $value)`              | `set(string|int $key, $value): void`             |
+| `set($key, $value)`              | `set(string\|int $key, $value): void`            |
 | `toArray()`                      | `toArray(): array`                               |
 | `first()`                        | `first(): mixed`                                 |
 | `last()`                         | `last(): mixed`                                  |
-| `key()`                          | `key(): int|string|null`                         |
+| `key()`                          | `key(): int\|string\|null`                        |
 | `current()`                      | `current(): mixed`                               |
 | `next()`                         | `next(): mixed`                                  |
 | `exists(Closure $p)`             | `exists(Closure $p): bool`                       |
@@ -46,7 +46,7 @@ You can find a list of major changes to public API below.
 | `forAll(Closure $p)`             | `forAll(Closure $p): bool`                       |
 | `map(Closure $func)`             | `map(Closure $func): self`                       |
 | `partition(Closure $p)`          | `partition(Closure $p): array`                   |
-| `indexOf($element)`              | `indexOf(mixed $element): int|string|false`      |
+| `indexOf($element)`              | `indexOf(mixed $element): int\|string\|false`    |
 | `slice($offset, $length = null)` | `slice(int $offset, ?int $length = null): array` |
 | `count()`                        | `count(): int`                                   |
 | `getIterator()`                  | `getIterator(): \Traversable`                    |
