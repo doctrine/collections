@@ -6,10 +6,10 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="lib" />
+        <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="lib/Doctrine/Common/Collections/Expr"/>
+            <directory name="src/Expr"/>
         </ignoreFiles>
     </projectFiles>
 
@@ -27,7 +27,7 @@
 
         <UnsafeGenericInstantiation>
             <errorLevel type="suppress">
-                <file name="lib/Doctrine/Common/Collections/ArrayCollection.php"/>
+                <file name="src/ArrayCollection.php"/>
             </errorLevel>
         </UnsafeGenericInstantiation>
 
@@ -41,7 +41,7 @@
         <InvalidTemplateParam>
             <errorLevel type="suppress">
                 <!-- https://github.com/vimeo/psalm/issues/8212 -->
-                <file name="lib/Doctrine/Common/Collections/ReadableCollection.php"/>
+                <file name="src/ReadableCollection.php"/>
             </errorLevel>
         </InvalidTemplateParam>
     </issueHandlers>
