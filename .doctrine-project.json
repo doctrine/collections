@@ -5,16 +5,26 @@
     "docsSlug": "doctrine-collections",
     "versions": [
         {
-            "name": "2.0",
-            "branchName": "2.0.x",
+            "name": "3.0",
+            "branchName": "3.0.x",
             "slug": "latest",
             "upcoming": true
         },
         {
+            "name": "2.1",
+            "branchName": "2.1.x",
+            "upcoming": true
+        },
+        {
+            "name": "2.0",
+            "branchName": "2.0.x",
+            "slug": "stable",
+            "current": true
+        },
+        {
             "name": "1.8",
             "branchName": "1.8.x",
-            "slug": "1.8",
-            "current": true
+            "slug": "1.8"
         },
         {
             "name": "1.7",
