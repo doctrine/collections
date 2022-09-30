@@ -9,13 +9,13 @@
 >
     <testsuites>
         <testsuite name="Doctrine Collections Test Suite">
-            <directory>./tests/Doctrine/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
     <coverage>
         <include>
-            <directory>./lib/Doctrine/</directory>
+            <directory>./src/</directory>
         </include>
     </coverage>
 </phpunit>

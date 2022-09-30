@@ -217,7 +217,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Returns the first element of this collection that satisfies the predicate p.
      *
      * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey=, T=):bool $p
+     * @psalm-param Closure(TKey, T):bool $p
      *
      * @return mixed The first element respecting the predicate,
      *               null if no element respects the predicate.
