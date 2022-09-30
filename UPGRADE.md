@@ -6,6 +6,13 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 3.0
+
+## BC breaking changes
+
+Native return types have been added. The new signatures are already described
+below [in the section about upgrading to 2.0](#upgrade-to-20).
+
 # Upgrade to 2.0
 
 ## BC breaking changes

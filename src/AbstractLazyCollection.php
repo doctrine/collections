@@ -6,7 +6,6 @@ namespace Doctrine\Common\Collections;
 
 use Closure;
 use LogicException;
-use ReturnTypeWillChange;
 use Traversable;
 
 /**
@@ -28,31 +27,21 @@ abstract class AbstractLazyCollection implements Collection
 
     protected bool $initialized = false;
 
-    /**
-     * {@inheritDoc}
-     */
-    #[ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         $this->initialize();
 
         return $this->collection->count();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function add(mixed $element)
+    public function add(mixed $element): void
     {
         $this->initialize();
 
         $this->collection->add($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->initialize();
         $this->collection->clear();
@@ -63,57 +52,42 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @template TMaybeContained
      */
-    public function contains(mixed $element)
+    public function contains(mixed $element): bool
     {
         $this->initialize();
 
         return $this->collection->contains($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         $this->initialize();
 
         return $this->collection->isEmpty();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function remove(string|int $key)
+    public function remove(string|int $key): mixed
     {
         $this->initialize();
 
         return $this->collection->remove($key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function removeElement(mixed $element)
+    public function removeElement(mixed $element): bool
     {
         $this->initialize();
 
         return $this->collection->removeElement($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function containsKey(string|int $key)
+    public function containsKey(string|int $key): bool
     {
         $this->initialize();
 
         return $this->collection->containsKey($key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string|int $key)
+    public function get(string|int $key): mixed
     {
         $this->initialize();
 
@@ -123,7 +97,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function getKeys()
+    public function getKeys(): array
     {
         $this->initialize();
 
@@ -133,7 +107,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function getValues()
+    public function getValues(): array
     {
         $this->initialize();
 
@@ -143,7 +117,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function set(string|int $key, mixed $value)
+    public function set($key, $value): void
     {
         $this->initialize();
         $this->collection->set($key, $value);
@@ -152,77 +126,56 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->initialize();
 
         return $this->collection->toArray();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function first()
+    public function first(): mixed
     {
         $this->initialize();
 
         return $this->collection->first();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function last()
+    public function last(): mixed
     {
         $this->initialize();
 
         return $this->collection->last();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function key()
+    public function key(): string|int|null
     {
         $this->initialize();
 
         return $this->collection->key();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function current()
+    public function current(): mixed
     {
         $this->initialize();
 
         return $this->collection->current();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function next()
+    public function next(): mixed
     {
         $this->initialize();
 
         return $this->collection->next();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function exists(Closure $p)
+    public function exists(Closure $p): bool
     {
         $this->initialize();
 
         return $this->collection->exists($p);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function findFirst(Closure $p)
+    public function findFirst(Closure $p): mixed
     {
         $this->initialize();
 
@@ -235,17 +188,14 @@ abstract class AbstractLazyCollection implements Collection
      * @return ReadableCollection<mixed>
      * @psalm-return ReadableCollection<TKey, T>
      */
-    public function filter(Closure $p)
+    public function filter(Closure $p): ReadableCollection
     {
         $this->initialize();
 
         return $this->collection->filter($p);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function forAll(Closure $p)
+    public function forAll(Closure $p): bool
     {
         $this->initialize();
 
@@ -253,8 +203,6 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @psalm-param Closure(T):U $func
      *
      * @return ReadableCollection<mixed>
@@ -262,7 +210,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @psalm-template U
      */
-    public function map(Closure $func)
+    public function map(Closure $func): ReadableCollection
     {
         $this->initialize();
 
@@ -272,7 +220,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, mixed $initial = null)
+    public function reduce(Closure $func, $initial = null): mixed
     {
         $this->initialize();
 
@@ -282,7 +230,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p)
+    public function partition(Closure $p): array
     {
         $this->initialize();
 
@@ -294,7 +242,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @template TMaybeContained
      */
-    public function indexOf(mixed $element)
+    public function indexOf($element): string|int|false
     {
         $this->initialize();
 
@@ -304,7 +252,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function slice(int $offset, int|null $length = null)
+    public function slice(int $offset, int|null $length = null): array
     {
         $this->initialize();
 
@@ -312,39 +260,26 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return Traversable<int|string, mixed>
      * @psalm-return Traversable<TKey,T>
      */
-    #[ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $this->initialize();
 
         return $this->collection->getIterator();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param TKey $offset
-     */
-    #[ReturnTypeWillChange]
-    public function offsetExists(mixed $offset)
+    /** @param TKey $offset */
+    public function offsetExists($offset): bool
     {
         $this->initialize();
 
         return $this->collection->offsetExists($offset);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param TKey $offset
-     */
-    #[ReturnTypeWillChange]
-    public function offsetGet(mixed $offset)
+    /** @param TKey $offset */
+    public function offsetGet(mixed $offset): mixed
     {
         $this->initialize();
 
@@ -352,21 +287,17 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @param TKey|null $offset
      * @param T         $value
      */
-    #[ReturnTypeWillChange]
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->initialize();
         $this->collection->offsetSet($offset, $value);
     }
 
     /** @param TKey $offset */
-    #[ReturnTypeWillChange]
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset(mixed $offset): void
     {
         $this->initialize();
         $this->collection->offsetUnset($offset);
@@ -375,11 +306,9 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * Is the lazy collection already initialized?
      *
-     * @return bool
-     *
      * @psalm-assert-if-true Collection<TKey,T> $this->collection
      */
-    public function isInitialized()
+    public function isInitialized(): bool
     {
         return $this->initialized;
     }
@@ -387,11 +316,9 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * Initialize the collection
      *
-     * @return void
-     *
      * @psalm-assert Collection<TKey,T> $this->collection
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         if ($this->initialized) {
             return;
@@ -407,8 +334,6 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * Do the initialization logic
-     *
-     * @return void
      */
-    abstract protected function doInitialize();
+    abstract protected function doInitialize(): void;
 }
