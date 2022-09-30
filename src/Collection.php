@@ -35,17 +35,13 @@ interface Collection extends ReadableCollection, ArrayAccess
      *
      * @param mixed $element The element to add.
      * @psalm-param T $element
-     *
-     * @return void we will require a native return type declaration in 3.0
      */
-    public function add(mixed $element);
+    public function add(mixed $element): void;
 
     /**
      * Clears the collection, removing all elements.
-     *
-     * @return void
      */
-    public function clear();
+    public function clear(): void;
 
     /**
      * Removes the element at the specified index from the collection.
@@ -56,7 +52,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      * @psalm-return T|null
      */
-    public function remove(string|int $key);
+    public function remove(string|int $key): mixed;
 
     /**
      * Removes the specified element from the collection, if it is found.
@@ -66,7 +62,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeElement(mixed $element);
+    public function removeElement(mixed $element): bool;
 
     /**
      * Sets an element in the collection at the specified key/index.
@@ -75,8 +71,6 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @param mixed      $value The element to set.
      * @psalm-param TKey $key
      * @psalm-param T $value
-     *
-     * @return void
      */
-    public function set(string|int $key, mixed $value);
+    public function set(string|int $key, mixed $value): void;
 }
