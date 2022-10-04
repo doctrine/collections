@@ -12,6 +12,6 @@ on:
 jobs:
   coding-standards:
     name: "Coding Standards"
-    uses: "doctrine/.github/.github/workflows/coding-standards.yml@1.5.0"
+    uses: "greg0ire/.github/.github/workflows/coding-standards.yml@upgrade-deps"
     with:
       php-version: "8.1"
