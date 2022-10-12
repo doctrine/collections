@@ -23,7 +23,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * @return bool TRUE if the collection contains the element, FALSE otherwise.
      * @psalm-return (TMaybeContained is T ? bool : false)
      *
-     * @template TMaybeContained
+     * @psalm-template TMaybeContained
      */
     public function contains($element);
 
@@ -207,7 +207,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
      * @psalm-return (TMaybeContained is T ? TKey|false : false)
      *
-     * @template TMaybeContained
+     * @psalm-template TMaybeContained
      */
     public function indexOf($element);
 }

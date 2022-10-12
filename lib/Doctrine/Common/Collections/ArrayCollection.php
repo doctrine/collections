@@ -232,7 +232,7 @@ class ArrayCollection implements Collection, Selectable
     /**
      * {@inheritDoc}
      *
-     * @template TMaybeContained
+     * @psalm-template TMaybeContained
      */
     public function contains($element)
     {
@@ -260,7 +260,7 @@ class ArrayCollection implements Collection, Selectable
      *
      * @psalm-return (TMaybeContained is T ? TKey|false : false)
      *
-     * @template TMaybeContained
+     * @psalm-template TMaybeContained
      */
     public function indexOf($element)
     {
