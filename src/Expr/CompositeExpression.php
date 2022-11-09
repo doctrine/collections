@@ -6,6 +6,8 @@ namespace Doctrine\Common\Collections\Expr;
 
 use RuntimeException;
 
+use function count;
+
 /**
  * Expression of Expressions combined by AND or OR operation.
  */
@@ -13,6 +15,7 @@ class CompositeExpression implements Expression
 {
     final public const TYPE_AND = 'AND';
     final public const TYPE_OR  = 'OR';
+    final public const TYPE_NOT = 'NOT';
 
     /** @var list<Expression> */
     private array $expressions = [];
@@ -34,6 +37,10 @@ class CompositeExpression implements Expression
             }
 
             $this->expressions[] = $expr;
+        }
+
+        if ($type === self::TYPE_NOT && count($this->expressions) !== 1) {
+            throw new RuntimeException('Not expression only allows one expression as child.');
         }
     }
 

@@ -2,7 +2,7 @@ Expressions
 ===========
 
 The ``Doctrine\Common\Collections\Expr\Comparison`` class
-can be used to create expressions to be used with the
+can be used to create comparison expressions to be used with the
 ``Doctrine\Common\Collections\Criteria`` class. It has the
 following operator constants:
 
@@ -19,6 +19,19 @@ following operator constants:
 - ``Comparison::MEMBER_OF``
 - ``Comparison::STARTS_WITH``
 - ``Comparison::ENDS_WITH``
+
+The ``Doctrine\Common\Collections\Expr\CompositeExpression`` class
+can be used to create composite expressions to be used with the
+``Doctrine\Common\Collections\Criteria`` class. It has the
+following operator constants:
+
+- ``CompositeExpression::TYPE_AND``
+- ``CompositeExpression::TYPE_OR``
+- ``CompositeExpression::TYPE_NOT``
+
+When using the ``TYPE_OR`` and ``TYPE_AND`` operators the
+``CompositeExpression`` accepts multiple expressions as parameter
+but only one expression can be provided when using the ``NOT`` operator.
 
 The ``Doctrine\Common\Collections\Criteria`` class has the following
 API to be used with expressions:

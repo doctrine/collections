@@ -338,6 +338,18 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertFalse($closure(new TestObject(0, 4)));
     }
 
+    public function testWalkNotCompositeExpression(): void
+    {
+        $closure = $this->visitor->walkCompositeExpression(
+            $this->builder->not(
+                $this->builder->eq('foo', 1),
+            ),
+        );
+
+        self::assertFalse($closure(new TestObject(1)));
+        self::assertTrue($closure(new TestObject(0)));
+    }
+
     public function testWalkUnknownCompositeExpressionThrowException(): void
     {
         self::expectException(RuntimeException::class);
