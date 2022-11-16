@@ -181,6 +181,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         return match ($expr->getType()) {
             CompositeExpression::TYPE_AND => $this->andExpressions($expressionList),
             CompositeExpression::TYPE_OR => $this->orExpressions($expressionList),
+            CompositeExpression::TYPE_NOT => $this->notExpression($expressionList),
             default => throw new RuntimeException('Unknown composite ' . $expr->getType()),
         };
     }
@@ -211,5 +212,11 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
             return false;
         };
+    }
+
+    /** @param callable[] $expressions */
+    private function notExpression(array $expressions): Closure
+    {
+        return static fn ($object) => ! $expressions[0]($object);
     }
 }
