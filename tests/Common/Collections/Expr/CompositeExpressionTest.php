@@ -14,21 +14,23 @@ use RuntimeException;
 /** @covers  \Doctrine\Common\Collections\Expr\CompositeExpression */
 class CompositeExpressionTest extends TestCase
 {
-    /** @return list<array{expression: mixed}> */
+    /** @return list<array{type:string, expressions: list<mixed>}> */
     public function invalidDataProvider(): array
     {
         return [
-            ['expression' => new Value('value')],
-            ['expression' => 'wrong-type'],
+            ['type' => CompositeExpression::TYPE_AND, 'expressions' => [new Value('value')]],
+            ['type' => CompositeExpression::TYPE_AND, 'expressions' => ['wrong-type']],
+            ['type' => CompositeExpression::TYPE_NOT, 'expressions' => [$this->createMock(Expression::class), $this->createMock(Expression::class)]],
         ];
     }
 
-    /** @dataProvider invalidDataProvider */
-    public function testExceptions(string|Value $expression): void
+    /**
+     * @param list<mixed> $expressions
+     *
+     * @dataProvider invalidDataProvider
+     */
+    public function testExceptions(string $type, array $expressions): void
     {
-        $type        = CompositeExpression::TYPE_AND;
-        $expressions = [$expression];
-
         $this->expectException(RuntimeException::class);
         new CompositeExpression($type, $expressions);
     }
