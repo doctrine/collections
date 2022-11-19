@@ -28,6 +28,11 @@ class ExpressionBuilder
         return new CompositeExpression(CompositeExpression::TYPE_OR, $expressions);
     }
 
+    public function not(Expression $expression): CompositeExpression
+    {
+        return new CompositeExpression(CompositeExpression::TYPE_NOT, [$expression]);
+    }
+
     public function eq(string $field, mixed $value): Comparison
     {
         return new Comparison($field, Comparison::EQ, new Value($value));

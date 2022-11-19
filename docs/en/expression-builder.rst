@@ -42,6 +42,18 @@ orX
 
     $collection->matching(new Criteria($expression));
 
+not
+---
+
+.. code-block:: php
+    $expressionBuilder = Criteria::expr();
+
+    $expression = $expressionBuilder->not(
+        $expressionBuilder->eq('foo', 1)
+    );
+
+    $collection->matching(new Criteria($expression));
+
 eq
 ---
 
