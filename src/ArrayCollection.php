@@ -170,7 +170,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     * {@inheritDoc}
+     *
+     * @return bool
      */
     #[ReturnTypeWillChange]
     public function offsetExists(mixed $offset)
@@ -182,7 +183,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     * {@inheritDoc}
+     *
+     * @return T|null
      */
     #[ReturnTypeWillChange]
     public function offsetGet(mixed $offset)
@@ -195,7 +197,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey|null $offset
      * @param T         $value
-     * {@inheritDoc}
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetSet(mixed $offset, mixed $value)
@@ -213,7 +216,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     * {@inheritDoc}
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetUnset(mixed $offset)
@@ -292,9 +296,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return array_values($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** @return int */
     #[ReturnTypeWillChange]
     public function count()
     {
