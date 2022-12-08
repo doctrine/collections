@@ -296,7 +296,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return array_values($this->elements);
     }
 
-    /** @return int */
+    /**
+     * {@inheritDoc}
+     */
     #[ReturnTypeWillChange]
     public function count()
     {
