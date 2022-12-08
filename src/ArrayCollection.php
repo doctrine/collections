@@ -298,6 +298,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * {@inheritDoc}
+     *
+     * @return int<0, max>
      */
     #[ReturnTypeWillChange]
     public function count()
