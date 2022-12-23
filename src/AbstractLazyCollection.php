@@ -30,6 +30,8 @@ abstract class AbstractLazyCollection implements Collection
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     #[ReturnTypeWillChange]
     public function count()
@@ -329,6 +331,8 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @param TKey $offset
+     *
+     * @return bool
      */
     #[ReturnTypeWillChange]
     public function offsetExists(mixed $offset)
@@ -342,6 +346,8 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @param TKey $offset
+     *
+     * @return T|null
      */
     #[ReturnTypeWillChange]
     public function offsetGet(mixed $offset)
@@ -356,6 +362,8 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @param TKey|null $offset
      * @param T         $value
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function offsetSet(mixed $offset, mixed $value)
@@ -364,7 +372,11 @@ abstract class AbstractLazyCollection implements Collection
         $this->collection->offsetSet($offset, $value);
     }
 
-    /** @param TKey $offset */
+    /**
+     * @param TKey $offset
+     *
+     * @return void
+     */
     #[ReturnTypeWillChange]
     public function offsetUnset(mixed $offset)
     {
