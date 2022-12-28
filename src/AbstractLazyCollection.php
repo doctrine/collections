@@ -271,7 +271,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /** @param TKey $offset */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         $this->initialize();
 
