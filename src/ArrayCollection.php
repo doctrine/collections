@@ -76,7 +76,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     public function first(): mixed
     {
-        return reset($this->elements);
+        $element = reset($this->elements);
+
+        if ($element === false) {
+            return null;
+        }
+
+        return $element;
     }
 
     /**
@@ -100,7 +106,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     public function last(): mixed
     {
-        return end($this->elements);
+        $element = end($this->elements);
+
+        if ($element === false) {
+            return null;
+        }
+
+        return $element;
     }
 
     public function key(): int|string|null
@@ -110,12 +122,24 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     public function next(): mixed
     {
-        return next($this->elements);
+        $element = next($this->elements);
+
+        if ($element === false) {
+            return null;
+        }
+
+        return $element;
     }
 
     public function current(): mixed
     {
-        return current($this->elements);
+        $element = current($this->elements);
+
+        if ($element === false) {
+            return null;
+        }
+
+        return $element;
     }
 
     public function remove(string|int $key): mixed

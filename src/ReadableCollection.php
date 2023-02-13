@@ -86,14 +86,14 @@ interface ReadableCollection extends Countable, IteratorAggregate
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.
      *
-     * @psalm-return T|false
+     * @psalm-return T|null
      */
     public function first(): mixed;
 
     /**
      * Sets the internal iterator to the last element in the collection and returns this element.
      *
-     * @psalm-return T|false
+     * @psalm-return T|null
      */
     public function last(): mixed;
 
@@ -107,14 +107,14 @@ interface ReadableCollection extends Countable, IteratorAggregate
     /**
      * Gets the element of the collection at the current iterator position.
      *
-     * @psalm-return T|false
+     * @psalm-return T|null
      */
     public function current(): mixed;
 
     /**
      * Moves the internal iterator position to the next element and returns this element.
      *
-     * @psalm-return T|false
+     * @psalm-return T|null
      */
     public function next(): mixed;
 

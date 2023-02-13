@@ -57,6 +57,12 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(reset($elements), $collection->first());
     }
 
+    public function testFirstNull(): void
+    {
+        $emptyCollection = $this->buildCollection([]);
+        self::assertNull($emptyCollection->first());
+    }
+
     /**
      * @param array<string|int, string|int> $elements
      *
@@ -66,6 +72,12 @@ abstract class BaseArrayCollectionTest extends TestCase
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(end($elements), $collection->last());
+    }
+
+    public function testLastNull(): void
+    {
+        $collection = $this->buildCollection([]);
+        self::assertNull($collection->last());
     }
 
     /**
@@ -108,7 +120,13 @@ abstract class BaseArrayCollectionTest extends TestCase
             self::assertSame(current($elements), $collection->current(), 'Current values not match');
         }
 
-        self::assertFalse($collection->next());
+        self::assertNull($collection->next());
+    }
+
+    public function testNextNull(): void
+    {
+        $collection = $this->buildCollection([]);
+        self::assertNull($collection->next());
     }
 
     /**
@@ -126,6 +144,13 @@ abstract class BaseArrayCollectionTest extends TestCase
         $collection->next();
 
         self::assertSame(current($elements), $collection->current());
+    }
+
+    public function testCurrentNull(): void
+    {
+        $collection = $this->buildCollection([]);
+
+        self::assertNull($collection->current());
     }
 
     /**
