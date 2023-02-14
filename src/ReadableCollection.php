@@ -156,8 +156,8 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * @param Closure $p The predicate used for filtering.
      * @psalm-param Closure(T, TKey):bool $p
      *
-     * @return ReadableCollection<mixed> A collection with the results of the filter operation.
-     * @psalm-return ReadableCollection<TKey, T>
+     * @return static<mixed> A collection with the results of the filter operation.
+     * @psalm-return static<TKey, T>
      */
     public function filter(Closure $p);
 
@@ -167,8 +167,8 @@ interface ReadableCollection extends Countable, IteratorAggregate
      *
      * @psalm-param Closure(T):U $func
      *
-     * @return ReadableCollection<mixed>
-     * @psalm-return ReadableCollection<TKey, U>
+     * @return static<mixed>
+     * @psalm-return static<TKey, U>
      *
      * @psalm-template U
      */
@@ -181,10 +181,10 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * @param Closure $p The predicate on which to partition.
      * @psalm-param Closure(TKey, T):bool $p
      *
-     * @return ReadableCollection<mixed>[] An array with two elements. The first element contains the collection
+     * @return static<mixed>[] An array with two elements. The first element contains the collection
      *                      of elements where the predicate returned TRUE, the second element
      *                      contains the collection of elements where the predicate returned FALSE.
-     * @psalm-return array{0: ReadableCollection<TKey, T>, 1: ReadableCollection<TKey, T>}
+     * @psalm-return array{0: static<TKey, T>, 1: static<TKey, T>}
      */
     public function partition(Closure $p);
 

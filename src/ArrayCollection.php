@@ -373,9 +373,6 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * {@inheritDoc}
-     *
-     * @return static
-     * @psalm-return static<TKey,T>
      */
     public function filter(Closure $p)
     {
