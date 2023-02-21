@@ -104,6 +104,12 @@ class ExpressionBuilder
     }
 
     /** @return Comparison */
+    public function notContains(string $field, mixed $value)
+    {
+        return new Comparison($field, Comparison::NCONTAINS, new Value($value));
+    }
+
+    /** @return Comparison */
     public function memberOf(string $field, mixed $value)
     {
         return new Comparison($field, Comparison::MEMBER_OF, new Value($value));

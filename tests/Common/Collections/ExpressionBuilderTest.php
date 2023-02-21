@@ -122,6 +122,14 @@ class ExpressionBuilderTest extends TestCase
         self::assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
 
+    public function testNotContains(): void
+    {
+        $expr = $this->builder->notContains('a', 'b');
+
+        self::assertInstanceOf(Comparison::class, $expr);
+        self::assertEquals(Comparison::NCONTAINS, $expr->getOperator());
+    }
+
     public function testMemberOf(): void
     {
         $expr = $this->builder->memberOf('b', ['a']);

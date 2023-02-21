@@ -19,6 +19,7 @@ class Comparison implements Expression
     final public const IN          = 'IN';
     final public const NIN         = 'NIN';
     final public const CONTAINS    = 'CONTAINS';
+    final public const NCONTAINS   = 'NCONTAINS';
     final public const MEMBER_OF   = 'MEMBER_OF';
     final public const STARTS_WITH = 'STARTS_WITH';
     final public const ENDS_WITH   = 'ENDS_WITH';
