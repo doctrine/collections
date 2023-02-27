@@ -128,12 +128,28 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertFalse($closure(new TestObject(2)));
     }
 
+    public function testWalkObjectsEqualsComparison(): void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo', new TestObject(1)));
+
+        self::assertTrue($closure(new TestObject(new TestObject(1))));
+        self::assertFalse($closure(new TestObject(new TestObject(2))));
+    }
+
     public function testWalkNotEqualsComparison(): void
     {
         $closure = $this->visitor->walkComparison($this->builder->neq('foo', 1));
 
         self::assertFalse($closure(new TestObject(1)));
         self::assertTrue($closure(new TestObject(2)));
+    }
+
+    public function testWalkObjectsNotEqualsComparison(): void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->neq('foo', new TestObject(1)));
+
+        self::assertFalse($closure(new TestObject(new TestObject(1))));
+        self::assertTrue($closure(new TestObject(new TestObject(2))));
     }
 
     public function testWalkLessThanComparison(): void

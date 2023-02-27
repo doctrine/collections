@@ -127,8 +127,16 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         $value = $comparison->getValue()->getValue();
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) === $value,
-            Comparison::NEQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) !== $value,
+            Comparison::EQ => static function ($object) use ($field, $value): bool {
+                $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                return is_scalar($fieldValue) ? $fieldValue === $value : $fieldValue == $value;
+            },
+            Comparison::NEQ => static function ($object) use ($field, $value): bool {
+                $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+
+                return is_scalar($fieldValue) ? $fieldValue !== $value : $fieldValue != $value;
+            },
             Comparison::LT => static fn ($object): bool => self::getObjectFieldValue($object, $field) < $value,
             Comparison::LTE => static fn ($object): bool => self::getObjectFieldValue($object, $field) <= $value,
             Comparison::GT => static fn ($object): bool => self::getObjectFieldValue($object, $field) > $value,
