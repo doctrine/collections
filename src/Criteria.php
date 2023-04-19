@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Deprecations\Deprecation;
 
+use function array_filter;
 use function array_map;
+use function array_merge;
 use function func_num_args;
 use function strtoupper;
 
@@ -52,6 +54,21 @@ class Criteria
         }
 
         return self::$expressionBuilder;
+    }
+
+
+    /**
+     * Merges two Criteria together.
+     *
+     * @return self
+     */
+    public static function merge(Criteria $leftCriteria, Criteria $rightCriteria)
+    {
+        return self::create()
+            ->andWhere(Criteria::expr()->andX(...array_filter([$leftCriteria->getWhereExpression(), $rightCriteria->getWhereExpression()])))
+            ->orderBy(array_merge($leftCriteria->getOrderings(), $rightCriteria->getOrderings()))
+            ->setFirstResult($rightCriteria->getFirstResult() ?? $leftCriteria->getFirstResult())
+            ->setMaxResults($rightCriteria->getMaxResults() ?? $leftCriteria->getFirstResult());
     }
 
     /**
