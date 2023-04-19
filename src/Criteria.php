@@ -56,7 +56,6 @@ class Criteria
         return self::$expressionBuilder;
     }
 
-
     /**
      * Merges two Criteria together.
      *
