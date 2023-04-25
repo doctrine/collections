@@ -59,11 +59,11 @@ class Criteria
     /**
      * Merges two Criteria together.
      *
-     * @return self
+     * @return static
      */
     public static function merge(Criteria $leftCriteria, Criteria $rightCriteria)
     {
-        return self::create()
+        return static::create()
             ->andWhere(Criteria::expr()->andX(...array_filter([$leftCriteria->getWhereExpression(), $rightCriteria->getWhereExpression()])))
             ->orderBy(array_merge($leftCriteria->getOrderings(), $rightCriteria->getOrderings()))
             ->setFirstResult($rightCriteria->getFirstResult() ?? $leftCriteria->getFirstResult())
