@@ -4,6 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src" />
@@ -17,6 +19,18 @@
         <MixedArgument errorLevel="info" />
         <MixedArgumentTypeCoercion errorLevel="info" />
         <MixedAssignment errorLevel="info" />
+
+        <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <file name="src/AbstractLazyCollection.php"/>
+            </errorLevel>
+        </MixedInferredReturnType>
+
+        <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <file name="src/AbstractLazyCollection.php"/>
+            </errorLevel>
+        </MixedReturnStatement>
 
         <PossiblyNullArgument>
             <errorLevel type="suppress">
