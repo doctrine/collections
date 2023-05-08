@@ -42,7 +42,7 @@
         "phpstan/phpstan": "^1.8",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^4.22"
+        "vimeo/psalm": "^5.11"
     },
     "autoload": {
         "psr-4": {
