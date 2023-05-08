@@ -235,8 +235,6 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * {@inheritDoc}
-     *
-     * @template TMaybeContained
      */
     public function contains(mixed $element)
     {
