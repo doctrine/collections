@@ -154,6 +154,16 @@ contains
 
     $collection->matching(new Criteria($expression));
 
+notContains
+--------
+
+.. code-block:: php
+    $expressionBuilder = Criteria::expr();
+
+    $expression = $expressionBuilder->notContains('foo', 'value1');
+
+    $collection->matching(new Criteria($expression));
+
 memberOf
 --------
 

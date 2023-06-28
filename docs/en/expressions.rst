@@ -16,6 +16,7 @@ following operator constants:
 - ``Comparison::IN``
 - ``Comparison::NIN``
 - ``Comparison::CONTAINS``
+- ``Comparison::NCONTAINS``
 - ``Comparison::MEMBER_OF``
 - ``Comparison::STARTS_WITH``
 - ``Comparison::ENDS_WITH``
