@@ -235,8 +235,6 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /**
      * {@inheritDoc}
-     *
-     * @template TMaybeContained
      */
     public function contains(mixed $element)
     {
@@ -432,6 +430,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Returns a string representation of this object.
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function __toString()
     {
         return self::class . '@' . spl_object_hash($this);
