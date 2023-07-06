@@ -429,6 +429,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * Returns a string representation of this object.
      * {@inheritDoc}
+     *
+     * @return string
      */
     #[ReturnTypeWillChange]
     public function __toString()
