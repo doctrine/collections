@@ -47,11 +47,6 @@ abstract class AbstractLazyCollection implements Collection
         $this->collection->clear();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @template TMaybeContained
-     */
     public function contains(mixed $element): bool
     {
         $this->initialize();

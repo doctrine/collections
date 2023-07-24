@@ -195,11 +195,6 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @template TMaybeContained
-     */
     public function contains(mixed $element): bool
     {
         return in_array($element, $this->elements, true);
