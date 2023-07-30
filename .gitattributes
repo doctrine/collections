@@ -1,5 +1,6 @@
 /tests export-ignore
 /.github export-ignore
+.doctrine-project.json export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 .scrutinizer.yml export-ignore
