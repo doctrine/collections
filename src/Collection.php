@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use ArrayAccess;
+use Closure;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
@@ -79,4 +80,24 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @return void
      */
     public function set(string|int $key, mixed $value);
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-param Closure(T):U $func
+     *
+     * @return Collection<mixed>
+     * @psalm-return Collection<TKey, U>
+     *
+     * @psalm-template U
+     */
+    public function map(Closure $func);
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return Collection<mixed> A collection with the results of the filter operation.
+     * @psalm-return Collection<TKey, T>
+     */
+    public function filter(Closure $p);
 }
