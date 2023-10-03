@@ -177,13 +177,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->findFirst($p);
     }
 
-    /**
-     * @psalm-param Closure(T, TKey):bool $p
-     *
-     * @return ReadableCollection<mixed>
-     * @psalm-return ReadableCollection<TKey, T>
-     */
-    public function filter(Closure $p): ReadableCollection
+    public function filter(Closure $p): Collection
     {
         $this->initialize();
 
@@ -197,15 +191,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->forAll($p);
     }
 
-    /**
-     * @psalm-param Closure(T):U $func
-     *
-     * @return ReadableCollection<mixed>
-     * @psalm-return ReadableCollection<TKey, U>
-     *
-     * @psalm-template U
-     */
-    public function map(Closure $func): ReadableCollection
+    public function map(Closure $func): Collection
     {
         $this->initialize();
 
