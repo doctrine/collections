@@ -177,6 +177,9 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->findFirst($p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function filter(Closure $p): Collection
     {
         $this->initialize();
@@ -191,6 +194,9 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->forAll($p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function map(Closure $func): Collection
     {
         $this->initialize();
