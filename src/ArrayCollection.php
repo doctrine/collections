@@ -55,6 +55,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @var mixed[]
      */
     private array $elements = [];
+    
+    /**
+     * The number of elements in this colleciton
+     * @var int
+     */
+    private int $size = 0;
 
     /**
      * Initializes a new ArrayCollection.
@@ -65,6 +71,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
+        $this->size = count($elements);
     }
 
     /**
@@ -146,7 +153,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
         $removed = $this->elements[$key];
         unset($this->elements[$key]);
-
+        $this->size--;
         return $removed;
     }
 
@@ -162,7 +169,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         }
 
         unset($this->elements[$key]);
-
+        $this->size--;
         return true;
     }
 
@@ -302,7 +309,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     #[ReturnTypeWillChange]
     public function count()
     {
-        return count($this->elements);
+        return $this->size;
     }
 
     /**
@@ -324,6 +331,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function add(mixed $element)
     {
         $this->elements[] = $element;
+        $this->size++;
     }
 
     /**
@@ -331,7 +339,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      */
     public function isEmpty()
     {
-        return empty($this->elements);
+        return $this->size === 0;
     }
 
     /**
@@ -444,6 +452,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function clear()
     {
         $this->elements = [];
+        $this->size = 0;
     }
 
     /**
