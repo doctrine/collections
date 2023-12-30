@@ -70,7 +70,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
-        $this->size     = count($elements);
+        $this->size     = empty($elements) ? 0 : count($elements);
     }
 
     /**
