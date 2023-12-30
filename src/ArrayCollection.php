@@ -55,11 +55,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @var mixed[]
      */
     private array $elements = [];
-    
+
     /**
      * The number of elements in this colleciton
-     * 
-     * @var int
      */
     private int $size;
 
@@ -72,7 +70,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
-        $this->size = count($elements);
+        $this->size     = count($elements);
     }
 
     /**
@@ -106,7 +104,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @psalm-template K of array-key
      * @psalm-template V
      */
-    protected function createFrom(array $elements)
+    protected function createFrom(array $elements): static
     {
         return new static($elements);
     }
@@ -153,11 +151,11 @@ class ArrayCollection implements Collection, Selectable, Stringable
         }
 
         $removed = $this->elements[$key];
-        
+
         unset($this->elements[$key]);
-        
+
         $this->size--;
-        
+
         return $removed;
     }
 
@@ -173,9 +171,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
         }
 
         unset($this->elements[$key]);
-        
+
         $this->size--;
-        
+
         return true;
     }
 
@@ -183,11 +181,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     *
-     * @return bool
      */
     #[ReturnTypeWillChange]
-    public function offsetExists(mixed $offset)
+    public function offsetExists(mixed $offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -210,11 +206,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey|null $offset
      * @param T         $value
-     *
-     * @return void
      */
     #[ReturnTypeWillChange]
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
             $this->add($value);
@@ -229,11 +223,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * Required by interface ArrayAccess.
      *
      * @param TKey $offset
-     *
-     * @return void
      */
     #[ReturnTypeWillChange]
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset(mixed $offset): void
     {
         $this->remove($offset);
     }
@@ -458,7 +450,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function clear()
     {
         $this->elements = [];
-        $this->size = 0;
+        $this->size     = 0;
     }
 
     /**
