@@ -58,9 +58,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
     
     /**
      * The number of elements in this colleciton
+     * 
      * @var int
      */
-    private int $size = 0;
+    private int $size;
 
     /**
      * Initializes a new ArrayCollection.
@@ -152,8 +153,11 @@ class ArrayCollection implements Collection, Selectable, Stringable
         }
 
         $removed = $this->elements[$key];
+        
         unset($this->elements[$key]);
+        
         $this->size--;
+        
         return $removed;
     }
 
@@ -169,7 +173,9 @@ class ArrayCollection implements Collection, Selectable, Stringable
         }
 
         unset($this->elements[$key]);
+        
         $this->size--;
+        
         return true;
     }
 
@@ -304,7 +310,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @return int<0, max>
+     * @return int
      */
     #[ReturnTypeWillChange]
     public function count()
