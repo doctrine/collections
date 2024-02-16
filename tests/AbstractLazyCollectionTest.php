@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Tests\LazyArrayCollection;
 
 use function assert;
 use function is_array;
