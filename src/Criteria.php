@@ -24,7 +24,7 @@ class Criteria
 
     private static ExpressionBuilder|null $expressionBuilder = null;
 
-    /** @var array<string, string> */
+    /** @var array<string, self::*> */
     private array $orderings = [];
 
     private int|null $firstResult = null;
@@ -151,7 +151,7 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
-     * @return array<string, string>
+     * @return array<string, self::*>
      */
     public function getOrderings()
     {
