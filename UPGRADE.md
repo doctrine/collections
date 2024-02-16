@@ -6,6 +6,18 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.2
+
+## Deprecated not using Criteria::ASC or Criteria::DESC for ordering
+
+When calling `Criteria::orderBy()`, `Criteria::ASC` or `Criteria::DESC` should
+be preferred.
+
+```diff
+-$criteria = Criteria::create()->orderBy(['foo' => 'asc']);
++$criteria = Criteria::create()->orderBy(['foo' => Criteria::ASC]);
+```
+
 # Upgrade to 2.0
 
 ## BC breaking changes

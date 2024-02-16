@@ -131,4 +131,16 @@ class CriteriaTest extends TestCase
     {
         self::assertInstanceOf(ExpressionBuilder::class, Criteria::expr());
     }
+
+    public function testPassingSloppyOrderingArgumentsIsDeprecated(): void
+    {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/368');
+        $criteria = Criteria::create()->orderBy(['username' => 'asc']);
+    }
+
+    public function testPassingConstantsIsTheRightWay(): void
+    {
+        $this->expectNoDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/368');
+        $criteria = Criteria::create()->orderBy(['username' => Criteria::ASC]);
+    }
 }

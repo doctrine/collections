@@ -10,6 +10,7 @@ use Doctrine\Deprecations\Deprecation;
 
 use function array_map;
 use function func_num_args;
+use function in_array;
 use function strtoupper;
 
 /**
@@ -173,7 +174,18 @@ class Criteria
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
-            static fn (string $ordering): string => strtoupper($ordering) === self::ASC ? self::ASC : self::DESC,
+            static function (string $ordering): string {
+                if (! in_array($ordering, [self::ASC, self::DESC], true)) {
+                    Deprecation::trigger(
+                        'doctrine/collections',
+                        'https://github.com/doctrine/collections/pull/368',
+                        'Passing anything other than Criteria::ASC or Criteria::DESC to %s() is deprecated. Pass one of these constants instead.',
+                        __METHOD__,
+                    );
+                }
+
+                return strtoupper($ordering) === self::ASC ? self::ASC : self::DESC;
+            },
             $orderings,
         );
 
