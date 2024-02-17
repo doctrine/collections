@@ -6,6 +6,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -334,6 +335,15 @@ abstract class BaseArrayCollectionTest extends TestCase
                 ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
                 ->toArray(),
         );
+        self::assertSame(
+            [
+                'object2' => $object2,
+                'object1' => $object1,
+            ],
+            $collection
+                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
+                ->toArray(),
+        );
     }
 
     /**
@@ -443,7 +453,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, ['foo' => Criteria::DESC, 'bar' => Criteria::DESC]))
+                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending]))
                 ->toArray(),
         );
     }

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\Value;
+use Doctrine\Common\Collections\Order;
 use RuntimeException;
 use stdClass;
 
@@ -72,7 +73,7 @@ class CollectionTest extends BaseCollectionTest
     {
         $this->fillMatchingFixture();
 
-        $col = $this->collection->matching(new Criteria(null, ['foo' => 'DESC']));
+        $col = $this->collection->matching(new Criteria(null, ['foo' => Order::Descending]));
 
         self::assertInstanceOf(Collection::class, $col);
         self::assertNotSame($col, $this->collection);

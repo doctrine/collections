@@ -19,12 +19,15 @@ use function strtoupper;
  */
 class Criteria
 {
-    final public const ASC  = 'ASC';
+    /** @deprecated use Order::Ascending instead */
+    final public const ASC = 'ASC';
+
+    /** @deprecated use Order::Descending instead */
     final public const DESC = 'DESC';
 
     private static ExpressionBuilder|null $expressionBuilder = null;
 
-    /** @var array<string, string> */
+    /** @var array<string, Order> */
     private array $orderings = [];
 
     private int|null $firstResult = null;
@@ -57,7 +60,7 @@ class Criteria
     /**
      * Construct a new Criteria.
      *
-     * @param array<string, string>|null $orderings
+     * @param array<string, string|Order>|null $orderings
      */
     public function __construct(
         private Expression|null $expression = null,
@@ -151,9 +154,32 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
+     * @deprecated use orderings() instead
+     *
      * @return array<string, string>
      */
     public function getOrderings()
+    {
+        Deprecation::trigger(
+            'doctrine/collections',
+            'https://github.com/doctrine/collections/pull/389',
+            'Calling %s() is deprecated. Use %s::orderings() instead.',
+            __METHOD__,
+            self::class,
+        );
+
+        return array_map(
+            static fn (Order $ordering): string => $ordering->value,
+            $this->orderings,
+        );
+    }
+
+    /**
+     * Gets the current orderings of this Criteria.
+     *
+     * @return array<string, Order>
+     */
+    public function orderings(): array
     {
         return $this->orderings;
     }
@@ -161,19 +187,38 @@ class Criteria
     /**
      * Sets the ordering of the result of this Criteria.
      *
-     * Keys are field and values are the order, being either ASC or DESC.
+     * Keys are field and values are the order, being a valid Order enum case.
      *
-     * @see Criteria::ASC
-     * @see Criteria::DESC
+     * @see Order::Ascending
+     * @see Order::Descending
      *
-     * @param array<string, string> $orderings
+     * @param array<string, string|Order> $orderings
      *
      * @return $this
      */
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(
-            static fn (string $ordering): string => strtoupper($ordering) === self::ASC ? self::ASC : self::DESC,
+            static function (string|Order $ordering): Order {
+                if ($ordering instanceof Order) {
+                    return $ordering;
+                }
+
+                static $triggered = false;
+
+                if (! $triggered) {
+                    Deprecation::trigger(
+                        'doctrine/collections',
+                        'https://github.com/doctrine/collections/pull/389',
+                        'Passing non-Order enum values to %s() is deprecated. Pass Order enum values instead.',
+                        __METHOD__,
+                    );
+                }
+
+                $triggered = true;
+
+                return strtoupper($ordering) === Order::Ascending->value ? Order::Ascending : Order::Descending;
+            },
             $orderings,
         );
 
