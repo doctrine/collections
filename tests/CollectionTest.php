@@ -15,7 +15,7 @@ use stdClass;
 use function count;
 use function is_string;
 
-class CollectionTest extends BaseCollectionTest
+class CollectionTest extends CollectionTestCase
 {
     protected function setUp(): void
     {

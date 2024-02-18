@@ -20,7 +20,7 @@ use function key;
 use function next;
 use function reset;
 
-abstract class BaseArrayCollectionTest extends TestCase
+abstract class ArrayCollectionTestCase extends TestCase
 {
     /**
      * @param mixed[] $elements
@@ -183,7 +183,7 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /** @psalm-return array<string, array{mixed[]}> */
-    public function provideDifferentElements(): array
+    public static function provideDifferentElements(): array
     {
         return [
             'indexed'     => [[1, 2, 3, 4, 5]],
@@ -359,7 +359,7 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /** @return mixed[][] */
-    public function provideSlices(): array
+    public static function provideSlices(): array
     {
         return [
             'preserve numeric keys' => [
