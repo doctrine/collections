@@ -144,6 +144,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 return ! in_array($fieldValue, $value, is_scalar($fieldValue));
             },
             Comparison::CONTAINS => static fn ($object): bool => str_contains((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::NCONTAINS => static fn ($object): bool => ! str_contains((string) self::getObjectFieldValue($object, $field), (string) $value),
             Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
                 $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
