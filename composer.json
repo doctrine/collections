@@ -51,7 +51,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests"
+            "Doctrine\\Tests\\Common\\Collections\\": "tests"
         }
     },
     "config": {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Tests\DerivedArrayCollection;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
