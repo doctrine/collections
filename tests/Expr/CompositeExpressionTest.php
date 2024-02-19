@@ -15,12 +15,18 @@ use RuntimeException;
 class CompositeExpressionTest extends TestCase
 {
     /** @return list<array{type:string, expressions: list<mixed>}> */
-    public function invalidDataProvider(): array
+    public static function invalidDataProvider(): array
     {
         return [
             ['type' => CompositeExpression::TYPE_AND, 'expressions' => [new Value('value')]],
             ['type' => CompositeExpression::TYPE_AND, 'expressions' => ['wrong-type']],
-            ['type' => CompositeExpression::TYPE_NOT, 'expressions' => [$this->createMock(Expression::class), $this->createMock(Expression::class)]],
+            [
+                'type' => CompositeExpression::TYPE_NOT,
+                'expressions' => [
+                    self::createStub(Expression::class),
+                    self::createStub(Expression::class),
+                ],
+            ],
         ];
     }
 

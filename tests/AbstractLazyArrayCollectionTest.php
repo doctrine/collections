@@ -14,7 +14,7 @@ use function assert;
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
-class AbstractLazyArrayCollectionTest extends BaseArrayCollectionTest
+class AbstractLazyArrayCollectionTest extends ArrayCollectionTestCase
 {
     /**
      * @param mixed[] $elements
