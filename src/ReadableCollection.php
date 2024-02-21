@@ -229,11 +229,11 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Applies iteratively the given function to each element in the collection,
      * so as to reduce the collection to a single value.
      *
-     * @psalm-param Closure(TReturn|TInitial|null, T):(TInitial|TReturn) $func
-     * @psalm-param TInitial|null $initial
+     * @psalm-param Closure(TReturn|TInitial, T):TReturn $func
+     * @psalm-param TInitial $initial
      *
      * @return mixed
-     * @psalm-return TReturn|TInitial|null
+     * @psalm-return TReturn|TInitial
      *
      * @psalm-template TReturn
      * @psalm-template TInitial
