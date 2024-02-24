@@ -6,6 +6,22 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.2
+
+## Deprecated string representation of sort order
+
+Criteria orderings direction is now represented by the
+`Doctrine\Common\Collection\Order` enum.
+
+As a consequence:
+
+- `Criteria::ASC` and `Criteria::DESC` are deprecated in favor of
+  `Order::Ascending` and `Order::Descending`, respectively.
+- `Criteria::getOrderings()` is deprecated in favor of `Criteria::orderings()`,
+  which returns `array<string, Order>`.
+- `Criteria::orderBy()` accepts `array<string, string|Order>`, but passing
+  anything other than `array<string, Order>` is deprecated.
+
 # Upgrade to 2.0
 
 ## BC breaking changes
