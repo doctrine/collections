@@ -20,7 +20,7 @@ use const JSON_THROW_ON_ERROR;
  *
  * @covers \Doctrine\Common\Collections\ArrayCollection
  */
-class ArrayCollectionTest extends BaseArrayCollectionTest
+class ArrayCollectionTest extends ArrayCollectionTestCase
 {
     /**
      * @param mixed[] $elements

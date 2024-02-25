@@ -6,6 +6,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -20,7 +21,7 @@ use function key;
 use function next;
 use function reset;
 
-abstract class BaseArrayCollectionTest extends TestCase
+abstract class ArrayCollectionTestCase extends TestCase
 {
     /**
      * @param mixed[] $elements
@@ -183,7 +184,7 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /** @psalm-return array<string, array{mixed[]}> */
-    public function provideDifferentElements(): array
+    public static function provideDifferentElements(): array
     {
         return [
             'indexed'     => [[1, 2, 3, 4, 5]],
@@ -334,6 +335,15 @@ abstract class BaseArrayCollectionTest extends TestCase
                 ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
                 ->toArray(),
         );
+        self::assertSame(
+            [
+                'object2' => $object2,
+                'object1' => $object1,
+            ],
+            $collection
+                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
+                ->toArray(),
+        );
     }
 
     /**
@@ -359,7 +369,7 @@ abstract class BaseArrayCollectionTest extends TestCase
     }
 
     /** @return mixed[][] */
-    public function provideSlices(): array
+    public static function provideSlices(): array
     {
         return [
             'preserve numeric keys' => [
@@ -443,7 +453,7 @@ abstract class BaseArrayCollectionTest extends TestCase
         self::assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, ['foo' => Criteria::DESC, 'bar' => Criteria::DESC]))
+                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending]))
                 ->toArray(),
         );
     }

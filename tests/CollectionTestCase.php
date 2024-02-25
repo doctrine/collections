@@ -16,7 +16,7 @@ use function is_numeric;
 use function is_string;
 use function sprintf;
 
-abstract class BaseCollectionTest extends TestCase
+abstract class CollectionTestCase extends TestCase
 {
     /** @var Collection<mixed> */
     protected Collection $collection;

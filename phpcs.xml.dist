@@ -32,10 +32,10 @@
     </rule>
 
     <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
-        <exclude-pattern>tests/Common/Collections/ClosureExpressionVisitorTest.php</exclude-pattern>
+        <exclude-pattern>tests/ClosureExpressionVisitorTest.php</exclude-pattern>
     </rule>
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
-        <exclude-pattern>tests/Common/Collections/ClosureExpressionVisitorTest.php</exclude-pattern>
+        <exclude-pattern>tests/ClosureExpressionVisitorTest.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
