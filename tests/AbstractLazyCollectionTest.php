@@ -16,7 +16,7 @@ use function is_string;
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
-class AbstractLazyCollectionTest extends BaseCollectionTest
+class AbstractLazyCollectionTest extends CollectionTestCase
 {
     protected function setUp(): void
     {
