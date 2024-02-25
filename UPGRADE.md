@@ -101,3 +101,12 @@ You can find a list of major changes to public API below.
 |             1.0.x              |                   3.0.x                    |
 |-------------------------------:|:-------------------------------------------|
 | `matching(Criteria $criteria)` | `matching(Criteria $criteria): Collection` |
+
+# Upgrade to 1.7
+
+## Deprecated null first result
+
+Passing null as `$firstResult` to
+`Doctrine\Common\Collections\Criteria::__construct()` and to
+`Doctrine\Common\Collections\Criteria::setFirstResult()` is deprecated.
+Use `0` instead.
