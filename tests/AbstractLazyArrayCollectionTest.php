@@ -6,7 +6,6 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Tests\LazyArrayCollection;
 
 use function assert;
 
@@ -15,7 +14,7 @@ use function assert;
  *
  * @covers \Doctrine\Common\Collections\AbstractLazyCollection
  */
-class AbstractLazyArrayCollectionTest extends BaseArrayCollectionTest
+class AbstractLazyArrayCollectionTest extends ArrayCollectionTestCase
 {
     /**
      * @param mixed[] $elements
