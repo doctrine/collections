@@ -8,7 +8,30 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
-## BC breaking changes
+## Deprecated null first result
+
+Passing null as `$firstResult` to
+`Doctrine\Common\Collections\Criteria::__construct()` and to
+`Doctrine\Common\Collections\Criteria::setFirstResult()` is no longer possible.
+Use `0` instead.
+
+## Removed string representation of sort order
+
+Criteria orderings direction is now represented by the
+`Doctrine\Common\Collection\Order` enum.
+
+As a consequence:
+
+- `Criteria::ASC` and `Criteria::DESC` are removed in favor of
+  `Order::Ascending` and `Order::Descending`, respectively.
+- `Criteria::getOrderings()` is removed in favor of `Criteria::orderings()`,
+  which returns `array<string, Order>`.
+- `Criteria::orderBy()` no longer accepts `array<string, string>`, pass
+  `array<string, Order>` instead.
+- `Criteria::__construct()` no longer accepts `array<string, string>` as
+  $orderings, pass `array<string, Order>` instead.
+
+## Signature changes
 
 Native return types have been added. The new signatures are already described
 below [in the section about upgrading to 2.0](#upgrade-to-20).

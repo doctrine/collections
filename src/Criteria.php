@@ -6,11 +6,6 @@ namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
-use Doctrine\Deprecations\Deprecation;
-
-use function array_map;
-use function func_num_args;
-use function strtoupper;
 
 /**
  * Criteria for filtering Selectable collections.
@@ -19,12 +14,6 @@ use function strtoupper;
  */
 class Criteria
 {
-    /** @deprecated use Order::Ascending instead */
-    final public const ASC = 'ASC';
-
-    /** @deprecated use Order::Descending instead */
-    final public const DESC = 'DESC';
-
     private static ExpressionBuilder|null $expressionBuilder = null;
 
     /** @var array<string, Order> */
@@ -56,24 +45,15 @@ class Criteria
     /**
      * Construct a new Criteria.
      *
-     * @param array<string, string|Order>|null $orderings
+     * @param array<string, Order>|null $orderings
      */
     public function __construct(
         private Expression|null $expression = null,
         array|null $orderings = null,
-        int|null $firstResult = null,
+        int $firstResult = 0,
         int|null $maxResults = null,
     ) {
         $this->expression = $expression;
-
-        if ($firstResult === null && func_num_args() > 2) {
-            Deprecation::trigger(
-                'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/311',
-                'Passing null as $firstResult to the constructor of %s is deprecated. Pass 0 instead or omit the argument.',
-                self::class,
-            );
-        }
 
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
@@ -148,29 +128,6 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
-     * @deprecated use orderings() instead
-     *
-     * @return array<string, string>
-     */
-    public function getOrderings(): array
-    {
-        Deprecation::trigger(
-            'doctrine/collections',
-            'https://github.com/doctrine/collections/pull/389',
-            'Calling %s() is deprecated. Use %s::orderings() instead.',
-            __METHOD__,
-            self::class,
-        );
-
-        return array_map(
-            static fn (Order $ordering): string => $ordering->value,
-            $this->orderings,
-        );
-    }
-
-    /**
-     * Gets the current orderings of this Criteria.
-     *
      * @return array<string, Order>
      */
     public function orderings(): array
@@ -186,35 +143,13 @@ class Criteria
      * @see Order::Ascending
      * @see Order::Descending
      *
-     * @param array<string, string|Order> $orderings
+     * @param array<string, Order> $orderings
      *
      * @return $this
      */
     public function orderBy(array $orderings): static
     {
-        $this->orderings = array_map(
-            static function (string|Order $ordering): Order {
-                if ($ordering instanceof Order) {
-                    return $ordering;
-                }
-
-                static $triggered = false;
-
-                if (! $triggered) {
-                    Deprecation::trigger(
-                        'doctrine/collections',
-                        'https://github.com/doctrine/collections/pull/389',
-                        'Passing non-Order enum values to %s() is deprecated. Pass Order enum values instead.',
-                        __METHOD__,
-                    );
-                }
-
-                $triggered = true;
-
-                return strtoupper($ordering) === Order::Ascending->value ? Order::Ascending : Order::Descending;
-            },
-            $orderings,
-        );
+        $this->orderings = $orderings;
 
         return $this;
     }
@@ -230,21 +165,12 @@ class Criteria
     /**
      * Set the number of first result that this Criteria should return.
      *
-     * @param int|null $firstResult The value to set.
+     * @param int $firstResult The value to set.
      *
      * @return $this
      */
-    public function setFirstResult(int|null $firstResult): static
+    public function setFirstResult(int $firstResult): static
     {
-        if ($firstResult === null) {
-            Deprecation::triggerIfCalledFromOutside(
-                'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/311',
-                'Passing null to %s() is deprecated, pass 0 instead.',
-                __METHOD__,
-            );
-        }
-
         $this->firstResult = $firstResult;
 
         return $this;

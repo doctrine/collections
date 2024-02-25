@@ -332,15 +332,6 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
-                ->toArray(),
-        );
-        self::assertSame(
-            [
-                'object2' => $object2,
-                'object1' => $object1,
-            ],
-            $collection
                 ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
                 ->toArray(),
         );
@@ -352,7 +343,7 @@ abstract class ArrayCollectionTestCase extends TestCase
      *
      * @dataProvider provideSlices
      */
-    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, int|null $firstResult, int|null $maxResult): void
+    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, int $firstResult, int|null $maxResult): void
     {
         $collection = $this->buildCollection($array);
 
@@ -426,7 +417,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                     'a' => 1,
                     'b' => 2,
                 ],
-                null,
+                0,
                 2,
             ],
         ];
