@@ -19,10 +19,7 @@ use function strtoupper;
  */
 class Criteria
 {
-    /** @deprecated use Order::Ascending instead */
-    final public const ASC = 'ASC';
-
-    /** @deprecated use Order::Descending instead */
+    final public const ASC  = 'ASC';
     final public const DESC = 'DESC';
 
     private static ExpressionBuilder|null $expressionBuilder = null;
@@ -154,20 +151,10 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
-     * @deprecated use orderings() instead
-     *
      * @return array<string, string>
      */
     public function getOrderings()
     {
-        Deprecation::trigger(
-            'doctrine/collections',
-            'https://github.com/doctrine/collections/pull/389',
-            'Calling %s() is deprecated. Use %s::orderings() instead.',
-            __METHOD__,
-            self::class,
-        );
-
         return array_map(
             static fn (Order $ordering): string => $ordering->value,
             $this->orderings,
@@ -200,23 +187,10 @@ class Criteria
     {
         $method          = __METHOD__;
         $this->orderings = array_map(
-            static function (string|Order $ordering) use ($method): Order {
+            static function (string|Order $ordering): Order {
                 if ($ordering instanceof Order) {
                     return $ordering;
                 }
-
-                static $triggered = false;
-
-                if (! $triggered) {
-                    Deprecation::trigger(
-                        'doctrine/collections',
-                        'https://github.com/doctrine/collections/pull/389',
-                        'Passing non-Order enum values to %s() is deprecated. Pass Order enum values instead.',
-                        $method,
-                    );
-                }
-
-                $triggered = true;
 
                 return strtoupper($ordering) === Order::Ascending->value ? Order::Ascending : Order::Descending;
             },
