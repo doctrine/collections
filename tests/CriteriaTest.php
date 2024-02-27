@@ -134,29 +134,31 @@ class CriteriaTest extends TestCase
         self::assertInstanceOf(ExpressionBuilder::class, Criteria::expr());
     }
 
-    public function testPassingNonOrderEnumToOrderByIsDeprecated(): void
+    public function testPassingNonOrderEnumToOrderByStillWorks(): void
     {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
         $criteria = Criteria::create()->orderBy(['foo' => 'ASC']);
+
+        self::assertEquals(['foo' => Order::Ascending], $criteria->orderings());
     }
 
-    public function testConstructingCriteriaWithNonOrderEnumIsDeprecated(): void
+    public function testConstructingCriteriaWithNonOrderEnumStillWorks(): void
     {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
         $criteria = new Criteria(null, ['foo' => 'ASC']);
+
+        self::assertEquals(['foo' => Order::Ascending], $criteria->orderings());
     }
 
-    public function testUsingOrderEnumIsTheRightWay(): void
+    public function testUsingOrderEnumInConstructorWorks(): void
     {
-        $this->expectNoDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
         Criteria::create()->orderBy(['foo' => Order::Ascending]);
-        new Criteria(null, ['foo' => Order::Ascending]);
+        $criteria = new Criteria(null, ['foo' => Order::Ascending]);
+
+        self::assertSame(['foo' => Order::Ascending], $criteria->orderings());
     }
 
-    public function testCallingGetOrderingsIsDeprecated(): void
+    public function testCallingGetOrderingsStillReturnsAnArrayOfString(): void
     {
         $criteria = Criteria::create()->orderBy(['foo' => Order::Ascending]);
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
-        $criteria->getOrderings();
+        self::assertSame(['foo' => 'ASC'], $criteria->getOrderings());
     }
 }
