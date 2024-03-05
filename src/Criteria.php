@@ -198,8 +198,9 @@ class Criteria
      */
     public function orderBy(array $orderings)
     {
+        $method          = __METHOD__;
         $this->orderings = array_map(
-            static function (string|Order $ordering): Order {
+            static function (string|Order $ordering) use ($method): Order {
                 if ($ordering instanceof Order) {
                     return $ordering;
                 }
@@ -211,7 +212,7 @@ class Criteria
                         'doctrine/collections',
                         'https://github.com/doctrine/collections/pull/389',
                         'Passing non-Order enum values to %s() is deprecated. Pass Order enum values instead.',
-                        __METHOD__,
+                        $method,
                     );
                 }
 
