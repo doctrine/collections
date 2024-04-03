@@ -11,6 +11,12 @@
             "upcoming": true
         },
         {
+            "name": "2.3",
+            "branchName": "2.3.x",
+            "slug": "2.3",
+            "upcoming": true
+        },
+        {
             "name": "2.2",
             "branchName": "2.2.x",
             "slug": "stable",
