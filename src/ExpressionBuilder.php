@@ -77,6 +77,12 @@ class ExpressionBuilder
         return new Comparison($field, Comparison::EQ, new Value(null));
     }
 
+    /** @return Comparison */
+    public function isNotNull(string $field)
+    {
+        return new Comparison($field, Comparison::NEQ, new Value(null));
+    }
+
     /**
      * @param mixed[] $values
      *
