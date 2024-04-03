@@ -125,7 +125,7 @@ isNull
     $collection->matching(new Criteria($expression));
 
 isNotNull
-------
+---------
 
 .. code-block:: php
     $expressionBuilder = Criteria::expr();
