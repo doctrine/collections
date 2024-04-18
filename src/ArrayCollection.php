@@ -371,6 +371,8 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
+     * @psalm-param Closure(T, TKey):bool $p
+     *
      * @return static
      * @psalm-return static<TKey,T>
      */
