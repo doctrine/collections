@@ -15,6 +15,6 @@ on:
 jobs:
   composer-lint:
     name: "Composer Lint"
-    uses: "doctrine/.github/.github/workflows/composer-lint.yml@5.0.0"
+    uses: "doctrine/.github/.github/workflows/composer-lint.yml@5.0.1"
     with:
       php-version: "8.1"
