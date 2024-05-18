@@ -40,6 +40,14 @@ interface Collection extends ReadableCollection, ArrayAccess
     public function add(mixed $element): void;
 
     /**
+     * Adds an element at the beginning of the collection.
+     *
+     * @param mixed $element The element to add.
+     * @psalm-param T $element
+     */
+    public function prepend(mixed $element): void;
+
+    /**
      * Clears the collection, removing all elements.
      */
     public function clear(): void;

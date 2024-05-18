@@ -18,6 +18,7 @@ use function array_reduce;
 use function array_reverse;
 use function array_search;
 use function array_slice;
+use function array_unshift;
 use function array_values;
 use function count;
 use function current;
@@ -270,6 +271,16 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function add(mixed $element): void
     {
         $this->elements[] = $element;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-suppress InvalidPropertyAssignmentValue
+     */
+    public function prepend(mixed $element): void
+    {
+        array_unshift($this->elements, $element);
     }
 
     public function isEmpty(): bool

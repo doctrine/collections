@@ -41,6 +41,13 @@ abstract class AbstractLazyCollection implements Collection
         $this->collection->add($element);
     }
 
+    public function prepend(mixed $element): void
+    {
+        $this->initialize();
+
+        $this->collection->prepend($element);
+    }
+
     public function clear(): void
     {
         $this->initialize();

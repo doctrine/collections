@@ -184,6 +184,14 @@ abstract class CollectionTestCase extends TestCase
         self::assertEquals($partition[1][0], false);
     }
 
+    public function testPrepend(): void
+    {
+        $this->collection->add('one');
+        $this->collection->add('two');
+        $this->collection->prepend('zero');
+        self::assertEquals('zero', $this->collection->get(0));
+    }
+
     public function testClear(): void
     {
         $this->collection[] = 'one';
