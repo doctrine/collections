@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\Common\Collections\Order;
+use LogicException;
 use RuntimeException;
 use stdClass;
 
@@ -93,5 +94,27 @@ class CollectionTest extends CollectionTestCase
         self::assertNotSame($col, $this->collection);
         self::assertEquals(1, count($col));
         self::assertEquals('baz', $col[1]->foo);
+    }
+
+    public function testOrderingScalarItems(): void
+    {
+        $this->collection[] = 1;
+        $this->collection[] = 2;
+        $this->collection[] = 3;
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The provided Criteria does not support items other than objects or arrays.');
+        $this->collection->matching(new Criteria(null, ['foo' => Order::Descending]));
+    }
+
+    public function testMatchingScalarItems(): void
+    {
+        $this->collection[] = 1;
+        $this->collection[] = 2;
+        $this->collection[] = 3;
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The provided Criteria does not support items other than objects or arrays.');
+        $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('foo', 'bar')));
     }
 }

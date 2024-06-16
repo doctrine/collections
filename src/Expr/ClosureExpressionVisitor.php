@@ -6,6 +6,7 @@ namespace Doctrine\Common\Collections\Expr;
 
 use ArrayAccess;
 use Closure;
+use LogicException;
 use RuntimeException;
 
 use function explode;
@@ -34,12 +35,16 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      * directly or indirectly (through an accessor get*, is*, or a magic
      * method, __get, __call).
      *
-     * @param object|mixed[] $object
+     * @param mixed $object
      *
      * @return mixed
      */
-    public static function getObjectFieldValue(object|array $object, string $field)
+    public static function getObjectFieldValue(mixed $object, string $field)
     {
+        if (!is_object($object) && !is_array($object)) {
+            throw new LogicException('The provided Criteria does not support items other than objects or arrays.');
+        }
+
         if (str_contains($field, '.')) {
             [$field, $subField] = explode('.', $field, 2);
             $object             = self::getObjectFieldValue($object, $field);
