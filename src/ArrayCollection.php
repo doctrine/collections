@@ -11,7 +11,10 @@ use ReturnTypeWillChange;
 use Stringable;
 use Traversable;
 
+use function array_all;
+use function array_any;
 use function array_filter;
+use function array_find;
 use function array_key_exists;
 use function array_keys;
 use function array_map;
@@ -245,13 +248,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
      */
     public function exists(Closure $p)
     {
-        foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(
+            $this->elements,
+            static fn (mixed $element, mixed $key): bool => (bool) $p($key, $element),
+        );
     }
 
     /**
@@ -386,13 +386,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
      */
     public function findFirst(Closure $p)
     {
-        foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
-                return $element;
-            }
-        }
-
-        return null;
+        return array_find(
+            $this->elements,
+            static fn (mixed $element, mixed $key): bool => (bool) $p($key, $element),
+        );
     }
 
     /**
@@ -400,13 +397,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
      */
     public function forAll(Closure $p)
     {
-        foreach ($this->elements as $key => $element) {
-            if (! $p($key, $element)) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all(
+            $this->elements,
+            static fn (mixed $element, mixed $key): bool => (bool) $p($key, $element),
+        );
     }
 
     /**

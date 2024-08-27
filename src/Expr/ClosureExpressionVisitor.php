@@ -8,6 +8,8 @@ use ArrayAccess;
 use Closure;
 use RuntimeException;
 
+use function array_all;
+use function array_any;
 use function explode;
 use function in_array;
 use function is_array;
@@ -189,29 +191,19 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     /** @param callable[] $expressions */
     private function andExpressions(array $expressions): Closure
     {
-        return static function ($object) use ($expressions): bool {
-            foreach ($expressions as $expression) {
-                if (! $expression($object)) {
-                    return false;
-                }
-            }
-
-            return true;
-        };
+        return static fn ($object): bool => array_all(
+            $expressions,
+            static fn (callable $expression): bool => (bool) $expression($object),
+        );
     }
 
     /** @param callable[] $expressions */
     private function orExpressions(array $expressions): Closure
     {
-        return static function ($object) use ($expressions): bool {
-            foreach ($expressions as $expression) {
-                if ($expression($object)) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
+        return static fn ($object): bool => array_any(
+            $expressions,
+            static fn (callable $expression): bool => (bool) $expression($object),
+        );
     }
 
     /** @param callable[] $expressions */
