@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @param array<TKey, TValue>                      $array
+ * @param callable(TValue $value, TKey $key): bool $callback
+ *
+ * @return TValue|null
+ *
+ * @template TKey of array-key
+ * @template TValue
+ */
+function array_find(array $array, callable $callback): mixed {}
