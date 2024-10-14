@@ -37,10 +37,4 @@
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
         <exclude-pattern>tests/ClosureExpressionVisitorTest.php</exclude-pattern>
     </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>src/AbstractLazyCollection.php</exclude-pattern>
-        <exclude-pattern>src/ArrayCollection.php</exclude-pattern>
-        <exclude-pattern>src/Collection.php</exclude-pattern>
-    </rule>
 </ruleset>
