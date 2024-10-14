@@ -1,5 +1,8 @@
+Getting Started
+===============
+
 Introduction
-============
+------------
 
 Doctrine Collections is a library that contains classes for working with
 arrays of data. Here is an example using the simple
@@ -17,7 +20,7 @@ arrays of data. Here is an example using the simple
     }); // [2, 3]
 
 Collection Methods
-==================
+------------------
 
 Doctrine Collections provides an interface named ``Doctrine\Common\Collections\Collection``
 that resembles the nature of a regular PHP array. That is,
@@ -40,7 +43,7 @@ from the ``Doctrine\Common\Collections\ReadableCollection`` interface.
 The methods available on the interface are:
 
 add
----
+^^^
 
 Adds an element at the end of the collection.
 
@@ -48,7 +51,7 @@ Adds an element at the end of the collection.
     $collection->add('test');
 
 clear
------
+^^^^^
 
 Clears the collection, removing all elements.
 
@@ -56,7 +59,7 @@ Clears the collection, removing all elements.
     $collection->clear();
 
 contains
---------
+^^^^^^^^
 
 Checks whether an element is contained in the collection. This is an O(n) operation, where n is the size of the collection.
 
@@ -66,7 +69,7 @@ Checks whether an element is contained in the collection. This is an O(n) operat
     $contains = $collection->contains('test'); // true
 
 containsKey
------------
+^^^^^^^^^^^
 
 Checks whether the collection contains an element with the specified key/index.
 
@@ -76,7 +79,7 @@ Checks whether the collection contains an element with the specified key/index.
     $contains = $collection->containsKey('test'); // true
 
 current
--------
+^^^^^^^
 
 Gets the element of the collection at the current iterator position.
 
@@ -86,7 +89,7 @@ Gets the element of the collection at the current iterator position.
     $current = $collection->current(); // first
 
 get
----
+^^^
 
 Gets the element at the specified key/index.
 
@@ -98,7 +101,7 @@ Gets the element at the specified key/index.
     $value = $collection->get('key'); // value
 
 getKeys
--------
+^^^^^^^
 
 Gets all keys/indices of the collection.
 
@@ -108,7 +111,7 @@ Gets all keys/indices of the collection.
     $keys = $collection->getKeys(); // [0, 1, 2]
 
 getValues
----------
+^^^^^^^^^
 
 Gets all values of the collection.
 
@@ -122,7 +125,7 @@ Gets all values of the collection.
     $values = $collection->getValues(); // ['value1', 'value2', 'value3']
 
 isEmpty
--------
+^^^^^^^
 
 Checks whether the collection is empty (contains no elements).
 
@@ -132,7 +135,7 @@ Checks whether the collection is empty (contains no elements).
     $isEmpty = $collection->isEmpty(); // false
 
 first
------
+^^^^^
 
 Sets the internal iterator to the first element in the collection and returns this element.
 
@@ -142,7 +145,7 @@ Sets the internal iterator to the first element in the collection and returns th
     $first = $collection->first(); // first
 
 exists
-------
+^^^^^^
 
 Tests for the existence of an element that satisfies the given predicate.
 
@@ -154,7 +157,7 @@ Tests for the existence of an element that satisfies the given predicate.
     }); // true
 
 findFirst
----------
+^^^^^^^^^
 
 Returns the first element of this collection that satisfies the given predicate.
 
@@ -166,7 +169,7 @@ Returns the first element of this collection that satisfies the given predicate.
     }); // 3
 
 filter
-------
+^^^^^^
 
 Returns all the elements of this collection for which your callback function returns `true`.
 The order and keys of the elements are preserved.
@@ -179,7 +182,7 @@ The order and keys of the elements are preserved.
     }); // [2, 3]
 
 forAll
-------
+^^^^^^
 
 Tests whether the given predicate holds for all elements of this collection.
 
@@ -191,7 +194,7 @@ Tests whether the given predicate holds for all elements of this collection.
     }); // false
 
 indexOf
--------
+^^^^^^^
 
 Gets the index/key of a given element. The comparison of two elements is strict, that means not only the value but also the type must match. For objects this means reference equality.
 
@@ -201,7 +204,7 @@ Gets the index/key of a given element. The comparison of two elements is strict,
     $indexOf = $collection->indexOf(3); // 2
 
 key
----
+^^^
 
 Gets the key/index of the element at the current iterator position.
 
@@ -213,7 +216,7 @@ Gets the key/index of the element at the current iterator position.
     $key = $collection->key(); // 1
 
 last
-----
+^^^^
 
 Sets the internal iterator to the last element in the collection and returns this element.
 
@@ -223,7 +226,7 @@ Sets the internal iterator to the last element in the collection and returns thi
     $last = $collection->last(); // 3
 
 map
----
+^^^
 
 Applies the given function to each element in the collection and returns a new collection with the elements returned by the function.
 
@@ -235,7 +238,7 @@ Applies the given function to each element in the collection and returns a new c
     }); // [2, 3, 4]
 
 reduce
-------
+^^^^^^
 
 Applies iteratively the given function to each element in the collection, so as to reduce the collection to a single value.
 
@@ -247,7 +250,7 @@ Applies iteratively the given function to each element in the collection, so as 
     }, 0); // 6
 
 next
-----
+^^^^
 
 Moves the internal iterator position to the next element and returns this element.
 
@@ -257,7 +260,7 @@ Moves the internal iterator position to the next element and returns this elemen
     $next = $collection->next(); // 2
 
 partition
----------
+^^^^^^^^^
 
 Partitions this collection in two collections according to a predicate. Keys are preserved in the resulting collections.
 
@@ -269,7 +272,7 @@ Partitions this collection in two collections according to a predicate. Keys are
     }); // [[2, 3], [1]]
 
 remove
-------
+^^^^^^
 
 Removes the element at the specified index from the collection.
 
@@ -279,7 +282,7 @@ Removes the element at the specified index from the collection.
     $collection->remove(0); // [2, 3]
 
 removeElement
--------------
+^^^^^^^^^^^^^
 
 Removes the specified element from the collection, if it is found.
 
@@ -289,7 +292,7 @@ Removes the specified element from the collection, if it is found.
     $collection->removeElement(3); // [1, 2]
 
 set
----
+^^^
 
 Sets an element in the collection at the specified key/index.
 
@@ -299,7 +302,7 @@ Sets an element in the collection at the specified key/index.
     $collection->set('name', 'jwage');
 
 slice
------
+^^^^^
 
 Extracts a slice of $length elements starting at position $offset from the Collection. If $length is null it returns all elements from $offset to the end of the Collection. Keys have to be preserved by this method. Calling this method will only return the selected slice and NOT change the elements contained in the collection slice is called on.
 
@@ -309,7 +312,7 @@ Extracts a slice of $length elements starting at position $offset from the Colle
     $slice = $collection->slice(1, 2); // [1, 2]
 
 toArray
--------
+^^^^^^^
 
 Gets a native PHP array representation of the collection.
 
@@ -319,7 +322,7 @@ Gets a native PHP array representation of the collection.
     $array = $collection->toArray(); // [0, 1, 2, 3, 4, 5]
 
 Selectable Methods
-==================
+------------------
 
 Some Doctrine Collections, like ``Doctrine\Common\Collections\ArrayCollection``,
 implement an interface named ``Doctrine\Common\Collections\Selectable``
@@ -328,7 +331,7 @@ can be applied to a collection to get a result with matching elements
 only.
 
 matching
---------
+^^^^^^^^
 
 Selects all elements from a selectable that match the expression and
 returns a new collection containing these elements and preserved keys.

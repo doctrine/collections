@@ -6,14 +6,9 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Serializable;
 
-use function json_decode;
-use function json_encode;
 use function serialize;
 use function unserialize;
-
-use const JSON_THROW_ON_ERROR;
 
 /**
  * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}.
@@ -44,19 +39,23 @@ class ArrayCollectionTest extends ArrayCollectionTestCase
 }
 
 /**
- * We can't implement Serializable interface on anonymous class
+ * @template TKey of array-key
+ * @template TValue
+ * @extends ArrayCollection<TKey, TValue>
  */
-class SerializableArrayCollection extends ArrayCollection implements Serializable
+class SerializableArrayCollection extends ArrayCollection
 {
-    public function serialize(): string
+    /** @return array<TKey, TValue> */
+    public function __serialize(): array
     {
-        return json_encode($this->getKeys(), JSON_THROW_ON_ERROR);
+        return $this->toArray();
     }
 
-    public function unserialize(string $serialized): void
+    /** @param array<TKey, TValue> $data */
+    public function __unserialize(array $data): void
     {
-        foreach (json_decode(json: $serialized, flags: JSON_THROW_ON_ERROR) as $value) {
-            parent::add($value);
+        foreach ($data as $key => $value) {
+            $this->set($key, $value);
         }
     }
 }
