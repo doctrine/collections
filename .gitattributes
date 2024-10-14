@@ -1,3 +1,4 @@
+/stubs export-ignore
 /tests export-ignore
 /.github export-ignore
 .doctrine-project.json export-ignore
