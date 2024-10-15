@@ -380,7 +380,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     /** @psalm-return Collection<TKey, T>&Selectable<TKey,T> */
-    public function matching(Criteria $criteria): Collection
+    public function matching(Criteria $criteria): Collection&Selectable
     {
         $expr     = $criteria->getWhereExpression();
         $filtered = $this->elements;
