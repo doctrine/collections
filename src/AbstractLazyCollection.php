@@ -112,7 +112,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value): void
+    public function set(string|int $key, mixed $value): void
     {
         $this->initialize();
         $this->collection->set($key, $value);
@@ -207,7 +207,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, $initial = null): mixed
+    public function reduce(Closure $func, mixed $initial = null): mixed
     {
         $this->initialize();
 
@@ -229,7 +229,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @template TMaybeContained
      */
-    public function indexOf($element): string|int|false
+    public function indexOf(mixed $element): string|int|false
     {
         $this->initialize();
 

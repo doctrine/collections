@@ -81,7 +81,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         }
 
         // camelcase field name to support different variable naming conventions
-        $ccField = preg_replace_callback('/_(.?)/', static fn ($matches) => strtoupper((string) $matches[1]), $field);
+        $ccField = preg_replace_callback('/_(.?)/', static fn (array $matches) => strtoupper((string) $matches[1]), $field);
 
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
@@ -103,7 +103,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             $next = static fn (): int => 0;
         }
 
-        return static function ($a, $b) use ($name, $next, $orientation): int {
+        return static function (mixed $a, mixed $b) use ($name, $next, $orientation): int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
 
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
@@ -122,24 +122,24 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         $value = $comparison->getValue()->getValue();
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) === $value,
-            Comparison::NEQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) !== $value,
-            Comparison::LT => static fn ($object): bool => self::getObjectFieldValue($object, $field) < $value,
-            Comparison::LTE => static fn ($object): bool => self::getObjectFieldValue($object, $field) <= $value,
-            Comparison::GT => static fn ($object): bool => self::getObjectFieldValue($object, $field) > $value,
-            Comparison::GTE => static fn ($object): bool => self::getObjectFieldValue($object, $field) >= $value,
-            Comparison::IN => static function ($object) use ($field, $value): bool {
+            Comparison::EQ => static fn (object|array $object): bool => self::getObjectFieldValue($object, $field) === $value,
+            Comparison::NEQ => static fn (object|array $object): bool => self::getObjectFieldValue($object, $field) !== $value,
+            Comparison::LT => static fn (object|array $object): bool => self::getObjectFieldValue($object, $field) < $value,
+            Comparison::LTE => static fn (object|array $object): bool => self::getObjectFieldValue($object, $field) <= $value,
+            Comparison::GT => static fn (object|array $object): bool => self::getObjectFieldValue($object, $field) > $value,
+            Comparison::GTE => static fn (object|array $object): bool => self::getObjectFieldValue($object, $field) >= $value,
+            Comparison::IN => static function (object|array $object) use ($field, $value): bool {
                 $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
                 return in_array($fieldValue, $value, is_scalar($fieldValue));
             },
-            Comparison::NIN => static function ($object) use ($field, $value): bool {
+            Comparison::NIN => static function (object|array $object) use ($field, $value): bool {
                 $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
                 return ! in_array($fieldValue, $value, is_scalar($fieldValue));
             },
-            Comparison::CONTAINS => static fn ($object): bool => str_contains((string) self::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
+            Comparison::CONTAINS => static fn (object|array $object): bool => str_contains((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::MEMBER_OF => static function (object|array $object) use ($field, $value): bool {
                 $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
 
                 if (! is_array($fieldValues)) {
@@ -148,8 +148,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
                 return in_array($value, $fieldValues, true);
             },
-            Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) self::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::STARTS_WITH => static fn (object|array $object): bool => str_starts_with((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::ENDS_WITH => static fn (object|array $object): bool => str_ends_with((string) self::getObjectFieldValue($object, $field), (string) $value),
             default => throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
     }
@@ -178,7 +178,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     /** @param callable[] $expressions */
     private function andExpressions(array $expressions): Closure
     {
-        return static fn ($object): bool => array_all(
+        return static fn (object $object): bool => array_all(
             $expressions,
             static fn (callable $expression): bool => (bool) $expression($object),
         );
@@ -187,7 +187,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     /** @param callable[] $expressions */
     private function orExpressions(array $expressions): Closure
     {
-        return static fn ($object): bool => array_any(
+        return static fn (object $object): bool => array_any(
             $expressions,
             static fn (callable $expression): bool => (bool) $expression($object),
         );
@@ -196,6 +196,6 @@ class ClosureExpressionVisitor extends ExpressionVisitor
     /** @param callable[] $expressions */
     private function notExpression(array $expressions): Closure
     {
-        return static fn ($object) => ! $expressions[0]($object);
+        return static fn (object $object) => ! $expressions[0]($object);
     }
 }

@@ -150,7 +150,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey $offset
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -219,7 +219,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @template TMaybeContained
      */
-    public function indexOf($element): int|string|false
+    public function indexOf(mixed $element): int|string|false
     {
         return array_search($element, $this->elements, true);
     }
@@ -254,7 +254,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value): void
+    public function set(string|int $key, mixed $value): void
     {
         $this->elements[$key] = $value;
     }
@@ -306,7 +306,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      */
-    public function reduce(Closure $func, $initial = null): mixed
+    public function reduce(Closure $func, mixed $initial = null): mixed
     {
         return array_reduce($this->elements, $func, $initial);
     }
