@@ -24,8 +24,8 @@ use Closure;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  *
- * @psalm-template TKey of array-key
- * @psalm-template T
+ * @phpstan-template TKey of array-key
+ * @phpstan-template T
  * @template-extends ReadableCollection<TKey, T>
  * @template-extends ArrayAccess<TKey, T>
  */
@@ -35,7 +35,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * Adds an element at the end of the collection.
      *
      * @param mixed $element The element to add.
-     * @psalm-param T $element
+     * @phpstan-param T $element
      *
      * @return void we will require a native return type declaration in 3.0
      */
@@ -52,10 +52,10 @@ interface Collection extends ReadableCollection, ArrayAccess
      * Removes the element at the specified index from the collection.
      *
      * @param string|int $key The key/index of the element to remove.
-     * @psalm-param TKey $key
+     * @phpstan-param TKey $key
      *
      * @return mixed The removed element or NULL, if the collection did not contain the element.
-     * @psalm-return T|null
+     * @phpstan-return T|null
      */
     public function remove(string|int $key);
 
@@ -63,7 +63,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * Removes the specified element from the collection, if it is found.
      *
      * @param mixed $element The element to remove.
-     * @psalm-param T $element
+     * @phpstan-param T $element
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
@@ -74,8 +74,8 @@ interface Collection extends ReadableCollection, ArrayAccess
      *
      * @param string|int $key   The key/index of the element to set.
      * @param mixed      $value The element to set.
-     * @psalm-param TKey $key
-     * @psalm-param T $value
+     * @phpstan-param TKey $key
+     * @phpstan-param T $value
      *
      * @return void
      */
@@ -84,34 +84,34 @@ interface Collection extends ReadableCollection, ArrayAccess
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T):U $func
+     * @phpstan-param Closure(T):U $func
      *
      * @return Collection<mixed>
-     * @psalm-return Collection<TKey, U>
+     * @phpstan-return Collection<TKey, U>
      *
-     * @psalm-template U
+     * @phpstan-template U
      */
     public function map(Closure $func);
 
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T, TKey):bool $p
+     * @phpstan-param Closure(T, TKey):bool $p
      *
      * @return Collection<mixed> A collection with the results of the filter operation.
-     * @psalm-return Collection<TKey, T>
+     * @phpstan-return Collection<TKey, T>
      */
     public function filter(Closure $p);
 
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(TKey, T):bool $p
+     * @phpstan-param Closure(TKey, T):bool $p
      *
      * @return Collection<mixed>[] An array with two elements. The first element contains the collection
      *                      of elements where the predicate returned TRUE, the second element
      *                      contains the collection of elements where the predicate returned FALSE.
-     * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
+     * @phpstan-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
     public function partition(Closure $p);
 }

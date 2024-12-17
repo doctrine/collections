@@ -9,7 +9,7 @@ use Countable;
 use IteratorAggregate;
 
 /**
- * @psalm-template TKey of array-key
+ * @phpstan-template TKey of array-key
  * @template-covariant T
  * @template-extends IteratorAggregate<TKey, T>
  */
@@ -20,10 +20,10 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * This is an O(n) operation, where n is the size of the collection.
      *
      * @param mixed $element The element to search for.
-     * @psalm-param TMaybeContained $element
+     * @phpstan-param TMaybeContained $element
      *
      * @return bool TRUE if the collection contains the element, FALSE otherwise.
-     * @psalm-return (TMaybeContained is T ? bool : false)
+     * @phpstan-return (TMaybeContained is T ? bool : false)
      *
      * @template TMaybeContained
      */
@@ -40,7 +40,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Checks whether the collection contains an element with the specified key/index.
      *
      * @param string|int $key The key/index to check for.
-     * @psalm-param TKey $key
+     * @phpstan-param TKey $key
      *
      * @return bool TRUE if the collection contains an element with the specified key/index,
      *              FALSE otherwise.
@@ -51,10 +51,10 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Gets the element at the specified key/index.
      *
      * @param string|int $key The key/index of the element to retrieve.
-     * @psalm-param TKey $key
+     * @phpstan-param TKey $key
      *
      * @return mixed
-     * @psalm-return T|null
+     * @phpstan-return T|null
      */
     public function get(string|int $key);
 
@@ -63,7 +63,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      *
      * @return int[]|string[] The keys/indices of the collection, in the order of the corresponding
      *               elements in the collection.
-     * @psalm-return list<TKey>
+     * @phpstan-return list<TKey>
      */
     public function getKeys();
 
@@ -72,7 +72,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      *
      * @return mixed[] The values of all elements in the collection, in the
      *                 order they appear in the collection.
-     * @psalm-return list<T>
+     * @phpstan-return list<T>
      */
     public function getValues();
 
@@ -80,7 +80,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Gets a native PHP array representation of the collection.
      *
      * @return mixed[]
-     * @psalm-return array<TKey,T>
+     * @phpstan-return array<TKey,T>
      */
     public function toArray();
 
@@ -88,7 +88,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Sets the internal iterator to the first element in the collection and returns this element.
      *
      * @return mixed
-     * @psalm-return T|false
+     * @phpstan-return T|false
      */
     public function first();
 
@@ -96,7 +96,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Sets the internal iterator to the last element in the collection and returns this element.
      *
      * @return mixed
-     * @psalm-return T|false
+     * @phpstan-return T|false
      */
     public function last();
 
@@ -104,7 +104,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Gets the key/index of the element at the current iterator position.
      *
      * @return int|string|null
-     * @psalm-return TKey|null
+     * @phpstan-return TKey|null
      */
     public function key();
 
@@ -112,7 +112,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Gets the element of the collection at the current iterator position.
      *
      * @return mixed
-     * @psalm-return T|false
+     * @phpstan-return T|false
      */
     public function current();
 
@@ -120,7 +120,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Moves the internal iterator position to the next element and returns this element.
      *
      * @return mixed
-     * @psalm-return T|false
+     * @phpstan-return T|false
      */
     public function next();
 
@@ -135,7 +135,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * @param int|null $length The maximum number of elements to return, or null for no limit.
      *
      * @return mixed[]
-     * @psalm-return array<TKey,T>
+     * @phpstan-return array<TKey,T>
      */
     public function slice(int $offset, int|null $length = null);
 
@@ -143,7 +143,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Tests for the existence of an element that satisfies the given predicate.
      *
      * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey, T):bool $p
+     * @phpstan-param Closure(TKey, T):bool $p
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
@@ -154,10 +154,10 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * The order of the elements is preserved.
      *
      * @param Closure $p The predicate used for filtering.
-     * @psalm-param Closure(T, TKey):bool $p
+     * @phpstan-param Closure(T, TKey):bool $p
      *
      * @return ReadableCollection<mixed> A collection with the results of the filter operation.
-     * @psalm-return ReadableCollection<TKey, T>
+     * @phpstan-return ReadableCollection<TKey, T>
      */
     public function filter(Closure $p);
 
@@ -165,12 +165,12 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
      *
-     * @psalm-param Closure(T):U $func
+     * @phpstan-param Closure(T):U $func
      *
      * @return ReadableCollection<mixed>
-     * @psalm-return ReadableCollection<TKey, U>
+     * @phpstan-return ReadableCollection<TKey, U>
      *
-     * @psalm-template U
+     * @phpstan-template U
      */
     public function map(Closure $func);
 
@@ -179,12 +179,12 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Keys are preserved in the resulting collections.
      *
      * @param Closure $p The predicate on which to partition.
-     * @psalm-param Closure(TKey, T):bool $p
+     * @phpstan-param Closure(TKey, T):bool $p
      *
      * @return ReadableCollection<mixed>[] An array with two elements. The first element contains the collection
      *                      of elements where the predicate returned TRUE, the second element
      *                      contains the collection of elements where the predicate returned FALSE.
-     * @psalm-return array{0: ReadableCollection<TKey, T>, 1: ReadableCollection<TKey, T>}
+     * @phpstan-return array{0: ReadableCollection<TKey, T>, 1: ReadableCollection<TKey, T>}
      */
     public function partition(Closure $p);
 
@@ -192,7 +192,7 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Tests whether the given predicate p holds for all elements of this collection.
      *
      * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey, T):bool $p
+     * @phpstan-param Closure(TKey, T):bool $p
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
@@ -204,10 +204,10 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * For objects this means reference equality.
      *
      * @param mixed $element The element to search for.
-     * @psalm-param TMaybeContained $element
+     * @phpstan-param TMaybeContained $element
      *
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
-     * @psalm-return (TMaybeContained is T ? TKey|false : false)
+     * @phpstan-return (TMaybeContained is T ? TKey|false : false)
      *
      * @template TMaybeContained
      */
@@ -217,11 +217,11 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Returns the first element of this collection that satisfies the predicate p.
      *
      * @param Closure $p The predicate.
-     * @psalm-param Closure(TKey, T):bool $p
+     * @phpstan-param Closure(TKey, T):bool $p
      *
      * @return mixed The first element respecting the predicate,
      *               null if no element respects the predicate.
-     * @psalm-return T|null
+     * @phpstan-return T|null
      */
     public function findFirst(Closure $p);
 
@@ -229,14 +229,14 @@ interface ReadableCollection extends Countable, IteratorAggregate
      * Applies iteratively the given function to each element in the collection,
      * so as to reduce the collection to a single value.
      *
-     * @psalm-param Closure(TReturn|TInitial, T):TReturn $func
-     * @psalm-param TInitial $initial
+     * @phpstan-param Closure(TReturn|TInitial, T):TReturn $func
+     * @phpstan-param TInitial $initial
      *
      * @return mixed
-     * @psalm-return TReturn|TInitial
+     * @phpstan-return TReturn|TInitial
      *
-     * @psalm-template TReturn
-     * @psalm-template TInitial
+     * @phpstan-template TReturn
+     * @phpstan-template TInitial
      */
     public function reduce(Closure $func, mixed $initial = null);
 }

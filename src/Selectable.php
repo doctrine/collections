@@ -16,8 +16,8 @@ namespace Doctrine\Common\Collections;
  * this API can implement efficient database access without having to ask the
  * EntityManager or Repositories.
  *
- * @psalm-template TKey as array-key
- * @psalm-template-covariant T
+ * @phpstan-template TKey as array-key
+ * @phpstan-template-covariant T
  */
 interface Selectable
 {
@@ -26,7 +26,7 @@ interface Selectable
      * returns a new collection containing these elements and preserved keys.
      *
      * @return ReadableCollection<mixed>&Selectable<mixed>
-     * @psalm-return ReadableCollection<TKey,T>&Selectable<TKey,T>
+     * @phpstan-return ReadableCollection<TKey,T>&Selectable<TKey,T>
      */
     public function matching(Criteria $criteria);
 }

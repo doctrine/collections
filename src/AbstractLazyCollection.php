@@ -12,8 +12,8 @@ use Traversable;
 /**
  * Lazy collection that is backed by a concrete collection
  *
- * @psalm-template TKey of array-key
- * @psalm-template T
+ * @phpstan-template TKey of array-key
+ * @phpstan-template T
  * @template-implements Collection<TKey,T>
  */
 abstract class AbstractLazyCollection implements Collection
@@ -21,7 +21,7 @@ abstract class AbstractLazyCollection implements Collection
     /**
      * The backed collection to use
      *
-     * @psalm-var Collection<TKey,T>|null
+     * @phpstan-var Collection<TKey,T>|null
      * @var Collection<mixed>|null
      */
     protected Collection|null $collection;
@@ -305,7 +305,7 @@ abstract class AbstractLazyCollection implements Collection
      * {@inheritDoc}
      *
      * @return Traversable<int|string, mixed>
-     * @psalm-return Traversable<TKey,T>
+     * @phpstan-return Traversable<TKey,T>
      */
     #[ReturnTypeWillChange]
     public function getIterator()
@@ -377,7 +377,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @return bool
      *
-     * @psalm-assert-if-true Collection<TKey,T> $this->collection
+     * @phpstan-assert-if-true Collection<TKey,T> $this->collection
      */
     public function isInitialized()
     {
@@ -389,7 +389,7 @@ abstract class AbstractLazyCollection implements Collection
      *
      * @return void
      *
-     * @psalm-assert Collection<TKey,T> $this->collection
+     * @phpstan-assert Collection<TKey,T> $this->collection
      */
     protected function initialize()
     {

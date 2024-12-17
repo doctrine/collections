@@ -183,7 +183,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertEquals(count($elements), $iterations, 'Number of iterations not match');
     }
 
-    /** @psalm-return array<string, array{mixed[]}> */
+    /** @phpstan-return array<string, array{mixed[]}> */
     public static function provideDifferentElements(): array
     {
         return [
