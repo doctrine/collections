@@ -1,0 +1,20 @@
+
+
+name: "Continuous Integration"
+
+on:
+  pull_request:
+    branches:
+      - "*.x"
+  push:
+    branches:
+      - "*.x"
+
+jobs:
+  phpunit:
+    name: "PHPUnit"
+    uses: "doctrine/.github/.github/workflows/continuous-integration.yml@7.2.1"
+    with:
+      php-versions: '["8.1"]'
+    secrets:
+      CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"

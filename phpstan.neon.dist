@@ -1,0 +1,14 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests/StaticAnalysis
+
+    ignoreErrors:
+        -
+            message: '~Parameter #1 \$key of method Doctrine\\Common\\Collections\\ArrayCollection<TKey of \(int\|string\),T>::set\(\) expects TKey of \(int\|string\), int\|string given\.~'
+            path: 'src/ArrayCollection.php'
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
