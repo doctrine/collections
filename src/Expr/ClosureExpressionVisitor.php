@@ -157,8 +157,9 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             },
             Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) self::getObjectFieldValue($object, $field), (string) $value),
             Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) self::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::LIKE, Comparison::NOTLIKE => static function () use ($comparison, $field, $value) {
-                $like = $comparison->getOperator() === Comparison::LIKE;
+            Comparison::LIKE, Comparison::NOTLIKE => static function ($object) use ($comparison, $field, $value) {
+                $like       = $comparison->getOperator() === Comparison::LIKE;
+                $fieldValue = self::getObjectFieldValue($object, $field);
 
                 // Replace the escaped characters to placeholder
                 $tmpValue = str_replace('\%', 'DOCTRINESQLWILDCARDESCAPEDMANY', $value);
@@ -174,11 +175,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDONE', '\\_', $pattern);
                     $pattern = '/^' . $pattern . '$/m';
 
-                    return static function ($object) use ($field, $like, $pattern) {
-                        $fieldValue = self::getObjectFieldValue($object, $field);
-
-                        return $like ? preg_match($pattern, $fieldValue) : ! preg_match($pattern, $fieldValue);
-                    };
+                    return $like ? (bool) preg_match($pattern, $fieldValue) : ! preg_match($pattern, $fieldValue);
                 }
 
                 // Replace the escaped characters to normal one
@@ -186,11 +183,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 $value = str_replace('\_', '_', $value);
 
                 // The wildcard characters not exist, use regular comparison
-                return static function ($object) use ($field, $value, $like) {
-                    $fieldValue = self::getObjectFieldValue($object, $field);
-
-                    return $like ? $fieldValue === $value : $fieldValue !== $value;
-                };
+                return $like ? $fieldValue === $value : $fieldValue !== $value;
             },
             default => throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
