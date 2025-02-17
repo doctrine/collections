@@ -122,17 +122,17 @@ class ExpressionBuilderTest extends TestCase
         self::assertEquals(Comparison::CONTAINS, $expr->getOperator());
     }
 
-    public function testLike()
+    public function testLike(): void
     {
-        $expr = $this->builder->like("a", "b");
+        $expr = $this->builder->like('a', 'b');
 
         $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
         $this->assertEquals(Comparison::LIKE, $expr->getOperator());
     }
 
-    public function testNotLike()
+    public function testNotLike(): void
     {
-        $expr = $this->builder->notLike("a", "b");
+        $expr = $this->builder->notLike('a', 'b');
 
         $this->assertInstanceOf('Doctrine\Common\Collections\Expr\Comparison', $expr);
         $this->assertEquals(Comparison::NOTLIKE, $expr->getOperator());

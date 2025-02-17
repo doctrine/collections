@@ -103,17 +103,13 @@ class ExpressionBuilder
         return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
 
-    /**
-     * @return Comparison
-     */
+    /** @return Comparison */
     public function like(string $field, mixed $value)
     {
         return new Comparison($field, Comparison::LIKE, new Value($value));
     }
 
-    /**
-     * @return Comparison
-     */
+    /** @return Comparison */
     public function notLike(string $field, mixed $value)
     {
         return new Comparison($field, Comparison::NOTLIKE, new Value($value));

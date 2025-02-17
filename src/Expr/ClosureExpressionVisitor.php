@@ -15,9 +15,11 @@ use function is_scalar;
 use function iterator_to_array;
 use function method_exists;
 use function preg_match;
+use function preg_quote;
 use function preg_replace_callback;
 use function str_contains;
 use function str_ends_with;
+use function str_replace;
 use function str_starts_with;
 use function strtoupper;
 
@@ -155,16 +157,15 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             },
             Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) self::getObjectFieldValue($object, $field), (string) $value),
             Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) self::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::LIKE, Comparison::NOTLIKE => function() use ($comparison, $field, $value) {
-                $like    = $comparison->getOperator() === Comparison::LIKE;
-                $pattern = null;
+            Comparison::LIKE, Comparison::NOTLIKE => static function () use ($comparison, $field, $value) {
+                $like = $comparison->getOperator() === Comparison::LIKE;
 
                 // Replace the escaped characters to placeholder
                 $tmpValue = str_replace('\%', 'DOCTRINESQLWILDCARDESCAPEDMANY', $value);
                 $tmpValue = str_replace('\_', 'DOCTRINESQLWILDCARDESCAPEDONE', $tmpValue);
 
                 // Check whether we have a wildcard characters, and build the regular expression
-                if(str_contains($tmpValue, '%') || str_contains($tmpValue, '_')) {
+                if (str_contains($tmpValue, '%') || str_contains($tmpValue, '_')) {
                     // Build regexp
                     $pattern = preg_quote($tmpValue, '/');
                     $pattern = str_replace('%', '.*', $pattern);
@@ -173,22 +174,23 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDONE', '\\_', $pattern);
                     $pattern = '/^' . $pattern . '$/m';
 
-                    return function ($object) use ($field, $value, $like, $pattern) {
-                        $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                        return (bool) ($like ? preg_match($pattern, $fieldValue) : !preg_match($pattern, $fieldValue));
-                    };
-                }
-                else {
-                    // Replace the escaped characters to normal one
-                    $value = str_replace('\%', '%', $value);
-                    $value = str_replace('\_', '_', $value);
+                    return static function ($object) use ($field, $like, $pattern) {
+                        $fieldValue = self::getObjectFieldValue($object, $field);
 
-                    // The wildcard characters not exist, use regular comparison
-                    return function ($object) use ($field, $value, $like) {
-                        $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                        return ($like ? $fieldValue === $value : $fieldValue !== $value);
+                        return $like ? preg_match($pattern, $fieldValue) : ! preg_match($pattern, $fieldValue);
                     };
                 }
+
+                // Replace the escaped characters to normal one
+                $value = str_replace('\%', '%', $value);
+                $value = str_replace('\_', '_', $value);
+
+                // The wildcard characters not exist, use regular comparison
+                return static function ($object) use ($field, $value, $like) {
+                    $fieldValue = self::getObjectFieldValue($object, $field);
+
+                    return $like ? $fieldValue === $value : $fieldValue !== $value;
+                };
             },
             default => throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
