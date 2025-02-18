@@ -161,9 +161,26 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 $like       = $comparison->getOperator() === Comparison::LIKE;
                 $fieldValue = self::getObjectFieldValue($object, $field);
 
+                // Find unique placeholders
+                $pl1 = 'ORMONE';
+                $pl2 = 'ORMMANY';
+                $idx = 0;
+
+                while (str_contains($value, $pl1 . $idx)) {
+                    $idx++;
+                }
+
+                $pl1 .= $idx;
+
+                while (str_contains($value, $pl2 . $idx)) {
+                    $idx++;
+                }
+
+                $pl2 .= $idx;
+
                 // Replace the escaped characters to placeholder
-                $tmpValue = str_replace('\%', 'DOCTRINESQLWILDCARDESCAPEDMANY', $value);
-                $tmpValue = str_replace('\_', 'DOCTRINESQLWILDCARDESCAPEDONE', $tmpValue);
+                $tmpValue = str_replace('\%', $pl2, $value);
+                $tmpValue = str_replace('\_', $pl1, $tmpValue);
 
                 // Check whether we have a wildcard characters, and build the regular expression
                 if (str_contains($tmpValue, '%') || str_contains($tmpValue, '_')) {
@@ -171,8 +188,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                     $pattern = preg_quote($tmpValue, '/');
                     $pattern = str_replace('%', '.*', $pattern);
                     $pattern = str_replace('_', '.{1}', $pattern);
-                    $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDMANY', '\\%', $pattern);
-                    $pattern = str_replace('DOCTRINESQLWILDCARDESCAPEDONE', '\\_', $pattern);
+                    $pattern = str_replace($pl2, '\\%', $pattern);
+                    $pattern = str_replace($pl1, '\\_', $pattern);
                     $pattern = '/^' . $pattern . '$/m';
 
                     return $like ? (bool) preg_match($pattern, $fieldValue) : ! preg_match($pattern, $fieldValue);
