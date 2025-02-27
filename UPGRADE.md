@@ -39,7 +39,7 @@ You can find a list of major changes to public API below.
 
 ### Doctrine\Common\Collections\Collection
 
-|             1.0.x                |                  3.0.x                           |
+|             1.0.x                |                  2.0.x                           |
 |---------------------------------:|:-------------------------------------------------|
 | `add($element)`                  | `add(mixed $element): void`                      |
 | `clear()`                        | `clear(): void`                                  |
@@ -72,7 +72,7 @@ You can find a list of major changes to public API below.
 
 ### Doctrine\Common\Collections\AbstractLazyCollection
 
-|      1.0.x        |         3.0.x           |
+|      1.0.x        |         2.0.x           |
 |------------------:|:------------------------|
 | `isInitialized()` | `isInitialized(): bool` |
 | `initialize()`    | `initialize(): void`    |
@@ -80,14 +80,14 @@ You can find a list of major changes to public API below.
 
 ### Doctrine\Common\Collections\ArrayCollection
 
-|            1.0.x              |               3.0.x                   |
+|            1.0.x              |               2.0.x                   |
 |------------------------------:|:--------------------------------------|
 | `createFrom(array $elements)` | `createFrom(array $elements): static` |
 | `__toString()`                | `__toString(): string`                |
 
 ### Doctrine\Common\Collections\Criteria
 
-|            1.0.x                          |               3.0.x                         |
+|            1.0.x                          |               2.0.x                         |
 |------------------------------------------:|:--------------------------------------------|
 | `where(Expression $expression): self`     | `where(Expression $expression): static`     |
 | `andWhere(Expression $expression): self`  | `andWhere(Expression $expression): static`  |
@@ -98,7 +98,7 @@ You can find a list of major changes to public API below.
 
 ### Doctrine\Common\Collections\Selectable
 
-|             1.0.x              |                   3.0.x                    |
+|             1.0.x              |                   2.0.x                    |
 |-------------------------------:|:-------------------------------------------|
 | `matching(Criteria $criteria)` | `matching(Criteria $criteria): Collection` |
 
