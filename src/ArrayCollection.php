@@ -43,18 +43,18 @@ use const ARRAY_FILTER_USE_BOTH;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
- * @psalm-template TKey of array-key
- * @psalm-template T
+ * @phpstan-template TKey of array-key
+ * @phpstan-template T
  * @template-implements Collection<TKey,T>
  * @template-implements Selectable<TKey,T>
- * @psalm-consistent-constructor
+ * @phpstan-consistent-constructor
  */
 class ArrayCollection implements Collection, Selectable, Stringable
 {
     /**
      * An array containing the entries of this collection.
      *
-     * @psalm-var array<TKey,T>
+     * @phpstan-var array<TKey,T>
      * @var mixed[]
      */
     private array $elements = [];
@@ -62,7 +62,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * Initializes a new ArrayCollection.
      *
-     * @psalm-param array<TKey,T> $elements
+     * @phpstan-param array<TKey,T> $elements
      */
     public function __construct(array $elements = [])
     {
@@ -92,13 +92,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * instance should be created when constructor semantics have changed.
      *
      * @param array $elements Elements.
-     * @psalm-param array<K,V> $elements
+     * @phpstan-param array<K,V> $elements
      *
      * @return static
-     * @psalm-return static<K,V>
+     * @phpstan-return static<K,V>
      *
-     * @psalm-template K of array-key
-     * @psalm-template V
+     * @phpstan-template K of array-key
+     * @phpstan-template V
      */
     protected function createFrom(array $elements)
     {
@@ -257,10 +257,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @psalm-param TMaybeContained $element
+     * @phpstan-param TMaybeContained $element
      *
      * @return int|string|false
-     * @psalm-return (TMaybeContained is T ? TKey|false : false)
+     * @phpstan-return (TMaybeContained is T ? TKey|false : false)
      *
      * @template TMaybeContained
      */
@@ -315,8 +315,6 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @psalm-suppress InvalidPropertyAssignmentValue
-     *
      * This breaks assumptions about the template type, but it would
      * be a backwards-incompatible change to remove this method
      */
@@ -337,7 +335,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * {@inheritDoc}
      *
      * @return Traversable<int|string, mixed>
-     * @psalm-return Traversable<TKey, T>
+     * @phpstan-return Traversable<TKey, T>
      */
     #[ReturnTypeWillChange]
     public function getIterator()
@@ -348,12 +346,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T):U $func
+     * @phpstan-param Closure(T):U $func
      *
      * @return static
-     * @psalm-return static<TKey, U>
+     * @phpstan-return static<TKey, U>
      *
-     * @psalm-template U
+     * @phpstan-template U
      */
     public function map(Closure $func)
     {
@@ -371,10 +369,10 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * {@inheritDoc}
      *
-     * @psalm-param Closure(T, TKey):bool $p
+     * @phpstan-param Closure(T, TKey):bool $p
      *
      * @return static
-     * @psalm-return static<TKey,T>
+     * @phpstan-return static<TKey,T>
      */
     public function filter(Closure $p)
     {
@@ -449,7 +447,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return array_slice($this->elements, $offset, $length, true);
     }
 
-    /** @psalm-return Collection<TKey, T>&Selectable<TKey,T> */
+    /** @phpstan-return Collection<TKey, T>&Selectable<TKey,T> */
     public function matching(Criteria $criteria)
     {
         $expr     = $criteria->getWhereExpression();
