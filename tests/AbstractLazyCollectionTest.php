@@ -23,7 +23,7 @@ class AbstractLazyCollectionTest extends CollectionTestCase
         $this->collection = new LazyArrayCollection(new ArrayCollection());
     }
 
-    /** @psalm-param mixed[] $elements */
+    /** @phpstan-param mixed[] $elements */
     private function buildCollection(array $elements): LazyArrayCollection
     {
         return new LazyArrayCollection(new ArrayCollection($elements));

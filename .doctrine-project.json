@@ -37,7 +37,8 @@
         {
             "name": "1.8",
             "branchName": "1.8.x",
-            "slug": "1.8"
+            "slug": "1.8",
+            "maintained": false
         },
         {
             "name": "1.7",

@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Expr\Expression;
 /**
  * Criteria for filtering Selectable collections.
  *
- * @psalm-consistent-constructor
+ * @phpstan-consistent-constructor
  */
 class Criteria
 {
