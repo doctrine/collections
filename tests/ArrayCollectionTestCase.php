@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Common\Collections;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
@@ -456,5 +457,49 @@ abstract class ArrayCollectionTestCase extends TestCase
                 ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending]))
                 ->toArray(),
         );
+    }
+
+    public function testMultiColumnSortAppliesAllSortsAndTreatsDateTimeInstancesAsValues(): void
+    {
+        $collection = $this->buildCollection([
+            ['foo' => new DateTimeImmutable('2025-01-01 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-02 12:00:00')],
+            ['foo' => new DateTimeImmutable('2025-01-01 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-04 12:00:00')],
+            ['foo' => new DateTimeImmutable('2025-01-01 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-03 12:00:00')],
+            ['foo' => new DateTimeImmutable('2025-01-02 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-05 12:00:00')],
+        ]);
+
+        $expected = [
+            3 => ['foo' => new DateTimeImmutable('2025-01-02 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-05 12:00:00')],
+            0 => ['foo' => new DateTimeImmutable('2025-01-01 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-02 12:00:00')],
+            2 => ['foo' => new DateTimeImmutable('2025-01-01 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-03 12:00:00')],
+            1 => ['foo' => new DateTimeImmutable('2025-01-01 12:00:00'), 'bar' => new DateTimeImmutable('2025-01-04 12:00:00')],
+        ];
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
+        $actual = $collection
+            ->matching((new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Ascending]))->treatDateTimeAsScalar())
+            ->toArray();
+
+        self::assertEquals($expected, $actual); // does not check array key order
+        self::assertSame(array_keys($expected), array_keys($actual));
+    }
+
+    public function testMatchingDateTimeEqualityAsScalar(): void
+    {
+        $collection = $this->buildCollection([
+            ['foo' => new DateTimeImmutable('2025-01-01 12:00:00')],
+            ['foo' => new DateTimeImmutable('2025-01-02 12:00:00')],
+        ]);
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
+        $actual = $collection->matching((new Criteria(Criteria::expr()->eq('foo', new DateTimeImmutable('2025-01-02 12:00:00'))))->treatDateTimeAsScalar());
+
+        self::assertCount(1, $actual);
     }
 }

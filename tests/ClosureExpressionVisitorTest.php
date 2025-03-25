@@ -6,6 +6,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use ArrayAccess;
 use ArrayIterator;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
@@ -128,12 +129,42 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertFalse($closure(new TestObject(2)));
     }
 
+    public function testWalkEqualsComparisonDateTimeNotAsScalar(): void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->eq('foo', new DateTimeImmutable('2025-03-01')));
+
+        self::assertFalse($closure(new TestObject(new DateTimeImmutable('2025-03-01'))));
+    }
+
+    public function testWalkEqualsComparisonDateTimeAsScalar(): void
+    {
+        $this->visitor = new ClosureExpressionVisitor(true);
+        $closure       = $this->visitor->walkComparison($this->builder->eq('foo', new DateTimeImmutable('2025-03-01')));
+
+        self::assertTrue($closure(new TestObject(new DateTimeImmutable('2025-03-01'))));
+    }
+
     public function testWalkNotEqualsComparison(): void
     {
         $closure = $this->visitor->walkComparison($this->builder->neq('foo', 1));
 
         self::assertFalse($closure(new TestObject(1)));
         self::assertTrue($closure(new TestObject(2)));
+    }
+
+    public function testWalkNotEqualsComparisonDateTimeNotAsScalar(): void
+    {
+        $closure = $this->visitor->walkComparison($this->builder->neq('foo', new DateTimeImmutable('2025-03-01')));
+
+        self::assertTrue($closure(new TestObject(new DateTimeImmutable('2025-03-01'))));
+    }
+
+    public function testWalkNotEqualsComparisonDateTimeAsScalar(): void
+    {
+        $this->visitor = new ClosureExpressionVisitor(true);
+        $closure       = $this->visitor->walkComparison($this->builder->neq('foo', new DateTimeImmutable('2025-03-01')));
+
+        self::assertFalse($closure(new TestObject(new DateTimeImmutable('2025-03-01'))));
     }
 
     public function testWalkLessThanComparison(): void
@@ -193,6 +224,15 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertFalse($closure(new TestObject(new TestObject('baz'))));
     }
 
+    public function testWalkInComparisonNeverStrictOnDateTime(): void
+    {
+        // basically covered by testWalkInComparisonObjects already, but this makes it more explicit
+
+        $closure = $this->visitor->walkComparison($this->builder->in('foo', [new DateTimeImmutable('2025-03-01')]));
+
+        self::assertTrue($closure(new TestObject(new DateTimeImmutable('2025-03-01'))));
+    }
+
     public function testWalkNotInComparison(): void
     {
         $closure = $this->visitor->walkComparison($this->builder->notIn('foo', [1, 2, 3, '04']));
@@ -213,6 +253,15 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($closure(new TestObject(new TestObject(0))));
         self::assertFalse($closure(new TestObject(new TestObject(4))));
         self::assertTrue($closure(new TestObject(new TestObject('baz'))));
+    }
+
+    public function testWalkNotInComparisonNeverStrictOnDateTime(): void
+    {
+        // basically covered by testWalkNotInComparisonObjects already, but this makes it more explicit
+
+        $closure = $this->visitor->walkComparison($this->builder->notIn('foo', [new DateTimeImmutable('2025-03-01')]));
+
+        self::assertFalse($closure(new TestObject(new DateTimeImmutable('2025-03-01'))));
     }
 
     public function testWalkContainsComparison(): void

@@ -44,4 +44,12 @@
         <exclude-pattern>src/ArrayCollection.php</exclude-pattern>
         <exclude-pattern>src/Collection.php</exclude-pattern>
     </rule>
+
+    <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator">
+        <exclude-pattern>src/Expr/ClosureExpressionVisitor.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator">
+        <exclude-pattern>src/Expr/ClosureExpressionVisitor.php</exclude-pattern>
+    </rule>
 </ruleset>

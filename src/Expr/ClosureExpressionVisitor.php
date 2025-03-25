@@ -6,11 +6,13 @@ namespace Doctrine\Common\Collections\Expr;
 
 use ArrayAccess;
 use Closure;
+use DateTimeInterface;
 use RuntimeException;
 
 use function array_all;
 use function array_any;
 use function explode;
+use function func_get_args;
 use function in_array;
 use function is_array;
 use function is_scalar;
@@ -31,6 +33,10 @@ use function strtoupper;
  */
 class ClosureExpressionVisitor extends ExpressionVisitor
 {
+    public function __construct(private readonly bool $treatDateTimeAsScalar = false)
+    {
+    }
+
     /**
      * Accesses the field of a given object. This field has to be public
      * directly or indirectly (through an accessor get*, is*, or a magic
@@ -103,16 +109,22 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null)
     {
+        if (isset(func_get_args()[3])) {
+            $orderDateTimeAsScalar = (bool) func_get_args()[3];
+        } else {
+            $orderDateTimeAsScalar = false;
+        }
+
         if (! $next) {
             $next = static fn (): int => 0;
         }
 
-        return static function ($a, $b) use ($name, $next, $orientation): int {
+        return static function ($a, $b) use ($name, $next, $orientation, $orderDateTimeAsScalar): int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
 
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
 
-            if ($aValue === $bValue) {
+            if ($aValue === $bValue || ($orderDateTimeAsScalar && $aValue instanceof DateTimeInterface && $bValue instanceof DateTimeInterface && $aValue == $bValue)) {
                 return $next($a, $b);
             }
 
@@ -129,8 +141,24 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         $value = $comparison->getValue()->getValue();
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) === $value,
-            Comparison::NEQ => static fn ($object): bool => self::getObjectFieldValue($object, $field) !== $value,
+            Comparison::EQ => function ($object) use ($field, $value): bool {
+                $fieldValue = self::getObjectFieldValue($object, $field);
+
+                if ($this->treatDateTimeAsScalar && $fieldValue instanceof DateTimeInterface) {
+                    return $fieldValue == $value;
+                }
+
+                return $fieldValue === $value;
+            },
+            Comparison::NEQ => function ($object) use ($field, $value): bool {
+                $fieldValue = self::getObjectFieldValue($object, $field);
+
+                if ($this->treatDateTimeAsScalar && $fieldValue instanceof DateTimeInterface) {
+                    return $fieldValue != $value;
+                }
+
+                return $fieldValue !== $value;
+            },
             Comparison::LT => static fn ($object): bool => self::getObjectFieldValue($object, $field) < $value,
             Comparison::LTE => static fn ($object): bool => self::getObjectFieldValue($object, $field) <= $value,
             Comparison::GT => static fn ($object): bool => self::getObjectFieldValue($object, $field) > $value,

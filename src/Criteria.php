@@ -30,6 +30,8 @@ class Criteria
     /** @var array<string, Order> */
     private array $orderings = [];
 
+    private bool $treatDateTimeAsScalar = false;
+
     private int|null $firstResult = null;
     private int|null $maxResults  = null;
 
@@ -224,6 +226,18 @@ class Criteria
         );
 
         return $this;
+    }
+
+    public function treatDateTimeAsScalar(): self
+    {
+        $this->treatDateTimeAsScalar = true;
+
+        return $this;
+    }
+
+    public function getTreatDateTimeAsScalar(): bool
+    {
+        return $this->treatDateTimeAsScalar;
     }
 
     /**
