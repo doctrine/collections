@@ -25,7 +25,7 @@ abstract class CustomCollection implements Collection
     }
 
     /**
-     * @psalm-param Closure(T, TKey):bool $p
+     * @phpstan-param Closure(T, TKey):bool $p
      *
      * @return Collection<TKey, T>
      */
@@ -35,9 +35,9 @@ abstract class CustomCollection implements Collection
     }
 
     /**
-     * @psalm-param Closure(TKey, T):bool $p
+     * @phpstan-param Closure(TKey, T):bool $p
      *
-     * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
+     * @phpstan-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
     public function partition(Closure $p): array
     {

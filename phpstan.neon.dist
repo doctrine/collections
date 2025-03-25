@@ -5,10 +5,6 @@ parameters:
         - tests/StaticAnalysis
 
     ignoreErrors:
-        # https://github.com/phpstan/phpstan-src/pull/1289
-        -
-            message: '~PHPDoc tag @return with type Doctrine\\Common\\Collections\\ArrayCollection.* is incompatible with native type static.*~'
-            path: 'src/ArrayCollection.php'
         -
             message: '~Parameter #1 \$key of method Doctrine\\Common\\Collections\\ArrayCollection<TKey of \(int\|string\),T>::set\(\) expects TKey of \(int\|string\), int\|string given\.~'
             path: 'src/ArrayCollection.php'
