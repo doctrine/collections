@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections\Expr;
 
-use RuntimeException;
-
 /**
  * An Expression visitor walks a graph of expressions and turns them into a
  * query for the underlying implementation.
@@ -37,16 +35,9 @@ abstract class ExpressionVisitor
      * Dispatches walking an expression to the appropriate handler.
      *
      * @return mixed
-     *
-     * @throws RuntimeException
      */
     public function dispatch(Expression $expr)
     {
-        return match (true) {
-            $expr instanceof Comparison => $this->walkComparison($expr),
-            $expr instanceof Value => $this->walkValue($expr),
-            $expr instanceof CompositeExpression => $this->walkCompositeExpression($expr),
-            default => throw new RuntimeException('Unknown Expression ' . $expr::class),
-        };
+        return $expr->visit($this);
     }
 }

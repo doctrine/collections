@@ -7,10 +7,8 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\Common\Collections\Order;
-use RuntimeException;
 use stdClass;
 
 use function count;
@@ -54,18 +52,6 @@ class CollectionTest extends CollectionTestCase
         self::assertInstanceOf(Collection::class, $col);
         self::assertNotSame($col, $this->collection);
         self::assertEquals(1, count($col));
-    }
-
-    public function testMatchingUnknownThrowException(): void
-    {
-        self::expectException(RuntimeException::class);
-        self::expectExceptionMessage('Unknown Expression GenericExpression');
-
-        $genericExpression = $this->getMockBuilder(Expression::class)
-            ->setMockClassName('GenericExpression')
-            ->getMock();
-
-        $this->collection->matching(new Criteria($genericExpression));
     }
 
     /** @group DDC-1637 */
