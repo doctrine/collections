@@ -358,3 +358,20 @@ returns a new collection containing these elements and preserved keys.
     $matchingCollection = $collection->matching($criteria); // [ 'wage' => [ 'name' => 'jwage' ]]
 
 You can read more about expressions :ref:`here <expressions>`.
+
+.. note::
+
+    Currently, expressions use strict comparison for the ``EQ`` (equal) and ``NEQ`` (not equal)
+    checks. That makes them behave more natural as long as only scalar values are involved,
+    e. g. ``'04'`` and ``4`` are *not* equal.
+
+    This may give surprising results when dealing with `DateTime` and `DateTimeImmutable`
+    instances, since you might generally expect them to be compared by value, not by object
+    identity.
+
+    Comparative operators like ``GT`` or ``LTE`` as well as ``IN`` and ``NIN`` do
+    not exhibit this behavior.
+
+    Also, multi-dimensional sorting based on non-scalar values will only consider the
+    next sort criteria for *identical* matches, which may not give the expected results
+    when `DateTime` or `DateTimeImmutable` instances come into play.
