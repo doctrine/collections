@@ -363,7 +363,7 @@ You can read more about expressions :ref:`here <expressions>`.
 
     Currently, expressions use strict comparison for the ``EQ`` (equal) and ``NEQ`` (not equal)
     checks. That makes them behave more natural as long as only scalar values are involved,
-    e. g. ``'04'`` and ``4`` are *not* equal.
+    e.g. ``'04'`` and ``4`` are *not* equal.
 
     This may give surprising results when dealing with `DateTime` and `DateTimeImmutable`
     instances, since you might generally expect them to be compared by value, not by object
