@@ -374,4 +374,4 @@ You can read more about expressions :ref:`here <expressions>`.
 
     Also, multi-dimensional sorting based on non-scalar values will only consider the
     next sort criteria for *identical* matches, which may not give the expected results
-    when `DateTime` or `DateTimeImmutable` instances come into play.
+    when ``DateTime`` or ``DateTimeImmutable`` instances come into play.
