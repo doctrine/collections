@@ -362,16 +362,17 @@ You can read more about expressions :ref:`here <expressions>`.
 .. note::
 
     Currently, expressions use strict comparison for the ``EQ`` (equal) and ``NEQ`` (not equal)
-    checks. That makes them behave more natural as long as only scalar values are involved,
-    e.g. ``'04'`` and ``4`` are *not* equal.
+    checks. That makes them behave more naturally as long as only scalar values are involved.
+    For example, ``'04'`` and ``4`` are *not* equal.
 
-    This may give surprising results when dealing with ``DateTime`` and ``DateTimeImmutable``
-    instances, since you might generally expect them to be compared by value, not by object
-    identity.
+    However, this can lead to surprising results when working with objects, especially objects
+    representing values. ``DateTime`` and ``DateTimeImmutable`` are two widespread examples for
+    objects that would typically rather be compared by their value than by identity.
 
     Comparative operators like ``GT`` or ``LTE`` as well as ``IN`` and ``NIN`` do
     not exhibit this behavior.
 
     Also, multi-dimensional sorting based on non-scalar values will only consider the
     next sort criteria for *identical* matches, which may not give the expected results
-    when ``DateTime`` or ``DateTimeImmutable`` instances come into play.
+    when objects come into play. Keep this in mind, for example, when sorting by fields that
+    contain ``DateTime`` or ``DateTimeImmutable`` objects.
