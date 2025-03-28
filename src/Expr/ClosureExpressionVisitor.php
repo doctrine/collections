@@ -109,11 +109,7 @@ class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null)
     {
-        if (isset(func_get_args()[3])) {
-            $orderDateTimeAsScalar = (bool) func_get_args()[3];
-        } else {
-            $orderDateTimeAsScalar = false;
-        }
+        $orderDateTimeAsScalar = (bool) (func_get_args()[3] ?? false);
 
         if (! $next) {
             $next = static fn (): int => 0;
