@@ -361,6 +361,24 @@ You can read more about expressions :ref:`here <expressions>`.
 
 .. note::
 
+    Currently, expressions use strict comparison for the ``EQ`` (equal) and ``NEQ`` (not equal)
+    checks. That makes them behave more naturally as long as only scalar values are involved.
+    For example, ``'04'`` and ``4`` are *not* equal.
+
+    However, this can lead to surprising results when working with objects, especially objects
+    representing values. ``DateTime`` and ``DateTimeImmutable`` are two widespread examples for
+    objects that would typically rather be compared by their value than by identity.
+
+    Comparative operators like ``GT`` or ``LTE`` as well as ``IN`` and ``NIN`` do
+    not exhibit this behavior.
+
+    Also, multi-dimensional sorting based on non-scalar values will only consider the
+    next sort criteria for *identical* matches, which may not give the expected results
+    when objects come into play. Keep this in mind, for example, when sorting by fields that
+    contain ``DateTime`` or ``DateTimeImmutable`` objects.
+
+.. note::
+
     For collections that contain objects, the field name given to ``Comparison`` will
     lead to various access methods being tried in sequence. For the exact implementation,
     refer to the ``ClosureExpressionVisitor::getObjectFieldValue()`` method.
@@ -378,4 +396,4 @@ You can read more about expressions :ref:`here <expressions>`.
     5. Convert snake-case field names to camel case and retry the ``get``, ``is``
        and prefixless accessor methods
     6. Direct access to ``::$field``, which must be a public property, as a
-       last-ditch effort.
+       last resort.
