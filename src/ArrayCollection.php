@@ -459,6 +459,11 @@ class ArrayCollection implements Collection, Selectable, Stringable
             $filtered = array_filter($filtered, $filter);
         }
 
+        $grouping = $criteria->grouping();
+        if ($grouping) {
+            $filtered = ClosureExpressionVisitor::groupByField($grouping, $filtered);
+        }
+
         $orderings = $criteria->orderings();
 
         if ($orderings) {

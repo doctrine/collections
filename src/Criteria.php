@@ -30,6 +30,11 @@ class Criteria
     /** @var array<string, Order> */
     private array $orderings = [];
 
+    /**
+     * @var array
+     */
+    private array $grouping = [];
+
     private int|null $firstResult = null;
     private int|null $maxResults  = null;
 
@@ -185,6 +190,16 @@ class Criteria
     }
 
     /**
+     * Gets the current orderings of this Criteria.
+     *
+     * @return array
+     */
+    public function grouping(): array
+    {           
+        return $this->grouping;
+    }
+
+    /**
      * Sets the ordering of the result of this Criteria.
      *
      * Keys are field and values are the order, being a valid Order enum case.
@@ -223,6 +238,27 @@ class Criteria
             $orderings,
         );
 
+        return $this;
+    }
+
+     /**
+      * Sets the grouping of the result of this Criteria.
+      *
+      * @param array    $groupFields    fields to be grouped
+      * @param array    $aggregates     aggregates defined in
+      * @param Criteria $filterCriteria Filter criteria for the aggregated columns
+      *                                 (Expressions 'where',  'andWhere',
+      *                                 'orWhere', )                  'orWhere', )
+      *
+      * @return $this
+      */
+    public function groupBy(array $groupFields, array $aggregates=[], ?Criteria $filterCriteria=null) : self
+    {
+        $this->grouping = [
+            'groupFields'     => $groupFields,
+            'aggregates'      => $aggregates,
+            'whereExpression' => !is_null($filterCriteria) ? $filterCriteria->getWhereExpression() : null,
+        ];
         return $this;
     }
 

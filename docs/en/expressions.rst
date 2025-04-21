@@ -80,6 +80,62 @@ Sets the ordering of the result of this Criteria.
 
     $criteria->orderBy(['name' => Order::Ascending]);
 
+groupBy
+-------
+
+The 'groupBy' criteria groups rows that have the same values into summary rows.
+The 'groupBy' criteria can used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+Also the results can be filtered by the expressions 'where, 'andWhere' and 'orWhere' separately from the
+main criteria.
+
+.. code-block:: php
+    
+    use Doctrine\Common\Collections\GroupAggregate; 
+    use Doctrine\Common\Collections\Order;
+    
+    // Basic
+ 
+    $criteria->groupBy(['category', 'key']);
+
+
+
+    // With aggregates COUNT and SUM for the fields  'value' and 'rate'
+
+    $criteria->groupBy(
+         ['category', 'key'],
+         [
+            GroupAggregate::$COUNT => [],
+            GroupAggregate::$SUM => ['value', 'rate']
+          ]
+     );
+
+
+     // With aggregate filter: 'sum(value) > 5'
+   
+    $expr = new Comparison('sum(value)', Comparison::GT, 6);
+    $criteria->groupBy(
+         ['category', 'key'],
+         [
+            GroupAggregate::$COUNT => [],
+            GroupAggregate::$SUM => ['value', 'rate'],
+            Criteria::create()->where($expr)
+          ]
+     );
+
+
+    // With aggregate orderBy : 'sum(value) DESC'
+    
+    $expr = new Comparison('sum(value)', Comparison::GT, 6);
+    $criteria->groupBy(
+         ['category', 'key'],
+         [
+            GroupAggregate::$COUNT => [],
+            GroupAggregate::$SUM => ['value', 'rate'],
+            Criteria::create()->where($expr)
+          ]
+     )->orderBy(['sum(value)' => Order::Descending]);
+     
+
 setFirstResult
 --------------
 
