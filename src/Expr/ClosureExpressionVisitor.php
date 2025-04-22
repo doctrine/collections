@@ -6,10 +6,15 @@ namespace Doctrine\Common\Collections\Expr;
 
 use ArrayAccess;
 use Closure;
+use Doctrine\Common\Collections\GroupAggregate;
 use RuntimeException;
 
 use function array_all;
 use function array_any;
+use function array_filter;
+use function array_reverse;
+use function array_unique;
+use function arsort;
 use function explode;
 use function in_array;
 use function is_array;
@@ -23,7 +28,7 @@ use function str_ends_with;
 use function str_starts_with;
 use function strtoupper;
 
-use Doctrine\Common\Collections\GroupAggregate;
+use const SORT_REGULAR;
 
 /**
  * Walks an expression graph and turns it into a PHP closure.
@@ -124,23 +129,29 @@ class ClosureExpressionVisitor extends ExpressionVisitor
 
     /**
      * Group by fields and aggregate
-     * 
+     *
+     * @param array<string> $grouping
+     * @param array<string> $originalRows
+     *
+     * @return array<string>
      */
     public static function groupByField(array $grouping, array $originalRows): array
     {
-        list(
+        [
             'groupFields' => $groupedFields,
             'aggregates' => $aggregates,
             'whereExpression' => $whereExpression,
-        ) = $grouping;
+        ]            = $grouping;
         $groupedRows = [];
         foreach ($originalRows as $originalRow) {
             $item = [];
             foreach ($groupedFields as $group) {
                 $item[$group] = $originalRow[$group];
             }
+
             $groupedRows[] = $item;
         }
+
         $groupedRows =  array_unique($groupedRows, SORT_REGULAR);
         arsort($groupedRows);
         $groupedRows = array_reverse($groupedRows);
@@ -148,8 +159,8 @@ class ClosureExpressionVisitor extends ExpressionVisitor
         $groupedRows = GroupAggregate::aggregate($originalRows, $groupedRows, $groupedFields, $aggregates);
 
         if ($whereExpression) {
-            $visitor  = new ClosureExpressionVisitor();
-            $filter   = $visitor->dispatch($whereExpression);
+            $visitor     = new ClosureExpressionVisitor();
+            $filter      = $visitor->dispatch($whereExpression);
             $groupedRows = array_filter($groupedRows, $filter);
         }
 

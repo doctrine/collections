@@ -53,26 +53,21 @@ namespace Doctrine\Tests\Common\Collections;
  *      Set the start row of the result set
  */
 
-use Doctrine\Common\Collections\Expr\Comparison;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\GroupAggregate;
 use Doctrine\Common\Collections\Order;
 use PHPUnit\Framework\TestCase;
 
-
 class GroupByTest extends TestCase
 {
-
-
     /**
      * Get test collection for all of the tests
-     *
-     * @return ArrayCollection
      */
     private function getCollection(): ArrayCollection
     {
-        return  new ArrayCollection(
+        return new ArrayCollection(
             [
                 [
                     'id'       => 0,
@@ -116,11 +111,9 @@ class GroupByTest extends TestCase
                     'label'    => 'alacreate',
                     'value'    => 8,
                 ],
-            ]
+            ],
         );
-
     }
-
 
     /**
      * Test  groupBy
@@ -168,9 +161,7 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
     }
-
 
     /**
      * Test criteria groupBy with aggregates
@@ -267,9 +258,7 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
     }
-
 
     /**
      * Test order by
@@ -329,9 +318,7 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
     }
-
 
     /**
      * Test where
@@ -369,9 +356,7 @@ class GroupByTest extends TestCase
     {
         $collection = $this->getCollection();
 
-        //
         // Test to filter by the aggregate column 'sum(value)'
-        //
         $fieldsToGroup = [
             'category',
             'key',
@@ -413,10 +398,8 @@ class GroupByTest extends TestCase
 
         self::assertSame($expected, $groupedRows);
 
-        //
         // Test to filter by the aggregate column 'sum(value)'
         // and the column 'value' of the original row set
-        //
         $exprMinValue = new Comparison('value', Comparison::GT, 2);
         $criteria     = Criteria::create()
             ->groupBy($fieldsToGroup, $aggregates, $groupCriteria)
@@ -444,9 +427,7 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
     }
-
 
     /**
      * Test andWhere
@@ -513,9 +494,7 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
     }
-
 
     /**
      * Test orWhere
@@ -586,9 +565,7 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
-    }//end testOrWhere()
-
+    }
 
     /**
      * Test setFirstResult
@@ -636,9 +613,7 @@ class GroupByTest extends TestCase
             ],
         ];
         self::assertSame($expected, $groupedRows);
-
     }
-
 
     /**
      * Test setMaxResults
@@ -695,8 +670,5 @@ class GroupByTest extends TestCase
         ];
 
         self::assertSame($expected, $groupedRows);
-
     }
-
-
 }

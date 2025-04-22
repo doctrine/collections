@@ -30,9 +30,7 @@ class Criteria
     /** @var array<string, Order> */
     private array $orderings = [];
 
-    /**
-     * @var array
-     */
+    /** @var array<array<string>, array<string>, Criteria> */
     private array $grouping = [];
 
     private int|null $firstResult = null;
@@ -192,10 +190,10 @@ class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
-     * @return array
+     * @return array<array<string>, array<string>, Criteria>
      */
     public function grouping(): array
-    {           
+    {
         return $this->grouping;
     }
 
@@ -244,21 +242,22 @@ class Criteria
      /**
       * Sets the grouping of the result of this Criteria.
       *
-      * @param array    $groupFields    fields to be grouped
-      * @param array    $aggregates     aggregates defined in
-      * @param Criteria $filterCriteria Filter criteria for the aggregated columns
-      *                                 (Expressions 'where',  'andWhere',
-      *                                 'orWhere', )                  'orWhere', )
+      * @param array<string> $groupFields    fields to be grouped
+      * @param array<string> $aggregates     aggregates defined in
+      * @param Criteria      $filterCriteria Filter criteria for the aggregated columns
+      *                                      (Expressions 'where',  'andWhere',
+      *                                      'orWhere', )                  'orWhere', )
       *
       * @return $this
       */
-    public function groupBy(array $groupFields, array $aggregates=[], ?Criteria $filterCriteria=null) : self
+    public function groupBy(array $groupFields, array $aggregates = [], Criteria|null $filterCriteria = null): self
     {
         $this->grouping = [
             'groupFields'     => $groupFields,
             'aggregates'      => $aggregates,
-            'whereExpression' => !is_null($filterCriteria) ? $filterCriteria->getWhereExpression() : null,
+            'whereExpression' => $filterCriteria?->getWhereExpression(),
         ];
+
         return $this;
     }
 
