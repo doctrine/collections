@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+use function array_merge;
 use function serialize;
 use function unserialize;
 
@@ -35,6 +36,28 @@ class ArrayCollectionTest extends ArrayCollectionTestCase
 
         $this->assertIsArray($unserializeCollection->getValues());
         $this->assertCount(0, $unserializeCollection->getValues());
+    }
+
+    public function testMerge(): void
+    {
+        $a        = [1, 2, 3, 'sd' => 'a2222212'];
+        $b        = ['aa' => 12, 'sd' => 'b2212'];
+        $c        = ['cc' => 122, 'sd' => 'c3111212'];
+        $expected = array_merge($a, $b);
+
+        // Merge one collection
+        $arrayCollectionA = new ArrayCollection($a);
+        $arrayCollectionB = new ArrayCollection($b);
+        $arrayCollectionC = new ArrayCollection($c);
+        $merged           = $arrayCollectionA->merge($arrayCollectionB);
+        $this->assertEquals($expected, $merged->toArray());
+
+        // Merge two collections
+        unset($arrayCollectionA);
+        $arrayCollectionA = new ArrayCollection($a);
+        $expected         = array_merge($a, $b, $c);
+        $merged           = $arrayCollectionA->merge($arrayCollectionB, $arrayCollectionC);
+        $this->assertEquals($expected, $merged->toArray());
     }
 }
 

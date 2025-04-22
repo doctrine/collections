@@ -18,11 +18,13 @@ use function array_find;
 use function array_key_exists;
 use function array_keys;
 use function array_map;
+use function array_merge;
 use function array_reduce;
 use function array_reverse;
 use function array_search;
 use function array_slice;
 use function array_values;
+use function array_walk;
 use function count;
 use function current;
 use function end;
@@ -445,6 +447,31 @@ class ArrayCollection implements Collection, Selectable, Stringable
     public function slice(int $offset, int|null $length = null)
     {
         return array_slice($this->elements, $offset, $length, true);
+    }
+
+    /**
+     * Merge
+     *
+     * @param array<self> $arrayCollectionArr array of arrayCollections or on item
+     */
+    public function merge(self ...$arrayCollectionArr): self
+    {
+        $arraysToMerge =  array_map(
+            static function (self $arrayCollection) {
+                return $arrayCollection->toArray();
+            },
+            $arrayCollectionArr,
+        );
+
+        $merged = $this->toArray();
+        array_walk(
+            $arrayCollectionArr,
+            static function (self $arrayCollection) use (&$merged) {
+                $merged = array_merge($merged, $arrayCollection->toArray());
+            },
+        );
+
+        return new self($merged);
     }
 
     /** @phpstan-return Collection<TKey, T>&Selectable<TKey,T> */

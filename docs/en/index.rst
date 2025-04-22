@@ -311,6 +311,24 @@ Extracts a slice of $length elements starting at position $offset from the Colle
 
     $slice = $collection->slice(1, 2); // [1, 2]
 
+
+merge
+^^^^^
+
+Merges the elements of one or more Array Collections together so that the values of one are appended to the end of the previous one. It returns the resulting Array Collection.
+
+If the input  Array Collections have the same string keys, then the later value for that key will overwrite the previous one. If, however, the Array Collections contain numeric keys, the later value will not overwrite the original value, but will be appended.
+
+
+
+.. code-block:: php
+        $collectionA    = new ArrayCollection([1, 2, 3, 'sd' => 'a2222212']);
+        $collectionB    = new ArrayCollection(['aa' => 12, 'sd' => 'b2212']);
+        $collectionC    = new ArrayCollection(['cc' => 122, 'sd' => 'c3111212']);
+       
+        $merged = $arrayCollectionA->merge($arrayCollectionB, $arrayCollectionC);  
+        
+        
 toArray
 ^^^^^^^
 
