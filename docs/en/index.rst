@@ -15,9 +15,7 @@ arrays of data. Here is an example using the simple
 
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $filteredCollection = $collection->filter(function($element) {
-        return $element > 1;
-    }); // [2, 3]
+    $filteredCollection = $collection->filter(static fn ($element): bool => $element > 1); // [2, 3]
 
 Collection Methods
 ------------------
@@ -152,9 +150,7 @@ Tests for the existence of an element that satisfies the given predicate.
 .. code-block:: php
     $collection = new Collection(['first', 'second', 'third']);
 
-    $exists = $collection->exists(function($key, $value) {
-        return $value === 'first';
-    }); // true
+    $exists = $collection->exists(static fn ($key, $value): bool => $value === 'first'); // true
 
 findFirst
 ^^^^^^^^^
@@ -164,9 +160,7 @@ Returns the first element of this collection that satisfies the given predicate.
 .. code-block:: php
     $collection = new Collection([1, 2, 3, 2, 1]);
 
-    $one = $collection->findFirst(function(int $key, int $value): bool {
-        return $value > 2 && $key > 1;
-    }); // 3
+    $one = $collection->findFirst(static fn (int $key, int $value): bool => $value > 2 && $key > 1); // 3
 
 filter
 ^^^^^^
@@ -177,9 +171,7 @@ The order and keys of the elements are preserved.
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $filteredCollection = $collection->filter(function($element) {
-        return $element > 1;
-    }); // [2, 3]
+    $filteredCollection = $collection->filter(static fn ($element): bool => $element > 1); // [2, 3]
 
 forAll
 ^^^^^^
@@ -189,9 +181,7 @@ Tests whether the given predicate holds for all elements of this collection.
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $forAll = $collection->forAll(function($key, $value) {
-        return $value > 1;
-    }); // false
+    $forAll = $collection->forAll(static fn ($key, $value): bool => $value > 1); // false
 
 indexOf
 ^^^^^^^
@@ -233,9 +223,7 @@ Applies the given function to each element in the collection and returns a new c
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $mappedCollection = $collection->map(function($value) {
-        return $value + 1;
-    }); // [2, 3, 4]
+    $mappedCollection = $collection->map(static fn (int $value): int => $value + 1); // [2, 3, 4]
 
 reduce
 ^^^^^^
@@ -245,9 +233,7 @@ Applies iteratively the given function to each element in the collection, so as 
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $reduce = $collection->reduce(function(int $accumulator, int $value): int {
-        return $accumulator + $value;
-    }, 0); // 6
+    $reduce = $collection->reduce(static fn (int $accumulator, int $value): int => $accumulator + $value, 0); // 6
 
 next
 ^^^^
@@ -267,9 +253,7 @@ Partitions this collection in two collections according to a predicate. Keys are
 .. code-block:: php
     $collection = new ArrayCollection([1, 2, 3]);
 
-    $mappedCollection = $collection->partition(function($key, $value) {
-        return $value > 1
-    }); // [[2, 3], [1]]
+    $mappedCollection = $collection->partition(static fn ($key, $value): bool => $value > 1); // [[2, 3], [1]]
 
 remove
 ^^^^^^
