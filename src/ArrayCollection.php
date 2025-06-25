@@ -359,6 +359,32 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     /**
+     * Applies the given function to each element in the collection and flattens the results.
+     * The function should return an array or single element for each element, which will be
+     * flattened into a single array.
+     *
+     * @phpstan-param Closure(T):array<U>|U $func
+     *
+     * @return static
+     * @phpstan-return static<int, U>
+     *
+     * @phpstan-template U
+     */
+    public function flatMap(Closure $func)
+    {
+        $result = [];
+        foreach ($this->elements as $element) {
+            $mapped = $func($element);
+            if (is_array($mapped)) {
+                $result = array_merge($result, $mapped);
+            } else {
+                $result[] = $mapped;
+            }
+        }
+        return $this->createFrom($result);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function reduce(Closure $func, $initial = null)
