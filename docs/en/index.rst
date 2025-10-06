@@ -360,3 +360,24 @@ You can read more about expressions :ref:`here <expressions>`.
     next sort criteria for *identical* matches, which may not give the expected results
     when objects come into play. Keep this in mind, for example, when sorting by fields that
     contain ``DateTime`` or ``DateTimeImmutable`` objects.
+
+.. note::
+
+    For collections that contain objects, the field name given to ``Comparison`` will
+    lead to various access methods being tried in sequence. For the exact implementation,
+    refer to the ``ClosureExpressionVisitor::getObjectFieldValue()`` method.
+
+    Roughly speaking, for a field named ``field``, the following things will be tried
+    in order:
+
+    1. ``getField()``, ``isField()`` and ``field()`` as getter methods
+    2. When the object implements a ``__call`` magic method, invoke it
+       by calling ``getField()``
+    3. When the object implements ``ArrayAccess``, use that to access the
+       ``field`` offset
+    4. When the object contains a ``::$field`` public property that is not
+       ``null``, access it directly
+    5. Convert snake-case field names to camel case and retry the ``get``, ``is``
+       and prefixless accessor methods
+    6. Direct access to ``::$field``, which must be a public property, as a
+       last resort.
