@@ -6,22 +6,18 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 use function serialize;
 use function unserialize;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\ArrayCollection}.
- *
- * @covers \Doctrine\Common\Collections\ArrayCollection
+ * Tests for {@see ArrayCollection}.
  */
+#[CoversClass(ArrayCollection::class)]
 class ArrayCollectionTest extends ArrayCollectionTestCase
 {
-    /**
-     * @param mixed[] $elements
-     *
-     * @return Collection<mixed>
-     */
+    /** @inheritDoc */
     protected function buildCollection(array $elements = []): Collection
     {
         return new ArrayCollection($elements);
