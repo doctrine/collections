@@ -6,9 +6,10 @@ namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/** @covers  \Doctrine\Common\Collections\Expr\Value */
+#[CoversClass(Value::class)]
 class ValueTest extends TestCase
 {
     public function testGetter(): void
@@ -23,7 +24,7 @@ class ValueTest extends TestCase
 
     public function testVisitor(): void
     {
-        $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
+        $visitor = $this->createMock(ExpressionVisitor::class);
         $visitor
             ->expects($this->once())
             ->method('walkValue');

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -26,7 +27,7 @@ abstract class ArrayCollectionTestCase extends TestCase
     /**
      * @param mixed[] $elements
      *
-     * @return Collection<mixed>
+     * @return Collection<array-key, mixed>
      */
     abstract protected function buildCollection(array $elements = []): Collection;
 
@@ -35,11 +36,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         return $obj instanceof Selectable;
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testToArray(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -47,33 +45,24 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame($elements, $collection->toArray());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testFirst(array $elements): void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(reset($elements), $collection->first());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testLast(array $elements): void
     {
         $collection = $this->buildCollection($elements);
         self::assertSame(end($elements), $collection->last());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testKey(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -86,11 +75,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(key($elements), $collection->key());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testNext(array $elements): void
     {
         $count      = count($elements);
@@ -112,11 +98,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertFalse($collection->next());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testCurrent(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -129,11 +112,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(current($elements), $collection->current());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testGetKeys(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -141,11 +121,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(array_keys($elements), $collection->getKeys());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testGetValues(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -153,11 +130,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(array_values($elements), $collection->getValues());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testCount(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -165,11 +139,8 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(count($elements), $collection->count());
     }
 
-    /**
-     * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
-     */
+    /** @param array<string|int, string|int> $elements */
+    #[DataProvider('provideDifferentElements')]
     public function testIterator(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -349,9 +320,8 @@ abstract class ArrayCollectionTestCase extends TestCase
     /**
      * @param int[] $array
      * @param int[] $slicedArray
-     *
-     * @dataProvider provideSlices
      */
+    #[DataProvider('provideSlices')]
     public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, int|null $firstResult, int|null $maxResult): void
     {
         $collection = $this->buildCollection($array);

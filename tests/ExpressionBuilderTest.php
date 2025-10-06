@@ -7,10 +7,11 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
-/** @group DDC-1637 */
+#[Group('DDC-1637')]
 class ExpressionBuilderTest extends TestCase
 {
     private ExpressionBuilder $builder;

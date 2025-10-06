@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\Common\Collections\Order;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 use function count;
@@ -27,7 +28,7 @@ class CollectionTest extends CollectionTestCase
         self::assertTrue(is_string((string) $this->collection));
     }
 
-    /** @group DDC-1637 */
+    #[Group('DDC-1637')]
     public function testMatching(): void
     {
         $this->fillMatchingFixture();
@@ -54,7 +55,7 @@ class CollectionTest extends CollectionTestCase
         self::assertEquals(1, count($col));
     }
 
-    /** @group DDC-1637 */
+    #[Group('DDC-1637')]
     public function testMatchingOrdering(): void
     {
         $this->fillMatchingFixture();
@@ -68,7 +69,7 @@ class CollectionTest extends CollectionTestCase
         self::assertEquals('bar', $col->last()->foo);
     }
 
-    /** @group DDC-1637 */
+    #[Group('DDC-1637')]
     public function testMatchingSlice(): void
     {
         $this->fillMatchingFixture();
