@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Common\Collections;
 
+use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 use function assert;
 use function is_array;
@@ -12,10 +14,9 @@ use function is_numeric;
 use function is_string;
 
 /**
- * Tests for {@see \Doctrine\Common\Collections\AbstractLazyCollection}.
- *
- * @covers \Doctrine\Common\Collections\AbstractLazyCollection
+ * Tests for {@see AbstractLazyCollection}.
  */
+#[CoversClass(AbstractLazyCollection::class)]
 class AbstractLazyCollectionTest extends CollectionTestCase
 {
     protected function setUp(): void

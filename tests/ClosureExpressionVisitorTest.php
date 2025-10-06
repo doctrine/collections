@@ -10,13 +10,14 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 
 use function usort;
 
-/** @group DDC-1637 */
+#[Group('DDC-1637')]
 class ClosureExpressionVisitorTest extends TestCase
 {
     private ClosureExpressionVisitor $visitor;

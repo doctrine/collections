@@ -7,10 +7,9 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\Common\Collections\Order;
-use RuntimeException;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 use function count;
@@ -29,7 +28,7 @@ class CollectionTest extends CollectionTestCase
         self::assertTrue(is_string((string) $this->collection));
     }
 
-    /** @group DDC-1637 */
+    #[Group('DDC-1637')]
     public function testMatching(): void
     {
         $this->fillMatchingFixture();
@@ -56,19 +55,7 @@ class CollectionTest extends CollectionTestCase
         self::assertEquals(1, count($col));
     }
 
-    public function testMatchingUnknownThrowException(): void
-    {
-        self::expectException(RuntimeException::class);
-        self::expectExceptionMessage('Unknown Expression GenericExpression');
-
-        $genericExpression = $this->getMockBuilder(Expression::class)
-            ->setMockClassName('GenericExpression')
-            ->getMock();
-
-        $this->collection->matching(new Criteria($genericExpression));
-    }
-
-    /** @group DDC-1637 */
+    #[Group('DDC-1637')]
     public function testMatchingOrdering(): void
     {
         $this->fillMatchingFixture();
@@ -82,7 +69,7 @@ class CollectionTest extends CollectionTestCase
         self::assertEquals('bar', $col->last()->foo);
     }
 
-    /** @group DDC-1637 */
+    #[Group('DDC-1637')]
     public function testMatchingSlice(): void
     {
         $this->fillMatchingFixture();

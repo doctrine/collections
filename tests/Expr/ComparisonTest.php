@@ -6,12 +6,12 @@ namespace Doctrine\Tests\Common\Collections\Expr;
 
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/** @coversDefaultClass \Doctrine\Common\Collections\Expr\Comparison */
+#[CoversClass(Comparison::class)]
 class ComparisonTest extends TestCase
 {
-    /** @covers ::visit */
     public function testVisit(): void
     {
         $callableExpected = static function (): void {

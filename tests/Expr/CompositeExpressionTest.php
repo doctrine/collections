@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-/** @covers  \Doctrine\Common\Collections\Expr\CompositeExpression */
+#[CoversClass(CompositeExpression::class)]
 class CompositeExpressionTest extends TestCase
 {
     /** @return list<array{type:string, expressions: list<mixed>}> */
@@ -30,11 +32,8 @@ class CompositeExpressionTest extends TestCase
         ];
     }
 
-    /**
-     * @param list<mixed> $expressions
-     *
-     * @dataProvider invalidDataProvider
-     */
+    /** @param list<mixed> $expressions */
+    #[DataProvider('invalidDataProvider')]
     public function testExceptions(string $type, array $expressions): void
     {
         $this->expectException(RuntimeException::class);
@@ -72,9 +71,9 @@ class CompositeExpressionTest extends TestCase
     {
         $compositeExpression = $this->createCompositeExpression();
 
-        $visitor = $this->getMockForAbstractClass(ExpressionVisitor::class);
+        $visitor = $this->createMock(ExpressionVisitor::class);
         $visitor
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('walkCompositeExpression');
 
         $compositeExpression->visit($visitor);
