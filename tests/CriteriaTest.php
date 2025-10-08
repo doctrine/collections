@@ -17,9 +17,19 @@ class CriteriaTest extends TestCase
 {
     use VerifyDeprecations;
 
+    #[IgnoreDeprecations]
+    public function testCreateLegacy(): void
+    {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
+        $criteria = Criteria::create();
+
+        self::assertInstanceOf(Criteria::class, $criteria);
+    }
+
     public function testCreate(): void
     {
-        $criteria = Criteria::create();
+        $criteria = Criteria::create(true);
 
         self::assertInstanceOf(Criteria::class, $criteria);
     }
@@ -27,7 +37,7 @@ class CriteriaTest extends TestCase
     public function testConstructor(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria($expr, ['foo' => Order::Ascending], 10, 20);
+        $criteria = new Criteria($expr, ['foo' => Order::Ascending], 10, 20, accessRawFieldValues: true);
 
         self::assertSame($expr, $criteria->getWhereExpression());
         self::assertSame(['foo' => Order::Ascending], $criteria->orderings());
@@ -49,9 +59,12 @@ class CriteriaTest extends TestCase
         self::assertSame(20, $criteria->getMaxResults());
     }
 
+    #[IgnoreDeprecations]
     public function testDefaultConstructor(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
         $this->expectNoDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/311');
+
         $criteria = new Criteria();
 
         self::assertNull($criteria->getWhereExpression());
@@ -63,7 +76,7 @@ class CriteriaTest extends TestCase
     public function testWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria();
+        $criteria = Criteria::create(true);
 
         $criteria->where($expr);
 
@@ -73,7 +86,7 @@ class CriteriaTest extends TestCase
     public function testAndWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria();
+        $criteria = Criteria::create(true);
 
         $criteria->where($expr);
         $expr = $criteria->getWhereExpression();
@@ -89,7 +102,7 @@ class CriteriaTest extends TestCase
     public function testAndWhereWithoutWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria();
+        $criteria = Criteria::create(true);
 
         $criteria->andWhere($expr);
 
@@ -99,7 +112,7 @@ class CriteriaTest extends TestCase
     public function testOrWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria();
+        $criteria = Criteria::create(true);
 
         $criteria->where($expr);
         $expr = $criteria->getWhereExpression();
@@ -115,7 +128,7 @@ class CriteriaTest extends TestCase
     public function testOrWhereWithoutWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria();
+        $criteria = Criteria::create(true);
 
         $criteria->orWhere($expr);
 
@@ -124,7 +137,7 @@ class CriteriaTest extends TestCase
 
     public function testOrderings(): void
     {
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->orderBy(['foo' => Order::Ascending]);
 
         self::assertEquals(['foo' => Order::Ascending], $criteria->orderings());
@@ -139,27 +152,27 @@ class CriteriaTest extends TestCase
     public function testPassingNonOrderEnumToOrderByIsDeprecated(): void
     {
         $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
-        $criteria = Criteria::create()->orderBy(['foo' => 'ASC']);
+        $criteria = Criteria::create(true)->orderBy(['foo' => 'ASC']);
     }
 
     #[IgnoreDeprecations]
     public function testConstructingCriteriaWithNonOrderEnumIsDeprecated(): void
     {
         $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
-        $criteria = new Criteria(null, ['foo' => 'ASC']);
+        $criteria = new Criteria(null, ['foo' => 'ASC'], firstResult: 0, accessRawFieldValues: true);
     }
 
     public function testUsingOrderEnumIsTheRightWay(): void
     {
         $this->expectNoDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
-        Criteria::create()->orderBy(['foo' => Order::Ascending]);
-        new Criteria(null, ['foo' => Order::Ascending]);
+        Criteria::create(true)->orderBy(['foo' => Order::Ascending]);
+        new Criteria(null, ['foo' => Order::Ascending], firstResult: 0, accessRawFieldValues: true);
     }
 
     #[IgnoreDeprecations]
     public function testCallingGetOrderingsIsDeprecated(): void
     {
-        $criteria = Criteria::create()->orderBy(['foo' => Order::Ascending]);
+        $criteria = Criteria::create(true)->orderBy(['foo' => Order::Ascending]);
         $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
         $criteria->getOrderings();
     }

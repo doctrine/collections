@@ -6,6 +6,18 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.4
+
+## Deprecated accessing fields through other means than raw field access when using the criteria filtering API (the `Doctrine\Common\Collections\Selectable` interface)
+
+Starting with the next major version, the only way to access data when using the criteria filtering 
+API is through direct (reflection-based) access at properties directly, also bypassing property hooks.
+This is to ensure consistency with how the ORM/ODM work. See https://github.com/doctrine/collections/pull/472 for
+the full motivation.
+
+To opt-in to the new behaviour, pass `true` for the `$accessRawFieldValues` parameter when creating a `Criteria`
+object through either `Doctrine\Common\Collections\Criteria::create()` or when calling the `Doctrine\Common\Collections\Criteria` constructor. 
+
 # Upgrade to 2.2
 
 ## Deprecated string representation of sort order

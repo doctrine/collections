@@ -22,6 +22,6 @@ class DerivedCollectionTest extends TestCase
         self::assertInstanceOf(DerivedArrayCollection::class, $collection->map($closure));
         self::assertInstanceOf(DerivedArrayCollection::class, $collection->filter($closure));
         self::assertContainsOnlyInstancesOf(DerivedArrayCollection::class, $collection->partition($closure));
-        self::assertInstanceOf(DerivedArrayCollection::class, $collection->matching(new Criteria()));
+        self::assertInstanceOf(DerivedArrayCollection::class, $collection->matching(Criteria::create(true)));
     }
 }
