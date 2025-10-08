@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 
 class CriteriaTest extends TestCase
@@ -34,6 +35,7 @@ class CriteriaTest extends TestCase
         self::assertSame(20, $criteria->getMaxResults());
     }
 
+    #[IgnoreDeprecations]
     public function testDeprecatedNullOffset(): void
     {
         $expr = new Comparison('field', '=', 'value');

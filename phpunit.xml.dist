@@ -3,7 +3,7 @@
      xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
      colors="true"
      beStrictAboutOutputDuringTests="true"
-     displayDetailsOnTestsThatTriggerDeprecations="true"
+     failOnDeprecation="true"
 >
     <testsuites>
         <testsuite name="Doctrine Collections Test Suite">
