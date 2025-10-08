@@ -3,6 +3,7 @@
      xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
      colors="true"
      beStrictAboutOutputDuringTests="true"
+     displayDetailsOnTestsThatTriggerDeprecations="true"
 >
     <testsuites>
         <testsuite name="Doctrine Collections Test Suite">
@@ -10,7 +11,11 @@
         </testsuite>
     </testsuites>
 
-    <source>
+    <php>
+        <server name="DOCTRINE_DEPRECATIONS" value="trigger"/>
+    </php>
+
+    <source ignoreSuppressionOfDeprecations="true">
         <include>
             <directory>./src/</directory>
         </include>
