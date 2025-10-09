@@ -33,16 +33,15 @@
     ],
     "homepage": "https://www.doctrine-project.org/projects/collections.html",
     "require": {
-        "php": "^8.1",
-        "doctrine/deprecations": "^1",
-        "symfony/polyfill-php84": "^1.30"
+        "php": "^8.4",
+        "doctrine/deprecations": "^1"
     },
     "require-dev": {
         "ext-json": "*",
         "doctrine/coding-standard": "^14",
         "phpstan/phpstan": "^2.1.30",
         "phpstan/phpstan-phpunit": "^2.0.7",
-        "phpunit/phpunit": "^10.5.58 || ^11.5.42 || ^12.4"
+        "phpunit/phpunit": "^12.4"
     },
     "autoload": {
         "psr-4": {
