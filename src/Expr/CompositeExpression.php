@@ -13,9 +13,9 @@ use function count;
  */
 class CompositeExpression implements Expression
 {
-    final public const TYPE_AND = 'AND';
-    final public const TYPE_OR  = 'OR';
-    final public const TYPE_NOT = 'NOT';
+    final public const string TYPE_AND = 'AND';
+    final public const string TYPE_OR  = 'OR';
+    final public const string TYPE_NOT = 'NOT';
 
     /** @var list<Expression> */
     private array $expressions = [];

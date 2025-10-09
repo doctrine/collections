@@ -9,19 +9,19 @@ namespace Doctrine\Common\Collections\Expr;
  */
 class Comparison implements Expression
 {
-    final public const EQ          = '=';
-    final public const NEQ         = '<>';
-    final public const LT          = '<';
-    final public const LTE         = '<=';
-    final public const GT          = '>';
-    final public const GTE         = '>=';
-    final public const IS          = '='; // no difference with EQ
-    final public const IN          = 'IN';
-    final public const NIN         = 'NIN';
-    final public const CONTAINS    = 'CONTAINS';
-    final public const MEMBER_OF   = 'MEMBER_OF';
-    final public const STARTS_WITH = 'STARTS_WITH';
-    final public const ENDS_WITH   = 'ENDS_WITH';
+    final public const string EQ          = '=';
+    final public const string NEQ         = '<>';
+    final public const string LT          = '<';
+    final public const string LTE         = '<=';
+    final public const string GT          = '>';
+    final public const string GTE         = '>=';
+    final public const string IS          = '='; // no difference with EQ
+    final public const string IN          = 'IN';
+    final public const string NIN         = 'NIN';
+    final public const string CONTAINS    = 'CONTAINS';
+    final public const string MEMBER_OF   = 'MEMBER_OF';
+    final public const string STARTS_WITH = 'STARTS_WITH';
+    final public const string ENDS_WITH   = 'ENDS_WITH';
 
     private readonly Value $value;
 
