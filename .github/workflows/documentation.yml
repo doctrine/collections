@@ -17,4 +17,4 @@ on:
 jobs:
   documentation:
     name: "Documentation"
-    uses: "doctrine/.github/.github/workflows/documentation.yml@8.0.0"
+    uses: "greg0ire/doctrine-dot-github/.github/workflows/documentation.yml@dev-file"
