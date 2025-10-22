@@ -30,7 +30,7 @@ class CriteriaTest extends TestCase
         $criteria = new Criteria($expr, ['foo' => Order::Ascending], 10, 20);
 
         self::assertSame($expr, $criteria->getWhereExpression());
-        self::assertSame(['foo' => Order::Ascending->value], $criteria->getOrderings());
+        self::assertSame(['foo' => Order::Ascending], $criteria->orderings());
         self::assertSame(10, $criteria->getFirstResult());
         self::assertSame(20, $criteria->getMaxResults());
     }
@@ -44,7 +44,6 @@ class CriteriaTest extends TestCase
         $criteria = new Criteria($expr, ['foo' => Order::Ascending], null, 20);
 
         self::assertSame($expr, $criteria->getWhereExpression());
-        self::assertSame(['foo' => 'ASC'], $criteria->getOrderings());
         self::assertSame(['foo' => Order::Ascending], $criteria->orderings());
         self::assertNull($criteria->getFirstResult());
         self::assertSame(20, $criteria->getMaxResults());
@@ -56,7 +55,7 @@ class CriteriaTest extends TestCase
         $criteria = new Criteria();
 
         self::assertNull($criteria->getWhereExpression());
-        self::assertSame([], $criteria->getOrderings());
+        self::assertSame([], $criteria->orderings());
         self::assertNull($criteria->getFirstResult());
         self::assertNull($criteria->getMaxResults());
     }
@@ -136,12 +135,14 @@ class CriteriaTest extends TestCase
         self::assertInstanceOf(ExpressionBuilder::class, Criteria::expr());
     }
 
+    #[IgnoreDeprecations]
     public function testPassingNonOrderEnumToOrderByIsDeprecated(): void
     {
         $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
         $criteria = Criteria::create()->orderBy(['foo' => 'ASC']);
     }
 
+    #[IgnoreDeprecations]
     public function testConstructingCriteriaWithNonOrderEnumIsDeprecated(): void
     {
         $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/389');
@@ -155,6 +156,7 @@ class CriteriaTest extends TestCase
         new Criteria(null, ['foo' => Order::Ascending]);
     }
 
+    #[IgnoreDeprecations]
     public function testCallingGetOrderingsIsDeprecated(): void
     {
         $criteria = Criteria::create()->orderBy(['foo' => Order::Ascending]);

@@ -4,6 +4,7 @@
      colors="true"
      beStrictAboutOutputDuringTests="true"
      failOnDeprecation="true"
+     bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Doctrine Collections Test Suite">
