@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -303,16 +304,36 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
+                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
                 ->toArray(),
         );
+    }
+
+    #[IgnoreDeprecations]
+    public function testLegacyMatchingWithSortingPreserveKeys(): void
+    {
+        $object1 = new stdClass();
+        $object2 = new stdClass();
+
+        $object1->sortField = 2;
+        $object2->sortField = 1;
+
+        $collection = $this->buildCollection([
+            'object1' => $object1,
+            'object2' => $object2,
+        ]);
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
         self::assertSame(
             [
                 'object2' => $object2,
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
+                ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
                 ->toArray(),
         );
     }
@@ -322,8 +343,12 @@ abstract class ArrayCollectionTestCase extends TestCase
      * @param int[] $slicedArray
      */
     #[DataProvider('provideSlices')]
-    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, int|null $firstResult, int|null $maxResult): void
-    {
+    public function testMatchingWithSlicingPreserveKeys(
+        array $array,
+        array $slicedArray,
+        int|null $firstResult,
+        int|null $maxResult,
+    ): void {
         $collection = $this->buildCollection($array);
 
         if (! $this->isSelectable($collection)) {
@@ -338,7 +363,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         );
     }
 
-    /** @return mixed[][] */
+    /** @return array<string, array{int[], int[], int|null, int|null}> */
     public static function provideSlices(): array
     {
         return [
@@ -396,10 +421,42 @@ abstract class ArrayCollectionTestCase extends TestCase
                     'a' => 1,
                     'b' => 2,
                 ],
-                null,
+                0,
                 2,
             ],
         ];
+    }
+
+    #[IgnoreDeprecations]
+    public function testLegacyMatchingWithSlicingPreserveKeys(): void
+    {
+        $array       = [
+            'a' => 1,
+            'b' => 2,
+            'c' => 3,
+            'd' => 4,
+        ];
+        $slicedArray = [
+            'a' => 1,
+            'b' => 2,
+        ];
+        $collection  = $this->buildCollection($array);
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
+        self::assertSame(
+            $slicedArray,
+            $collection
+                ->matching(new Criteria(
+                    null,
+                    null,
+                    null,
+                    2,
+                ))
+                ->toArray(),
+        );
     }
 
     public function testMultiColumnSortAppliesAllSorts(): void
