@@ -283,11 +283,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     public function testMatchingWithSortingPreserveKeys(): void
     {
-        $object1 = new stdClass();
-        $object2 = new stdClass();
-
-        $object1->sortField = 2;
-        $object2->sortField = 1;
+        $object1 = new TestObjectPrivatePropertyOnly(2);
+        $object2 = new TestObjectPrivatePropertyOnly(1);
 
         $collection = $this->buildCollection([
             'object1' => $object1,
@@ -304,7 +301,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
+                ->matching(new Criteria(null, ['fooBar' => Order::Ascending], 0, accessRawFieldValues: true))
                 ->toArray(),
         );
     }
@@ -333,7 +330,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['sortField' => Criteria::ASC]))
+                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
                 ->toArray(),
         );
     }
@@ -358,7 +355,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $slicedArray,
             $collection
-                ->matching(new Criteria(null, null, $firstResult, $maxResult))
+                ->matching(new Criteria(null, null, $firstResult, $maxResult, accessRawFieldValues: true))
                 ->toArray(),
         );
     }
@@ -480,7 +477,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending]))
+                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending], 0, null, accessRawFieldValues: true))
                 ->toArray(),
         );
     }

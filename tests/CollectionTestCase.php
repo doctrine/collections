@@ -260,7 +260,7 @@ abstract class CollectionTestCase extends TestCase
             self::markTestSkipped(sprintf('Collection does not implement %s', Selectable::class));
         }
 
-        $criteria = Criteria::create();
+        $criteria = Criteria::create(true);
 
         self::assertInstanceOf(Collection::class, $this->collection->matching($criteria));
         self::assertInstanceOf(Selectable::class, $this->collection->matching($criteria));

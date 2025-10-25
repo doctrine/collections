@@ -10,7 +10,10 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -20,13 +23,15 @@ use function usort;
 #[Group('DDC-1637')]
 class ClosureExpressionVisitorTest extends TestCase
 {
+    use VerifyDeprecations;
+
     private ClosureExpressionVisitor $visitor;
 
     private ExpressionBuilder $builder;
 
     protected function setUp(): void
     {
-        $this->visitor = new ClosureExpressionVisitor();
+        $this->visitor = new ClosureExpressionVisitor(true);
         $this->builder = new ExpressionBuilder();
     }
 
@@ -37,22 +42,70 @@ class ClosureExpressionVisitorTest extends TestCase
         $this->assertFalse($closure(new TestObject(new TestObject(2))));
     }
 
+    public function testGetEmbeddedObjectFieldValueAccessingRawValue(): void
+    {
+        $object = new TestObject(new TestObjectPrivatePropertyOnly(42));
+
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'foo.fooBar', true));
+    }
+
+    #[RequiresPhp('>= 8.4')]
+    public function testGetObjectFieldValueAccessingRawValueBypassingPropertyHook(): void
+    {
+        $object         = new TestObjectPropertyHook();
+        $object->fooBar = 42;
+
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar', true));
+    }
+
+    public function testGetObjectFieldValueAccessingRawValue(): void
+    {
+        $object = new TestObjectPrivatePropertyOnly(42);
+
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar', true));
+    }
+
+    public function testGetObjectFieldValueFindingParentClassAccessingRawValue(): void
+    {
+        $object = new TestObjectWithPrivatePropertyInParentClass(42);
+
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar', true));
+    }
+
+    public function testGetObjectFieldValueNonexistentFieldAccessingRawValue(): void
+    {
+        $object = new stdClass();
+
+        $this->expectException(RuntimeException::class);
+
+        $this->visitor->getObjectFieldValue($object, 'fooBar', true);
+    }
+
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueIsAccessor(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObject(1, 2, true);
 
         self::assertTrue($this->visitor->getObjectFieldValue($object, 'baz'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueIsAccessorWithIsPrefix(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObject(1, 2, true);
 
         self::assertTrue($this->visitor->getObjectFieldValue($object, 'isBaz'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueIsAccessorCamelCase(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObjectNotCamelCase(1);
 
         self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
@@ -60,8 +113,11 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueIsAccessorBoth(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObjectBothCamelCaseAndUnderscore(1, 2);
 
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
@@ -69,8 +125,11 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueIsAccessorOnePublic(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObjectPublicCamelCaseAndPrivateUnderscore(1, 2);
 
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
@@ -78,8 +137,11 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueIsAccessorBothPublic(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObjectPublicCamelCaseAndPrivateUnderscore(1, 2);
 
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
@@ -87,23 +149,32 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueBlankAccessor(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObjectBlankGetter(1);
 
         self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
         self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueMagicCallMethod(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = new TestObject(1, 2, true, 3);
 
         self::assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValueArrayAccess(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object = self::createMock(ArrayAccess::class);
         $object->expects(self::once())
             ->method('offsetGet')
@@ -113,8 +184,11 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertSame(33, $this->visitor->getObjectFieldValue($object, 'foo'));
     }
 
+    #[IgnoreDeprecations]
     public function testGetObjectFieldValuePublicPropertyIsNull(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+
         $object      = new stdClass();
         $object->foo = null;
 
@@ -366,7 +440,7 @@ class ClosureExpressionVisitorTest extends TestCase
     public function testSortByFieldAscending(): void
     {
         $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
-        $sort    = ClosureExpressionVisitor::sortByField('foo');
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, null, true);
 
         usort($objects, $sort);
 
@@ -378,7 +452,7 @@ class ClosureExpressionVisitorTest extends TestCase
     public function testSortByFieldDescending(): void
     {
         $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
-        $sort    = ClosureExpressionVisitor::sortByField('foo', -1);
+        $sort    = ClosureExpressionVisitor::sortByField('foo', -1, null, true);
 
         usort($objects, $sort);
 
@@ -393,7 +467,7 @@ class ClosureExpressionVisitorTest extends TestCase
         $secondElement = new TestObject('a');
 
         $objects = [$firstElement, $secondElement];
-        $sort    = ClosureExpressionVisitor::sortByField('foo');
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 0, null, true);
 
         usort($objects, $sort);
 
@@ -403,8 +477,8 @@ class ClosureExpressionVisitorTest extends TestCase
     public function testSortDelegate(): void
     {
         $objects = [new TestObject('a', 'c'), new TestObject('a', 'b'), new TestObject('a', 'a')];
-        $sort    = ClosureExpressionVisitor::sortByField('bar', 1);
-        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, $sort);
+        $sort    = ClosureExpressionVisitor::sortByField('bar', 1, null, true);
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, $sort, true);
 
         usort($objects, $sort);
 
@@ -513,4 +587,8 @@ class TestObjectBlankGetter
     {
         return $this->fooBar;
     }
+}
+
+class TestObjectWithPrivatePropertyInParentClass extends TestObjectPrivatePropertyOnly
+{
 }

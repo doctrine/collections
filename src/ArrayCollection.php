@@ -450,11 +450,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /** @phpstan-return Collection<TKey, T>&Selectable<TKey,T> */
     public function matching(Criteria $criteria)
     {
+        $accessRawFieldValues = $criteria->isRawFieldValueAccessEnabled();
+
         $expr     = $criteria->getWhereExpression();
         $filtered = $this->elements;
 
         if ($expr) {
-            $visitor  = new ClosureExpressionVisitor();
+            $visitor  = new ClosureExpressionVisitor($accessRawFieldValues);
             $filter   = $visitor->dispatch($expr);
             $filtered = array_filter($filtered, $filter);
         }
@@ -464,7 +466,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         if ($orderings) {
             $next = null;
             foreach (array_reverse($orderings) as $field => $ordering) {
-                $next = ClosureExpressionVisitor::sortByField($field, $ordering === Order::Descending ? -1 : 1, $next);
+                $next = ClosureExpressionVisitor::sortByField($field, $ordering === Order::Descending ? -1 : 1, $next, $accessRawFieldValues);
             }
 
             uasort($filtered, $next);
