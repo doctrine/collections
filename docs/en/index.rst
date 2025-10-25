@@ -364,11 +364,14 @@ You can read more about expressions :ref:`here <expressions>`.
 .. note::
 
     For collections that contain objects, the field name given to ``Comparison`` will
-    lead to various access methods being tried in sequence. For the exact implementation,
-    refer to the ``ClosureExpressionVisitor::getObjectFieldValue()`` method.
+    lead to various access methods being tried in sequence. This behavior is deprecated
+    as of v2.4.0. Set the ``$accessRawFieldValues`` parameter in the ``Criteria`` constructor
+    to ``true`` to opt-in to the new behaviour of using direct (reflection-based) field access only.
+    This will be the only option in the next major version.
 
-    Roughly speaking, for a field named ``field``, the following things will be tried
-    in order:
+    Unless you opt in, refer to the ``ClosureExpressionVisitor::getObjectFieldValue()`` method
+    for the exact order of accessors tried. Roughly speaking, for a field named ``field``,
+    the following things will be tried in order:
 
     1. ``getField()``, ``isField()`` and ``field()`` as getter methods
     2. When the object implements a ``__call`` magic method, invoke it

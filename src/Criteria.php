@@ -6,6 +6,10 @@ namespace Doctrine\Common\Collections;
 
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
+use Doctrine\Deprecations\Deprecation;
+
+use function func_get_arg;
+use function func_num_args;
 
 /**
  * Criteria for filtering Selectable collections.
@@ -25,9 +29,11 @@ class Criteria
     /**
      * Creates an instance of the class.
      */
-    public static function create(): static
+    public static function create(/* bool $accessRawFieldValues = false */): static
     {
-        return new static();
+        $accessRawFieldValues = 0 < func_num_args() ? func_get_arg(0) : false;
+
+        return new static(firstResult: 0, accessRawFieldValues: $accessRawFieldValues);
     }
 
     /**
@@ -52,8 +58,16 @@ class Criteria
         array|null $orderings = null,
         int $firstResult = 0,
         int|null $maxResults = null,
+        private bool $accessRawFieldValues = false,
     ) {
-        $this->expression = $expression;
+        if (! $accessRawFieldValues) {
+            Deprecation::trigger(
+                'doctrine/collections',
+                'https://github.com/doctrine/collections/pull/472',
+                'Not enabling raw field value access for the Criteria matching API in %s is deprecated. Raw field access will be the only supported method in 3.0',
+                self::class,
+            );
+        }
 
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
@@ -196,5 +210,11 @@ class Criteria
         $this->maxResults = $maxResults;
 
         return $this;
+    }
+
+    /** @internal */
+    public function isRawFieldValueAccessEnabled(): bool
+    {
+        return $this->accessRawFieldValues;
     }
 }
