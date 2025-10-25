@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -282,6 +283,32 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     public function testMatchingWithSortingPreserveKeys(): void
     {
+        $object1 = new TestObjectPrivatePropertyOnly(2);
+        $object2 = new TestObjectPrivatePropertyOnly(1);
+
+        $collection = $this->buildCollection([
+            'object1' => $object1,
+            'object2' => $object2,
+        ]);
+
+        if (! $this->isSelectable($collection)) {
+            $this->markTestSkipped('Collection does not support Selectable interface');
+        }
+
+        self::assertSame(
+            [
+                'object2' => $object2,
+                'object1' => $object1,
+            ],
+            $collection
+                ->matching(new Criteria(null, ['fooBar' => Order::Ascending], 0, accessRawFieldValues: true))
+                ->toArray(),
+        );
+    }
+
+    #[IgnoreDeprecations]
+    public function testLegacyMatchingWithSortingPreserveKeys(): void
+    {
         $object1 = new stdClass();
         $object2 = new stdClass();
 
@@ -313,8 +340,12 @@ abstract class ArrayCollectionTestCase extends TestCase
      * @param int[] $slicedArray
      */
     #[DataProvider('provideSlices')]
-    public function testMatchingWithSlicingPreserveKeys(array $array, array $slicedArray, int $firstResult, int|null $maxResult): void
-    {
+    public function testMatchingWithSlicingPreserveKeys(
+        array $array,
+        array $slicedArray,
+        int $firstResult,
+        int|null $maxResult,
+    ): void {
         $collection = $this->buildCollection($array);
 
         if (! $this->isSelectable($collection)) {
@@ -324,12 +355,12 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $slicedArray,
             $collection
-                ->matching(new Criteria(null, null, $firstResult, $maxResult))
+                ->matching(new Criteria(null, null, $firstResult, $maxResult, accessRawFieldValues: true))
                 ->toArray(),
         );
     }
 
-    /** @return mixed[][] */
+    /** @return array<string, array{int[], int[], int|null, int|null}> */
     public static function provideSlices(): array
     {
         return [
@@ -414,7 +445,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending]))
+                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending], 0, null, accessRawFieldValues: true))
                 ->toArray(),
         );
     }

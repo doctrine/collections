@@ -37,4 +37,14 @@
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
         <exclude-pattern>tests/ClosureExpressionVisitorTest.php</exclude-pattern>
     </rule>
+
+    <rule ref="PSR2.Classes.PropertyDeclaration.Multiple">
+        <!-- https://github.com/doctrine/collections/pull/472#issuecomment-3384164908 -->
+        <exclude-pattern>tests/TestObjectPropertyHook.php</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR2.Classes.PropertyDeclaration.ScopeMissing">
+        <!-- https://github.com/doctrine/collections/pull/472#issuecomment-3384164908 -->
+        <exclude-pattern>tests/TestObjectPropertyHook.php</exclude-pattern>
+    </rule>
 </ruleset>
