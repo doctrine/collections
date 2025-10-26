@@ -364,23 +364,6 @@ You can read more about expressions :ref:`here <expressions>`.
 .. note::
 
     For collections that contain objects, the field name given to ``Comparison`` will
-    lead to various access methods being tried in sequence. This behavior is deprecated
-    as of v2.4.0. Set the ``$accessRawFieldValues`` parameter in the ``Criteria`` constructor
-    to ``true`` to opt-in to the new behaviour of using direct (reflection-based) field access only.
-    This will be the only option in the next major version.
-
-    Unless you opt in, refer to the ``ClosureExpressionVisitor::getObjectFieldValue()`` method
-    for the exact order of accessors tried. Roughly speaking, for a field named ``field``,
-    the following things will be tried in order:
-
-    1. ``getField()``, ``isField()`` and ``field()`` as getter methods
-    2. When the object implements a ``__call`` magic method, invoke it
-       by calling ``getField()``
-    3. When the object implements ``ArrayAccess``, use that to access the
-       ``field`` offset
-    4. When the object contains a ``::$field`` public property that is not
-       ``null``, access it directly
-    5. Convert snake-case field names to camel case and retry the ``get``, ``is``
-       and prefixless accessor methods
-    6. Direct access to ``::$field``, which must be a public property, as a
-       last resort.
+    be used to read the raw value (bypassing property hooks) of the property with that name.
+    In the case of private properties, the property will be looked up by moving upwards
+    through the class inheritance tree and picking the first match.
