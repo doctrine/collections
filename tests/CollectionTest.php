@@ -11,8 +11,6 @@ use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
-use stdClass;
 
 use function count;
 use function is_string;
@@ -32,32 +30,12 @@ class CollectionTest extends CollectionTestCase
         self::assertTrue(is_string((string) $this->collection));
     }
 
-    #[Group('DDC-1637')]
-    #[IgnoreDeprecations]
-    public function testMatchingLegacy(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $std1               = new stdClass();
-        $std1->foo          = 'bar';
-        $this->collection[] = $std1;
-
-        $std2               = new stdClass();
-        $std2->foo          = 'baz';
-        $this->collection[] = $std2;
-
-        $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('foo', 'bar')));
-        self::assertInstanceOf(Collection::class, $col);
-        self::assertNotSame($col, $this->collection);
-        self::assertEquals(1, count($col));
-    }
-
     public function testMatching(): void
     {
         $this->collection[] = new TestObjectPrivatePropertyOnly(42);
         $this->collection[] = new TestObjectPrivatePropertyOnly(84);
 
-        $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('fooBar', 42), firstResult: 0, accessRawFieldValues: true));
+        $col = $this->collection->matching(new Criteria(Criteria::expr()->eq('fooBar', 42)));
         self::assertInstanceOf(Collection::class, $col);
         self::assertNotSame($col, $this->collection);
         self::assertEquals(1, count($col));
@@ -69,11 +47,7 @@ class CollectionTest extends CollectionTestCase
         $this->collection[0]->foo = 1;
 
         $col = $this->collection->matching(
-            new Criteria(
-                new Value(static fn (stdClass $test): bool => $test->foo === 1),
-                firstResult: 0,
-                accessRawFieldValues: true,
-            ),
+            new Criteria(new Value(static fn (TestObject $test): bool => $test->foo === 1)),
         );
 
         self::assertInstanceOf(Collection::class, $col);
@@ -88,7 +62,7 @@ class CollectionTest extends CollectionTestCase
         $this->collection['two']   = $obj2 = new TestObjectPrivatePropertyOnly(10);
         $this->collection['three'] = $obj3 = new TestObjectPrivatePropertyOnly(78);
 
-        $criteria = Criteria::create(true)->orderBy(['fooBar' => Order::Ascending]);
+        $criteria = Criteria::create()->orderBy(['fooBar' => Order::Ascending]);
 
         $col = $this->collection->matching($criteria);
 
@@ -98,11 +72,8 @@ class CollectionTest extends CollectionTestCase
     }
 
     #[Group('DDC-1637')]
-    #[IgnoreDeprecations]
     public function testMatchingOrderingLegacy(): void
     {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
         $this->fillMatchingFixture();
 
         $col = $this->collection->matching(new Criteria(null, ['foo' => Order::Descending]));
@@ -119,7 +90,7 @@ class CollectionTest extends CollectionTestCase
     {
         $this->fillMatchingFixture();
 
-        $col = $this->collection->matching(new Criteria(null, null, 1, 1, accessRawFieldValues: true));
+        $col = $this->collection->matching(new Criteria(null, null, 1, 1));
 
         self::assertInstanceOf(Collection::class, $col);
         self::assertNotSame($col, $this->collection);

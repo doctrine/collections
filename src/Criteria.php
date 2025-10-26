@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Deprecations\Deprecation;
 
-use function func_get_arg;
 use function func_num_args;
 
 /**
@@ -29,11 +28,18 @@ class Criteria
     /**
      * Creates an instance of the class.
      */
-    public static function create(/* bool $accessRawFieldValues = false */): static
+    public static function create(): static
     {
-        $accessRawFieldValues = 0 < func_num_args() ? func_get_arg(0) : false;
+        if (func_num_args() === 1) {
+            Deprecation::trigger(
+                'doctrine/collections',
+                'https://github.com/doctrine/collections/pull/486',
+                'The `accessRawFieldValues` parameter passed to %s is deprecated and a no-op. You can remove it.',
+                __METHOD__,
+            );
+        }
 
-        return new static(firstResult: 0, accessRawFieldValues: $accessRawFieldValues);
+        return new static();
     }
 
     /**
@@ -58,14 +64,13 @@ class Criteria
         array|null $orderings = null,
         int $firstResult = 0,
         int|null $maxResults = null,
-        private bool $accessRawFieldValues = false,
     ) {
-        if (! $accessRawFieldValues) {
+        if (func_num_args() === 5) {
             Deprecation::trigger(
                 'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/472',
-                'Not enabling raw field value access for the Criteria matching API in %s is deprecated. Raw field access will be the only supported method in 3.0',
-                self::class,
+                'https://github.com/doctrine/collections/pull/486',
+                'The `accessRawFieldValues` parameter passed to %s is deprecated and a no-op. You can remove it.',
+                __METHOD__,
             );
         }
 
@@ -210,11 +215,5 @@ class Criteria
         $this->maxResults = $maxResults;
 
         return $this;
-    }
-
-    /** @internal */
-    public function isRawFieldValueAccessEnabled(): bool
-    {
-        return $this->accessRawFieldValues;
     }
 }

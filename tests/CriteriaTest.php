@@ -20,16 +20,24 @@ class CriteriaTest extends TestCase
     #[IgnoreDeprecations]
     public function testCreateLegacy(): void
     {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
 
-        $criteria = Criteria::create();
+        $criteria = Criteria::create(true);
 
         self::assertInstanceOf(Criteria::class, $criteria);
     }
 
+    #[IgnoreDeprecations]
+    public function testConstructorLegacy(): void
+    {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
+
+        new Criteria(new Comparison('test', '=', 'test'), null, 0, null, true);
+    }
+
     public function testCreate(): void
     {
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         self::assertInstanceOf(Criteria::class, $criteria);
     }
@@ -37,7 +45,7 @@ class CriteriaTest extends TestCase
     public function testConstructor(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria($expr, ['foo' => Order::Ascending], 10, 20, accessRawFieldValues: true);
+        $criteria = new Criteria($expr, ['foo' => Order::Ascending], 10, 20);
 
         self::assertSame($expr, $criteria->getWhereExpression());
         self::assertSame(['foo' => Order::Ascending], $criteria->orderings());
@@ -48,7 +56,7 @@ class CriteriaTest extends TestCase
     public function testWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         $criteria->where($expr);
 
@@ -58,7 +66,7 @@ class CriteriaTest extends TestCase
     public function testAndWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         $criteria->where($expr);
         $expr = $criteria->getWhereExpression();
@@ -74,7 +82,7 @@ class CriteriaTest extends TestCase
     public function testAndWhereWithoutWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         $criteria->andWhere($expr);
 
@@ -84,7 +92,7 @@ class CriteriaTest extends TestCase
     public function testOrWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         $criteria->where($expr);
         $expr = $criteria->getWhereExpression();
@@ -100,7 +108,7 @@ class CriteriaTest extends TestCase
     public function testOrWhereWithoutWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         $criteria->orWhere($expr);
 
@@ -109,7 +117,7 @@ class CriteriaTest extends TestCase
 
     public function testOrderings(): void
     {
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->orderBy(['foo' => Order::Ascending]);
 
         self::assertEquals(['foo' => Order::Ascending], $criteria->orderings());

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Common\Collections;
 
-use ArrayAccess;
 use ArrayIterator;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Comparison;
@@ -13,7 +12,6 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
-use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -42,34 +40,43 @@ class ClosureExpressionVisitorTest extends TestCase
         $this->assertFalse($closure(new TestObject(new TestObject(2))));
     }
 
+    #[IgnoreDeprecations]
+    public function testGetObjectFieldValueLegacy(): void
+    {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
+
+        $object = new TestObject();
+
+        $this->visitor->getObjectFieldValue($object, 'foo', true);
+    }
+
     public function testGetEmbeddedObjectFieldValueAccessingRawValue(): void
     {
         $object = new TestObject(new TestObjectPrivatePropertyOnly(42));
 
-        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'foo.fooBar', true));
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'foo.fooBar'));
     }
 
-    #[RequiresPhp('>= 8.4')]
     public function testGetObjectFieldValueAccessingRawValueBypassingPropertyHook(): void
     {
         $object         = new TestObjectPropertyHook();
         $object->fooBar = 42;
 
-        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar', true));
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueAccessingRawValue(): void
     {
         $object = new TestObjectPrivatePropertyOnly(42);
 
-        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar', true));
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueFindingParentClassAccessingRawValue(): void
     {
         $object = new TestObjectWithPrivatePropertyInParentClass(42);
 
-        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar', true));
+        self::assertSame(42, $this->visitor->getObjectFieldValue($object, 'fooBar'));
     }
 
     public function testGetObjectFieldValueNonexistentFieldAccessingRawValue(): void
@@ -78,121 +85,7 @@ class ClosureExpressionVisitorTest extends TestCase
 
         $this->expectException(RuntimeException::class);
 
-        $this->visitor->getObjectFieldValue($object, 'fooBar', true);
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueIsAccessor(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObject(1, 2, true);
-
-        self::assertTrue($this->visitor->getObjectFieldValue($object, 'baz'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueIsAccessorWithIsPrefix(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObject(1, 2, true);
-
-        self::assertTrue($this->visitor->getObjectFieldValue($object, 'isBaz'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueIsAccessorCamelCase(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObjectNotCamelCase(1);
-
-        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueIsAccessorBoth(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObjectBothCamelCaseAndUnderscore(1, 2);
-
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueIsAccessorOnePublic(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObjectPublicCamelCaseAndPrivateUnderscore(1, 2);
-
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueIsAccessorBothPublic(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObjectPublicCamelCaseAndPrivateUnderscore(1, 2);
-
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foo_bar'));
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        self::assertEquals(2, $this->visitor->getObjectFieldValue($object, 'fooBar'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueBlankAccessor(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObjectBlankGetter(1);
-
-        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'foobar'));
-        self::assertEquals(1, $this->visitor->getObjectFieldValue($object, 'fooBar'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueMagicCallMethod(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = new TestObject(1, 2, true, 3);
-
-        self::assertEquals(3, $this->visitor->getObjectFieldValue($object, 'qux'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueArrayAccess(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object = self::createMock(ArrayAccess::class);
-        $object->expects(self::once())
-            ->method('offsetGet')
-            ->with('foo')
-            ->willReturn(33);
-
-        self::assertSame(33, $this->visitor->getObjectFieldValue($object, 'foo'));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValuePublicPropertyIsNull(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/472');
-
-        $object      = new stdClass();
-        $object->foo = null;
-
-        self::assertSame(null, $this->visitor->getObjectFieldValue($object, 'foo'));
+        $this->visitor->getObjectFieldValue($object, 'fooBar');
     }
 
     public function testWalkEqualsComparison(): void
@@ -437,28 +330,39 @@ class ClosureExpressionVisitorTest extends TestCase
         $closure(new TestObject());
     }
 
-    public function testSortByFieldAscending(): void
+    #[IgnoreDeprecations]
+    public function testSortByFieldLegacy(): void
     {
-        $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
+
+        $objects = [new TestObject('b'), new TestObject('a')];
         $sort    = ClosureExpressionVisitor::sortByField('foo', 1, null, true);
 
         usort($objects, $sort);
+    }
 
-        self::assertEquals('a', $objects[0]->getFoo());
-        self::assertEquals('b', $objects[1]->getFoo());
-        self::assertEquals('c', $objects[2]->getFoo());
+    public function testSortByFieldAscending(): void
+    {
+        $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 1);
+
+        usort($objects, $sort);
+
+        self::assertEquals('a', $objects[0]->foo);
+        self::assertEquals('b', $objects[1]->foo);
+        self::assertEquals('c', $objects[2]->foo);
     }
 
     public function testSortByFieldDescending(): void
     {
         $objects = [new TestObject('b'), new TestObject('a'), new TestObject('c')];
-        $sort    = ClosureExpressionVisitor::sortByField('foo', -1, null, true);
+        $sort    = ClosureExpressionVisitor::sortByField('foo', -1);
 
         usort($objects, $sort);
 
-        self::assertEquals('c', $objects[0]->getFoo());
-        self::assertEquals('b', $objects[1]->getFoo());
-        self::assertEquals('a', $objects[2]->getFoo());
+        self::assertEquals('c', $objects[0]->foo);
+        self::assertEquals('b', $objects[1]->foo);
+        self::assertEquals('a', $objects[2]->foo);
     }
 
     public function testSortByFieldKeepOrderWhenSameValue(): void
@@ -467,7 +371,7 @@ class ClosureExpressionVisitorTest extends TestCase
         $secondElement = new TestObject('a');
 
         $objects = [$firstElement, $secondElement];
-        $sort    = ClosureExpressionVisitor::sortByField('foo', 0, null, true);
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 0);
 
         usort($objects, $sort);
 
@@ -477,14 +381,14 @@ class ClosureExpressionVisitorTest extends TestCase
     public function testSortDelegate(): void
     {
         $objects = [new TestObject('a', 'c'), new TestObject('a', 'b'), new TestObject('a', 'a')];
-        $sort    = ClosureExpressionVisitor::sortByField('bar', 1, null, true);
-        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, $sort, true);
+        $sort    = ClosureExpressionVisitor::sortByField('bar', 1);
+        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, $sort);
 
         usort($objects, $sort);
 
-        self::assertEquals('a', $objects[0]->getBar());
-        self::assertEquals('b', $objects[1]->getBar());
-        self::assertEquals('c', $objects[2]->getBar());
+        self::assertEquals('a', $objects[0]->bar);
+        self::assertEquals('b', $objects[1]->bar);
+        self::assertEquals('c', $objects[2]->bar);
     }
 
     public function testArrayComparison(): void
@@ -492,100 +396,6 @@ class ClosureExpressionVisitorTest extends TestCase
         $closure = $this->visitor->walkComparison($this->builder->eq('foo', 42));
 
         self::assertTrue($closure(['foo' => 42]));
-    }
-}
-
-class TestObject
-{
-    public function __construct(
-        private readonly mixed $foo = null,
-        private readonly mixed $bar = null,
-        private readonly mixed $baz = null,
-        private readonly mixed $qux = null,
-    ) {
-    }
-
-    /** @param array<int, mixed> $arguments */
-    public function __call(string $name, array $arguments): mixed
-    {
-        if ($name === 'getqux') {
-            return $this->qux;
-        }
-    }
-
-    public function getFoo(): mixed
-    {
-        return $this->foo;
-    }
-
-    public function getBar(): mixed
-    {
-        return $this->bar;
-    }
-
-    public function isBaz(): mixed
-    {
-        return $this->baz;
-    }
-}
-
-class TestObjectNotCamelCase
-{
-    public function __construct(private readonly int|null $foo_bar)
-    {
-    }
-
-    public function getFooBar(): int|null
-    {
-        return $this->foo_bar;
-    }
-}
-
-class TestObjectBothCamelCaseAndUnderscore
-{
-    public function __construct(private readonly int|null $foo_bar = null, private readonly int|null $fooBar = null)
-    {
-    }
-
-    public function getFooBar(): int|null
-    {
-        return $this->fooBar;
-    }
-}
-
-class TestObjectPublicCamelCaseAndPrivateUnderscore
-{
-    public function __construct(private readonly int|null $foo_bar = null, public int|null $fooBar = null)
-    {
-    }
-
-    public function getFooBar(): int|null
-    {
-        return $this->fooBar;
-    }
-}
-
-class TestObjectBothPublic
-{
-    public function __construct(public mixed $foo_bar = null, public mixed $fooBar = null)
-    {
-    }
-
-    public function getFooBar(): mixed
-    {
-        return $this->foo_bar;
-    }
-}
-
-class TestObjectBlankGetter
-{
-    public function __construct(public int|null $fooBar = null)
-    {
-    }
-
-    public function fooBar(): int|null
-    {
-        return $this->fooBar;
     }
 }
 

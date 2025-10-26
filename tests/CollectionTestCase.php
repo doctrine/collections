@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 use function count;
 use function is_array;
@@ -232,13 +231,13 @@ abstract class CollectionTestCase extends TestCase
 
     protected function fillMatchingFixture(): void
     {
-        $std1               = new stdClass();
-        $std1->foo          = 'bar';
-        $this->collection[] = $std1;
+        $obj1               = new TestObject();
+        $obj1->foo          = 'bar';
+        $this->collection[] = $obj1;
 
-        $std2               = new stdClass();
-        $std2->foo          = 'baz';
-        $this->collection[] = $std2;
+        $obj2               = new TestObject();
+        $obj2->foo          = 'baz';
+        $this->collection[] = $obj2;
     }
 
     public function testCanRemoveNullValuesByKey(): void
@@ -260,7 +259,7 @@ abstract class CollectionTestCase extends TestCase
             self::markTestSkipped(sprintf('Collection does not implement %s', Selectable::class));
         }
 
-        $criteria = Criteria::create(true);
+        $criteria = Criteria::create();
 
         self::assertInstanceOf(Collection::class, $this->collection->matching($criteria));
         self::assertInstanceOf(Selectable::class, $this->collection->matching($criteria));
