@@ -8,6 +8,17 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## The criteria filtering API (the `Doctrine\Common\Collections\Selectable` interface) accesses fields through raw field access only
+
+When using the criteria filtering API properties will be accessed directly through reflection, also bypassing property hooks.
+
+The `$accessRawFieldValues` parameter in the following methods is now a no-op and can be removed in calling code:
+
+* `Doctrine\Common\Collections\Criteria::__construct()`
+* `Doctrine\Common\Collections\Criteria::create()`
+* `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue()`
+* `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::sortByField()`
+
 ## Deprecated null first result
 
 Passing null as `$firstResult` to

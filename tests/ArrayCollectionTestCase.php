@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 use function array_keys;
 use function array_search;
@@ -301,7 +300,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['fooBar' => Order::Ascending], 0, accessRawFieldValues: true))
+                ->matching(new Criteria(null, ['fooBar' => Order::Ascending]))
                 ->toArray(),
         );
     }
@@ -309,11 +308,11 @@ abstract class ArrayCollectionTestCase extends TestCase
     #[IgnoreDeprecations]
     public function testLegacyMatchingWithSortingPreserveKeys(): void
     {
-        $object1 = new stdClass();
-        $object2 = new stdClass();
+        $object1 = new TestObject();
+        $object2 = new TestObject();
 
-        $object1->sortField = 2;
-        $object2->sortField = 1;
+        $object1->foo = 2;
+        $object2->foo = 1;
 
         $collection = $this->buildCollection([
             'object1' => $object1,
@@ -330,7 +329,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['sortField' => Order::Ascending]))
+                ->matching(new Criteria(null, ['foo' => Order::Ascending]))
                 ->toArray(),
         );
     }
@@ -355,7 +354,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $slicedArray,
             $collection
-                ->matching(new Criteria(null, null, $firstResult, $maxResult, accessRawFieldValues: true))
+                ->matching(new Criteria(null, null, $firstResult, $maxResult))
                 ->toArray(),
         );
     }
@@ -445,7 +444,7 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending], 0, null, accessRawFieldValues: true))
+                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending], 0, null))
                 ->toArray(),
         );
     }
