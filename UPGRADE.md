@@ -12,11 +12,16 @@ awareness about deprecated code.
 
 Starting with the next major version, the only way to access data when using the criteria filtering 
 API is through direct (reflection-based) access at properties directly, also bypassing property hooks.
-This is to ensure consistency with how the ORM/ODM work. See https://github.com/doctrine/collections/pull/472 for
+This is to ensure consistency with how the ORM/ODM works. See https://github.com/doctrine/collections/pull/472 for
 the full motivation.
 
 To opt-in to the new behaviour, pass `true` for the `$accessRawFieldValues` parameter when creating a `Criteria`
-object through either `Doctrine\Common\Collections\Criteria::create()` or when calling the `Doctrine\Common\Collections\Criteria` constructor. 
+object through either `Doctrine\Common\Collections\Criteria::create()` or when calling the `Doctrine\Common\Collections\Criteria` constructor.
+
+Be aware that switching to reflection-based field access may prevent ORM or ODM proxy objects
+becoming initialized, since their triggers (like calling public methods) are bypassed. That might lead
+to `null` values being read from such objects, which may cause wrong filtering or sorting results.
+See https://github.com/doctrine/collections/issues/487 for more details on when this may happen.
 
 # Upgrade to 2.2
 
