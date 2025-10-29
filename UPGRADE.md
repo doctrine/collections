@@ -21,6 +21,7 @@ object through either `Doctrine\Common\Collections\Criteria::create()` or when c
 Be aware that switching to reflection-based field access may prevent ORM or ODM proxy objects
 becoming initialized, since their triggers (like calling public methods) are bypassed. This might lead
 to `null` values being read from such objects, which may cause wrong filtering or sorting results.
+To avoid this issue, use native lazy objects added in PHP 8.4.
 See https://github.com/doctrine/collections/issues/487 for more details on when this may happen.
 
 # Upgrade to 2.2
