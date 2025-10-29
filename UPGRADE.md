@@ -19,7 +19,7 @@ To opt-in to the new behaviour, pass `true` for the `$accessRawFieldValues` para
 object through either `Doctrine\Common\Collections\Criteria::create()` or when calling the `Doctrine\Common\Collections\Criteria` constructor.
 
 Be aware that switching to reflection-based field access may prevent ORM or ODM proxy objects
-becoming initialized, since their triggers (like calling public methods) are bypassed. That might lead
+becoming initialized, since their triggers (like calling public methods) are bypassed. This might lead
 to `null` values being read from such objects, which may cause wrong filtering or sorting results.
 See https://github.com/doctrine/collections/issues/487 for more details on when this may happen.
 
