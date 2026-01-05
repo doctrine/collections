@@ -6,6 +6,16 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.5
+
+Extending the following classes is deprecated and will no longer be possible in 3.0:
+
+- `Doctrine\Common\Collections\Criteria`
+- `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor`
+- `Doctrine\Common\Collections\Expr\Comparison`
+- `Doctrine\Common\Collections\Expr\Value`
+- `Doctrine\Common\Collections\ExpressionBuilder`
+
 # Upgrade to 2.4
 
 ## Deprecated accessing fields through other means than raw field access when using the criteria filtering API (the `Doctrine\Common\Collections\Selectable` interface)

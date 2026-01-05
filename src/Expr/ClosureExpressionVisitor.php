@@ -35,6 +35,8 @@ use const PHP_VERSION_ID;
  *
  * This closure can be used with {@Collection#filter()} and is used internally
  * by {@ArrayCollection#select()}.
+ *
+ * @final since 2.5
  */
 class ClosureExpressionVisitor extends ExpressionVisitor
 {
