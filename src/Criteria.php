@@ -14,6 +14,7 @@ use function func_num_args;
  * Criteria for filtering Selectable collections.
  *
  * @phpstan-consistent-constructor
+ * @final since 2.5
  */
 class Criteria
 {
