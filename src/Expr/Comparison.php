@@ -6,24 +6,22 @@ namespace Doctrine\Common\Collections\Expr;
 
 /**
  * Comparison of a field with a value by the given operator.
- *
- * @final since 2.5
  */
-class Comparison implements Expression
+final class Comparison implements Expression
 {
-    final public const string EQ          = '=';
-    final public const string NEQ         = '<>';
-    final public const string LT          = '<';
-    final public const string LTE         = '<=';
-    final public const string GT          = '>';
-    final public const string GTE         = '>=';
-    final public const string IS          = '='; // no difference with EQ
-    final public const string IN          = 'IN';
-    final public const string NIN         = 'NIN';
-    final public const string CONTAINS    = 'CONTAINS';
-    final public const string MEMBER_OF   = 'MEMBER_OF';
-    final public const string STARTS_WITH = 'STARTS_WITH';
-    final public const string ENDS_WITH   = 'ENDS_WITH';
+    public const string EQ          = '=';
+    public const string NEQ         = '<>';
+    public const string LT          = '<';
+    public const string LTE         = '<=';
+    public const string GT          = '>';
+    public const string GTE         = '>=';
+    public const string IS          = '='; // no difference with EQ
+    public const string IN          = 'IN';
+    public const string NIN         = 'NIN';
+    public const string CONTAINS    = 'CONTAINS';
+    public const string MEMBER_OF   = 'MEMBER_OF';
+    public const string STARTS_WITH = 'STARTS_WITH';
+    public const string ENDS_WITH   = 'ENDS_WITH';
 
     private readonly Value $value;
 

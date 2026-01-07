@@ -8,6 +8,16 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## Final classes
+
+The following classes are now final and can no longer be extended:
+
+- `Doctrine\Common\Collections\Criteria`
+- `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor`
+- `Doctrine\Common\Collections\Expr\Comparison`
+- `Doctrine\Common\Collections\Expr\Value`
+- `Doctrine\Common\Collections\ExpressionBuilder`
+
 ## The criteria filtering API (the `Doctrine\Common\Collections\Selectable` interface) accesses fields through raw field access only
 
 When using the criteria filtering API properties will be accessed directly through reflection, also bypassing property hooks.

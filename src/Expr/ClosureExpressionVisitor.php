@@ -27,10 +27,8 @@ use function str_starts_with;
  *
  * This closure can be used with {@Collection#filter()} and is used internally
  * by {@ArrayCollection#select()}.
- *
- * @final since 2.5
  */
-class ClosureExpressionVisitor extends ExpressionVisitor
+final class ClosureExpressionVisitor extends ExpressionVisitor
 {
     public function __construct(
         // @phpstan-ignore property.onlyWritten (that property is deprecated, kept for BC)
