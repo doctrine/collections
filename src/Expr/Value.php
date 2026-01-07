@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections\Expr;
 
+/** @final since 2.5 */
 class Value implements Expression
 {
     public function __construct(private readonly mixed $value)
