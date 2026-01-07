@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\Expr\Value;
  * Important Notice for interoperable code: You have to use scalar
  * values only for comparisons, otherwise the behavior of the comparison
  * may be different between implementations (Array vs ORM vs ODM).
+ *
+ * @final since 2.5
  */
 class ExpressionBuilder
 {

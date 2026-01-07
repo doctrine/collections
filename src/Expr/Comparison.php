@@ -6,6 +6,8 @@ namespace Doctrine\Common\Collections\Expr;
 
 /**
  * Comparison of a field with a value by the given operator.
+ *
+ * @final since 2.5
  */
 class Comparison implements Expression
 {

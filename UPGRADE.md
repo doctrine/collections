@@ -47,6 +47,16 @@ As a consequence:
 Native return types have been added. The new signatures are already described
 below [in the section about upgrading to 2.0](#upgrade-to-20).
 
+# Upgrade to 2.5
+
+Extending the following classes is deprecated and will no longer be possible in 3.0:
+
+- `Doctrine\Common\Collections\Criteria`
+- `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor`
+- `Doctrine\Common\Collections\Expr\Comparison`
+- `Doctrine\Common\Collections\Expr\Value`
+- `Doctrine\Common\Collections\ExpressionBuilder`
+
 # Upgrade to 2.4
 
 ## Deprecated accessing fields through other means than raw field access when using the criteria filtering API (the `Doctrine\Common\Collections\Selectable` interface)
