@@ -8,6 +8,14 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## Readonly classes
+
+The following classes are now `readonly` classes, making all their properties immutable:
+
+- `Doctrine\Common\Collections\Expr\Comparison`
+- `Doctrine\Common\Collections\Expr\CompositeExpression`
+- `Doctrine\Common\Collections\Expr\Value`
+
 ## Final classes
 
 The following classes are now final and can no longer be extended:
@@ -15,6 +23,7 @@ The following classes are now final and can no longer be extended:
 - `Doctrine\Common\Collections\Criteria`
 - `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor`
 - `Doctrine\Common\Collections\Expr\Comparison`
+- `Doctrine\Common\Collections\Expr\CompositeExpression`
 - `Doctrine\Common\Collections\Expr\Value`
 - `Doctrine\Common\Collections\ExpressionBuilder`
 

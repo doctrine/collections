@@ -7,7 +7,7 @@ namespace Doctrine\Common\Collections\Expr;
 /**
  * Comparison of a field with a value by the given operator.
  */
-final class Comparison implements Expression
+final readonly class Comparison implements Expression
 {
     public const string EQ          = '=';
     public const string NEQ         = '<>';
@@ -23,9 +23,9 @@ final class Comparison implements Expression
     public const string STARTS_WITH = 'STARTS_WITH';
     public const string ENDS_WITH   = 'ENDS_WITH';
 
-    private readonly Value $value;
+    private Value $value;
 
-    public function __construct(private readonly string $field, private readonly string $op, mixed $value)
+    public function __construct(private string $field, private string $op, mixed $value)
     {
         if (! ($value instanceof Value)) {
             $value = new Value($value);
