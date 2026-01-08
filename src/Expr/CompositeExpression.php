@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections\Expr;
 
+use Override;
 use RuntimeException;
 
 use function count;
@@ -63,6 +64,7 @@ final readonly class CompositeExpression implements Expression
         return $this->type;
     }
 
+    #[Override]
     public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkCompositeExpression($this);

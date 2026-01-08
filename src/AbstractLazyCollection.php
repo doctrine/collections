@@ -6,6 +6,7 @@ namespace Doctrine\Common\Collections;
 
 use Closure;
 use LogicException;
+use Override;
 use Traversable;
 
 /**
@@ -27,6 +28,7 @@ abstract class AbstractLazyCollection implements Collection
 
     protected bool $initialized = false;
 
+    #[Override]
     public function count(): int
     {
         $this->initialize();
@@ -34,6 +36,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->count();
     }
 
+    #[Override]
     public function add(mixed $element): void
     {
         $this->initialize();
@@ -41,12 +44,14 @@ abstract class AbstractLazyCollection implements Collection
         $this->collection->add($element);
     }
 
+    #[Override]
     public function clear(): void
     {
         $this->initialize();
         $this->collection->clear();
     }
 
+    #[Override]
     public function contains(mixed $element): bool
     {
         $this->initialize();
@@ -54,6 +59,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->contains($element);
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         $this->initialize();
@@ -61,6 +67,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->isEmpty();
     }
 
+    #[Override]
     public function remove(string|int $key): mixed
     {
         $this->initialize();
@@ -68,6 +75,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->remove($key);
     }
 
+    #[Override]
     public function removeElement(mixed $element): bool
     {
         $this->initialize();
@@ -75,6 +83,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->removeElement($element);
     }
 
+    #[Override]
     public function containsKey(string|int $key): bool
     {
         $this->initialize();
@@ -82,6 +91,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->containsKey($key);
     }
 
+    #[Override]
     public function get(string|int $key): mixed
     {
         $this->initialize();
@@ -89,9 +99,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->get($key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function getKeys(): array
     {
         $this->initialize();
@@ -99,9 +107,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->getKeys();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function getValues(): array
     {
         $this->initialize();
@@ -109,18 +115,14 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->getValues();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function set(string|int $key, mixed $value): void
     {
         $this->initialize();
         $this->collection->set($key, $value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function toArray(): array
     {
         $this->initialize();
@@ -128,6 +130,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->toArray();
     }
 
+    #[Override]
     public function first(): mixed
     {
         $this->initialize();
@@ -135,6 +138,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->first();
     }
 
+    #[Override]
     public function last(): mixed
     {
         $this->initialize();
@@ -142,6 +146,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->last();
     }
 
+    #[Override]
     public function key(): string|int|null
     {
         $this->initialize();
@@ -149,6 +154,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->key();
     }
 
+    #[Override]
     public function current(): mixed
     {
         $this->initialize();
@@ -156,6 +162,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->current();
     }
 
+    #[Override]
     public function next(): mixed
     {
         $this->initialize();
@@ -163,6 +170,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->next();
     }
 
+    #[Override]
     public function exists(Closure $p): bool
     {
         $this->initialize();
@@ -170,6 +178,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->exists($p);
     }
 
+    #[Override]
     public function findFirst(Closure $p): mixed
     {
         $this->initialize();
@@ -177,9 +186,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->findFirst($p);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function filter(Closure $p): Collection
     {
         $this->initialize();
@@ -187,6 +194,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->filter($p);
     }
 
+    #[Override]
     public function forAll(Closure $p): bool
     {
         $this->initialize();
@@ -194,9 +202,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->forAll($p);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function map(Closure $func): Collection
     {
         $this->initialize();
@@ -204,9 +210,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->map($func);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function reduce(Closure $func, mixed $initial = null): mixed
     {
         $this->initialize();
@@ -214,9 +218,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->reduce($func, $initial);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function partition(Closure $p): array
     {
         $this->initialize();
@@ -224,11 +226,8 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->partition($p);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @template TMaybeContained
-     */
+    /** @template TMaybeContained */
+    #[Override]
     public function indexOf(mixed $element): string|int|false
     {
         $this->initialize();
@@ -236,9 +235,7 @@ abstract class AbstractLazyCollection implements Collection
         return $this->collection->indexOf($element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function slice(int $offset, int|null $length = null): array
     {
         $this->initialize();
@@ -250,6 +247,7 @@ abstract class AbstractLazyCollection implements Collection
      * @return Traversable<int|string, mixed>
      * @phpstan-return Traversable<TKey,T>
      */
+    #[Override]
     public function getIterator(): Traversable
     {
         $this->initialize();
@@ -258,6 +256,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /** @param TKey $offset */
+    #[Override]
     public function offsetExists(mixed $offset): bool
     {
         $this->initialize();
@@ -266,6 +265,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /** @param TKey $offset */
+    #[Override]
     public function offsetGet(mixed $offset): mixed
     {
         $this->initialize();
@@ -277,6 +277,7 @@ abstract class AbstractLazyCollection implements Collection
      * @param TKey|null $offset
      * @param T         $value
      */
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->initialize();
@@ -284,6 +285,7 @@ abstract class AbstractLazyCollection implements Collection
     }
 
     /** @param TKey $offset */
+    #[Override]
     public function offsetUnset(mixed $offset): void
     {
         $this->initialize();

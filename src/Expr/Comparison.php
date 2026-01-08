@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections\Expr;
 
+use Override;
+
 /**
  * Comparison of a field with a value by the given operator.
  */
@@ -49,6 +51,7 @@ final readonly class Comparison implements Expression
         return $this->op;
     }
 
+    #[Override]
     public function visit(ExpressionVisitor $visitor): mixed
     {
         return $visitor->walkComparison($this);

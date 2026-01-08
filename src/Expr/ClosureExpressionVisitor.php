@@ -6,6 +6,7 @@ namespace Doctrine\Common\Collections\Expr;
 
 use Closure;
 use Doctrine\Deprecations\Deprecation;
+use Override;
 use ReflectionClass;
 use RuntimeException;
 
@@ -108,6 +109,7 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
+    #[Override]
     public function walkComparison(Comparison $comparison): Closure
     {
         $field = $comparison->getField();
@@ -146,11 +148,13 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
+    #[Override]
     public function walkValue(Value $value): mixed
     {
         return $value->getValue();
     }
 
+    #[Override]
     public function walkCompositeExpression(CompositeExpression $expr): Closure
     {
         $expressionList = [];
