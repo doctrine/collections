@@ -13,6 +13,7 @@ Extending the following classes is deprecated and will no longer be possible in 
 - `Doctrine\Common\Collections\Criteria`
 - `Doctrine\Common\Collections\Expr\ClosureExpressionVisitor`
 - `Doctrine\Common\Collections\Expr\Comparison`
+- `Doctrine\Common\Collections\Expr\CompositeExpression`
 - `Doctrine\Common\Collections\Expr\Value`
 - `Doctrine\Common\Collections\ExpressionBuilder`
 
