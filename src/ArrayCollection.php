@@ -211,6 +211,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
             return;
         }
 
+        /** @phpstan-var TKey $offset */
         $this->set($offset, $value);
     }
 
