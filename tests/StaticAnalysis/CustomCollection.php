@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Common\Collections\StaticAnalysis;
 use Closure;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Override;
 
 /**
  * @phpstan-template TKey of array-key
@@ -29,6 +30,7 @@ abstract class CustomCollection implements Collection
      *
      * @return Collection<TKey, T>
      */
+    #[Override]
     public function filter(Closure $p): Collection
     {
         return $this->collection->filter($p);
@@ -39,6 +41,7 @@ abstract class CustomCollection implements Collection
      *
      * @phpstan-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
+    #[Override]
     public function partition(Closure $p): array
     {
         return $this->collection->partition($p);

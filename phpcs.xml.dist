@@ -14,11 +14,6 @@
     <file>src</file>
     <file>tests</file>
 
-    <rule ref="Doctrine" >
-        <!-- https://github.com/doctrine/collections/pull/381#issuecomment-1745206747 -->
-        <exclude name="SlevomatCodingStandard.Commenting.UselessInheritDocComment" />
-    </rule>
-
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>

@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Common\Collections;
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 use function assert;
@@ -17,7 +18,7 @@ use function assert;
 #[CoversClass(AbstractLazyCollection::class)]
 class AbstractLazyArrayCollectionTest extends ArrayCollectionTestCase
 {
-    /** @inheritDoc */
+    #[Override]
     protected function buildCollection(array $elements = []): Collection
     {
         return new LazyArrayCollection(new ArrayCollection($elements));

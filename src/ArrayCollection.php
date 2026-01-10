@@ -7,6 +7,7 @@ namespace Doctrine\Common\Collections;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Override;
 use Stringable;
 use Traversable;
 
@@ -68,14 +69,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
         $this->elements = $elements;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function toArray(): array
     {
         return $this->elements;
     }
 
+    #[Override]
     public function first(): mixed
     {
         return reset($this->elements);
@@ -100,26 +100,31 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return new static($elements);
     }
 
+    #[Override]
     public function last(): mixed
     {
         return end($this->elements);
     }
 
+    #[Override]
     public function key(): int|string|null
     {
         return key($this->elements);
     }
 
+    #[Override]
     public function next(): mixed
     {
         return next($this->elements);
     }
 
+    #[Override]
     public function current(): mixed
     {
         return current($this->elements);
     }
 
+    #[Override]
     public function remove(string|int $key): mixed
     {
         if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
@@ -132,6 +137,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         return $removed;
     }
 
+    #[Override]
     public function removeElement(mixed $element): bool
     {
         $key = array_search($element, $this->elements, true);
@@ -150,6 +156,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey $offset
      */
+    #[Override]
     public function offsetExists(mixed $offset): bool
     {
         return $this->containsKey($offset);
@@ -160,6 +167,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey $offset
      */
+    #[Override]
     public function offsetGet(mixed $offset): mixed
     {
         return $this->get($offset);
@@ -171,6 +179,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @param TKey|null $offset
      * @param T         $value
      */
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
@@ -187,21 +196,25 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @param TKey $offset
      */
+    #[Override]
     public function offsetUnset(mixed $offset): void
     {
         $this->remove($offset);
     }
 
+    #[Override]
     public function containsKey(string|int $key): bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
 
+    #[Override]
     public function contains(mixed $element): bool
     {
         return in_array($element, $this->elements, true);
     }
 
+    #[Override]
     public function exists(Closure $p): bool
     {
         return array_any(
@@ -211,84 +224,76 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-param TMaybeContained $element
      *
      * @phpstan-return (TMaybeContained is T ? TKey|false : false)
      *
      * @template TMaybeContained
      */
+    #[Override]
     public function indexOf(mixed $element): int|string|false
     {
         return array_search($element, $this->elements, true);
     }
 
+    #[Override]
     public function get(string|int $key): mixed
     {
         return $this->elements[$key] ?? null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function getKeys(): array
     {
         return array_keys($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function getValues(): array
     {
         return array_values($this->elements);
     }
 
     /** @return int<0, max> */
+    #[Override]
     public function count(): int
     {
         return count($this->elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function set(string|int $key, mixed $value): void
     {
         $this->elements[$key] = $value;
     }
 
     /**
-     * {@inheritDoc}
-     *
      * This breaks assumptions about the template type, but it would
      * be a backwards-incompatible change to remove this method
      */
+    #[Override]
     public function add(mixed $element): void
     {
         $this->elements[] = $element;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return empty($this->elements);
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return Traversable<int|string, mixed>
      * @phpstan-return Traversable<TKey, T>
      */
+    #[Override]
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->elements);
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-param Closure(T):U $func
      *
      * @return static
@@ -296,32 +301,31 @@ class ArrayCollection implements Collection, Selectable, Stringable
      *
      * @phpstan-template U
      */
+    #[Override]
     public function map(Closure $func): Collection
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function reduce(Closure $func, mixed $initial = null): mixed
     {
         return array_reduce($this->elements, $func, $initial);
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-param Closure(T, TKey):bool $p
      *
      * @return static
      * @phpstan-return static<TKey,T>
      */
+    #[Override]
     public function filter(Closure $p): Collection
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
+    #[Override]
     public function findFirst(Closure $p): mixed
     {
         return array_find(
@@ -330,6 +334,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         );
     }
 
+    #[Override]
     public function forAll(Closure $p): bool
     {
         return array_all(
@@ -338,9 +343,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function partition(Closure $p): array
     {
         $matches = $noMatches = [];
@@ -359,25 +362,26 @@ class ArrayCollection implements Collection, Selectable, Stringable
     /**
      * Returns a string representation of this object.
      */
+    #[Override]
     public function __toString(): string
     {
         return self::class . '@' . spl_object_hash($this);
     }
 
+    #[Override]
     public function clear(): void
     {
         $this->elements = [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[Override]
     public function slice(int $offset, int|null $length = null): array
     {
         return array_slice($this->elements, $offset, $length, true);
     }
 
     /** @phpstan-return Collection<TKey, T>&Selectable<TKey,T> */
+    #[Override]
     public function matching(Criteria $criteria): Collection
     {
         $expr     = $criteria->getWhereExpression();

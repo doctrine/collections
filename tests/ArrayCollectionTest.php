@@ -6,6 +6,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 use function serialize;
@@ -18,6 +19,7 @@ use function unserialize;
 class ArrayCollectionTest extends ArrayCollectionTestCase
 {
     /** @inheritDoc */
+    #[Override]
     protected function buildCollection(array $elements = []): Collection
     {
         return new ArrayCollection($elements);

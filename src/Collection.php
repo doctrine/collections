@@ -6,6 +6,7 @@ namespace Doctrine\Common\Collections;
 
 use ArrayAccess;
 use Closure;
+use Override;
 
 /**
  * The missing (SPL) Collection/Array/OrderedMap interface.
@@ -76,8 +77,6 @@ interface Collection extends ReadableCollection, ArrayAccess
     public function set(string|int $key, mixed $value): void;
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-param Closure(T):U $func
      *
      * @return Collection<mixed>
@@ -85,21 +84,19 @@ interface Collection extends ReadableCollection, ArrayAccess
      *
      * @phpstan-template U
      */
+    #[Override]
     public function map(Closure $func): self;
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-param Closure(T, TKey):bool $p
      *
      * @return Collection<mixed> A collection with the results of the filter operation.
      * @phpstan-return Collection<TKey, T>
      */
+    #[Override]
     public function filter(Closure $p): self;
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-param Closure(TKey, T):bool $p
      *
      * @return Collection<mixed>[] An array with two elements. The first element contains the collection
@@ -107,5 +104,6 @@ interface Collection extends ReadableCollection, ArrayAccess
      *                      contains the collection of elements where the predicate returned FALSE.
      * @phpstan-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
+    #[Override]
     public function partition(Closure $p): array;
 }
