@@ -53,7 +53,7 @@ class CompositeExpressionTest extends TestCase
     protected function createCompositeExpression(): CompositeExpression
     {
         $type        = CompositeExpression::TYPE_AND;
-        $expressions = [$this->createMock(Expression::class)];
+        $expressions = [$this->createStub(Expression::class)];
 
         return new CompositeExpression($type, $expressions);
     }
@@ -61,7 +61,7 @@ class CompositeExpressionTest extends TestCase
     public function testGetExpressionList(): void
     {
         $compositeExpression    = $this->createCompositeExpression();
-        $expectedExpressionList = [$this->createMock(Expression::class)];
+        $expectedExpressionList = [$this->createStub(Expression::class)];
         $actualExpressionList   = $compositeExpression->getExpressionList();
 
         self::assertEquals($expectedExpressionList, $actualExpressionList);
