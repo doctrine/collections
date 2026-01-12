@@ -64,12 +64,13 @@ class Criteria
     /**
      * Construct a new Criteria.
      *
+     * @param int|null                         $firstResult
      * @param array<string, string|Order>|null $orderings
      */
     public function __construct(
         private Expression|null $expression = null,
         array|null $orderings = null,
-        int|null $firstResult = null,
+        int|Placeholder|null $firstResult = Placeholder::NotSpecified,
         int|null $maxResults = null,
         private bool $accessRawFieldValues = false,
     ) {
@@ -82,13 +83,17 @@ class Criteria
             );
         }
 
-        if ($firstResult === null && func_num_args() > 2) {
+        if ($firstResult === null) {
             Deprecation::trigger(
                 'doctrine/collections',
                 'https://github.com/doctrine/collections/pull/311',
                 'Passing null as $firstResult to the constructor of %s is deprecated. Pass 0 instead or omit the argument.',
                 self::class,
             );
+        }
+
+        if ($firstResult === Placeholder::NotSpecified) {
+            $firstResult = null;
         }
 
         $this->setFirstResult($firstResult);

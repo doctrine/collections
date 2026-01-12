@@ -73,6 +73,12 @@ class CriteriaTest extends TestCase
         self::assertNull($criteria->getMaxResults());
     }
 
+    public function testNamedArgs(): void
+    {
+        $this->expectNoDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/311');
+        new Criteria(orderings: ['startDate' => Order::Descending], accessRawFieldValues: true);
+    }
+
     public function testWhere(): void
     {
         $expr     = new Comparison('field', '=', 'value');
