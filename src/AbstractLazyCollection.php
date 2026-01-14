@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use Closure;
+use Doctrine\Deprecations\Deprecation;
 use LogicException;
 use ReturnTypeWillChange;
 use Traversable;
@@ -404,6 +405,18 @@ abstract class AbstractLazyCollection implements Collection, Selectable
         if ($this->collection === null) {
             throw new LogicException('You must initialize the collection property in the doInitialize() method.');
         }
+
+        if ($this->collection instanceof Selectable) {
+            return;
+        }
+
+        Deprecation::trigger(
+            'doctrine/collections',
+            'https://github.com/doctrine/collections/pull/518',
+            'Initializing %s with a collection that does not implement %s is deprecated and will throw an exception in 3.0.',
+            self::class,
+            Selectable::class,
+        );
     }
 
     /**
