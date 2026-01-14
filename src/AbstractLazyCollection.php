@@ -15,8 +15,9 @@ use Traversable;
  * @phpstan-template TKey of array-key
  * @phpstan-template T
  * @template-implements Collection<TKey,T>
+ * @template-implements Selectable<TKey,T>
  */
-abstract class AbstractLazyCollection implements Collection
+abstract class AbstractLazyCollection implements Collection, Selectable
 {
     /**
      * The backed collection to use
@@ -411,4 +412,18 @@ abstract class AbstractLazyCollection implements Collection
      * @return void
      */
     abstract protected function doInitialize();
+
+    /**
+     * {@inheritDoc}
+     */
+    public function matching(Criteria $criteria)
+    {
+        $this->initialize();
+
+        if (! $this->collection instanceof Selectable) {
+            throw new LogicException('The backed collection must implement Selectable to use matching().');
+        }
+
+        return $this->collection->matching($criteria);
+    }
 }
