@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use LogicException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
@@ -23,8 +22,6 @@ use function is_string;
 #[CoversClass(AbstractLazyCollection::class)]
 class AbstractLazyCollectionTest extends CollectionTestCase
 {
-    use VerifyDeprecations;
-
     protected function setUp(): void
     {
         $this->collection = new LazyArrayCollection(new ArrayCollection());
@@ -138,27 +135,5 @@ class AbstractLazyCollectionTest extends CollectionTestCase
 
         self::assertCount(2, $result);
         self::assertSame($obj1, $result->first());
-    }
-
-    #[IgnoreDeprecations]
-    public function testMatchingThrowsExceptionWhenBackedCollectionNotSelectable(): void
-    {
-        $lazyCollection = new LazyArrayCollection($this->createStub(Collection::class));
-
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The backed collection must implement Selectable to use matching().');
-
-        $lazyCollection->matching(Criteria::create(true));
-    }
-
-    #[IgnoreDeprecations]
-    public function testMatchingTriggersDeprecationWhenBackedCollectionNotSelectable(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/518');
-
-        $lazyCollection = new LazyArrayCollection($this->createStub(Collection::class));
-
-        // Trigger initialization with any method - deprecation happens during initialize()
-        $lazyCollection->isEmpty();
     }
 }

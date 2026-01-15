@@ -12,8 +12,9 @@ use IteratorAggregate;
  * @phpstan-template TKey of array-key
  * @template-covariant T
  * @template-extends IteratorAggregate<TKey, T>
+ * @template-extends Selectable<TKey, T>
  */
-interface ReadableCollection extends Countable, IteratorAggregate
+interface ReadableCollection extends Countable, IteratorAggregate, Selectable
 {
     /**
      * Checks whether an element is contained in the collection.
