@@ -18,7 +18,6 @@ use function unserialize;
 #[CoversClass(ArrayCollection::class)]
 class ArrayCollectionTest extends ArrayCollectionTestCase
 {
-    /** @inheritDoc */
     #[Override]
     protected function buildCollection(array $elements = []): Collection
     {

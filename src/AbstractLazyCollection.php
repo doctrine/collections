@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use Closure;
+use Doctrine\Deprecations\Deprecation;
 use LogicException;
 use Override;
 use Traversable;
@@ -15,8 +16,9 @@ use Traversable;
  * @phpstan-template TKey of array-key
  * @phpstan-template T
  * @template-implements Collection<TKey,T>
+ * @template-implements Selectable<TKey,T>
  */
-abstract class AbstractLazyCollection implements Collection
+abstract class AbstractLazyCollection implements Collection, Selectable
 {
     /**
      * The backed collection to use
@@ -319,10 +321,34 @@ abstract class AbstractLazyCollection implements Collection
         if ($this->collection === null) {
             throw new LogicException('You must initialize the collection property in the doInitialize() method.');
         }
+
+        if ($this->collection instanceof Selectable) {
+            return;
+        }
+
+        Deprecation::trigger(
+            'doctrine/collections',
+            'https://github.com/doctrine/collections/pull/518',
+            'Initializing %s with a collection that does not implement %s is deprecated and will throw an exception in 3.0.',
+            self::class,
+            Selectable::class,
+        );
     }
 
     /**
      * Do the initialization logic
      */
     abstract protected function doInitialize(): void;
+
+    #[Override]
+    public function matching(Criteria $criteria): ReadableCollection
+    {
+        $this->initialize();
+
+        if (! $this->collection instanceof Selectable) {
+            throw new LogicException('The backed collection must implement Selectable to use matching().');
+        }
+
+        return $this->collection->matching($criteria);
+    }
 }

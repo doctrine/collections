@@ -6,9 +6,13 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
+use LogicException;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-use function assert;
 use function is_array;
 use function is_numeric;
 use function is_string;
@@ -19,6 +23,8 @@ use function is_string;
 #[CoversClass(AbstractLazyCollection::class)]
 class AbstractLazyCollectionTest extends CollectionTestCase
 {
+    use VerifyDeprecations;
+
     protected function setUp(): void
     {
         $this->collection = new LazyArrayCollection(new ArrayCollection());
@@ -33,7 +39,6 @@ class AbstractLazyCollectionTest extends CollectionTestCase
     public function testClearInitializes(): void
     {
         $collection = $this->buildCollection(['a', 'b', 'c']);
-        assert($collection instanceof LazyArrayCollection);
 
         $collection->clear();
 
@@ -44,7 +49,6 @@ class AbstractLazyCollectionTest extends CollectionTestCase
     public function testFilterInitializes(): void
     {
         $collection = $this->buildCollection([1, 'foo', 3]);
-        assert($collection instanceof LazyArrayCollection);
 
         $res = $collection->filter(static fn ($value) => is_numeric($value));
 
@@ -105,5 +109,56 @@ class AbstractLazyCollectionTest extends CollectionTestCase
         $collection->offsetUnset(0);
         self::assertCount(1, $collection);
         self::assertFalse(isset($collection[0]));
+    }
+
+    public function testMatchingInitializes(): void
+    {
+        $collection = $this->buildCollection(['foo', 'bar', 'baz']);
+
+        self::assertFalse($collection->isInitialized());
+
+        $result = $collection->matching(Criteria::create());
+
+        self::assertTrue($collection->isInitialized());
+        self::assertCount(3, $result);
+    }
+
+    public function testMatchingWithCriteria(): void
+    {
+        $obj1 = new TestObjectPrivatePropertyOnly('bar');
+        $obj2 = new TestObjectPrivatePropertyOnly('baz');
+        $obj3 = new TestObjectPrivatePropertyOnly('bar');
+
+        $collection = $this->buildCollection([$obj1, $obj2, $obj3]);
+
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('fooBar', 'bar'));
+
+        $result = $collection->matching($criteria);
+
+        self::assertCount(2, $result);
+        self::assertSame($obj1, $result->first());
+    }
+
+    #[IgnoreDeprecations]
+    public function testMatchingThrowsExceptionWhenBackedCollectionNotSelectable(): void
+    {
+        $lazyCollection = new LazyArrayCollection($this->createStub(Collection::class));
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The backed collection must implement Selectable to use matching().');
+
+        $lazyCollection->matching(Criteria::create(true));
+    }
+
+    #[IgnoreDeprecations]
+    public function testMatchingTriggersDeprecationWhenBackedCollectionNotSelectable(): void
+    {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/518');
+
+        $lazyCollection = new LazyArrayCollection($this->createStub(Collection::class));
+
+        // Trigger initialization with any method - deprecation happens during initialize()
+        $lazyCollection->isEmpty();
     }
 }
