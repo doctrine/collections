@@ -6,6 +6,16 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.6
+
+When extending `Doctrine\Common\Collections\AbstractLazyCollection`, the
+backing collection initialized in `doInitialize()` must implement
+`Doctrine\Common\Collections\Selectable`. Initializing with a collection that
+does not implement `Selectable` is deprecated and will throw an exception in 3.0.
+
+Also, implementing `ReadableCollection` without implementing `Selectable`
+deprecated and will be an error in 3.0.
+
 # Upgrade to 2.5
 
 Extending the following classes is deprecated and will no longer be possible in 3.0:
