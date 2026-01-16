@@ -8,6 +8,12 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## `ReadableCollection` now extends `Selectable`
+
+The `Doctrine\Common\Collections\ReadableCollection` interface now extends
+`Doctrine\Common\Collections\Selectable`. Any class implementing
+`ReadableCollection` must also implement `Selectable`.
+
 ## Readonly classes
 
 The following classes are now `readonly` classes, making all their properties immutable:
