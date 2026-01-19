@@ -30,7 +30,6 @@
         },
         {
             "name": "2.5",
-            "branchName": "2.5.x",
             "slug": "2.5",
             "maintained": false
         },
