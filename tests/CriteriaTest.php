@@ -9,32 +9,10 @@ use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Order;
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 
 class CriteriaTest extends TestCase
 {
-    use VerifyDeprecations;
-
-    #[IgnoreDeprecations]
-    public function testCreateLegacy(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
-
-        $criteria = Criteria::create(true);
-
-        self::assertInstanceOf(Criteria::class, $criteria);
-    }
-
-    #[IgnoreDeprecations]
-    public function testConstructorLegacy(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
-
-        new Criteria(new Comparison('test', '=', 'test'), null, 0, null, true);
-    }
-
     public function testCreate(): void
     {
         $criteria = Criteria::create();

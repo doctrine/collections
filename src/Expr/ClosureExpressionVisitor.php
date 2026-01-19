@@ -31,12 +31,6 @@ use function str_starts_with;
  */
 final class ClosureExpressionVisitor extends ExpressionVisitor
 {
-    public function __construct(
-        // @phpstan-ignore property.onlyWritten (that property is deprecated, kept for BC)
-        private readonly bool $accessRawFieldValues = false,
-    ) {
-    }
-
     /**
      * Accesses the raw field value of a given object.
      *
@@ -44,15 +38,6 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function getObjectFieldValue(object|array $object, string $field): mixed
     {
-        if (func_num_args() === 3) {
-            Deprecation::trigger(
-                'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/486',
-                'The `accessRawFieldValues` parameter passed to %s is deprecated and a no-op. You can remove it.',
-                __METHOD__,
-            );
-        }
-
         if (str_contains($field, '.')) {
             [$field, $subField] = explode('.', $field, 2);
             $object             = self::getObjectFieldValue($object, $field);
@@ -84,15 +69,6 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null): Closure
     {
-        if (func_num_args() === 4) {
-            Deprecation::trigger(
-                'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/486',
-                'The `accessRawFieldValues` parameter passed to %s is deprecated and a no-op. You can remove it.',
-                __METHOD__,
-            );
-        }
-
         if (! $next) {
             $next = static fn (): int => 0;
         }
