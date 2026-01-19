@@ -81,6 +81,8 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
 
     /**
      * Helper for sorting arrays of objects based on multiple fields + orientations.
+     *
+     * @return Closure(mixed, mixed): int
      */
     public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null): Closure
     {
@@ -171,7 +173,11 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
-    /** @param callable[] $expressions */
+    /**
+     * @param array<callable(object): bool> $expressions
+     *
+     * @return Closure(object): bool
+     */
     private function andExpressions(array $expressions): Closure
     {
         return static fn (object $object): bool => array_all(
@@ -180,7 +186,11 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         );
     }
 
-    /** @param callable[] $expressions */
+    /**
+     * @param array<callable(object): bool> $expressions
+     *
+     * @return Closure(object): bool
+     */
     private function orExpressions(array $expressions): Closure
     {
         return static fn (object $object): bool => array_any(
@@ -189,7 +199,11 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         );
     }
 
-    /** @param callable[] $expressions */
+    /**
+     * @param array<callable(object): bool> $expressions
+     *
+     * @return Closure(object): bool
+     */
     private function notExpression(array $expressions): Closure
     {
         return static fn (object $object) => ! $expressions[0]($object);
