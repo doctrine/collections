@@ -30,15 +30,6 @@ final class Criteria
      */
     public static function create(): static
     {
-        if (func_num_args() === 1) {
-            Deprecation::trigger(
-                'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/486',
-                'The `accessRawFieldValues` parameter passed to %s is deprecated and a no-op. You can remove it.',
-                __METHOD__,
-            );
-        }
-
         return new static();
     }
 
@@ -65,15 +56,6 @@ final class Criteria
         int $firstResult = 0,
         int|null $maxResults = null,
     ) {
-        if (func_num_args() === 5) {
-            Deprecation::trigger(
-                'doctrine/collections',
-                'https://github.com/doctrine/collections/pull/486',
-                'The `accessRawFieldValues` parameter passed to %s is deprecated and a no-op. You can remove it.',
-                __METHOD__,
-            );
-        }
-
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
 

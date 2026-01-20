@@ -9,9 +9,7 @@ use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -21,8 +19,6 @@ use function usort;
 #[Group('DDC-1637')]
 class ClosureExpressionVisitorTest extends TestCase
 {
-    use VerifyDeprecations;
-
     private ClosureExpressionVisitor $visitor;
 
     private ExpressionBuilder $builder;
@@ -38,16 +34,6 @@ class ClosureExpressionVisitorTest extends TestCase
         $closure = $this->visitor->walkComparison($this->builder->eq('foo.foo', 1));
         $this->assertTrue($closure(new TestObject(new TestObject(1))));
         $this->assertFalse($closure(new TestObject(new TestObject(2))));
-    }
-
-    #[IgnoreDeprecations]
-    public function testGetObjectFieldValueLegacy(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
-
-        $object = new TestObject();
-
-        $this->visitor->getObjectFieldValue($object, 'foo', true);
     }
 
     public function testGetEmbeddedObjectFieldValueAccessingRawValue(): void
@@ -328,17 +314,6 @@ class ClosureExpressionVisitorTest extends TestCase
         );
 
         $closure(new TestObject());
-    }
-
-    #[IgnoreDeprecations]
-    public function testSortByFieldLegacy(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/collections/pull/486');
-
-        $objects = [new TestObject('b'), new TestObject('a')];
-        $sort    = ClosureExpressionVisitor::sortByField('foo', 1, null, true);
-
-        usort($objects, $sort);
     }
 
     public function testSortByFieldAscending(): void
