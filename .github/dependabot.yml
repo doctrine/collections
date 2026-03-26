@@ -6,3 +6,8 @@ updates:
       interval: "weekly"
     labels:
       - "CI"
+    target-branch: "2.6.x"
+    groups:
+      doctrine:
+        patterns:
+          - "doctrine/*"
