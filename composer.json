@@ -34,7 +34,8 @@
     "homepage": "https://www.doctrine-project.org/projects/collections.html",
     "require": {
         "php": "^8.4",
-        "doctrine/deprecations": "^1"
+        "doctrine/deprecations": "^1",
+        "symfony/polyfill-php86": "^1.36"
     },
     "require-dev": {
         "ext-json": "*",

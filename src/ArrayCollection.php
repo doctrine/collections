@@ -8,6 +8,7 @@ use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Override;
+use SortDirection;
 use Stringable;
 use Traversable;
 
@@ -394,12 +395,12 @@ class ArrayCollection implements Collection, Selectable, Stringable
             $filtered = array_filter($filtered, $filter);
         }
 
-        $orderings = $criteria->orderings();
+        $orderings = $criteria->getOrderings();
 
         if ($orderings) {
             $next = null;
             foreach (array_reverse($orderings) as $field => $ordering) {
-                $next = ClosureExpressionVisitor::sortByField($field, $ordering === Order::Descending ? -1 : 1, $next);
+                $next = ClosureExpressionVisitor::sortByField($field, $ordering === SortDirection::Descending ? -1 : 1, $next);
             }
 
             uasort($filtered, $next);
