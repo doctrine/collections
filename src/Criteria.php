@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections;
 
+use Deprecated;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Deprecations\Deprecation;
+use SortDirection;
 
 use function func_num_args;
 
@@ -19,7 +21,7 @@ final class Criteria
 {
     private static ExpressionBuilder|null $expressionBuilder = null;
 
-    /** @var array<string, Order> */
+    /** @var array<string, Order|SortDirection> */
     private array $orderings = [];
 
     private int|null $firstResult = null;
@@ -48,7 +50,7 @@ final class Criteria
     /**
      * Construct a new Criteria.
      *
-     * @param array<string, Order>|null $orderings
+     * @param array<string, Order|SortDirection>|null $orderings
      */
     public function __construct(
         private Expression|null $expression = null,
@@ -129,22 +131,47 @@ final class Criteria
     /**
      * Gets the current orderings of this Criteria.
      *
+     * @return array<string, SortDirection>
+     */
+    public function getOrderings(): array
+    {
+        return array_map(
+            static fn (Order|SortDirection $order): SortDirection => $order instanceof Order
+                ? $order == Order::Ascending
+                    ? SortDirection::Ascending
+                    : SortDirection::Descending
+                : $order,
+            $this->orderings,
+        );
+    }
+
+    /**
+     * Gets the current orderings of this Criteria.
+     *
      * @return array<string, Order>
      */
+    #[Deprecated(message: 'Use getOrderings() instead.', since: 'doctrine/collections 3.1')]
     public function orderings(): array
     {
-        return $this->orderings;
+        return array_map(
+            static fn (Order|SortDirection $order): Order => $order instanceof SortDirection
+                ? $order == SortDirection::Ascending
+                    ? Order::Ascending
+                    : Order::Descending
+                : $order,
+            $this->orderings,
+        );
     }
 
     /**
      * Sets the ordering of the result of this Criteria.
      *
-     * Keys are field and values are the order, being a valid Order enum case.
+     * Keys are field and values are the order, being a valid SortDirection enum case.
      *
-     * @see Order::Ascending
-     * @see Order::Descending
+     * @see SortDirection::Ascending
+     * @see SortDirection::Descending
      *
-     * @param array<string, Order> $orderings
+     * @param array<string, Order|SortDirection> $orderings
      *
      * @return $this
      */

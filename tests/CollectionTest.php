@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\Attributes\Group;
+use SortDirection;
 
 use function count;
 use function is_string;
@@ -62,7 +63,7 @@ class CollectionTest extends CollectionTestCase
         $this->collection['two']   = $obj2 = new TestObjectPrivatePropertyOnly(10);
         $this->collection['three'] = $obj3 = new TestObjectPrivatePropertyOnly(78);
 
-        $criteria = Criteria::create()->orderBy(['fooBar' => Order::Ascending]);
+        $criteria = Criteria::create()->orderBy(['fooBar' => SortDirection::Ascending]);
 
         $col = $this->collection->matching($criteria);
 
@@ -76,7 +77,7 @@ class CollectionTest extends CollectionTestCase
     {
         $this->fillMatchingFixture();
 
-        $col = $this->collection->matching(new Criteria(null, ['foo' => Order::Descending]));
+        $col = $this->collection->matching(new Criteria(null, ['foo' => SortDirection::Descending]));
 
         self::assertInstanceOf(Collection::class, $col);
         self::assertNotSame($col, $this->collection);
@@ -96,5 +97,32 @@ class CollectionTest extends CollectionTestCase
         self::assertNotSame($col, $this->collection);
         self::assertEquals(1, count($col));
         self::assertEquals('baz', $col[1]->foo);
+    }
+
+    public function testMatchingOrderingMixedOrderTypes(): void
+    {
+        $this->collection[] = $obj1 = new TestObject();
+        $obj1->foo = 'c';
+        $obj1->bar = 1;
+
+        $this->collection[] = $obj2 = new TestObject();
+        $obj2->foo = 'a';
+        $obj2->bar = 2;
+
+        $this->collection[] = $obj3 = new TestObject();
+        $obj3->foo = 'b';
+        $obj3->bar = 3;
+
+        $criteria = Criteria::create()->orderBy([
+            'foo' => Order::Ascending,
+            'bar' => SortDirection::Descending,
+        ]);
+
+        $col = $this->collection->matching($criteria);
+
+        self::assertInstanceOf(Collection::class, $col);
+        self::assertCount(3, $col);
+        self::assertSame($obj2, $col->first());
+        self::assertSame($obj1, $col->last());
     }
 }
