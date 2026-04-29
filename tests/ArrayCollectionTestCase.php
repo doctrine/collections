@@ -6,12 +6,12 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 
+use SortDirection;
 use function array_keys;
 use function array_search;
 use function array_values;
@@ -300,7 +300,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['fooBar' => Order::Ascending]))
+                ->matching(new Criteria(null, ['fooBar' => SortDirection::Ascending]))
                 ->toArray(),
         );
     }
@@ -329,7 +329,7 @@ abstract class ArrayCollectionTestCase extends TestCase
                 'object1' => $object1,
             ],
             $collection
-                ->matching(new Criteria(null, ['foo' => Order::Ascending]))
+                ->matching(new Criteria(null, ['foo' => SortDirection::Ascending]))
                 ->toArray(),
         );
     }
@@ -444,7 +444,10 @@ abstract class ArrayCollectionTestCase extends TestCase
         self::assertSame(
             $expected,
             $collection
-                ->matching(new Criteria(null, ['foo' => Order::Descending, 'bar' => Order::Descending], 0, null))
+                ->matching(new Criteria(null, [
+                    'foo' => SortDirection::Descending,
+                    'bar' => SortDirection::Descending,
+                ], 0, null))
                 ->toArray(),
         );
     }

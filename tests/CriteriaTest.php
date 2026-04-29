@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\ExpressionBuilder;
-use Doctrine\Common\Collections\Order;
 use PHPUnit\Framework\TestCase;
 use SortDirection;
 
@@ -21,14 +20,13 @@ class CriteriaTest extends TestCase
         self::assertInstanceOf(Criteria::class, $criteria);
     }
 
-    #[IgnoreDeprecations]
     public function testConstructor(): void
     {
         $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria($expr, ['foo' => Order::Ascending], 10, 20);
+        $criteria = new Criteria($expr, ['foo' => SortDirection::Ascending], 10, 20);
 
         self::assertSame($expr, $criteria->getWhereExpression());
-        self::assertSame(['foo' => Order::Ascending], $criteria->orderings());
+        self::assertSame(['foo' => SortDirection::Ascending], $criteria->getOrderings());
         self::assertSame(10, $criteria->getFirstResult());
         self::assertSame(20, $criteria->getMaxResults());
     }
@@ -95,15 +93,6 @@ class CriteriaTest extends TestCase
         self::assertSame($expr, $criteria->getWhereExpression());
     }
 
-    #[IgnoreDeprecations]
-    public function testOrderings(): void
-    {
-        $criteria = Criteria::create()
-            ->orderBy(['foo' => SortDirection::Ascending]);
-
-        self::assertEquals(['foo' => Order::Ascending], $criteria->orderings());
-    }
-
     public function testExpr(): void
     {
         self::assertInstanceOf(ExpressionBuilder::class, Criteria::expr());
@@ -112,52 +101,11 @@ class CriteriaTest extends TestCase
     public function testGetOrderings(): void
     {
         $criteria = Criteria::create()
-            ->orderBy(['foo' => SortDirection::Ascending, 'bar' => Order::Descending]);
+            ->orderBy(['foo' => SortDirection::Ascending, 'bar' => SortDirection::Descending]);
 
         self::assertEquals([
             'foo' => SortDirection::Ascending,
             'bar' => SortDirection::Descending,
         ], $criteria->getOrderings());
-    }
-
-    #[IgnoreDeprecations]
-    public function testOrderingsWithMixedOrderTypes(): void
-    {
-        $criteria = Criteria::create()
-            ->orderBy([
-                'foo' => SortDirection::Ascending,
-                'bar' => Order::Descending,
-                'baz' => SortDirection::Descending,
-            ]);
-
-        $orderings = $criteria->orderings();
-
-        self::assertCount(3, $orderings);
-        self::assertEquals(Order::Ascending, $orderings['foo']);
-        self::assertEquals(Order::Descending, $orderings['bar']);
-        self::assertEquals(Order::Descending, $orderings['baz']);
-    }
-
-    #[IgnoreDeprecations]
-    public function testConstructorWithMixedOrderTypes(): void
-    {
-        $expr     = new Comparison('field', '=', 'value');
-        $criteria = new Criteria($expr, [
-            'foo' => Order::Ascending,
-            'bar' => SortDirection::Descending,
-        ], 5, 15);
-
-        self::assertSame($expr, $criteria->getWhereExpression());
-
-        $getOrderings = $criteria->getOrderings();
-        self::assertEquals(SortDirection::Ascending, $getOrderings['foo']);
-        self::assertEquals(SortDirection::Descending, $getOrderings['bar']);
-
-        $orderings = $criteria->orderings();
-        self::assertEquals(Order::Ascending, $orderings['foo']);
-        self::assertEquals(Order::Descending, $orderings['bar']);
-
-        self::assertSame(5, $criteria->getFirstResult());
-        self::assertSame(15, $criteria->getMaxResults());
     }
 }
