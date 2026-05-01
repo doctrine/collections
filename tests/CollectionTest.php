@@ -98,31 +98,4 @@ class CollectionTest extends CollectionTestCase
         self::assertEquals(1, count($col));
         self::assertEquals('baz', $col[1]->foo);
     }
-
-    public function testMatchingOrderingMixedOrderTypes(): void
-    {
-        $this->collection[] = $obj1 = new TestObject();
-        $obj1->foo = 'c';
-        $obj1->bar = 1;
-
-        $this->collection[] = $obj2 = new TestObject();
-        $obj2->foo = 'a';
-        $obj2->bar = 2;
-
-        $this->collection[] = $obj3 = new TestObject();
-        $obj3->foo = 'b';
-        $obj3->bar = 3;
-
-        $criteria = Criteria::create()->orderBy([
-            'foo' => Order::Ascending,
-            'bar' => SortDirection::Descending,
-        ]);
-
-        $col = $this->collection->matching($criteria);
-
-        self::assertInstanceOf(Collection::class, $col);
-        self::assertCount(3, $col);
-        self::assertSame($obj2, $col->first());
-        self::assertSame($obj1, $col->last());
-    }
 }

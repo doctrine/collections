@@ -6,6 +6,20 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.0
+
+## Removed `Order` enum
+
+PHP 8.6 provides a native `\SortDirection` enum that should be used instead of
+the `Doctrine\Common\Collections\Order` enum, which is removed.
+
+`\SortDirection` is polyfilled by the `symfony/polyfill-php86` package, that we
+require.
+
+As a consequence, `Criteria::orderings()`, which returns an array of `Order`
+instances, is removed. Instead, use `Criteria::getOrderings()`, which returns
+an array of `\SortDirection` instances.
+
 # Upgrade to 3.1
 
 ## Deprecated `Order` enum
