@@ -17,14 +17,14 @@ use Traversable;
  * @template-implements Collection<TKey,T>
  * @template-implements Selectable<TKey,T>
  */
-abstract class AbstractLazyCollection implements Collection, Selectable
+abstract class AbstractLazyCollection<TKey, T> implements Collection<TKey, T>, Selectable<TKey, T>
 {
     /**
      * The backed collection to use
      *
      * @var Collection<TKey,T>|null
      */
-    protected Collection|null $collection;
+    protected Collection<TKey, T>|null $collection;
 
     protected bool $initialized = false;
 
@@ -37,7 +37,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function add(mixed $element): void
+    public function add(T $element): void
     {
         $this->initialize();
 
@@ -68,7 +68,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function remove(string|int $key): mixed
+    public function remove(TKey $key): T|null
     {
         $this->initialize();
 
@@ -76,7 +76,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function removeElement(mixed $element): bool
+    public function removeElement(T $element): bool
     {
         $this->initialize();
 
@@ -84,7 +84,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function containsKey(string|int $key): bool
+    public function containsKey(TKey $key): bool
     {
         $this->initialize();
 
@@ -92,7 +92,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function get(string|int $key): mixed
+    public function get(TKey $key): T|null
     {
         $this->initialize();
 
@@ -116,7 +116,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function set(string|int $key, mixed $value): void
+    public function set(TKey $key, T $value): void
     {
         $this->initialize();
         $this->collection->set($key, $value);
@@ -131,7 +131,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function first(): mixed
+    public function first(): T|false
     {
         $this->initialize();
 
@@ -139,7 +139,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function last(): mixed
+    public function last(): T|false
     {
         $this->initialize();
 
@@ -147,7 +147,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function key(): string|int|null
+    public function key(): TKey|null
     {
         $this->initialize();
 
@@ -155,7 +155,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function current(): mixed
+    public function current(): T|false
     {
         $this->initialize();
 
@@ -163,7 +163,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function next(): mixed
+    public function next(): T|false
     {
         $this->initialize();
 
@@ -179,7 +179,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function findFirst(Closure $p): mixed
+    public function findFirst(Closure $p): T|null
     {
         $this->initialize();
 
@@ -187,7 +187,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function filter(Closure $p): Collection
+    public function filter(Closure $p): Collection<TKey, T>
     {
         $this->initialize();
 
@@ -203,7 +203,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     }
 
     #[Override]
-    public function map(Closure $func): Collection
+    public function map<U>(Closure $func): Collection<TKey, U>
     {
         $this->initialize();
 
@@ -327,7 +327,7 @@ abstract class AbstractLazyCollection implements Collection, Selectable
     abstract protected function doInitialize(): void;
 
     #[Override]
-    public function matching(Criteria $criteria): ReadableCollection
+    public function matching(Criteria $criteria): ReadableCollection<TKey, T>
     {
         $this->initialize();
 

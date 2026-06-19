@@ -19,7 +19,7 @@ namespace Doctrine\Common\Collections;
  * @phpstan-template TKey as array-key
  * @phpstan-template-covariant T
  */
-interface Selectable
+interface Selectable<TKey, T>
 {
     /**
      * Selects all elements from a selectable that match the expression and
@@ -28,5 +28,5 @@ interface Selectable
      * @return ReadableCollection<mixed>&Selectable<mixed>
      * @phpstan-return ReadableCollection<TKey,T>&Selectable<TKey,T>
      */
-    public function matching(Criteria $criteria): ReadableCollection;
+    public function matching(Criteria $criteria): ReadableCollection<TKey, T>;
 }
