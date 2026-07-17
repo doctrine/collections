@@ -50,7 +50,7 @@ use const ARRAY_FILTER_USE_BOTH;
  * @template-implements Selectable<TKey,T>
  * @phpstan-consistent-constructor
  */
-class ArrayCollection implements Collection, Selectable, Stringable
+class ArrayCollection<TKey, T> implements Collection<TKey, T>, Selectable<TKey, T>, Stringable
 {
     /**
      * An array containing the entries of this collection.
@@ -77,7 +77,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     #[Override]
-    public function first(): mixed
+    public function first(): T|false
     {
         return reset($this->elements);
     }
@@ -102,31 +102,31 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     #[Override]
-    public function last(): mixed
+    public function last(): T|false
     {
         return end($this->elements);
     }
 
     #[Override]
-    public function key(): int|string|null
+    public function key(): TKey|null
     {
         return key($this->elements);
     }
 
     #[Override]
-    public function next(): mixed
+    public function next(): T|false
     {
         return next($this->elements);
     }
 
     #[Override]
-    public function current(): mixed
+    public function current(): T|false
     {
         return current($this->elements);
     }
 
     #[Override]
-    public function remove(string|int $key): mixed
+    public function remove(TKey $key): T|null
     {
         if (! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
             return null;
@@ -139,7 +139,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     #[Override]
-    public function removeElement(mixed $element): bool
+    public function removeElement(T $element): bool
     {
         $key = array_search($element, $this->elements, true);
 
@@ -205,7 +205,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     #[Override]
-    public function containsKey(string|int $key): bool
+    public function containsKey(TKey $key): bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
@@ -239,7 +239,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     #[Override]
-    public function get(string|int $key): mixed
+    public function get(TKey $key): T|null
     {
         return $this->elements[$key] ?? null;
     }
@@ -264,7 +264,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     }
 
     #[Override]
-    public function set(string|int $key, mixed $value): void
+    public function set(TKey $key, T $value): void
     {
         $this->elements[$key] = $value;
     }
@@ -274,7 +274,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * be a backwards-incompatible change to remove this method
      */
     #[Override]
-    public function add(mixed $element): void
+    public function add(T $element): void
     {
         $this->elements[] = $element;
     }
@@ -304,7 +304,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @phpstan-template U
      */
     #[Override]
-    public function map(Closure $func): Collection
+    public function map<U>(Closure $func): Collection<TKey, U>
     {
         return $this->createFrom(array_map($func, $this->elements));
     }
@@ -322,13 +322,13 @@ class ArrayCollection implements Collection, Selectable, Stringable
      * @phpstan-return static<TKey,T>
      */
     #[Override]
-    public function filter(Closure $p): Collection
+    public function filter(Closure $p): Collection<TKey, T>
     {
         return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
 
     #[Override]
-    public function findFirst(Closure $p): mixed
+    public function findFirst(Closure $p): T|null
     {
         return array_find(
             $this->elements,
@@ -384,7 +384,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
     /** @phpstan-return Collection<TKey, T>&Selectable<TKey,T> */
     #[Override]
-    public function matching(Criteria $criteria): Collection
+    public function matching(Criteria $criteria): Collection<TKey, T>
     {
         $expr     = $criteria->getWhereExpression();
         $filtered = $this->elements;
