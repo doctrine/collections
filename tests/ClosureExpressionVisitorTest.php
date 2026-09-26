@@ -6,6 +6,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use ArrayAccess;
 use ArrayIterator;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
@@ -485,6 +486,51 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertEquals('a', $objects[0]->getBar());
         self::assertEquals('b', $objects[1]->getBar());
         self::assertEquals('c', $objects[2]->getBar());
+    }
+
+    public function testSortDelegateWithEqualButNotIdenticalObjectPrimaryField(): void
+    {
+        // Value-equal but not identical primary values must still fall through to
+        // the secondary field.
+        $sameInstant = static fn (): DateTimeImmutable => new DateTimeImmutable('2024-12-10 16:04:11');
+
+        $objects = [
+            new TestObject($sameInstant(), 5),
+            new TestObject($sameInstant(), 6),
+        ];
+
+        self::assertNotSame($objects[0]->getFoo(), $objects[1]->getFoo());
+        self::assertEquals($objects[0]->getFoo(), $objects[1]->getFoo());
+
+        $sort = ClosureExpressionVisitor::sortByField('bar', -1, null, true);
+        $sort = ClosureExpressionVisitor::sortByField('foo', -1, $sort, true);
+
+        usort($objects, $sort);
+
+        self::assertEquals(6, $objects[0]->getBar());
+        self::assertEquals(5, $objects[1]->getBar());
+    }
+
+    public function testSortByFieldComparatorIsAntisymmetricForEqualButNotIdenticalObjects(): void
+    {
+        // Swapping the input order of two value-equal elements must not change
+        // which one sorts first.
+        $sameInstant = static fn (): DateTimeImmutable => new DateTimeImmutable('2024-12-10 16:04:11');
+
+        $element5 = new TestObject($sameInstant(), 5);
+        $element6 = new TestObject($sameInstant(), 6);
+
+        $sort = ClosureExpressionVisitor::sortByField('bar', -1, null, true);
+        $sort = ClosureExpressionVisitor::sortByField('foo', -1, $sort, true);
+
+        $orderedFromAscendingInput = [$element5, $element6];
+        usort($orderedFromAscendingInput, $sort);
+
+        $orderedFromDescendingInput = [$element6, $element5];
+        usort($orderedFromDescendingInput, $sort);
+
+        self::assertEquals(6, $orderedFromAscendingInput[0]->getBar());
+        self::assertEquals(6, $orderedFromDescendingInput[0]->getBar());
     }
 
     public function testArrayComparison(): void

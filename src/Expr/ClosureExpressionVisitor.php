@@ -170,11 +170,13 @@ class ClosureExpressionVisitor extends ExpressionVisitor
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name, $accessRawFieldValues);
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name, $accessRawFieldValues);
 
-            if ($aValue === $bValue) {
+            $comparison = $aValue <=> $bValue;
+
+            if ($comparison === 0) {
                 return $next($a, $b);
             }
 
-            return ($aValue > $bValue ? 1 : -1) * $orientation;
+            return $comparison * $orientation;
         };
     }
 
