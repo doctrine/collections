@@ -40,8 +40,8 @@
     "require-dev": {
         "ext-json": "*",
         "doctrine/coding-standard": "^14",
-        "phpstan/phpstan": "^2.1.30",
-        "phpstan/phpstan-phpunit": "^2.0.7",
+        "phpstan/phpstan": "2.2.16",
+        "phpstan/phpstan-phpunit": "2.0.18",
         "phpunit/phpunit": "^10.5.58 || ^11.5.42 || ^12.4"
     },
     "autoload": {
