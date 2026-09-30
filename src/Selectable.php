@@ -25,8 +25,7 @@ interface Selectable
      * Selects all elements from a selectable that match the expression and
      * returns a new collection containing these elements and preserved keys.
      *
-     * @return ReadableCollection<mixed>&Selectable<mixed>
-     * @phpstan-return ReadableCollection<TKey,T>&Selectable<TKey,T>
+     * @return ReadableCollection<TKey,T>
      */
     public function matching(Criteria $criteria): ReadableCollection;
 }
