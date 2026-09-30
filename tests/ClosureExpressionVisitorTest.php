@@ -245,6 +245,21 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertFalse($closure(new TestObject(0, 0)));
     }
 
+    public function testWalkAndCompositeExpressionSupportsArrays(): void
+    {
+        $closure = $this->visitor->walkCompositeExpression(
+            $this->builder->andX(
+                $this->builder->eq('foo', 1),
+                $this->builder->eq('bar', 1),
+            ),
+        );
+
+        self::assertTrue($closure(['foo' => 1, 'bar' => 1]));
+        self::assertFalse($closure(['foo' => 1, 'bar' => 0]));
+        self::assertFalse($closure(['foo' => 0, 'bar' => 1]));
+        self::assertFalse($closure(['foo' => 0, 'bar' => 0]));
+    }
+
     public function testWalkOrCompositeExpression(): void
     {
         $closure = $this->visitor->walkCompositeExpression(
@@ -258,6 +273,21 @@ class ClosureExpressionVisitorTest extends TestCase
         self::assertTrue($closure(new TestObject(1, 0)));
         self::assertTrue($closure(new TestObject(0, 1)));
         self::assertFalse($closure(new TestObject(0, 0)));
+    }
+
+    public function testWalkOrCompositeExpressionSupportsArrays(): void
+    {
+        $closure = $this->visitor->walkCompositeExpression(
+            $this->builder->orX(
+                $this->builder->eq('foo', 1),
+                $this->builder->eq('bar', 1),
+            ),
+        );
+
+        self::assertTrue($closure(['foo' => 1, 'bar' => 1]));
+        self::assertTrue($closure(['foo' => 1, 'bar' => 0]));
+        self::assertTrue($closure(['foo' => 0, 'bar' => 1]));
+        self::assertFalse($closure(['foo' => 0, 'bar' => 0]));
     }
 
     public function testWalkOrAndCompositeExpression(): void
@@ -317,6 +347,18 @@ class ClosureExpressionVisitorTest extends TestCase
 
         self::assertFalse($closure(new TestObject(1)));
         self::assertTrue($closure(new TestObject(0)));
+    }
+
+    public function testWalkNotCompositeExpressionSupportsArrays(): void
+    {
+        $closure = $this->visitor->walkCompositeExpression(
+            $this->builder->not(
+                $this->builder->eq('foo', 1),
+            ),
+        );
+
+        self::assertFalse($closure(['foo' => 1]));
+        self::assertTrue($closure(['foo' => 0]));
     }
 
     public function testWalkUnknownCompositeExpressionThrowException(): void

@@ -174,38 +174,38 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
-     * @param array<callable(object): bool> $expressions
+     * @param array<callable(object|mixed[]): bool> $expressions
      *
-     * @return Closure(object): bool
+     * @return Closure(object|mixed[]): bool
      */
     private function andExpressions(array $expressions): Closure
     {
-        return static fn (object $object): bool => array_all(
+        return static fn (object|array $object): bool => array_all(
             $expressions,
             static fn (callable $expression): bool => (bool) $expression($object),
         );
     }
 
     /**
-     * @param array<callable(object): bool> $expressions
+     * @param array<callable(object|mixed[]): bool> $expressions
      *
-     * @return Closure(object): bool
+     * @return Closure(object|mixed[]): bool
      */
     private function orExpressions(array $expressions): Closure
     {
-        return static fn (object $object): bool => array_any(
+        return static fn (object|array $object): bool => array_any(
             $expressions,
             static fn (callable $expression): bool => (bool) $expression($object),
         );
     }
 
     /**
-     * @param array<callable(object): bool> $expressions
+     * @param array<callable(object|mixed[]): bool> $expressions
      *
-     * @return Closure(object): bool
+     * @return Closure(object|mixed[]): bool
      */
     private function notExpression(array $expressions): Closure
     {
-        return static fn (object $object) => ! $expressions[0]($object);
+        return static fn (object|array $object) => ! $expressions[0]($object);
     }
 }
