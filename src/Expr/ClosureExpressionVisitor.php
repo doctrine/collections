@@ -28,6 +28,9 @@ use function str_starts_with;
  *
  * This closure can be used with {@Collection#filter()} and is used internally
  * by {@ArrayCollection#select()}.
+ *
+ * @phpstan-type ObjectOrMap = object|array<string, mixed>
+ * @phpstan-type ObjectOrMapFilter = Closure(ObjectOrMap): bool
  */
 final class ClosureExpressionVisitor extends ExpressionVisitor
 {
@@ -38,9 +41,9 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
-     * Accesses the raw field value of a given object.
+     * Accesses the raw field value of a given object or map.
      *
-     * @param object|mixed[] $object
+     * @phpstan-param ObjectOrMap $object
      */
     public static function getObjectFieldValue(object|array $object, string $field): mixed
     {
@@ -82,7 +85,7 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
     /**
      * Helper for sorting arrays of objects based on multiple fields + orientations.
      *
-     * @return Closure(mixed, mixed): int
+     * @phpstan-return Closure(ObjectOrMap, ObjectOrMap): int
      */
     public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null): Closure
     {
@@ -99,7 +102,7 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
             $next = static fn (): int => 0;
         }
 
-        return static function (mixed $a, mixed $b) use ($name, $next, $orientation): int {
+        return static function (object|array $a, object|array $b) use ($name, $next, $orientation): int {
             $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
             $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
 
@@ -111,6 +114,9 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         };
     }
 
+    /**
+     * @phpstan-return ObjectOrMapFilter
+     */
     #[Override]
     public function walkComparison(Comparison $comparison): Closure
     {
@@ -156,6 +162,9 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
         return $value->getValue();
     }
 
+    /**
+     * @phpstan-return ObjectOrMapFilter
+     */
     #[Override]
     public function walkCompositeExpression(CompositeExpression $expr): Closure
     {
@@ -174,38 +183,49 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /**
-     * @param array<callable(object|mixed[]): bool> $expressions
+     * {@inheritDoc}
      *
-     * @return Closure(object|mixed[]): bool
+     * @phpstan-return ($expr is Comparison|CompositeExpression ? ObjectOrMapFilter : mixed)
+     */
+    #[Override]
+    public function dispatch(Expression $expr): mixed
+    {
+        return parent::dispatch($expr);
+    }
+
+    /**
+     * @phpstan-param list<ObjectOrMapFilter> $expressions
+     *
+     * @phpstan-return ObjectOrMapFilter
      */
     private function andExpressions(array $expressions): Closure
     {
         return static fn (object|array $object): bool => array_all(
             $expressions,
-            static fn (callable $expression): bool => (bool) $expression($object),
+            static fn (Closure $expression): bool => (bool) $expression($object),
         );
     }
 
     /**
-     * @param array<callable(object|mixed[]): bool> $expressions
+     * @phpstan-param list<ObjectOrMapFilter> $expressions
      *
-     * @return Closure(object|mixed[]): bool
+     * @phpstan-return ObjectOrMapFilter
      */
     private function orExpressions(array $expressions): Closure
     {
         return static fn (object|array $object): bool => array_any(
             $expressions,
-            static fn (callable $expression): bool => (bool) $expression($object),
+            static fn (Closure $expression): bool => (bool) $expression($object),
         );
     }
 
     /**
-     * @param array<callable(object|mixed[]): bool> $expressions
+     * @phpstan-param list<ObjectOrMapFilter> $expressions
      *
-     * @return Closure(object|mixed[]): bool
+     * @phpstan-return ObjectOrMapFilter
      */
     private function notExpression(array $expressions): Closure
     {
-        return static fn (object|array $object) => ! $expressions[0]($object);
+        return static fn (object|array $object): bool => ! $expressions[0]($object);
     }
 }
