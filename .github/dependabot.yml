@@ -1,5 +1,16 @@
 version: 2
 updates:
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "Dependencies"
+    target-branch: "2.6.x"
+    groups:
+      phpstan:
+        patterns:
+          - "phpstan/*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
