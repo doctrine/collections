@@ -202,7 +202,7 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
     {
         return static fn (object|array $object): bool => array_all(
             $expressions,
-            static fn (Closure $expression): bool => (bool) $expression($object),
+            static fn (Closure $expression): bool => $expression($object),
         );
     }
 
@@ -215,7 +215,7 @@ final class ClosureExpressionVisitor extends ExpressionVisitor
     {
         return static fn (object|array $object): bool => array_any(
             $expressions,
-            static fn (Closure $expression): bool => (bool) $expression($object),
+            static fn (Closure $expression): bool => $expression($object),
         );
     }
 

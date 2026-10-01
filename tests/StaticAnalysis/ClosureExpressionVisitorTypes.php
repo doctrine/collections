@@ -57,4 +57,21 @@ final class ClosureExpressionVisitorTypes
 
         $collection->matching($criteria);
     }
+
+    public function compositeChildren(ClosureExpressionVisitor $visitor, stdClass $object): void
+    {
+        $expression = new CompositeExpression(CompositeExpression::TYPE_AND, [
+            new Comparison('foo', Comparison::EQ, 1),
+            new CompositeExpression(CompositeExpression::TYPE_OR, [
+                new Comparison('bar', Comparison::EQ, 2),
+            ]),
+        ]);
+
+        foreach ($expression->getExpressionList() as $child) {
+            $filter = $visitor->dispatch($child);
+
+            $filter($object);
+            $filter(['foo' => 1]);
+        }
+    }
 }
