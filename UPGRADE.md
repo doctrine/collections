@@ -6,6 +6,18 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 3.2
+
+## Deprecated `ExpressionVisitor::dispatch()`
+
+That method takes an argument and just calls its `visit()` method, passing
+itself as the argument. Do so yourself instead.
+
+```diff
+-    $visitor->dispatch($expr);
++    $expr->visit($visitor);
+```
+
 # Upgrade to 3.1
 
 ## Deprecated `Order` enum

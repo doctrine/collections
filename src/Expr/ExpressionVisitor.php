@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Common\Collections\Expr;
 
+use Deprecated;
+
 /**
  * An Expression visitor walks a graph of expressions and turns them into a
  * query for the underlying implementation.
@@ -28,6 +30,7 @@ abstract class ExpressionVisitor
     /**
      * Dispatches walking an expression to the appropriate handler.
      */
+    #[Deprecated('Use Expression::visit() instead', '3.2.0')]
     public function dispatch(Expression $expr): mixed
     {
         return $expr->visit($this);

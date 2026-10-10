@@ -392,7 +392,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
 
         if ($expr) {
             $visitor  = new ClosureExpressionVisitor();
-            $filter   = $visitor->dispatch($expr);
+            $filter   = $expr->visit($visitor);
             $filtered = array_filter($filtered, $filter);
         }
 
