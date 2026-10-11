@@ -30,7 +30,7 @@ use Override;
  * @template-extends ReadableCollection<TKey, T>
  * @template-extends ArrayAccess<TKey, T>
  */
-interface Collection extends ReadableCollection, ArrayAccess
+interface Collection<TKey, T> extends ReadableCollection<TKey, T>, ArrayAccess
 {
     /**
      * Adds an element at the end of the collection.
@@ -38,7 +38,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @param mixed $element The element to add.
      * @phpstan-param T $element
      */
-    public function add(mixed $element): void;
+    public function add(T $element): void;
 
     /**
      * Clears the collection, removing all elements.
@@ -54,7 +54,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      * @phpstan-return T|null
      */
-    public function remove(string|int $key): mixed;
+    public function remove(TKey $key): T|null;
 
     /**
      * Removes the specified element from the collection, if it is found.
@@ -64,7 +64,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeElement(mixed $element): bool;
+    public function removeElement(T $element): bool;
 
     /**
      * Sets an element in the collection at the specified key/index.
@@ -74,7 +74,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @phpstan-param TKey $key
      * @phpstan-param T $value
      */
-    public function set(string|int $key, mixed $value): void;
+    public function set(TKey $key, T $value): void;
 
     /**
      * @phpstan-param Closure(T):U $func
@@ -85,7 +85,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @phpstan-template U
      */
     #[Override]
-    public function map(Closure $func): self;
+    public function map<U>(Closure $func): self<TKey, U>;
 
     /**
      * @phpstan-param Closure(T, TKey):bool $p
@@ -94,7 +94,7 @@ interface Collection extends ReadableCollection, ArrayAccess
      * @phpstan-return Collection<TKey, T>
      */
     #[Override]
-    public function filter(Closure $p): self;
+    public function filter(Closure $p): self<TKey, T>;
 
     /**
      * @phpstan-param Closure(TKey, T):bool $p

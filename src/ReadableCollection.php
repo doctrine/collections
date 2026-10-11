@@ -14,7 +14,7 @@ use IteratorAggregate;
  * @template-extends IteratorAggregate<TKey, T>
  * @template-extends Selectable<TKey, T>
  */
-interface ReadableCollection extends Countable, IteratorAggregate, Selectable
+interface ReadableCollection<TKey, T> extends Countable, IteratorAggregate, Selectable<TKey, T>
 {
     /**
      * Checks whether an element is contained in the collection.
@@ -46,7 +46,7 @@ interface ReadableCollection extends Countable, IteratorAggregate, Selectable
      * @return bool TRUE if the collection contains an element with the specified key/index,
      *              FALSE otherwise.
      */
-    public function containsKey(string|int $key): bool;
+    public function containsKey(TKey $key): bool;
 
     /**
      * Gets the element at the specified key/index.
@@ -56,7 +56,7 @@ interface ReadableCollection extends Countable, IteratorAggregate, Selectable
      *
      * @phpstan-return T|null
      */
-    public function get(string|int $key): mixed;
+    public function get(TKey $key): T|null;
 
     /**
      * Gets all keys/indices of the collection.
@@ -89,35 +89,35 @@ interface ReadableCollection extends Countable, IteratorAggregate, Selectable
      *
      * @phpstan-return T|false
      */
-    public function first(): mixed;
+    public function first(): T|false;
 
     /**
      * Sets the internal iterator to the last element in the collection and returns this element.
      *
      * @phpstan-return T|false
      */
-    public function last(): mixed;
+    public function last(): T|false;
 
     /**
      * Gets the key/index of the element at the current iterator position.
      *
      * @phpstan-return TKey|null
      */
-    public function key(): int|string|null;
+    public function key(): TKey|null;
 
     /**
      * Gets the element of the collection at the current iterator position.
      *
      * @phpstan-return T|false
      */
-    public function current(): mixed;
+    public function current(): T|false;
 
     /**
      * Moves the internal iterator position to the next element and returns this element.
      *
      * @phpstan-return T|false
      */
-    public function next(): mixed;
+    public function next(): T|false;
 
     /**
      * Extracts a slice of $length elements starting at position $offset from the Collection.
@@ -154,7 +154,7 @@ interface ReadableCollection extends Countable, IteratorAggregate, Selectable
      * @return ReadableCollection<mixed> A collection with the results of the filter operation.
      * @phpstan-return ReadableCollection<TKey, T>
      */
-    public function filter(Closure $p): self;
+    public function filter(Closure $p): self<TKey, T>;
 
     /**
      * Applies the given function to each element in the collection and returns
@@ -167,7 +167,7 @@ interface ReadableCollection extends Countable, IteratorAggregate, Selectable
      *
      * @phpstan-template U
      */
-    public function map(Closure $func): self;
+    public function map<U>(Closure $func): self<TKey, U>;
 
     /**
      * Partitions this collection in two collections according to a predicate.
@@ -218,7 +218,7 @@ interface ReadableCollection extends Countable, IteratorAggregate, Selectable
      *               null if no element respects the predicate.
      * @phpstan-return T|null
      */
-    public function findFirst(Closure $p): mixed;
+    public function findFirst(Closure $p): T|null;
 
     /**
      * Applies iteratively the given function to each element in the collection,

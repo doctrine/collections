@@ -21,7 +21,7 @@ class AbstractLazyArrayCollectionTest extends ArrayCollectionTestCase
     #[Override]
     protected function buildCollection(array $elements = []): Collection
     {
-        return new LazyArrayCollection(new ArrayCollection($elements));
+        return new LazyArrayCollection(new ArrayCollection::<int|string, int|float|string|bool|array|object|null>($elements));
     }
 
     public function testLazyCollection(): void

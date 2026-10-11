@@ -24,13 +24,13 @@ class AbstractLazyCollectionTest extends CollectionTestCase
 {
     protected function setUp(): void
     {
-        $this->collection = new LazyArrayCollection(new ArrayCollection());
+        $this->collection = new LazyArrayCollection(new ArrayCollection::<int|string, int|float|string|bool|array|object|null>());
     }
 
     /** @phpstan-param mixed[] $elements */
     private function buildCollection(array $elements): LazyArrayCollection
     {
-        return new LazyArrayCollection(new ArrayCollection($elements));
+        return new LazyArrayCollection(new ArrayCollection::<int|string, int|float|string|bool|array|object|null>($elements));
     }
 
     public function testClearInitializes(): void

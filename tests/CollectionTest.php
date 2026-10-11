@@ -22,7 +22,7 @@ class CollectionTest extends CollectionTestCase
 
     protected function setUp(): void
     {
-        $this->collection = new ArrayCollection();
+        $this->collection = new ArrayCollection::<int|string, int|float|string|bool|array|object|null>();
     }
 
     public function testToString(): void
