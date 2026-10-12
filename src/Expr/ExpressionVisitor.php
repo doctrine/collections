@@ -27,6 +27,10 @@ abstract class ExpressionVisitor
 
     /**
      * Dispatches walking an expression to the appropriate handler.
+     *
+     * The return type is the one of the handler the expression dispatches to.
+     * Concrete visitors are expected to narrow it down, see
+     * {@see ClosureExpressionVisitor::dispatch()}.
      */
     public function dispatch(Expression $expr): mixed
     {

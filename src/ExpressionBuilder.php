@@ -18,16 +18,25 @@ use Doctrine\Common\Collections\Expr\Value;
  */
 final class ExpressionBuilder
 {
+    /**
+     * @param Comparison|CompositeExpression ...$expressions
+     */
     public function andX(Expression ...$expressions): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_AND, $expressions);
     }
 
+    /**
+     * @param Comparison|CompositeExpression ...$expressions
+     */
     public function orX(Expression ...$expressions): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_OR, $expressions);
     }
 
+    /**
+     * @param Comparison|CompositeExpression $expression
+     */
     public function not(Expression $expression): CompositeExpression
     {
         return new CompositeExpression(CompositeExpression::TYPE_NOT, [$expression]);

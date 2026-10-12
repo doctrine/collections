@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Common\Collections;
 
 use Deprecated;
+use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Deprecations\Deprecation;
@@ -102,6 +103,8 @@ final class Criteria
      * Appends the where expression to evaluate when this Criteria is searched for
      * using an AND with previous expression.
      *
+     * @param Comparison|CompositeExpression $expression
+     *
      * @return $this
      */
     public function andWhere(Expression $expression): static
@@ -110,10 +113,10 @@ final class Criteria
             return $this->where($expression);
         }
 
-        $this->expression = new CompositeExpression(
-            CompositeExpression::TYPE_AND,
-            [$this->expression, $expression],
-        );
+        $expressions = [$this->expression, $expression];
+
+        // @phpstan-ignore argument.type (the stored expression may be a `Value`, which is not composite-safe)
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_AND, $expressions);
 
         return $this;
     }
@@ -121,6 +124,8 @@ final class Criteria
     /**
      * Appends the where expression to evaluate when this Criteria is searched for
      * using an OR with previous expression.
+     *
+     * @param Comparison|CompositeExpression $expression
      *
      * @return $this
      */
@@ -130,10 +135,10 @@ final class Criteria
             return $this->where($expression);
         }
 
-        $this->expression = new CompositeExpression(
-            CompositeExpression::TYPE_OR,
-            [$this->expression, $expression],
-        );
+        $expressions = [$this->expression, $expression];
+
+        // @phpstan-ignore argument.type (the stored expression may be a `Value`, which is not composite-safe)
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_OR, $expressions);
 
         return $this;
     }

@@ -20,11 +20,11 @@ final readonly class CompositeExpression implements Expression
     final public const string TYPE_OR  = 'OR';
     final public const string TYPE_NOT = 'NOT';
 
-    /** @var list<Expression> */
+    /** @var list<Comparison|CompositeExpression> */
     private array $expressions;
 
     /**
-     * @param Expression[] $expressions
+     * @param array<array-key, Comparison|CompositeExpression> $expressions
      *
      * @throws RuntimeException
      */
@@ -54,7 +54,7 @@ final readonly class CompositeExpression implements Expression
     /**
      * Returns the list of expressions nested in this composite.
      *
-     * @return list<Expression>
+     * @return list<Comparison|CompositeExpression>
      */
     public function getExpressionList(): array
     {
