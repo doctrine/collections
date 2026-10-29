@@ -31,7 +31,7 @@ use function in_array;
 use function key;
 use function next;
 use function reset;
-use function spl_object_hash;
+use function spl_object_id;
 use function uasort;
 
 use const ARRAY_FILTER_USE_BOTH;
@@ -368,7 +368,7 @@ class ArrayCollection implements Collection, Selectable, Stringable
     #[Override]
     public function __toString(): string
     {
-        return self::class . '@' . spl_object_hash($this);
+        return self::class . '@' . spl_object_id($this);
     }
 
     #[Override]
