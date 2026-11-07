@@ -21,7 +21,7 @@ class ArrayCollectionTest extends ArrayCollectionTestCase
     #[Override]
     protected function buildCollection(array $elements = []): Collection
     {
-        return new ArrayCollection($elements);
+        return new ArrayCollection::<int|string, int|float|string|bool|array|object|null>($elements);
     }
 
     public function testUnserializeEmptyArrayCollection(): void
@@ -40,7 +40,7 @@ class ArrayCollectionTest extends ArrayCollectionTestCase
  * @template TValue
  * @extends ArrayCollection<TKey, TValue>
  */
-class SerializableArrayCollection extends ArrayCollection
+class SerializableArrayCollection extends ArrayCollection<int|string, int|float|string|bool|array|object|null>
 {
     /** @return array<TKey, TValue> */
     public function __serialize(): array

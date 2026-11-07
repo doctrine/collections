@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Simple lazy collection that used an ArrayCollection as backed collection.
  */
-class LazyArrayCollection extends AbstractLazyCollection
+class LazyArrayCollection extends AbstractLazyCollection<int|string, int|float|string|bool|array|object|null>
 {
     /** @param Collection<mixed> $collectionOnInitialization Apply the collection only in method doInitialize */
     public function __construct(

@@ -10,7 +10,7 @@ use stdClass;
 /**
  * Simple collection implements different constructor semantics.
  */
-final class DerivedArrayCollection extends ArrayCollection
+final class DerivedArrayCollection extends ArrayCollection<int|string, int|float|string|bool|array|object|null>
 {
     /** @param mixed[] $elements */
     public function __construct(private readonly stdClass $foo, array $elements = [])
