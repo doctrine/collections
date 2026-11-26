@@ -86,6 +86,14 @@ class CollectionTest extends CollectionTestCase
         self::assertEquals('bar', $col->last()->foo);
     }
 
+    public function testMatchingWithZeroLimit(): void
+    {
+        $this->fillMatchingFixture();
+
+        self::assertSame([], $this->collection->matching(new Criteria(maxResults: 0))->toArray());
+        self::assertSame([], $this->collection->matching(new Criteria(firstResult: 1, maxResults: 0))->toArray());
+    }
+
     #[Group('DDC-1637')]
     public function testMatchingSlice(): void
     {
